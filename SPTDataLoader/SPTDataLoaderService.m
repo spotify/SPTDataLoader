@@ -5,7 +5,7 @@
 #import "SPTCancellationTokenFactoryImplementation.h"
 #import "SPTCancellationToken.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderPrivateDelegate, SPTCancellationTokenDelegate, NSURLSessionDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderPrivateDelegate, SPTCancellationTokenDelegate>
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
@@ -44,7 +44,7 @@
     _sessionQueue = [NSOperationQueue new];
     _sessionQueue.maxConcurrentOperationCount = 1;
     _sessionQueue.name = NSStringFromClass(self.class);
-    _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
+    _session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:_sessionQueue];
     
     return self;
 }
@@ -67,7 +67,5 @@
 {
     
 }
-
-#pragma mark NSURLSessionDelegate
 
 @end
