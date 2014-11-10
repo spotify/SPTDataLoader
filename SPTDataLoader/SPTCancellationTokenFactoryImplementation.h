@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import <SpotifyClient/SPTCancellationTokenFactory.h>
+#import "SPTCancellationTokenFactory.h"
 
 /**
  * The generic implementation for the cancellation token factory
