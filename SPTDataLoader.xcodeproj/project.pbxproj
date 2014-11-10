@@ -14,6 +14,8 @@
 		050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
 		050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
 		050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
+		050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
+		050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,10 @@
 		050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoader+Private.h"; sourceTree = "<group>"; };
 		050E06B61A10CFA500A10A0E /* SPTCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationToken.h; sourceTree = "<group>"; };
 		050E06B71A10CFA500A10A0E /* SPTCancellationTokenFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactory.h; sourceTree = "<group>"; };
+		050E06B81A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
+		050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
+		050E06BA1A10CFD700A10A0E /* SPTCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenImplementation.h; sourceTree = "<group>"; };
+		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,10 @@
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				050E06B61A10CFA500A10A0E /* SPTCancellationToken.h */,
 				050E06B71A10CFA500A10A0E /* SPTCancellationTokenFactory.h */,
+				050E06B81A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.h */,
+				050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */,
+				050E06BA1A10CFD700A10A0E /* SPTCancellationTokenImplementation.h */,
+				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -219,11 +229,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */,
 				050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */,
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
 				050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */,
 				050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */,
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
+				050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
