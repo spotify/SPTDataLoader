@@ -7,7 +7,7 @@
 #import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderPrivateDelegate, SPTCancellationTokenDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderPrivateDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
@@ -46,7 +46,7 @@
     _sessionQueue = [NSOperationQueue new];
     _sessionQueue.maxConcurrentOperationCount = 1;
     _sessionQueue.name = NSStringFromClass(self.class);
-    _session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:_sessionQueue];
+    _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
     
     return self;
 }
@@ -54,6 +54,17 @@
 - (SPTDataLoaderFactory *)createDataLoaderFactory
 {
     return [SPTDataLoaderFactory dataLoaderFactoryWithPrivateDelegate:self];
+}
+
+- (SPTDataLoaderRequestOperation *)operationForTask:(NSURLSessionTask *)task
+{
+    for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
+        if ([operation.task isEqual:task]) {
+            return operation;
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark SPTDataLoaderPrivateDelegate
@@ -80,6 +91,42 @@
             break;
         }
     }
+}
+
+#pragma mark NSURLSessionDataDelegate
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
+    SPTDataLoaderRequestOperation *operation = [self operationForTask:dataTask];
+    completionHandler([operation receiveResponse:response]);
+}
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
+{
+    // This is highly unusual
+}
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data
+{
+    SPTDataLoaderRequestOperation *operation = [self operationForTask:dataTask];
+    [operation receiveData:data];
+}
+
+#pragma mark NSURLSessionTaskDelegate
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didCompleteWithError:(NSError *)error
+{
+    SPTDataLoaderRequestOperation *operation = [self operationForTask:task];
+    [operation completeWithError:error];
 }
 
 @end

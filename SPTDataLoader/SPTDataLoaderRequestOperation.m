@@ -2,10 +2,11 @@
 
 #import "SPTCancellationToken.h"
 
-@interface SPTDataLoaderRequestOperation ()
+@interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
-@property (nonatomic, strong) NSURLSessionTask *task;
+
+@property (nonatomic, strong) NSMutableData *receivedData;
 
 @end
 
@@ -32,7 +33,31 @@
     _task = task;
     _cancellationToken = cancellationToken;
     
+    _receivedData = [NSMutableData data];
+    
     return self;
+}
+
+- (void)receiveData:(NSData *)data
+{
+    [self.receivedData appendData:data];
+}
+
+- (void)completeWithError:(NSError *)error
+{
+}
+
+- (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
+{
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    
+    if (httpResponse.expectedContentLength) {
+        self.receivedData = [NSMutableData dataWithCapacity:httpResponse.expectedContentLength];
+    } else {
+        self.receivedData = [NSMutableData data];
+    }
+    
+    return NSURLSessionResponseAllow;
 }
 
 @end
