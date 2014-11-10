@@ -11,6 +11,41 @@
 
 @implementation SPTDataLoader
 
+#pragma mark Private
+
++ (instancetype)dataLoaderWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate
+{
+    return [[self alloc] initWithPrivateDelegate:privateDelegate];
+}
+
+- (instancetype)initWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate
+{
+    if (!(self = [super init])) {
+        return nil;
+    }
+    
+    _privateDelegate = privateDelegate;
+    
+    _cancellationTokens = [NSHashTable weakObjectsHashTable];
+    
+    return self;
+}
+
+- (void)successfulResponse:(SPTDataLoaderResponse *)response
+{
+    [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
+}
+
+- (void)failedResponse:(SPTDataLoaderResponse *)response
+{
+    [self.delegate dataLoader:self didReceiveErrorResponse:response];
+}
+
+- (void)cancelledRequest:(SPTDataLoaderRequest *)request
+{
+    [self.delegate dataLoader:self didCancelRequest:request];
+}
+
 #pragma mark SPTDataLoader
 
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
@@ -28,32 +63,9 @@
 
 #pragma mark NSObject
 
-- (id)init
+- (void)dealloc
 {
-    if (!(self = [super init])) {
-        return nil;
-    }
-    
-    _cancellationTokens = [NSHashTable weakObjectsHashTable];
-    
-    return self;
-}
-
-#pragma mark Private
-
-- (void)successfulResponse:(SPTDataLoaderResponse *)response
-{
-    [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
-}
-
-- (void)failedResponse:(SPTDataLoaderResponse *)response
-{
-    [self.delegate dataLoader:self didReceiveErrorResponse:response];
-}
-
-- (void)cancelledRequest:(SPTDataLoaderRequest *)request
-{
-    [self.delegate dataLoader:self didCancelRequest:request];
+    [self cancelAllLoads];
 }
 
 @end

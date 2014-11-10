@@ -22,7 +22,13 @@
 /**
  * The object to delegate performing requests to
  */
-@property (nonatomic, weak) id<SPTDataLoaderPrivateDelegate> privateDelegate;
+@property (nonatomic, weak, readonly) id<SPTDataLoaderPrivateDelegate> privateDelegate;
+
+/**
+ * Class constructor
+ * @param privateDelegate The private delegate for delegating the request handling
+ */
++ (instancetype)dataLoaderWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate;
 
 /**
  * Call when a response successfully completed
