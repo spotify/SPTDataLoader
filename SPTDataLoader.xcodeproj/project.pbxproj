@@ -17,6 +17,7 @@
 		050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
 		056E51E61A111E7E00E8716C /* SPTDataLoaderRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */; };
+		056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestOperation.m; sourceTree = "<group>"; };
 		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
 		056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandler.h; sourceTree = "<group>"; };
+		056E523D1A113A2B00E8716C /* SPTExpTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTExpTime.h; sourceTree = "<group>"; };
+		056E523E1A113A2B00E8716C /* SPTExpTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTExpTime.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,8 @@
 				056E51E41A111E7E00E8716C /* SPTDataLoaderRequestOperation.h */,
 				056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */,
 				056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */,
+				056E523D1A113A2B00E8716C /* SPTExpTime.h */,
+				056E523E1A113A2B00E8716C /* SPTExpTime.m */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -241,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */,
+				056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */,
 				050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */,
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
 				050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */,
