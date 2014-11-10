@@ -6,12 +6,15 @@
 #import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTExpTime.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate, SPTDataLoaderRequestOperationDelegate>
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
+
+@property (nonatomic, strong) NSMutableDictionary *serviceRetryTimes;
 
 @end
 
@@ -47,6 +50,7 @@
     _sessionQueue.maxConcurrentOperationCount = 1;
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
+    _serviceRetryTimes = [NSMutableDictionary new];
     
     return self;
 }
@@ -128,6 +132,16 @@ didCompleteWithError:(NSError *)error
 {
     SPTDataLoaderRequestOperation *operation = [self operationForTask:task];
     [operation completeWithError:error];
+}
+
+#pragma mark SPTDataLoaderRequestOperationDelegate
+
+- (NSTimeInterval)dataLoaderRequestOperation:(SPTDataLoaderRequestOperation *)requestOperation
+                timeLeftUntilExecutionForURL:(NSURL *)URL
+{
+    NSURLComponents *components = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:nil];
+    SPTExpTime *expTime = self.serviceRetryTimes[components.path.pathComponents.firstObject];
+    return expTime.timeInterval;
 }
 
 @end

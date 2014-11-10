@@ -1,6 +1,7 @@
 #import "SPTDataLoaderRequestOperation.h"
 
 #import "SPTCancellationToken.h"
+#import "SPTDataLoaderRequest.h"
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
 
@@ -75,10 +76,22 @@
         return;
     }
     
-    self.isExecuting = YES;
-    self.isFinished = NO;
+    dispatch_block_t executionBlock = ^ {
+        self.isExecuting = YES;
+        self.isFinished = NO;
+        
+        [self.task resume];
+    };
     
-    [self.task resume];
+    NSTimeInterval waitTime = [self.delegate dataLoaderRequestOperation:self
+                                           timeLeftUntilExecutionForURL:self.request.URL];
+    if (!waitTime) {
+        executionBlock();
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(),
+                       executionBlock);
+    }
 }
 
 - (void)cancel

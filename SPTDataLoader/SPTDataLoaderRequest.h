@@ -5,4 +5,9 @@
  */
 @interface SPTDataLoaderRequest : NSObject
 
+/**
+ * The URL to request
+ */
+@property (nonatomic, strong) NSURL *URL;
+
 @end
