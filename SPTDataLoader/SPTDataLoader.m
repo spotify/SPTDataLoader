@@ -39,4 +39,21 @@
     return self;
 }
 
+#pragma mark Private
+
+- (void)successfulResponse:(SPTDataLoaderResponse *)response
+{
+    [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
+}
+
+- (void)failedResponse:(SPTDataLoaderResponse *)response
+{
+    [self.delegate dataLoader:self didReceiveErrorResponse:response];
+}
+
+- (void)cancelledRequest:(SPTDataLoaderRequest *)request
+{
+    [self.delegate dataLoader:self didCancelRequest:request];
+}
+
 @end

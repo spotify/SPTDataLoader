@@ -24,4 +24,20 @@
  */
 @property (nonatomic, weak) id<SPTDataLoaderPrivateDelegate> privateDelegate;
 
+/**
+ * Call when a response successfully completed
+ * @param response The response that successfully completed
+ */
+- (void)successfulResponse:(SPTDataLoaderResponse *)response;
+/**
+ * Call when a response failed to complete
+ * @param response The response that failed to complete
+ */
+- (void)failedResponse:(SPTDataLoaderResponse *)response;
+/**
+ * Call when a request becomes cancelled
+ * @param request The request that was cancelled
+ */
+- (void)cancelledRequest:(SPTDataLoaderRequest *)request;
+
 @end
