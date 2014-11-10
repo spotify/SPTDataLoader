@@ -16,6 +16,7 @@
 		050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
 		050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
+		056E51E61A111E7E00E8716C /* SPTDataLoaderRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,9 @@
 		050E06BA1A10CFD700A10A0E /* SPTCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenImplementation.h; sourceTree = "<group>"; };
 		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
 		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
+		056E51E41A111E7E00E8716C /* SPTDataLoaderRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestOperation.h; sourceTree = "<group>"; };
+		056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestOperation.m; sourceTree = "<group>"; };
+		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,7 @@
 				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
 				050E06AA1A10CC1300A10A0E /* SPTDataLoaderRequest.h */,
 				050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */,
+				056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */,
 				050E06AD1A10CC6B00A10A0E /* SPTDataLoaderResponse.h */,
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				050E06B61A10CFA500A10A0E /* SPTCancellationToken.h */,
@@ -123,6 +128,8 @@
 				050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */,
 				050E06BA1A10CFD700A10A0E /* SPTCancellationTokenImplementation.h */,
 				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
+				056E51E41A111E7E00E8716C /* SPTDataLoaderRequestOperation.h */,
+				056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -235,6 +242,7 @@
 				050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */,
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
 				050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */,
+				056E51E61A111E7E00E8716C /* SPTDataLoaderRequestOperation.m in Sources */,
 				050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */,
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
 				050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */,
@@ -400,6 +408,7 @@
 				050E06A01A10C62100A10A0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		050E06A11A10C62100A10A0E /* Build configuration list for PBXNativeTarget "SPTDataLoaderTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +417,7 @@
 				050E06A31A10C62100A10A0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

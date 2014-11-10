@@ -4,6 +4,8 @@
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTCancellationTokenFactoryImplementation.h"
 #import "SPTCancellationToken.h"
+#import "SPTDataLoaderRequestOperation.h"
+#import "SPTDataLoaderRequest+Private.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderPrivateDelegate, SPTCancellationTokenDelegate>
 
@@ -58,14 +60,26 @@
 
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
-    return [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
+    NSURLRequest *urlRequest = request.urlRequest;
+    NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
+    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
+    SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request
+                                                                                                               task:task
+                                                                                                  cancellationToken:cancellationToken];
+    [self.sessionQueue addOperation:operation];
+    return cancellationToken;
 }
 
 #pragma mark SPTCancellationTokenDelegate
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
-    
+    for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
+        if ([operation.cancellationToken isEqual:cancellationToken]) {
+            [operation cancel];
+            break;
+        }
+    }
 }
 
 @end
