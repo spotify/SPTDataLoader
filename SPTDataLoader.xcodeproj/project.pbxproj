@@ -12,6 +12,7 @@
 		050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
 		050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
 		050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
+		050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderService.m; sourceTree = "<group>"; };
 		050E06A71A10C7BE00A10A0E /* SPTDataLoaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderFactory.h; sourceTree = "<group>"; };
 		050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactory.m; sourceTree = "<group>"; };
+		050E06AA1A10CC1300A10A0E /* SPTDataLoaderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequest.h; sourceTree = "<group>"; };
+		050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +98,8 @@
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
 				050E068D1A10C62100A10A0E /* SPTDataLoader.h */,
 				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
+				050E06AA1A10CC1300A10A0E /* SPTDataLoaderRequest.h */,
+				050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 			files = (
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
 				050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */,
+				050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */,
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
