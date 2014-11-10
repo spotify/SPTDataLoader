@@ -8,6 +8,9 @@
 
 @property (nonatomic, strong) NSMutableData *receivedData;
 
+@property (atomic, assign) BOOL isFinished;
+@property (atomic, assign) BOOL isExecuting;
+
 @end
 
 @implementation SPTDataLoaderRequestOperation
@@ -45,6 +48,8 @@
 
 - (void)completeWithError:(NSError *)error
 {
+    self.isExecuting = NO;
+    self.isFinished = YES;
 }
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
@@ -57,7 +62,42 @@
         self.receivedData = [NSMutableData data];
     }
     
-    return NSURLSessionResponseAllow;
+    return self.isCancelled ? NSURLSessionResponseCancel : NSURLSessionResponseAllow;
+}
+
+#pragma mark NSOperationQueue
+
+- (void)start
+{
+    if (self.isCancelled) {
+        self.isFinished = YES;
+        self.isExecuting = NO;
+        return;
+    }
+    
+    self.isExecuting = YES;
+    self.isFinished = NO;
+    
+    [self.task resume];
+}
+
+- (void)cancel
+{
+    [self.task cancel];
+    self.isExecuting = NO;
+    [super cancel];
+}
+
+- (BOOL)isConcurrent
+{
+    return YES;
+}
+
+#pragma mark NSKeyValueObserving
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *) key
+{
+    return YES;
 }
 
 @end
