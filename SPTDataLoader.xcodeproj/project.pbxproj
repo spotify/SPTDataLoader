@@ -1,0 +1,371 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		050E068E1A10C62100A10A0E /* SPTDataLoader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 050E068D1A10C62100A10A0E /* SPTDataLoader.h */; };
+		050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
+		050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		050E06971A10C62100A10A0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 050E06891A10C62100A10A0E;
+			remoteInfo = SPTDataLoader;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		050E06881A10C62100A10A0E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				050E068E1A10C62100A10A0E /* SPTDataLoader.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		050E068A1A10C62100A10A0E /* libSPTDataLoader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSPTDataLoader.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		050E068D1A10C62100A10A0E /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoader.h; sourceTree = "<group>"; };
+		050E068F1A10C62100A10A0E /* SPTDataLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoader.m; sourceTree = "<group>"; };
+		050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPTDataLoaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		050E069B1A10C62100A10A0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		050E06871A10C62100A10A0E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		050E06921A10C62100A10A0E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		050E06811A10C62100A10A0E = {
+			isa = PBXGroup;
+			children = (
+				050E068C1A10C62100A10A0E /* SPTDataLoader */,
+				050E06991A10C62100A10A0E /* SPTDataLoaderTests */,
+				050E068B1A10C62100A10A0E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		050E068B1A10C62100A10A0E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				050E068A1A10C62100A10A0E /* libSPTDataLoader.a */,
+				050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		050E068C1A10C62100A10A0E /* SPTDataLoader */ = {
+			isa = PBXGroup;
+			children = (
+				050E068D1A10C62100A10A0E /* SPTDataLoader.h */,
+				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
+			);
+			path = SPTDataLoader;
+			sourceTree = "<group>";
+		};
+		050E06991A10C62100A10A0E /* SPTDataLoaderTests */ = {
+			isa = PBXGroup;
+			children = (
+				050E069A1A10C62100A10A0E /* Supporting Files */,
+			);
+			path = SPTDataLoaderTests;
+			sourceTree = "<group>";
+		};
+		050E069A1A10C62100A10A0E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				050E069B1A10C62100A10A0E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		050E06891A10C62100A10A0E /* SPTDataLoader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 050E069E1A10C62100A10A0E /* Build configuration list for PBXNativeTarget "SPTDataLoader" */;
+			buildPhases = (
+				050E06861A10C62100A10A0E /* Sources */,
+				050E06871A10C62100A10A0E /* Frameworks */,
+				050E06881A10C62100A10A0E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SPTDataLoader;
+			productName = SPTDataLoader;
+			productReference = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		050E06941A10C62100A10A0E /* SPTDataLoaderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 050E06A11A10C62100A10A0E /* Build configuration list for PBXNativeTarget "SPTDataLoaderTests" */;
+			buildPhases = (
+				050E06911A10C62100A10A0E /* Sources */,
+				050E06921A10C62100A10A0E /* Frameworks */,
+				050E06931A10C62100A10A0E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				050E06981A10C62100A10A0E /* PBXTargetDependency */,
+			);
+			name = SPTDataLoaderTests;
+			productName = SPTDataLoaderTests;
+			productReference = 050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		050E06821A10C62100A10A0E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = spotify;
+				TargetAttributes = {
+					050E06891A10C62100A10A0E = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					050E06941A10C62100A10A0E = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 050E06811A10C62100A10A0E;
+			productRefGroup = 050E068B1A10C62100A10A0E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				050E06891A10C62100A10A0E /* SPTDataLoader */,
+				050E06941A10C62100A10A0E /* SPTDataLoaderTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		050E06931A10C62100A10A0E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		050E06861A10C62100A10A0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		050E06911A10C62100A10A0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		050E06981A10C62100A10A0E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 050E06891A10C62100A10A0E /* SPTDataLoader */;
+			targetProxy = 050E06971A10C62100A10A0E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		050E069C1A10C62100A10A0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		050E069D1A10C62100A10A0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		050E069F1A10C62100A10A0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		050E06A01A10C62100A10A0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		050E06A21A10C62100A10A0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		050E06A31A10C62100A10A0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				050E069C1A10C62100A10A0E /* Debug */,
+				050E069D1A10C62100A10A0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		050E069E1A10C62100A10A0E /* Build configuration list for PBXNativeTarget "SPTDataLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				050E069F1A10C62100A10A0E /* Debug */,
+				050E06A01A10C62100A10A0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		050E06A11A10C62100A10A0E /* Build configuration list for PBXNativeTarget "SPTDataLoaderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				050E06A21A10C62100A10A0E /* Debug */,
+				050E06A31A10C62100A10A0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 050E06821A10C62100A10A0E /* Project object */;
+}
