@@ -62,6 +62,7 @@
 		050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
 		050E06BA1A10CFD700A10A0E /* SPTCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenImplementation.h; sourceTree = "<group>"; };
 		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
+		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +109,7 @@
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
 				050E06A71A10C7BE00A10A0E /* SPTDataLoaderFactory.h */,
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
+				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
 				050E068D1A10C62100A10A0E /* SPTDataLoader.h */,
 				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
 				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
