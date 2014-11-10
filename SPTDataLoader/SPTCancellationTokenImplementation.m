@@ -43,17 +43,4 @@
     self.cancelled = YES;
 }
 
-#pragma mark NSObject
-
-- (BOOL)isEqual:(id)object
-{
-    if (![object conformsToProtocol:@protocol(SPTCancellationToken)]) {
-        return NO;
-    }
-    
-    id<SPTCancellationToken> cancellationToken = object;
-    
-    return cancellationToken.cancelled == self.cancelled && cancellationToken.delegate == self.delegate;
-}
-
 @end
