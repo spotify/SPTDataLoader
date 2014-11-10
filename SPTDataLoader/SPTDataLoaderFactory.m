@@ -1,29 +1,27 @@
 #import "SPTDataLoaderFactory.h"
 
+#import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
 
-@interface SPTDataLoaderFactory () <SPTDataLoaderPrivateDelegate>
-
-@property (nonatomic, weak, readonly) id<SPTDataLoaderPrivateDelegate> privateDelegate;
-
+@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate>
 @end
 
 @implementation SPTDataLoaderFactory
 
 #pragma mark Private
 
-+ (instancetype)dataLoaderFactoryWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate
++ (instancetype)dataLoaderFactoryWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
 {
-    return [[self alloc] initWithPrivateDelegate:privateDelegate];
+    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate];
 }
 
-- (instancetype)initWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate
+- (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
 {
     if (!(self = [super init])) {
         return nil;
     }
     
-    _privateDelegate = privateDelegate;
+    _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
     
     return self;
 }
@@ -32,14 +30,34 @@
 
 - (SPTDataLoader *)createDataLoader
 {
-    return [SPTDataLoader dataLoaderWithPrivateDelegate:self];
+    return [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self];
 }
 
-#pragma mark SPTDataLoaderPrivateDelegate
+#pragma mark SPTDataLoaderRequestResponseHandler
 
-- (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+@synthesize requestResponseHandlerDelegate = _requestResponseHandlerDelegate;
+
+- (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
-    return [self.privateDelegate performRequest:request];
+    
+}
+
+- (void)failedResponse:(SPTDataLoaderResponse *)response
+{
+    
+}
+
+- (void)cancelledRequest:(SPTDataLoaderRequest *)request
+{
+    
+}
+
+#pragma mark SPTDataLoaderRequestResponseHandlerDelegate
+
+- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                    performRequest:(SPTDataLoaderRequest *)request
+{
+    return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
 
 @end

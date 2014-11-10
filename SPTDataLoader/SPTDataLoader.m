@@ -4,7 +4,6 @@
 
 @interface SPTDataLoader ()
 
-@property (nonatomic, weak) id<SPTDataLoaderPrivateDelegate> privateDelegate;
 @property (nonatomic, strong) NSHashTable *cancellationTokens;
 
 @end
@@ -13,18 +12,18 @@
 
 #pragma mark Private
 
-+ (instancetype)dataLoaderWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate
++ (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
 {
-    return [[self alloc] initWithPrivateDelegate:privateDelegate];
+    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate];
 }
 
-- (instancetype)initWithPrivateDelegate:(id<SPTDataLoaderPrivateDelegate>)privateDelegate
+- (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
 {
     if (!(self = [super init])) {
         return nil;
     }
     
-    _privateDelegate = privateDelegate;
+    _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
     
     _cancellationTokens = [NSHashTable weakObjectsHashTable];
     
@@ -50,7 +49,8 @@
 
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
-    id<SPTCancellationToken> cancellationToken = [self.privateDelegate performRequest:request];
+    id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
+                                                                                              performRequest:request];
     [self.cancellationTokens addObject:cancellationToken];
     return cancellationToken;
 }
@@ -67,5 +67,9 @@
 {
     [self cancelAllLoads];
 }
+
+#pragma mark SPTDataLoaderRequestResponseHandler
+
+@synthesize requestResponseHandlerDelegate = _requestResponseHandlerDelegate;
 
 @end

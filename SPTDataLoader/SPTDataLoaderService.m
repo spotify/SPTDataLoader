@@ -1,13 +1,13 @@
 #import "SPTDataLoaderService.h"
 
-#import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTCancellationTokenFactoryImplementation.h"
 #import "SPTCancellationToken.h"
 #import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
+#import "SPTDataLoaderRequestResponseHandler.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderPrivateDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
@@ -53,7 +53,7 @@
 
 - (SPTDataLoaderFactory *)createDataLoaderFactory
 {
-    return [SPTDataLoaderFactory dataLoaderFactoryWithPrivateDelegate:self];
+    return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self];
 }
 
 - (SPTDataLoaderRequestOperation *)operationForTask:(NSURLSessionTask *)task
@@ -67,9 +67,10 @@
     return nil;
 }
 
-#pragma mark SPTDataLoaderPrivateDelegate
+#pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                    performRequest:(SPTDataLoaderRequest *)request
 {
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
