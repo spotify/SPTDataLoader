@@ -13,5 +13,9 @@
  * The number of times to retry this request
  */
 @property (nonatomic, assign) NSUInteger retryCount;
+/**
+ * The body of the request
+ */
+@property (nonatomic, strong) NSData *body;
 
 @end
