@@ -7,7 +7,7 @@
 /**
  * An object that could act as an authoriser for injecting the required authorisation headers into a request
  */
-@protocol SPTDataLoaderAuthoriser <NSObject>
+@protocol SPTDataLoaderAuthoriser <NSObject, NSCopying>
 
 /**
  * The identifier for the data loader authoriser
