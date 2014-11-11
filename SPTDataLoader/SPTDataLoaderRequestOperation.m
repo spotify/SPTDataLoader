@@ -131,20 +131,16 @@
         return;
     }
     
-    dispatch_block_t executionBlock = ^ {
+    NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
+    if (!waitTime) {
         self.isExecuting = YES;
         self.isFinished = NO;
         
         [self.task resume];
-    };
-    
-    NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
-    if (!waitTime) {
-        executionBlock();
     } else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)),
-                       dispatch_get_main_queue(),
-                       executionBlock);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^ {
+            [self checkRateLimiterAndExecute];
+        });
     }
 }
 
