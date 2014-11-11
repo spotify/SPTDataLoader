@@ -35,7 +35,7 @@
 
 - (NSTimeInterval)earliestTimeUntilRequestCanBeExecuted:(SPTDataLoaderRequest *)request
 {
-    NSString *serviceKey = [self serviceKeyFromRequest:request];
+    NSString *serviceKey = [self serviceKeyFromURL:request.URL];
     
     double requestsPerSecond = [self requestsPerSecondForServiceKey:serviceKey];
     CFAbsoluteTime lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
@@ -51,8 +51,18 @@
 
 - (void)executedRequest:(SPTDataLoaderRequest *)request
 {
-    NSString *serviceKey = [self serviceKeyFromRequest:request];
+    NSString *serviceKey = [self serviceKeyFromURL:request.URL];
     self.serviceEndpointLastExecution[serviceKey] = @(CFAbsoluteTimeGetCurrent());
+}
+
+- (double)requestsPerSecondForURL:(NSURL *)URL
+{
+    return [self requestsPerSecondForServiceKey:[self serviceKeyFromURL:URL]];
+}
+
+- (void)setRequestsPerSecond:(double)requestsPerSecond forURL:(NSURL *)URL
+{
+    self.serviceEndpointRequestsPerSecond[[self serviceKeyFromURL:URL]] = @(requestsPerSecond);
 }
 
 - (double)requestsPerSecondForServiceKey:(NSString *)serviceKey
@@ -60,9 +70,9 @@
     return [self.serviceEndpointRequestsPerSecond[serviceKey] doubleValue] ?: self.requestsPerSecond;
 }
 
-- (NSString *)serviceKeyFromRequest:(SPTDataLoaderRequest *)request
+- (NSString *)serviceKeyFromURL:(NSURL *)URL
 {
-    NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
+    NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     NSURLComponents *serviceComponents = [NSURLComponents new];
     serviceComponents.scheme = requestComponents.scheme;
     serviceComponents.host = requestComponents.host;
