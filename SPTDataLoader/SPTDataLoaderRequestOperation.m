@@ -7,10 +7,9 @@
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
 
-@property (nonatomic, strong) SPTDataLoaderRequest *request;
-
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) NSUInteger retryCount;
+@property (nonatomic, strong) SPTDataLoaderResponse *response;
 
 @property (atomic, assign) BOOL isFinished;
 @property (atomic, assign) BOOL isExecuting;
@@ -59,16 +58,23 @@
     self.isExecuting = NO;
     self.isFinished = YES;
     
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request];
     if (error) {
-        if (self.retryCount++ != self.request.retryCount) {
-            [self start];
-        } else {
-            [self.requestResponseHandler failedResponse:response];
-        }
-    } else {
-        [self.requestResponseHandler successfulResponse:response];
+        self.response.error = error;
     }
+    
+    if (self.response.error) {
+        if ([self.response shouldRetry]) {
+            if (self.retryCount++ != self.request.retryCount) {
+                [self start];
+                return;
+            }
+        }
+        
+        [self.requestResponseHandler failedResponse:self.response];
+        return;
+    }
+    
+    [self.requestResponseHandler successfulResponse:self.response];
 }
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
@@ -76,6 +82,8 @@
     if (self.isCancelled) {
         return NSURLSessionResponseCancel;
     }
+    
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response];
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     

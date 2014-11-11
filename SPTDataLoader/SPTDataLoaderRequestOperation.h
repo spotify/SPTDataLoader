@@ -42,6 +42,10 @@
  * The request response handler to callback to
  */
 @property (nonatomic, weak, readonly) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
+/**
+ * The request being executed
+ */
+@property (nonatomic, strong, readonly) SPTDataLoaderRequest *request;
 
 /**
  * Class constructor

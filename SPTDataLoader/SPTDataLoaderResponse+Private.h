@@ -8,9 +8,20 @@
 @interface SPTDataLoaderResponse (Private)
 
 /**
+ * The error that the request generated
+ */
+@property (nonatomic, strong, readwrite) NSError *error;
+
+/**
  * Class constructor
  * @param request The request object making up the response
+ * @param response The URL response received from the session
  */
-+ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request;
++ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(NSURLResponse *)response;
+
+/**
+ * Whether we should retry the current request based on the current response data
+ */
+- (BOOL)shouldRetry;
 
 @end
