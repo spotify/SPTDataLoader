@@ -5,8 +5,11 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTExpTime.h"
+#import "SPTDataLoaderRateLimiter.h"
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
+
+@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) NSUInteger retryCount;
@@ -26,17 +29,20 @@
                                                  task:(NSURLSessionTask *)task
                                     cancellationToken:(id<SPTCancellationToken>)cancellationToken
                                requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                          rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
     return [[self alloc] initWithRequest:request
                                     task:task
                        cancellationToken:cancellationToken
-                  requestResponseHandler:requestResponseHandler];
+                  requestResponseHandler:requestResponseHandler
+                             rateLimiter:rateLimiter];
 }
 
 - (instancetype)initWithRequest:(SPTDataLoaderRequest *)request
                            task:(NSURLSessionTask *)task
               cancellationToken:(id<SPTCancellationToken>)cancellationToken
          requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
     if (!(self = [super init])) {
         return nil;
@@ -46,6 +52,8 @@
     _task = task;
     _cancellationToken = cancellationToken;
     _requestResponseHandler = requestResponseHandler;
+    _rateLimiter = rateLimiter;
+    
     _expTime = [SPTExpTime expTimeWithInitialTime:1.0 maxTime:60.0 * 60.0];
     
     return self;
@@ -60,6 +68,8 @@
 {
     self.isExecuting = NO;
     self.isFinished = YES;
+    
+    [self.rateLimiter executedRequest:self.request];
     
     if (error) {
         self.response.error = error;
@@ -99,13 +109,25 @@
     return NSURLSessionResponseAllow;
 }
 
-#pragma mark NSOperationQueue
-
-- (void)start
+- (void)checkRateLimiterAndExecute
 {
     if (self.isCancelled) {
-        self.isFinished = YES;
-        self.isExecuting = NO;
+        return;
+    }
+    
+    NSTimeInterval waitTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request];
+    if (!waitTime) {
+        [self checkRetryLimiterAndExecute];
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^ {
+            [self checkRateLimiterAndExecute];
+        });
+    }
+}
+
+- (void)checkRetryLimiterAndExecute
+{
+    if (self.isCancelled) {
         return;
     }
     
@@ -124,6 +146,19 @@
                        dispatch_get_main_queue(),
                        executionBlock);
     }
+}
+
+#pragma mark NSOperationQueue
+
+- (void)start
+{
+    if (self.isCancelled) {
+        self.isFinished = YES;
+        self.isExecuting = NO;
+        return;
+    }
+    
+    [self checkRateLimiterAndExecute];
 }
 
 - (void)cancel

@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
 @class SPTDataLoaderRequest;
+@class SPTDataLoaderRateLimiter;
 
 @protocol SPTCancellationToken;
 @protocol SPTDataLoaderRequestResponseHandler;
@@ -33,11 +34,13 @@
  * @param task The task to perform
  * @param cancellationToken The token to use to cancel the request with
  * @param requestResponseHandler The object tie to this operation for potential callbacks
+ * @param rateLimiter The object controlling the rate limits on a per service basis
  */
 + (instancetype)dataLoaderRequestOperationWithRequest:(SPTDataLoaderRequest *)request
                                                  task:(NSURLSessionTask *)task
                                     cancellationToken:(id<SPTCancellationToken>)cancellationToken
-                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler;
+                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                          rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter;
 
 /**
  * Call to tell the operation it has received some data

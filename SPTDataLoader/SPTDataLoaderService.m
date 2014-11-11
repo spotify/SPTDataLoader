@@ -6,14 +6,14 @@
 #import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderRateLimiter.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
-
-@property (nonatomic, strong) NSMutableDictionary *serviceRetryTimes;
+@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 
 @end
 
@@ -49,7 +49,7 @@
     _sessionQueue.maxConcurrentOperationCount = 1;
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
-    _serviceRetryTimes = [NSMutableDictionary new];
+    _rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     
     return self;
 }
@@ -81,7 +81,8 @@
     SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request
                                                                                                                task:task
                                                                                                   cancellationToken:cancellationToken
-                                                                                             requestResponseHandler:requestResponseHandler];
+                                                                                             requestResponseHandler:requestResponseHandler
+                                                                                                        rateLimiter:self.rateLimiter];
     [self.sessionQueue addOperation:operation];
     return cancellationToken;
 }
