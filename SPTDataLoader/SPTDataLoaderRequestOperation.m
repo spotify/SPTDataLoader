@@ -2,6 +2,8 @@
 
 #import "SPTCancellationToken.h"
 #import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderResponse+Private.h"
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
 
@@ -55,6 +57,13 @@
 {
     self.isExecuting = NO;
     self.isFinished = YES;
+    
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request];
+    if (error) {
+        [self.requestResponseHandler failedResponse:response];
+    } else {
+        [self.requestResponseHandler successfulResponse:response];
+    }
 }
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
@@ -100,6 +109,7 @@
 
 - (void)cancel
 {
+    [self.requestResponseHandler cancelledRequest:self.request];
     [self.task cancel];
     self.isExecuting = NO;
     [super cancel];
