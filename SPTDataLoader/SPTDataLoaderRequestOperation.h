@@ -4,6 +4,7 @@
 @class SPTDataLoaderRequestOperation;
 
 @protocol SPTCancellationToken;
+@protocol SPTDataLoaderRequestResponseHandler;
 
 /**
  * The tasks the operation delegates to its creator
@@ -37,16 +38,22 @@
  * The object listening to a request operation
  */
 @property (nonatomic, weak) id<SPTDataLoaderRequestOperationDelegate> delegate;
+/**
+ * The request response handler to callback to
+ */
+@property (nonatomic, weak, readonly) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
 
 /**
  * Class constructor
  * @param request The request object to perform lookup with
  * @param task The task to perform
  * @param cancellationToken The token to use to cancel the request with
+ * @param requestResponseHandler The object tie to this operation for potential callbacks
  */
 + (instancetype)dataLoaderRequestOperationWithRequest:(SPTDataLoaderRequest *)request
                                                  task:(NSURLSessionTask *)task
-                                    cancellationToken:(id<SPTCancellationToken>)cancellationToken;
+                                    cancellationToken:(id<SPTCancellationToken>)cancellationToken
+                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler;
 
 /**
  * Call to tell the operation it has received some data

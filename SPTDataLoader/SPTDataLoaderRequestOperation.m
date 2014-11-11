@@ -21,13 +21,18 @@
 + (instancetype)dataLoaderRequestOperationWithRequest:(SPTDataLoaderRequest *)request
                                                  task:(NSURLSessionTask *)task
                                     cancellationToken:(id<SPTCancellationToken>)cancellationToken
+                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
-    return [[self alloc] initWithRequest:request task:task cancellationToken:cancellationToken];
+    return [[self alloc] initWithRequest:request
+                                    task:task
+                       cancellationToken:cancellationToken
+                  requestResponseHandler:requestResponseHandler];
 }
 
 - (instancetype)initWithRequest:(SPTDataLoaderRequest *)request
                            task:(NSURLSessionTask *)task
               cancellationToken:(id<SPTCancellationToken>)cancellationToken
+         requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
     if (!(self = [super init])) {
         return nil;
@@ -36,8 +41,7 @@
     _request = request;
     _task = task;
     _cancellationToken = cancellationToken;
-    
-    _receivedData = [NSMutableData data];
+    _requestResponseHandler = requestResponseHandler;
     
     return self;
 }

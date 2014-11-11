@@ -81,7 +81,8 @@
     id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
     SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request
                                                                                                                task:task
-                                                                                                  cancellationToken:cancellationToken];
+                                                                                                  cancellationToken:cancellationToken
+                                                                                             requestResponseHandler:requestResponseHandler];
     [self.sessionQueue addOperation:operation];
     return cancellationToken;
 }
