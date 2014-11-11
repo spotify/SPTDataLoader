@@ -3,7 +3,7 @@
 /**
  * A representing of the request to make to the backend
  */
-@interface SPTDataLoaderRequest : NSObject
+@interface SPTDataLoaderRequest : NSObject <NSCopying>
 
 /**
  * The URL to request
