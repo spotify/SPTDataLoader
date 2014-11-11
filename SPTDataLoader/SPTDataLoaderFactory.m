@@ -2,7 +2,8 @@
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
-#import "SPTDataLoaderResponse.h"
+#import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderAuthoriser.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate>
 
@@ -73,6 +74,13 @@
                                     performRequest:(SPTDataLoaderRequest *)request
 {
     [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
+    
+    for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
+        if ([authoriser requestRequiresAuthorisation:request]) {
+            [authoriser authoriseRequest:request];
+        }
+    }
+    
     return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
 
