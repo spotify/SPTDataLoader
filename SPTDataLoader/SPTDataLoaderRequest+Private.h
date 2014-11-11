@@ -10,4 +10,11 @@
  */
 @property (nonatomic, strong, readonly) NSURLRequest *urlRequest;
 
+/**
+ * Whether we should retry a failed response
+ * @param response The response received from the server
+ * @param error The object describing the failure
+ */
+- (BOOL)shouldRetryForResponse:(NSURLResponse *)response error:(NSError *)error;
+
 @end
