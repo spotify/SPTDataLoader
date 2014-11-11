@@ -6,6 +6,8 @@
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate>
 
+@property (nonatomic, copy) NSArray *authorisers;
+
 @property (nonatomic, strong) NSMapTable *requestToRequestResponseHandler;
 
 @end
@@ -15,17 +17,20 @@
 #pragma mark Private
 
 + (instancetype)dataLoaderFactoryWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                                        authorisers:(NSArray *)authorisers
 {
-    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate];
+    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate authorisers:authorisers];
 }
 
 - (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                           authorisers:(NSArray *)authorisers
 {
     if (!(self = [super init])) {
         return nil;
     }
     
     _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
+    _authorisers = authorisers;
     
     _requestToRequestResponseHandler = [NSMapTable weakToWeakObjectsMapTable];
     

@@ -55,9 +55,9 @@
     return self;
 }
 
-- (SPTDataLoaderFactory *)createDataLoaderFactory
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray *)authorisers
 {
-    return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self];
+    return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self authorisers:authorisers];
 }
 
 - (SPTDataLoaderRequestOperation *)operationForTask:(NSURLSessionTask *)task

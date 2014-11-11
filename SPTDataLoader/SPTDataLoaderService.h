@@ -15,7 +15,8 @@
 
 /**
  * Creates a data loader factory
+ * @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */
-- (SPTDataLoaderFactory *)createDataLoaderFactory;
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray *)authorisers;
 
 @end
