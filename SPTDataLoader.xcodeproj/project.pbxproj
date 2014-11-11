@@ -66,6 +66,7 @@
 		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
 		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
 		052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderResponse+Private.h"; sourceTree = "<group>"; };
+		052FB10E1A121A6100AFE80E /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
 		056E51E41A111E7E00E8716C /* SPTDataLoaderRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestOperation.h; sourceTree = "<group>"; };
 		056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestOperation.m; sourceTree = "<group>"; };
 		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
@@ -139,6 +140,7 @@
 				056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */,
 				056E523D1A113A2B00E8716C /* SPTExpTime.h */,
 				056E523E1A113A2B00E8716C /* SPTExpTime.m */,
+				052FB10E1A121A6100AFE80E /* SPTDataLoaderAuthoriser.h */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
