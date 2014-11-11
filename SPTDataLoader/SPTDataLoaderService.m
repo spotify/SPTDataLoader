@@ -7,6 +7,7 @@
 #import "SPTDataLoaderRequest+Private.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderRateLimiter.h"
+#import "SPTDataLoaderResponse+Private.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
@@ -70,21 +71,55 @@
     return nil;
 }
 
-#pragma mark SPTDataLoaderRequestResponseHandlerDelegate
-
-- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                    performRequest:(SPTDataLoaderRequest *)request
+- (void)performRequest:(SPTDataLoaderRequest *)request
+     cancellationToken:(id<SPTCancellationToken>)cancellationToken
+requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
-    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
     SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request
                                                                                                                task:task
                                                                                                   cancellationToken:cancellationToken
                                                                                              requestResponseHandler:requestResponseHandler
                                                                                                         rateLimiter:self.rateLimiter];
     [self.sessionQueue addOperation:operation];
+}
+
+#pragma mark SPTDataLoaderRequestResponseHandlerDelegate
+
+- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                    performRequest:(SPTDataLoaderRequest *)request
+{
+    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
+    
+    if ([requestResponseHandler respondsToSelector:@selector(shouldAuthoriseRequest:)]) {
+        if ([requestResponseHandler shouldAuthoriseRequest:request]) {
+            if ([requestResponseHandler respondsToSelector:@selector(authoriseRequest:cancellationToken:)]) {
+                [requestResponseHandler authoriseRequest:request cancellationToken:cancellationToken];
+                return cancellationToken;
+            }
+        }
+    }
+    
+    [self performRequest:request cancellationToken:cancellationToken requestResponseHandler:requestResponseHandler];
     return cancellationToken;
+}
+
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+             authorisedRequest:(SPTDataLoaderRequest *)request
+             cancellationToken:(id<SPTCancellationToken>)cancellationToken
+{
+    [self performRequest:request cancellationToken:cancellationToken requestResponseHandler:requestResponseHandler];
+}
+
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+      failedToAuthoriseRequest:(SPTDataLoaderRequest *)request
+             cancellationToken:(id<SPTCancellationToken>)cancellationToken
+                         error:(NSError *)error
+{
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    response.error = error;
+    [requestResponseHandler failedResponse:response];
 }
 
 #pragma mark SPTCancellationTokenDelegate
