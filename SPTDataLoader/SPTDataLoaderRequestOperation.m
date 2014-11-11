@@ -4,12 +4,14 @@
 #import "SPTDataLoaderRequest.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTExpTime.h"
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
+@property (nonatomic, strong) SPTExpTime *expTime;
 
 @property (atomic, assign) BOOL isFinished;
 @property (atomic, assign) BOOL isExecuting;
@@ -44,6 +46,7 @@
     _task = task;
     _cancellationToken = cancellationToken;
     _requestResponseHandler = requestResponseHandler;
+    _expTime = [SPTExpTime expTimeWithInitialTime:1.0 maxTime:60.0 * 60.0];
     
     return self;
 }
@@ -113,8 +116,7 @@
         [self.task resume];
     };
     
-    NSTimeInterval waitTime = [self.delegate dataLoaderRequestOperation:self
-                                           timeLeftUntilExecutionForURL:self.request.URL];
+    NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
     if (!waitTime) {
         executionBlock();
     } else {

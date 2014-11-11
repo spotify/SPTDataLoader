@@ -1,25 +1,9 @@
 #import <Foundation/Foundation.h>
 
 @class SPTDataLoaderRequest;
-@class SPTDataLoaderRequestOperation;
 
 @protocol SPTCancellationToken;
 @protocol SPTDataLoaderRequestResponseHandler;
-
-/**
- * The tasks the operation delegates to its creator
- */
-@protocol SPTDataLoaderRequestOperationDelegate <NSObject>
-
-/**
- * Called when the operation needs to know how much time is left before the execution of a URL can begin
- * @param requestOperation The operation making the request
- * @param URL The URL the operation is making a request on
- */
-- (NSTimeInterval)dataLoaderRequestOperation:(SPTDataLoaderRequestOperation *)requestOperation
-                timeLeftUntilExecutionForURL:(NSURL *)URL;
-
-@end
 
 /**
  * The operation for performing a URL session task
@@ -34,10 +18,6 @@
  * The task for performing the URL request on
  */
 @property (nonatomic, strong, readonly) NSURLSessionTask *task;
-/**
- * The object listening to a request operation
- */
-@property (nonatomic, weak) id<SPTDataLoaderRequestOperationDelegate> delegate;
 /**
  * The request response handler to callback to
  */
