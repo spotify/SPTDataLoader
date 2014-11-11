@@ -26,21 +26,17 @@
  * Delegate a successfully authorised request
  * @param requestResponseHandler The handler that successfully authorised the request
  * @param request The request that contains the authorisation headers
- * @param cancellationToken The token used to cancel the request
  */
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-             authorisedRequest:(SPTDataLoaderRequest *)request
-             cancellationToken:(id<SPTCancellationToken>)cancellationToken;
+             authorisedRequest:(SPTDataLoaderRequest *)request;
 /**
  * Delegate a failed authorisation attempt for a request
  * @param requestResponseHandler The handler that failed to authorise the request
  * @param request The request whose authorisation failed
- * @param cancellationToken The token used to cancel the request
  * @param error The object describing the failure in the authorisation request
  */
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
       failedToAuthoriseRequest:(SPTDataLoaderRequest *)request
-             cancellationToken:(id<SPTCancellationToken>)cancellationToken
                          error:(NSError *)error;
 
 @end
@@ -80,6 +76,6 @@
  * @param request The request to be authorise
  * @param cancellationToken The token used to cancel this request
  */
-- (void)authoriseRequest:(SPTDataLoaderRequest *)request cancellationToken:(id<SPTCancellationToken>)cancellationToken;
+- (void)authoriseRequest:(SPTDataLoaderRequest *)request;
 
 @end

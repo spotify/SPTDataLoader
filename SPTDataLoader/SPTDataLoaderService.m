@@ -72,14 +72,12 @@
 }
 
 - (void)performRequest:(SPTDataLoaderRequest *)request
-     cancellationToken:(id<SPTCancellationToken>)cancellationToken
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
     SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request
                                                                                                                task:task
-                                                                                                  cancellationToken:cancellationToken
                                                                                              requestResponseHandler:requestResponseHandler
                                                                                                         rateLimiter:self.rateLimiter];
     [self.sessionQueue addOperation:operation];
@@ -90,31 +88,29 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 - (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                     performRequest:(SPTDataLoaderRequest *)request
 {
-    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
+    request.cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
     
     if ([requestResponseHandler respondsToSelector:@selector(shouldAuthoriseRequest:)]) {
         if ([requestResponseHandler shouldAuthoriseRequest:request]) {
-            if ([requestResponseHandler respondsToSelector:@selector(authoriseRequest:cancellationToken:)]) {
-                [requestResponseHandler authoriseRequest:request cancellationToken:cancellationToken];
-                return cancellationToken;
+            if ([requestResponseHandler respondsToSelector:@selector(authoriseRequest:)]) {
+                [requestResponseHandler authoriseRequest:request];
+                return request.cancellationToken;
             }
         }
     }
     
-    [self performRequest:request cancellationToken:cancellationToken requestResponseHandler:requestResponseHandler];
-    return cancellationToken;
+    [self performRequest:request requestResponseHandler:requestResponseHandler];
+    return request.cancellationToken;
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
              authorisedRequest:(SPTDataLoaderRequest *)request
-             cancellationToken:(id<SPTCancellationToken>)cancellationToken
 {
-    [self performRequest:request cancellationToken:cancellationToken requestResponseHandler:requestResponseHandler];
+    [self performRequest:request requestResponseHandler:requestResponseHandler];
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
       failedToAuthoriseRequest:(SPTDataLoaderRequest *)request
-             cancellationToken:(id<SPTCancellationToken>)cancellationToken
                          error:(NSError *)error
 {
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
@@ -127,7 +123,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
     for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
-        if ([operation.cancellationToken isEqual:cancellationToken]) {
+        if ([operation.request.cancellationToken isEqual:cancellationToken]) {
             [operation cancel];
             break;
         }

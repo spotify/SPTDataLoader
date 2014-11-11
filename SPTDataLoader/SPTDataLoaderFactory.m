@@ -5,7 +5,7 @@
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderAuthoriser.h"
 
-@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate>
+@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 
 @property (nonatomic, copy) NSArray *authorisers;
 
@@ -31,9 +31,13 @@
     }
     
     _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
-    _authorisers = authorisers;
+    _authorisers = [authorisers copy];
     
     _requestToRequestResponseHandler = [NSMapTable weakToWeakObjectsMapTable];
+    
+    for (id<SPTDataLoaderAuthoriser> authoriser in _authorisers) {
+        authoriser.delegate = self;
+    }
     
     return self;
 }
@@ -68,20 +72,53 @@
     [requestResponseHandler cancelledRequest:request];
 }
 
+- (BOOL)shouldAuthoriseRequest:(SPTDataLoaderRequest *)request
+{
+    for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
+        if ([authoriser requestRequiresAuthorisation:request]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (void)authoriseRequest:(SPTDataLoaderRequest *)request
+{
+    for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
+        if ([authoriser requestRequiresAuthorisation:request]) {
+            [authoriser authoriseRequest:request];
+            return;
+        }
+    }
+}
+
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
 - (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                     performRequest:(SPTDataLoaderRequest *)request
 {
     [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
-    
-    for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
-        if ([authoriser requestRequiresAuthorisation:request]) {
-            [authoriser authoriseRequest:request];
-        }
-    }
-    
     return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
+}
+
+#pragma mark SPTDataLoaderAuthoriserDelegate
+
+- (void)dataLoaderAuthoriser:(id<SPTDataLoaderAuthoriser>)dataLoaderAuthoriser
+           authorisedRequest:(SPTDataLoaderRequest *)request
+{
+    if ([self.requestResponseHandlerDelegate respondsToSelector:@selector(requestResponseHandler:authorisedRequest:)]) {
+        [self.requestResponseHandlerDelegate requestResponseHandler:self authorisedRequest:request];
+    }
+}
+
+- (void)dataLoaderAuthoriser:(id<SPTDataLoaderAuthoriser>)dataLoaderAuthoriser
+   didFailToAuthoriseRequest:(SPTDataLoaderRequest *)request
+                   withError:(NSError *)error
+{
+    if ([self.requestResponseHandlerDelegate respondsToSelector:@selector(requestResponseHandler:failedToAuthoriseRequest:error:)]) {
+        [self.requestResponseHandlerDelegate requestResponseHandler:self failedToAuthoriseRequest:request error:error];
+    }
 }
 
 @end

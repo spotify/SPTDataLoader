@@ -12,10 +12,6 @@
 @interface SPTDataLoaderRequestOperation : NSOperation
 
 /**
- * The token for cancelling the operation
- */
-@property (nonatomic, strong, readonly) id<SPTCancellationToken> cancellationToken;
-/**
  * The task for performing the URL request on
  */
 @property (nonatomic, strong, readonly) NSURLSessionTask *task;
@@ -32,13 +28,11 @@
  * Class constructor
  * @param request The request object to perform lookup with
  * @param task The task to perform
- * @param cancellationToken The token to use to cancel the request with
  * @param requestResponseHandler The object tie to this operation for potential callbacks
  * @param rateLimiter The object controlling the rate limits on a per service basis
  */
 + (instancetype)dataLoaderRequestOperationWithRequest:(SPTDataLoaderRequest *)request
                                                  task:(NSURLSessionTask *)task
-                                    cancellationToken:(id<SPTCancellationToken>)cancellationToken
                                requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                           rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter;
 

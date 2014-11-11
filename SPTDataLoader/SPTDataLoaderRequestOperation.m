@@ -1,6 +1,5 @@
 #import "SPTDataLoaderRequestOperation.h"
 
-#import "SPTCancellationToken.h"
 #import "SPTDataLoaderRequest.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
@@ -27,20 +26,17 @@
 
 + (instancetype)dataLoaderRequestOperationWithRequest:(SPTDataLoaderRequest *)request
                                                  task:(NSURLSessionTask *)task
-                                    cancellationToken:(id<SPTCancellationToken>)cancellationToken
                                requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                           rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
     return [[self alloc] initWithRequest:request
                                     task:task
-                       cancellationToken:cancellationToken
                   requestResponseHandler:requestResponseHandler
                              rateLimiter:rateLimiter];
 }
 
 - (instancetype)initWithRequest:(SPTDataLoaderRequest *)request
                            task:(NSURLSessionTask *)task
-              cancellationToken:(id<SPTCancellationToken>)cancellationToken
          requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                     rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
@@ -50,7 +46,6 @@
     
     _request = request;
     _task = task;
-    _cancellationToken = cancellationToken;
     _requestResponseHandler = requestResponseHandler;
     _rateLimiter = rateLimiter;
     
