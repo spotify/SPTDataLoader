@@ -2,8 +2,12 @@
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
+#import "SPTDataLoaderResponse.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate>
+
+@property (nonatomic, strong) NSMapTable *requestToRequestResponseHandler;
+
 @end
 
 @implementation SPTDataLoaderFactory
@@ -23,6 +27,8 @@
     
     _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
     
+    _requestToRequestResponseHandler = [NSMapTable weakToWeakObjectsMapTable];
+    
     return self;
 }
 
@@ -39,17 +45,21 @@
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+    [requestResponseHandler successfulResponse:response];
     
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
-    
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+    [requestResponseHandler failedResponse:response];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
-    
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+    [requestResponseHandler cancelledRequest:request];
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
@@ -57,6 +67,7 @@
 - (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                     performRequest:(SPTDataLoaderRequest *)request
 {
+    [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
     return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
 

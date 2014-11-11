@@ -68,6 +68,10 @@
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
 {
+    if (self.isCancelled) {
+        return NSURLSessionResponseCancel;
+    }
+    
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     
     if (httpResponse.expectedContentLength) {
@@ -76,7 +80,7 @@
         self.receivedData = [NSMutableData data];
     }
     
-    return self.isCancelled ? NSURLSessionResponseCancel : NSURLSessionResponseAllow;
+    return NSURLSessionResponseAllow;
 }
 
 #pragma mark NSOperationQueue
