@@ -9,5 +9,9 @@
  * The URL to request
  */
 @property (nonatomic, strong) NSURL *URL;
+/**
+ * The number of times to retry this request
+ */
+@property (nonatomic, assign) NSUInteger retryCount;
 
 @end

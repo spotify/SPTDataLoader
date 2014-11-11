@@ -8,7 +8,7 @@
 
 - (NSURLRequest *)urlRequest
 {
-    return nil;
+    return [NSURLRequest requestWithURL:self.URL];
 }
 
 @end

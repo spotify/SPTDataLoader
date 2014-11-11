@@ -1,6 +1,7 @@
 #import "SPTDataLoader.h"
 
 #import "SPTDataLoader+Private.h"
+#import "SPTDataLoaderRequest.h"
 
 @interface SPTDataLoader ()
 
@@ -35,7 +36,7 @@
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
     id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
-                                                                                              performRequest:request];
+                                                                                              performRequest:[request copy]];
     [self.cancellationTokens addObject:cancellationToken];
     return cancellationToken;
 }

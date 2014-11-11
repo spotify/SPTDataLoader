@@ -10,6 +10,7 @@
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
 
 @property (nonatomic, strong) NSMutableData *receivedData;
+@property (nonatomic, assign) NSUInteger retryCount;
 
 @property (atomic, assign) BOOL isFinished;
 @property (atomic, assign) BOOL isExecuting;
@@ -60,7 +61,11 @@
     
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request];
     if (error) {
-        [self.requestResponseHandler failedResponse:response];
+        if (self.retryCount++ != self.request.retryCount) {
+            [self start];
+        } else {
+            [self.requestResponseHandler failedResponse:response];
+        }
     } else {
         [self.requestResponseHandler successfulResponse:response];
     }
