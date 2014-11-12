@@ -1,4 +1,4 @@
-#import "SPTDataLoader.h"
+#import <SPTDataLoader/SPTDataLoader.h>
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 

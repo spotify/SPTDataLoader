@@ -1,4 +1,4 @@
-#import "SPTDataLoaderResponse.h"
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
 
 #import "SPTDataLoaderResponse+Private.h"
 

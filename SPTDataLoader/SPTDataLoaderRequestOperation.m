@@ -1,9 +1,10 @@
 #import "SPTDataLoaderRequestOperation.h"
 
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTExpTime.h>
+
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTExpTime.h"
 #import "SPTDataLoaderRateLimiter.h"
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>

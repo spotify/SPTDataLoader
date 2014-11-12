@@ -1,4 +1,4 @@
-#import "SPTDataLoaderFactory.h"
+#import <SPTDataLoader/SPTDataLoaderFactory.h>
 
 @protocol SPTDataLoaderRequestResponseHandlerDelegate;
 @protocol SPTDataLoaderAuthoriser;

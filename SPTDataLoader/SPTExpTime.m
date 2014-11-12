@@ -1,5 +1,5 @@
+#import <SPTDataLoader/SPTExpTime.h>
 
-#import "SPTExpTime.h"
 #include <math.h>
 #include <stdlib.h>
 

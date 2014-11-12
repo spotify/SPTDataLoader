@@ -1,6 +1,6 @@
-#import "SPTCancellationTokenFactoryImplementation.h"
+#import <SPTDataLoader/SPTCancellationTokenFactoryImplementation.h>
 
-#import "SPTCancellationTokenImplementation.h"
+#import <SPTDataLoader/SPTCancellationTokenImplementation.h>
 
 @implementation SPTCancellationTokenFactoryImplementation
 

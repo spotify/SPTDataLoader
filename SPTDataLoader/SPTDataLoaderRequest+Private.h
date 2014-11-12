@@ -1,4 +1,4 @@
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 @protocol SPTCancellationToken;
 

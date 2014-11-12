@@ -1,4 +1,4 @@
-#import "SPTDataLoaderResponse.h"
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
 
 @class SPTDataLoaderRequest;
 

@@ -1,9 +1,10 @@
-#import "SPTDataLoaderFactory.h"
+#import <SPTDataLoader/SPTDataLoaderFactory.h>
+
+#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTDataLoaderAuthoriser.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 

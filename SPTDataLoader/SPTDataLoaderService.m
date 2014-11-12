@@ -1,8 +1,9 @@
-#import "SPTDataLoaderService.h"
+#import <SPTDataLoader/SPTDataLoaderService.h>
+
+#import <SPTDataLoader/SPTCancellationTokenFactoryImplementation.h>
+#import <SPTDataLoader/SPTCancellationToken.h>
 
 #import "SPTDataLoaderFactory+Private.h"
-#import "SPTCancellationTokenFactoryImplementation.h"
-#import "SPTCancellationToken.h"
 #import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "SPTDataLoaderRequestResponseHandler.h"

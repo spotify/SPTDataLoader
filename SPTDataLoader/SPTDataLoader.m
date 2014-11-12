@@ -1,7 +1,8 @@
-#import "SPTDataLoader.h"
+#import <SPTDataLoader/SPTDataLoader.h>
+
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 #import "SPTDataLoader+Private.h"
-#import "SPTDataLoaderRequest.h"
 
 @interface SPTDataLoader ()
 
