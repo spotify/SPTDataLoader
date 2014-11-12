@@ -2,6 +2,12 @@
 
 #import <SPTDataLoader/SPTDataLoaderService.h>
 
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate>
+
+@property (nonatomic, strong) NSURLSession *session;
+
+@end
+
 @interface SPTDataLoaderServiceTest : XCTestCase
 
 @property (nonatomic ,strong) SPTDataLoaderService *service;
@@ -17,6 +23,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"];
+    self.service.session = nil;
 }
 
 - (void)tearDown
@@ -36,6 +43,11 @@
 {
     SPTDataLoaderFactory *factory = [self.service createDataLoaderFactoryWithAuthorisers:nil];
     XCTAssertNotNil(factory, @"The factory should not be nil after creation from the service");
+}
+
+- (void)testNoOperationForTask
+{
+    [self.service URLSession:self.service.session dataTask:nil didReceiveResponse:nil completionHandler:nil];
 }
 
 @end

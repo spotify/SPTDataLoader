@@ -150,7 +150,9 @@ didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
 {
     SPTDataLoaderRequestOperation *operation = [self operationForTask:dataTask];
-    completionHandler([operation receiveResponse:response]);
+    if (completionHandler) {
+        completionHandler([operation receiveResponse:response]);
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session
