@@ -8,6 +8,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *serviceEndpointRequestsPerSecond;
 @property (nonatomic, strong) NSMutableDictionary *serviceEndpointLastExecution;
+@property (nonatomic, strong) NSMutableDictionary *serviceEndpointRetryAt;
 
 @end
 
@@ -29,6 +30,7 @@
     _requestsPerSecond = requestsPerSecond;
     _serviceEndpointRequestsPerSecond = [NSMutableDictionary new];
     _serviceEndpointLastExecution = [NSMutableDictionary new];
+    _serviceEndpointRetryAt = [NSMutableDictionary new];
     
     return self;
 }
@@ -37,6 +39,14 @@
 {
     NSString *serviceKey = [self serviceKeyFromURL:request.URL];
     
+    // First check if we are not accepting requests until a certain time (i.e. Retry-after header)
+    CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
+    CFAbsoluteTime retryAtTime = [self.serviceEndpointRetryAt[serviceKey] doubleValue];
+    if (currentTime < retryAtTime) {
+        return retryAtTime - currentTime;
+    }
+    
+    // Next check that our rate limit is being respected
     double requestsPerSecond = [self requestsPerSecondForServiceKey:serviceKey];
     CFAbsoluteTime lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
     CFAbsoluteTime deltaTime = CFAbsoluteTimeGetCurrent() - lastExecution;
@@ -63,6 +73,11 @@
 - (void)setRequestsPerSecond:(double)requestsPerSecond forURL:(NSURL *)URL
 {
     self.serviceEndpointRequestsPerSecond[[self serviceKeyFromURL:URL]] = @(requestsPerSecond);
+}
+
+- (void)setRetryAfter:(NSTimeInterval)retryAfterSeconds forURL:(NSURL *)URL
+{
+    self.serviceEndpointRetryAt[[self serviceKeyFromURL:URL]] = @(CFAbsoluteTimeGetCurrent() + retryAfterSeconds);
 }
 
 - (double)requestsPerSecondForServiceKey:(NSString *)serviceKey

@@ -4,9 +4,12 @@
 
 NSString * const SPTDataLoaderResponseErrorDomain = @"com.sptdataloaderresponse.error";
 
+static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
+
 @interface SPTDataLoaderResponse ()
 
 @property (nonatomic, strong, readonly) NSURLResponse *response;
+@property (nonatomic, strong, readwrite) NSDictionary *headers;
 
 @end
 
@@ -29,6 +32,8 @@ NSString * const SPTDataLoaderResponseErrorDomain = @"com.sptdataloaderresponse.
     _response = response;
     
     _error = [self errorForResponse:response];
+    _headers = [self headersForResponse:response];
+    _retryAfter = [self retryAfterForHeaders:_headers];
     
     return self;
 }
@@ -124,8 +129,6 @@ NSString * const SPTDataLoaderResponseErrorDomain = @"com.sptdataloaderresponse.
     return NO;
 }
 
-#pragma mark SPTDataLoaderResponse
-
 - (NSError *)errorForResponse:(NSURLResponse *)response
 {
     if (![self.response isKindOfClass:[NSHTTPURLResponse class]]) {
@@ -138,6 +141,33 @@ NSString * const SPTDataLoaderResponseErrorDomain = @"com.sptdataloaderresponse.
     }
     
     return [NSError errorWithDomain:SPTDataLoaderResponseErrorDomain code:httpResponse.statusCode userInfo:nil];
+}
+
+- (NSDictionary *)headersForResponse:(NSURLResponse *)response
+{
+    if (![self.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        return nil;
+    }
+    
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    return httpResponse.allHeaderFields;
+}
+
+- (NSDate *)retryAfterForHeaders:(NSDictionary *)headers
+{
+    static NSDateFormatter *httpDateFormatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        httpDateFormatter = [NSDateFormatter new];
+        [httpDateFormatter setDateFormat:@"EEE',' dd' 'MMM' 'yyyy' HH':'mm':'ss zzz"];
+    });
+    
+    NSTimeInterval retryAfterSeconds = [headers[SPTDataLoaderResponseHeaderRetryAfter] doubleValue];
+    if (retryAfterSeconds) {
+        return [NSDate dateWithTimeIntervalSinceNow:retryAfterSeconds];
+    }
+    
+    return [httpDateFormatter dateFromString:headers[SPTDataLoaderResponseHeaderRetryAfter]];
 }
 
 @end

@@ -72,6 +72,11 @@
     }
     
     if (self.response.error) {
+        if (self.response.retryAfter) {
+            [self.rateLimiter setRetryAfter:self.response.retryAfter.timeIntervalSince1970
+                                     forURL:self.response.request.URL];
+        }
+        
         if ([self.response shouldRetry]) {
             if (self.retryCount++ != self.request.retryCount) {
                 [self start];

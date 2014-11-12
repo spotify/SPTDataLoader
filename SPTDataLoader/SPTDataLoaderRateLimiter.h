@@ -35,5 +35,11 @@
  * @param URL The URL to check the requests per second for
  */
 - (void)setRequestsPerSecond:(double)requestsPerSecond forURL:(NSURL *)URL;
+/**
+ * Set the amount of time to wait until retrying for a given URL
+ * @param retryAfterSeconds The number of seconds to wait until a request can be realised
+ * @param URL The URL to set the retry after
+ */
+- (void)setRetryAfter:(NSTimeInterval)retryAfterSeconds forURL:(NSURL *)URL;
 
 @end
