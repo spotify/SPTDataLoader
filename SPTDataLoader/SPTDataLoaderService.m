@@ -8,6 +8,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderRateLimiter.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderResolver.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
@@ -15,6 +16,7 @@
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, strong) SPTDataLoaderResolver *resolver;
 
 @end
 
@@ -51,6 +53,7 @@
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
     _rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
+    _resolver = [SPTDataLoaderResolver new];
     
     return self;
 }
@@ -74,6 +77,13 @@
 - (void)performRequest:(SPTDataLoaderRequest *)request
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
+    NSString *host = [self.resolver addressForHost:request.URL.host];
+    if (![host isEqualToString:request.URL.host]) {
+        NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:nil];
+        requestComponents.host = host;
+        request.URL = requestComponents.URL;
+    }
+    
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
     SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request

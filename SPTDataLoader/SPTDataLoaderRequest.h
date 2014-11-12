@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+extern NSString * const SPTDataLoaderRequestHostHeader;
+
 /**
  * A representing of the request to make to the backend
  */
@@ -17,5 +19,21 @@
  * The body of the request
  */
 @property (nonatomic, strong) NSData *body;
+/**
+ * The headers represented by a dictionary
+ */
+@property (nonatomic, strong, readonly) NSDictionary *headers;
+
+/**
+ * Adds a header value
+ * @param value The value of the header field
+ * @param header The header field to add the value to
+ */
+- (void)addValue:(NSString *)value forHeader:(NSString *)header;
+/**
+ * Removes a header value
+ * @param header The header field to remove
+ */
+- (void)removeHeader:(NSString *)header;
 
 @end
