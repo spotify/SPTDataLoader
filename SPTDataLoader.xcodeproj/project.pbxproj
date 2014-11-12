@@ -17,6 +17,8 @@
 		050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
 		052FB1621A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */; };
+		052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */; };
+		052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
 		056E51E61A111E7E00E8716C /* SPTDataLoaderRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */; };
 		056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
 /* End PBXBuildFile section */
@@ -70,6 +72,10 @@
 		052FB10E1A121A6100AFE80E /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
 		052FB1601A125E4D00AFE80E /* SPTDataLoaderRateLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRateLimiter.h; sourceTree = "<group>"; };
 		052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRateLimiter.m; sourceTree = "<group>"; };
+		052FB1631A12793F00AFE80E /* SPTDataLoaderResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderResolver.h; sourceTree = "<group>"; };
+		052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolver.m; sourceTree = "<group>"; };
+		052FB1661A127BF900AFE80E /* SPTDataLoaderResolverAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderResolverAddress.h; sourceTree = "<group>"; };
+		052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolverAddress.m; sourceTree = "<group>"; };
 		056E51E41A111E7E00E8716C /* SPTDataLoaderRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestOperation.h; sourceTree = "<group>"; };
 		056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestOperation.m; sourceTree = "<group>"; };
 		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
@@ -146,6 +152,10 @@
 				052FB10E1A121A6100AFE80E /* SPTDataLoaderAuthoriser.h */,
 				052FB1601A125E4D00AFE80E /* SPTDataLoaderRateLimiter.h */,
 				052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */,
+				052FB1631A12793F00AFE80E /* SPTDataLoaderResolver.h */,
+				052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */,
+				052FB1661A127BF900AFE80E /* SPTDataLoaderResolverAddress.h */,
+				052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -263,6 +273,8 @@
 				056E51E61A111E7E00E8716C /* SPTDataLoaderRequestOperation.m in Sources */,
 				050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */,
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
+				052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */,
+				052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */,
 				050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
