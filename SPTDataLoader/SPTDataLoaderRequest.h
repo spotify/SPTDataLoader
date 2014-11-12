@@ -23,6 +23,10 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  * The headers represented by a dictionary
  */
 @property (nonatomic, strong, readonly) NSDictionary *headers;
+/**
+ * Whether the result of the request should be delivered in chunks
+ */
+@property (nonatomic, assign) BOOL chunks;
 
 /**
  * Adds a header value

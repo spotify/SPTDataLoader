@@ -34,6 +34,23 @@
  */
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request;
 
+@optional
+
+/**
+ * Whether the data loader delegate will support chunks being called back
+ * @param dataLoader The data loader asking the delegate for its support
+ */
+- (BOOL)dataLoaderShouldSupportChunks:(SPTDataLoader *)dataLoader;
+/**
+ * Called when the data loader receives a chunk of data for a request
+ * @param dataLoader The data loader that receives the chunk
+ * @param data The data that the data loader received
+ * @param request The request that generated the data
+ */
+- (void)dataLoader:(SPTDataLoader *)dataLoader
+didReceiveDataChunk:(NSData *)data
+        forRequest:(SPTDataLoaderRequest *)request;
+
 @end
 
 /**

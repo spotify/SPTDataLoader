@@ -56,6 +56,7 @@
 
 - (void)receiveData:(NSData *)data
 {
+    [self.requestResponseHandler receivedDataChunk:data forRequest:self.request];
     [self.receivedData appendData:data];
 }
 

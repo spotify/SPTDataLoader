@@ -63,6 +63,12 @@
  * @param request The request that was cancelled
  */
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request;
+/**
+ * Called when a chunk is received
+ * @param data The data received by the request
+ * @param request The request the chunk is received for
+ */
+- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request;
 
 @optional
 

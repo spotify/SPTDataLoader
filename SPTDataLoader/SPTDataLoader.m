@@ -35,8 +35,17 @@
 
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
+    SPTDataLoaderRequest *copiedRequest = [request copy];
+    
+    if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)]) {
+        BOOL chunkSupport = [self.delegate dataLoaderShouldSupportChunks:self];
+        if (!chunkSupport) {
+            copiedRequest.chunks = NO;
+        }
+    }
+    
     id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
-                                                                                              performRequest:[request copy]];
+                                                                                              performRequest:copiedRequest];
     [self.cancellationTokens addObject:cancellationToken];
     return cancellationToken;
 }
@@ -71,6 +80,13 @@
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
     [self.delegate dataLoader:self didCancelRequest:request];
+}
+
+- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request
+{
+    if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forRequest:)]) {
+        [self.delegate dataLoader:self didReceiveDataChunk:data forRequest:request];
+    }
 }
 
 @end

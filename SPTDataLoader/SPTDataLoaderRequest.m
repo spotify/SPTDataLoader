@@ -46,6 +46,7 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
     copy.retryCount = self.retryCount;
     copy.body = [self.body copy];
     copy.mutableHeaders = [self.mutableHeaders mutableCopy];
+    copy.chunks = self.chunks;
     return copy;
 }
 

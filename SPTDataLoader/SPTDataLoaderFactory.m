@@ -72,6 +72,12 @@
     [requestResponseHandler cancelledRequest:request];
 }
 
+- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request
+{
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+    [requestResponseHandler receivedDataChunk:data forRequest:request];
+}
+
 - (BOOL)shouldAuthoriseRequest:(SPTDataLoaderRequest *)request
 {
     for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
