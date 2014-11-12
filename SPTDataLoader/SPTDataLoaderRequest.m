@@ -19,7 +19,10 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
     NSString * const SPTDataLoaderRequestContentLengthHeader = @"Content-Length";
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.URL];
-    [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
+    
+    if (!self.headers[SPTDataLoaderRequestHostHeader]) {
+        [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
+    }
     
     if (self.body) {
         [urlRequest addValue:@(self.body.length).stringValue forHTTPHeaderField:SPTDataLoaderRequestContentLengthHeader];
