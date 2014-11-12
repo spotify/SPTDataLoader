@@ -7,6 +7,7 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 @interface SPTDataLoaderRequest ()
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
+@property (nonatomic, strong) id<SPTCancellationToken> cancellationToken;
 
 @end
 
@@ -59,6 +60,15 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 
 - (void)addValue:(NSString *)value forHeader:(NSString *)header
 {
+    if (!header) {
+        return;
+    }
+    
+    if (!value && header) {
+        [self.mutableHeaders removeObjectForKey:header];
+        return;
+    }
+    
     self.mutableHeaders[header] = value;
 }
 

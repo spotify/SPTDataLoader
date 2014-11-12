@@ -79,7 +79,7 @@
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
     NSString *host = [self.resolver addressForHost:request.URL.host];
-    if (![host isEqualToString:request.URL.host]) {
+    if (![host isEqualToString:request.URL.host] && host) {
         [request addValue:request.URL.host forHeader:SPTDataLoaderRequestHostHeader];
         NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:nil];
         requestComponents.host = host;

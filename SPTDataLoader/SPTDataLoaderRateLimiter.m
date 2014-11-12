@@ -87,6 +87,10 @@
 
 - (NSString *)serviceKeyFromURL:(NSURL *)URL
 {
+    if (!URL) {
+        return nil;
+    }
+    
     NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     NSURLComponents *serviceComponents = [NSURLComponents new];
     serviceComponents.scheme = requestComponents.scheme;

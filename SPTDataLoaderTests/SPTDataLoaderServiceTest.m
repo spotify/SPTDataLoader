@@ -1,8 +1,12 @@
 #import <XCTest/XCTest.h>
 
 #import <SPTDataLoader/SPTDataLoaderService.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
-@interface SPTDataLoaderService () <NSURLSessionDataDelegate>
+#import "SPTDataLoaderRequestResponseHandler.h"
+#import "NSURLSessionMock.h"
+
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 
@@ -11,6 +15,7 @@
 @interface SPTDataLoaderServiceTest : XCTestCase
 
 @property (nonatomic ,strong) SPTDataLoaderService *service;
+@property (nonatomic, strong) NSURLSessionMock *session;
 
 @end
 
@@ -23,7 +28,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"];
-    self.service.session = nil;
+    self.service.session = [NSURLSessionMock new];
 }
 
 - (void)tearDown
@@ -47,7 +52,18 @@
 
 - (void)testNoOperationForTask
 {
-    [self.service URLSession:self.service.session dataTask:nil didReceiveResponse:nil completionHandler:nil];
+    // Test no crash occurs
+    [self.service URLSession:self.session dataTask:nil didReceiveResponse:nil completionHandler:nil];
+}
+
+- (void)testOperationForTaskWithValidTask
+{
+    // Test no crash occurs
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:nil performRequest:request];
+    
+    NSURLSessionDataTask *dataTask = self.session.lastDataTask;
+    [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:nil completionHandler:nil];
 }
 
 @end
