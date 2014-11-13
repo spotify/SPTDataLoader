@@ -1,6 +1,15 @@
 #import <XCTest/XCTest.h>
 
+#import <SPTDataLoader/SPTDataLoaderFactory.h>
+
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
+
 #import "SPTDataLoaderFactory+Private.h"
+#import "SPTDataLoaderRequestResponseHandlerMock.h"
+#import "SPTDataLoaderResponse+Private.h"
+
+@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate>
+@end
 
 @interface SPTDataLoaderFactoryTest : XCTestCase
 
@@ -36,6 +45,16 @@
 {
     SPTDataLoader *dataLoader = [self.factory createDataLoader];
     XCTAssertNotNil(dataLoader, @"The data loader created by the factory is nil");
+}
+
+- (void)testSuccessfulResponse
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.factory successfulResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1, @"The factory did not relay a successful response to the correct handler");
 }
 
 @end

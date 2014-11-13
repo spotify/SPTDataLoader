@@ -59,7 +59,6 @@
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     [requestResponseHandler successfulResponse:response];
-    
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
