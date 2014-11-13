@@ -40,7 +40,8 @@
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                             rateLimiter:self.rateLimiter
                                                                resolver:self.resolver];
-    self.service.session = [NSURLSessionMock new];
+    self.session = [NSURLSessionMock new];
+    self.service.session = self.session;
 }
 
 - (void)tearDown
@@ -141,6 +142,15 @@
 {
     // Test no crash
     [self.service URLSession:self.service.session dataTask:nil didBecomeDownloadTask:nil];
+}
+
+- (void)testSessionDidReceiveData
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    [self.service URLSession:self.service.session dataTask:self.session.lastDataTask didReceiveData:nil];
+    XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1, @"The service did not call received data on the request response handler");
 }
 
 @end

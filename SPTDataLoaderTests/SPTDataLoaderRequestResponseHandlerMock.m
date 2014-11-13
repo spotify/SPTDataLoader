@@ -4,6 +4,7 @@
 
 @property (nonatomic, assign, readwrite) NSUInteger numberOfFailedResponseCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfCancelledRequestCalls;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedDataRequestCalls;
 
 @end
 
@@ -28,7 +29,7 @@
 
 - (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request
 {
-    
+    self.numberOfReceivedDataRequestCalls++;
 }
 
 @end

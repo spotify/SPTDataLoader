@@ -6,5 +6,6 @@
 
 @property (nonatomic, assign, readonly) NSUInteger numberOfFailedResponseCalls;
 @property (nonatomic, assign, readonly) NSUInteger numberOfCancelledRequestCalls;
+@property (nonatomic, assign, readonly) NSUInteger numberOfReceivedDataRequestCalls;
 
 @end
