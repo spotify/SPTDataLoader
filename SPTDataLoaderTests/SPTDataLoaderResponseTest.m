@@ -26,7 +26,7 @@
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeOK
                                                   HTTPVersion:@"1.1"
-                                                 headerFields:nil];
+                                                 headerFields:@{ @"Header" : @"Value" }];
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
 }
 
@@ -105,6 +105,11 @@
     XCTAssertNotNil(self.response.error, @"An implicit error should have been generated due to the HTTP status code");
     XCTAssertEqualObjects(self.response.error.domain, SPTDataLoaderResponseErrorDomain, @"The implicit error should have the data loader response error domain");
     XCTAssertEqual(self.response.error.code, SPTDataLoaderResponseHTTPStatusCodeNotFound, @"The implicit error should have the same code as the HTTP status code");
+}
+
+- (void)testHeaders
+{
+    XCTAssertEqualObjects(self.response.headers, @{ @"Header" : @"Value" }, @"The headers were not copied from the response");
 }
 
 @end
