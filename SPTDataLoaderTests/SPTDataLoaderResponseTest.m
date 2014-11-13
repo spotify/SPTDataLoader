@@ -23,7 +23,10 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]];
-    self.urlResponse = [NSURLResponse new];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeOK
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:nil];
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
 }
 
@@ -38,6 +41,12 @@
 - (void)testNotNil
 {
     XCTAssertNotNil(self.response, @"The response should not be nil");
+}
+
+- (void)testShouldRetryWithOKHTTPStatusCode
+{
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertFalse(shouldRetry, @"The response should not retry when given the HTTP status code of OK");
 }
 
 @end
