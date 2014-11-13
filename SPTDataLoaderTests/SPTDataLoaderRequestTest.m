@@ -82,4 +82,20 @@
     XCTAssertEqual(@([request.allHTTPHeaderFields[@"Content-Length"] integerValue]).unsignedIntegerValue, data.length, @"The content-length header was reported incorrectly");
 }
 
+- (void)testURLRequestCopyingHeaders
+{
+    [self.request addValue:@"Value" forHeader:@"Header"];
+    NSURLRequest *request = self.request.urlRequest;
+    NSDictionary *expectedHeaders = @{ @"Header" : @"Value",
+                                       @"Host" : self.URL.host };
+    XCTAssertEqualObjects(request.allHTTPHeaderFields, expectedHeaders, @"The headers were not copied appropriately");
+}
+
+- (void)testURLRequestCachePolicy
+{
+    self.request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    NSURLRequest *request = self.request.urlRequest;
+    XCTAssertEqual(self.request.cachePolicy, request.cachePolicy, @"The URL request does not share the same cache policy as the request");
+}
+
 @end

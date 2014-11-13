@@ -31,6 +31,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     _URL = URL;
     
     _mutableHeaders = [NSMutableDictionary new];
+    _method = SPTDataLoaderRequestMethodGet;
     
     return self;
 }
