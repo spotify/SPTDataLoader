@@ -62,6 +62,10 @@
 - (void)executedRequest:(SPTDataLoaderRequest *)request
 {
     NSString *serviceKey = [self serviceKeyFromURL:request.URL];
+    if (!serviceKey) {
+        return;
+    }
+    
     self.serviceEndpointLastExecution[serviceKey] = @(CFAbsoluteTimeGetCurrent());
 }
 

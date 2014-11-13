@@ -153,4 +153,13 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1, @"The service did not call received data on the request response handler");
 }
 
+- (void)testSessionDidComplete
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    [self.service URLSession:self.session task:self.session.lastDataTask didCompleteWithError:nil];
+    XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1, @"The service did not call successfully received response on the request response handler");
+}
+
 @end

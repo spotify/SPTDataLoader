@@ -5,6 +5,7 @@
 @property (nonatomic, assign, readwrite) NSUInteger numberOfFailedResponseCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfCancelledRequestCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedDataRequestCalls;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfSuccessfulDataResponseCalls;
 
 @end
 
@@ -14,7 +15,7 @@
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
-    
+    self.numberOfSuccessfulDataResponseCalls++;
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
