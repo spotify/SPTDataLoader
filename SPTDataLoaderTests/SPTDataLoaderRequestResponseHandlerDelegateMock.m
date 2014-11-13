@@ -12,7 +12,7 @@
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
              authorisedRequest:(SPTDataLoaderRequest *)request
 {
-    
+    self.lastRequestAuthorised = request;
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler

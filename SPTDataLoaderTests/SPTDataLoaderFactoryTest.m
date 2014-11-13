@@ -10,7 +10,7 @@
 #import "SPTDataLoaderAuthoriserMock.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 
-@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate>
+@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 @end
 
 @interface SPTDataLoaderFactoryTest : XCTestCase
@@ -141,6 +141,13 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:nil performRequest:request];
     XCTAssertEqual(request, self.delegate.lastRequestPerformed, @"The factory did not relay the perform request to it's delegate");
+}
+
+- (void)testRelayAuthorisingSuccessToDelegate
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory dataLoaderAuthoriser:nil authorisedRequest:request];
+    XCTAssertEqual(request, self.delegate.lastRequestAuthorised, @"The factory did not relay the request authorisation success to it's delegate");
 }
 
 @end
