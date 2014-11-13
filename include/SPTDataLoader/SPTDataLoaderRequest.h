@@ -1,5 +1,12 @@
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, SPTDataLoaderRequestMethod) {
+    SPTDataLoaderRequestMethodGet,
+    SPTDataLoaderRequestMethodPost,
+    SPTDataLoaderRequestMethodPut,
+    SPTDataLoaderRequestMethodDelete
+};
+
 extern NSString * const SPTDataLoaderRequestHostHeader;
 
 /**
@@ -31,6 +38,10 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  * The cache policy to use for this request
  */
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
+/**
+ * The method used to send the request
+ */
+@property (nonatomic, assign) SPTDataLoaderRequestMethod method;
 
 /**
  * Class constructor

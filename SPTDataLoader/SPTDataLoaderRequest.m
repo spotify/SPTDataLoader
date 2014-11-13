@@ -4,6 +4,8 @@
 
 NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 
+static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
+
 @interface SPTDataLoaderRequest ()
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
@@ -80,6 +82,7 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
     }
     
     urlRequest.cachePolicy = self.cachePolicy;
+    urlRequest.HTTPMethod = NSStringFromSPTDataLoaderRequestMethod(self.method);
     
     return urlRequest;
 }
@@ -95,7 +98,23 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
     copy.mutableHeaders = [self.mutableHeaders mutableCopy];
     copy.chunks = self.chunks;
     copy.cachePolicy = self.cachePolicy;
+    copy.method = self.method;
     return copy;
 }
 
 @end
+
+static NSString * const SPTDataLoaderRequestDeleteMethodString = @"DELETE";
+static NSString * const SPTDataLoaderRequestGetMethodString = @"GET";
+static NSString * const SPTDataLoaderRequestPostMethodString = @"POST";
+static NSString * const SPTDataLoaderRequestPutMethodString = @"PUT";
+
+static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod)
+{
+    switch (requestMethod) {
+        case SPTDataLoaderRequestMethodDelete: return SPTDataLoaderRequestDeleteMethodString;
+        case SPTDataLoaderRequestMethodGet: return SPTDataLoaderRequestGetMethodString;
+        case SPTDataLoaderRequestMethodPost: return SPTDataLoaderRequestPostMethodString;
+        case SPTDataLoaderRequestMethodPut: return SPTDataLoaderRequestPutMethodString;
+    }
+}
