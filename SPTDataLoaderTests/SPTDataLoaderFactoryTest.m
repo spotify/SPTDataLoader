@@ -57,4 +57,14 @@
     XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1, @"The factory did not relay a successful response to the correct handler");
 }
 
+- (void)testFailedResponse
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.factory failedResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1, @"The factory did not relay a failed response to the correct handler");
+}
+
 @end
