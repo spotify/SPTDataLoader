@@ -58,7 +58,7 @@
 
 - (void)receiveData:(NSData *)data
 {
-    [self.requestResponseHandler receivedDataChunk:data forRequest:self.request];
+    [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
     [self.receivedData appendData:data];
 }
 
@@ -102,6 +102,7 @@
     }
     
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response];
+    [self.requestResponseHandler receivedInitialResponse:self.response];
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     

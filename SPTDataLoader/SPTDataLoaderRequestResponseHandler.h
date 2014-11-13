@@ -66,9 +66,14 @@
 /**
  * Called when a chunk is received
  * @param data The data received by the request
- * @param request The request the chunk is received for
+ * @param response The response the chunk is received for
  */
-- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request;
+- (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response;
+/**
+ * Called when the headers for a response are received
+ * @param response The response containing the initial information (such as headers)
+ */
+- (void)receivedInitialResponse:(SPTDataLoaderResponse *)response;
 
 @optional
 

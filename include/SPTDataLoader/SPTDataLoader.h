@@ -45,11 +45,17 @@
  * Called when the data loader receives a chunk of data for a request
  * @param dataLoader The data loader that receives the chunk
  * @param data The data that the data loader received
- * @param request The request that generated the data
+ * @param response The response that generated the data
  */
 - (void)dataLoader:(SPTDataLoader *)dataLoader
 didReceiveDataChunk:(NSData *)data
-        forRequest:(SPTDataLoaderRequest *)request;
+        forResponse:(SPTDataLoaderResponse *)response;
+/**
+ * Called when the data loader receives an initial response for a request
+ * @param dataLoader The data loader that received the initial response
+ * @param response The response with all values filled out other than its body
+ */
+- (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response;
 
 @end
 

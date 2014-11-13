@@ -87,12 +87,19 @@
     [self.delegate dataLoader:self didCancelRequest:request];
 }
 
-- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request
+- (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
-    BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forRequest:)];
+    BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     NSAssert(didReceiveDataChunkSelectorExists, @"The SPTDataLoaderDelegate does not implement didReceiveDataChunk yet received a data chunk back");
     if (didReceiveDataChunkSelectorExists) {
-        [self.delegate dataLoader:self didReceiveDataChunk:data forRequest:request];
+        [self.delegate dataLoader:self didReceiveDataChunk:data forResponse:response];
+    }
+}
+
+- (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
+{
+    if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveInitialResponse:)]) {
+        [self.delegate dataLoader:self didReceiveInitialResponse:response];
     }
 }
 

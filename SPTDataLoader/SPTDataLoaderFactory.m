@@ -73,10 +73,16 @@
     [requestResponseHandler cancelledRequest:request];
 }
 
-- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request
+- (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
-    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
-    [requestResponseHandler receivedDataChunk:data forRequest:request];
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+    [requestResponseHandler receivedDataChunk:data forResponse:response];
+}
+
+- (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
+{
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+    [requestResponseHandler receivedInitialResponse:response];
 }
 
 - (BOOL)shouldAuthoriseRequest:(SPTDataLoaderRequest *)request

@@ -28,9 +28,14 @@
     self.numberOfCancelledRequestCalls++;
 }
 
-- (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request
+- (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfReceivedDataRequestCalls++;
+}
+
+- (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
+{
+    
 }
 
 @end
