@@ -112,4 +112,16 @@
     XCTAssertEqualObjects(self.response.headers, @{ @"Header" : @"Value" }, @"The headers were not copied from the response");
 }
 
+- (void)testRelativeRetryAfter
+{
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:@{ @"Retry-After" : @"60" }];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
+    XCTAssertEqual(floor(testDate.timeIntervalSince1970), floor(self.response.retryAfter.timeIntervalSince1970), @"The relative retry-after was not as expected");
+}
+
 @end
