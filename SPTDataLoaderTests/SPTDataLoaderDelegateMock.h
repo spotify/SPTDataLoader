@@ -8,5 +8,6 @@
 @property (nonatomic, assign) NSUInteger numberOfCallsToSuccessfulResponse;
 @property (nonatomic, assign) NSUInteger numberOfCallsToErrorResponse;
 @property (nonatomic, assign) NSUInteger numberOfCallsToCancelledRequest;
+@property (nonatomic, assign) NSUInteger numberOfCallsToReceiveDataChunk;
 
 @end

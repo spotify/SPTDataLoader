@@ -109,4 +109,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 1, @"The data loader did not relay a cancelled request to the delegate");
 }
 
+- (void)testRelayReceivedDataChunkToDelegate
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader receivedDataChunk:nil forResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1, @"The data loader did not relay a received data chunk response to the delegate");
+}
+
 @end
