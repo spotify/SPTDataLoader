@@ -7,5 +7,6 @@
 @property (nonatomic, assign) BOOL supportChunks;
 @property (nonatomic, assign) NSUInteger numberOfCallsToSuccessfulResponse;
 @property (nonatomic, assign) NSUInteger numberOfCallsToErrorResponse;
+@property (nonatomic, assign) NSUInteger numberOfCallsToCancelledRequest;
 
 @end

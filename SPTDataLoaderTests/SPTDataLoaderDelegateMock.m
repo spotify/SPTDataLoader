@@ -14,7 +14,7 @@
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request
 {
-    
+    self.numberOfCallsToCancelledRequest++;
 }
 
 - (BOOL)dataLoaderShouldSupportChunks:(SPTDataLoader *)dataLoader
