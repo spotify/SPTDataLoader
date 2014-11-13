@@ -6,6 +6,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRateLimiter.h"
+#import "SPTDataLoaderResponse+Private.h"
 
 @interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
 
@@ -71,6 +72,8 @@
     if (error) {
         self.response.error = error;
     }
+    
+    self.response.body = self.receivedData;
     
     if (self.response.error) {
         if (self.response.retryAfter) {

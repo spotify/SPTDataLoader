@@ -11,6 +11,10 @@
  * The error that the request generated
  */
 @property (nonatomic, strong, readwrite) NSError *error;
+/**
+ * Allows private consumers to alter the data for the response
+ */
+@property (nonatomic, strong, readwrite) NSData *body;
 
 /**
  * Class constructor

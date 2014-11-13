@@ -75,5 +75,9 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
  * The date at which the request that generated the response can be retried
  */
 @property (nonatomic, strong, readonly) NSDate *retryAfter;
+/**
+ * The body of data contained in the response
+ */
+@property (nonatomic, strong, readonly) NSData *body;
 
 @end
