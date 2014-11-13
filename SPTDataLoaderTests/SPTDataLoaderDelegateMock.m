@@ -31,7 +31,7 @@ didReceiveDataChunk:(NSData *)data
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response
 {
-    
+    self.numberOfCallsToReceivedInitialResponse++;
 }
 
 @end

@@ -117,4 +117,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1, @"The data loader did not relay a received data chunk response to the delegate");
 }
 
+- (void)testRelayReceivedInitialResponseToDelegate
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader receivedInitialResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1, @"The data loader did not relay a received initial response to the delegate");
+}
+
 @end
