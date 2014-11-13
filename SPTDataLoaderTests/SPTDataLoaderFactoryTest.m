@@ -7,6 +7,7 @@
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderAuthoriserMock.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate>
 @end
@@ -94,6 +95,15 @@
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.factory receivedInitialResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfReceivedInitialResponseCalls, 1, @"The factory did not relay a received data chunk response to the correct handler");
+}
+
+- (void)testShouldAuthoriseRequest
+{
+    SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
+    SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ]];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    BOOL shouldAuthorise = [factory shouldAuthoriseRequest:request];
+    XCTAssertTrue(shouldAuthorise, @"The factory should mark the request as authorisable");
 }
 
 @end
