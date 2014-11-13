@@ -10,6 +10,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 @property (nonatomic, strong, readonly) NSURLResponse *response;
 @property (nonatomic, strong, readwrite) NSDictionary *headers;
+@property (nonatomic, strong, readwrite) NSError *error;
 
 @end
 

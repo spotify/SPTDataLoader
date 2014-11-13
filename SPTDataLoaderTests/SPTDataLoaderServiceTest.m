@@ -9,6 +9,7 @@
 #import "NSURLSessionMock.h"
 #import "SPTDataLoaderAuthoriserMock.h"
 #import "SPTDataLoaderFactory+Private.h"
+#import "SPTDataLoaderRequestResponseHandlerMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate>
 
@@ -98,6 +99,14 @@
 {
     // Test no crash occurs on optional delegate method
     [self.service requestResponseHandler:nil authorisedRequest:nil];
+}
+
+- (void)testRequestAuthorisationFailed
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:requestResponseHandlerMock failedToAuthoriseRequest:request error:nil];
+    XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1, @"The service did not call a failed response on a failed authorisation attempt");
 }
 
 @end
