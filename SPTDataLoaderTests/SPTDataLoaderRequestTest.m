@@ -74,4 +74,12 @@
     XCTAssertEqualObjects(request.allHTTPHeaderFields[@"Host"], self.URL.host, @"The URL request should add a host header field");
 }
 
+- (void)testURLRequestContentLengthHeader
+{
+    NSData *data = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
+    self.request.body = data;
+    NSURLRequest *request = self.request.urlRequest;
+    XCTAssertEqual(@([request.allHTTPHeaderFields[@"Content-Length"] integerValue]).unsignedIntegerValue, data.length, @"The content-length header was reported incorrectly");
+}
+
 @end
