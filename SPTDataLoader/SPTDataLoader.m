@@ -36,25 +36,29 @@
 
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
-    SPTDataLoaderRequest *copiedRequest = [request copy];
-    
-    if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)]) {
-        BOOL chunkSupport = [self.delegate dataLoaderShouldSupportChunks:self];
-        if (!chunkSupport) {
-            copiedRequest.chunks = NO;
+    @synchronized(self) {
+        SPTDataLoaderRequest *copiedRequest = [request copy];
+        
+        if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)]) {
+            BOOL chunkSupport = [self.delegate dataLoaderShouldSupportChunks:self];
+            if (!chunkSupport) {
+                copiedRequest.chunks = NO;
+            }
         }
+        
+        id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
+                                                                                                  performRequest:copiedRequest];
+        [self.cancellationTokens addObject:cancellationToken];
+        return cancellationToken;
     }
-    
-    id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
-                                                                                              performRequest:copiedRequest];
-    [self.cancellationTokens addObject:cancellationToken];
-    return cancellationToken;
 }
 
 - (void)cancelAllLoads
 {
-    NSArray *cancellationTokens = [self.cancellationTokens.allObjects copy];
-    [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
+    @synchronized(self) {
+        NSArray *cancellationTokens = [self.cancellationTokens.allObjects copy];
+        [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
+    }
 }
 
 #pragma mark NSObject
