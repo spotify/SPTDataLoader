@@ -76,12 +76,12 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
             case SPTDataLoaderResponseHTTPStatusCodeRequestRangeUnsatisifiable:
             case SPTDataLoaderResponseHTTPStatusCodeExpectationFail:
             case SPTDataLoaderResponseHTTPStatusCodeHTTPVersionNotSupported:
+            case SPTDataLoaderResponseHTTPStatusCodeNotImplemented:
                 return NO;
             case SPTDataLoaderResponseHTTPStatusCodeNotFound:
             case SPTDataLoaderResponseHTTPStatusCodeRequestTimeout:
             case SPTDataLoaderResponseHTTPStatusCodeUnsupportedMediaTypes:
             case SPTDataLoaderResponseHTTPStatusCodeInternalServerError:
-            case SPTDataLoaderResponseHTTPStatusCodeNotImplemented:
             case SPTDataLoaderResponseHTTPStatusCodeBadGateway:
             case SPTDataLoaderResponseHTTPStatusCodeServiceUnavailable:
             case SPTDataLoaderResponseHTTPStatusCodeGatewayTimeout:
