@@ -33,4 +33,9 @@
     XCTAssertNotNil(self.request, @"The request should not be nil after construction");
 }
 
+- (void)testHeadersEmptyInitially
+{
+    XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should be empty when initially setting up the request");
+}
+
 @end
