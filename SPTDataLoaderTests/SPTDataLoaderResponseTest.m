@@ -89,4 +89,9 @@
     XCTAssertFalse(shouldRetry, @"The response should not retry without having a reason to");
 }
 
+- (void)testErrorForHTTPStatusCode
+{
+    XCTAssertNil(self.response.error, @"The response should not have an implicit error with HTTP status code OK");
+}
+
 @end
