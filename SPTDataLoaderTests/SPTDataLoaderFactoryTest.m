@@ -106,4 +106,11 @@
     XCTAssertTrue(shouldAuthorise, @"The factory should mark the request as authorisable");
 }
 
+- (void)testShouldNotAuthoriseRequest
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    BOOL shouldAuthorise = [self.factory shouldAuthoriseRequest:request];
+    XCTAssertFalse(shouldAuthorise, @"The factory should not mark the request as authorisable");
+}
+
 @end
