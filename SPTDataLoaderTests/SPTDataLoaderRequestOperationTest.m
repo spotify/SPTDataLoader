@@ -46,4 +46,10 @@
     XCTAssertEqual(self.requestResponseHandler.numberOfReceivedDataRequestCalls, 1, @"The operation did not relay the received data onto its request response handler");
 }
 
+- (void)testRelaySuccessfulResponse
+{
+    [self.operation completeWithError:nil];
+    XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1, @"The operation did not relay the successful response onto its request response handler");
+}
+
 @end
