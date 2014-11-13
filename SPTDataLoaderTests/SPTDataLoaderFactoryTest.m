@@ -113,4 +113,13 @@
     XCTAssertFalse(shouldAuthorise, @"The factory should not mark the request as authorisable");
 }
 
+- (void)testAuthoriseRequest
+{
+    SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
+    SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ]];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [factory authoriseRequest:request];
+    XCTAssertEqual(authoriser.numberOfCallsToAuthoriseRequest, 1, @"The factory did not send an authorise request to the authoriser");
+}
+
 @end
