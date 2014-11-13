@@ -30,6 +30,7 @@
 		059940A21A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A11A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m */; };
 		059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */; };
 		059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */; };
+		059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		059940A31A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenDelegateMock.h; sourceTree = "<group>"; };
 		059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenDelegateMock.m; sourceTree = "<group>"; };
 		059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTest.m; sourceTree = "<group>"; };
+		059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponseTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */,
 				0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */,
 				059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */,
+				059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
 			path = SPTDataLoaderTests;
@@ -355,6 +358,7 @@
 				059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */,
 				059940A21A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
+				059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */,
 				059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */,
 				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,
 				059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */,
