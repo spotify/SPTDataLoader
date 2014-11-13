@@ -2,9 +2,13 @@
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 
+#import "SPTDataLoaderRequest+Private.h"
+
 @interface SPTDataLoaderRequestTest : XCTestCase
 
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
+
+@property (nonatomic, strong) NSURL *URL;
 
 @end
 
@@ -16,8 +20,8 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    self.request = [SPTDataLoaderRequest requestWithURL:URL];
+    self.URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    self.request = [SPTDataLoaderRequest requestWithURL:self.URL];
 }
 
 - (void)tearDown
@@ -62,6 +66,12 @@
     [self.request addValue:@"Value" forHeader:@"Header"];
     [self.request removeHeader:@"Header"];
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should not contain anything after removal");
+}
+
+- (void)testURLRequestAddsHostHeader
+{
+    NSURLRequest *request = self.request.urlRequest;
+    XCTAssertEqualObjects(request.allHTTPHeaderFields[@"Host"], self.URL.host, @"The URL request should add a host header field");
 }
 
 @end
