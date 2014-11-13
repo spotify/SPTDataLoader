@@ -8,6 +8,7 @@
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderAuthoriserMock.h"
+#import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate>
 @end
@@ -15,6 +16,8 @@
 @interface SPTDataLoaderFactoryTest : XCTestCase
 
 @property (nonatomic, strong) SPTDataLoaderFactory *factory;
+
+@property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *delegate;
 
 @end
 
@@ -26,7 +29,9 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:nil];
+    self.delegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
+    self.factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self.delegate
+                                                                                 authorisers:nil];
 }
 
 - (void)tearDown
@@ -129,6 +134,13 @@
     self.factory.offline = YES;
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     XCTAssertEqual(request.cachePolicy, NSURLRequestReturnCacheDataDontLoad, @"The factory did not change the request cache policy to no load when being set to offline");
+}
+
+- (void)testRelayToDelegateWhenPerformingRequest
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:nil performRequest:request];
+    XCTAssertEqual(request, self.delegate.lastRequestPerformed, @"The factory did not relay the perform request to it's delegate");
 }
 
 @end

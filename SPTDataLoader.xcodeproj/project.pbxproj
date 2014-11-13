@@ -25,6 +25,7 @@
 		056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
 		059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */; };
 		059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */; };
+		0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,8 @@
 		059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerMock.h; sourceTree = "<group>"; };
 		059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerMock.m; sourceTree = "<group>"; };
 		059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactoryTest.m; sourceTree = "<group>"; };
+		0599409B1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerDelegateMock.h; sourceTree = "<group>"; };
+		0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerDelegateMock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +220,8 @@
 				0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */,
 				059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */,
 				059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */,
+				0599409B1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.h */,
+				0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */,
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
+				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,
 				059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */,
 				056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */,
 			);
