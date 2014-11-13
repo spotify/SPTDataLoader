@@ -137,4 +137,10 @@
     XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler");
 }
 
+- (void)testSwitchingToDownloadTask
+{
+    // Test no crash
+    [self.service URLSession:self.service.session dataTask:nil didBecomeDownloadTask:nil];
+}
+
 @end
