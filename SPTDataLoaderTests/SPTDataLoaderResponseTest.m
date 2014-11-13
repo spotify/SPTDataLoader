@@ -94,4 +94,17 @@
     XCTAssertNil(self.response.error, @"The response should not have an implicit error with HTTP status code OK");
 }
 
+- (void)testErrorForHTTPStatusCodeNotFound
+{
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:nil];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    XCTAssertNotNil(self.response.error, @"An implicit error should have been generated due to the HTTP status code");
+    XCTAssertEqualObjects(self.response.error.domain, SPTDataLoaderResponseErrorDomain, @"The implicit error should have the data loader response error domain");
+    XCTAssertEqual(self.response.error.code, SPTDataLoaderResponseHTTPStatusCodeNotFound, @"The implicit error should have the same code as the HTTP status code");
+}
+
 @end
