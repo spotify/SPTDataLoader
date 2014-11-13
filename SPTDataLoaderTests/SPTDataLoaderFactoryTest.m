@@ -67,4 +67,13 @@
     XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1, @"The factory did not relay a failed response to the correct handler");
 }
 
+- (void)testCancelledRequest
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    [self.factory cancelledRequest:request];
+    XCTAssertEqual(requestResponseHandler.numberOfCancelledRequestCalls, 1, @"The factory did not relay a cancelled request to the correct handler");
+}
+
 @end
