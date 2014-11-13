@@ -71,4 +71,14 @@
     XCTAssertFalse(shouldRetry, @"The response should not retry when the certificate was rejected");
 }
 
+- (void)testShouldRetryForTimedOut
+{
+    NSError *connectonError = [NSError errorWithDomain:NSURLErrorDomain
+                                                  code:NSURLErrorTimedOut
+                                              userInfo:nil];
+    self.response.error = connectonError;
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertTrue(shouldRetry, @"The response should retry when the connection timed out");
+}
+
 @end
