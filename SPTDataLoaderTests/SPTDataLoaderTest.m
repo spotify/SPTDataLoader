@@ -6,11 +6,15 @@
 
 #import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
+#import "SPTDataLoaderDelegateMock.h"
 
 @interface SPTDataLoaderTest : XCTestCase
 
 @property (nonatomic, strong) SPTDataLoader *dataLoader;
-@property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *delegate;
+
+@property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *requestResponseHandlerDelegate;
+
+@property (nonatomic, strong) SPTDataLoaderDelegateMock *delegate;
 
 @end
 
@@ -22,8 +26,10 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.delegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
-    self.dataLoader = [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self.delegate];
+    self.requestResponseHandlerDelegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
+    self.dataLoader = [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self.requestResponseHandlerDelegate];
+    self.delegate = [SPTDataLoaderDelegateMock new];
+    self.dataLoader.delegate = self.delegate;
 }
 
 - (void)tearDown
@@ -43,7 +49,16 @@
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.dataLoader performRequest:request];
-    XCTAssertNotNil(self.delegate.lastRequestPerformed, @"Their should be a valid last request performed");
+    XCTAssertNotNil(self.requestResponseHandlerDelegate.lastRequestPerformed, @"Their should be a valid last request performed");
+}
+
+- (void)testPerformRequestExcludesChunkSupportWhenDelegateDoesNotSupport
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.chunks = YES;
+    self.delegate.supportChunks = NO;
+    [self.dataLoader performRequest:request];
+    XCTAssertFalse(self.requestResponseHandlerDelegate.lastRequestPerformed.chunks, @"The data loader should remove chunk support from the request if its delegate does not support it");
 }
 
 @end
