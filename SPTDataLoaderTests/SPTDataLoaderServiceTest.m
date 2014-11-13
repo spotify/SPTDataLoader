@@ -123,4 +123,18 @@
 }
  */
 
+- (void)testSessionDidReceiveResponse
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:nil performRequest:request];
+    
+    NSURLSessionDataTask *dataTask = self.session.lastDataTask;
+    __block BOOL calledCompletionHandler = NO;
+    void (^completionHandler)(NSURLSessionResponseDisposition) = ^(NSURLSessionResponseDisposition disposition) {
+        calledCompletionHandler = YES;
+    };
+    [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:nil completionHandler:completionHandler];
+    XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler");
+}
+
 @end
