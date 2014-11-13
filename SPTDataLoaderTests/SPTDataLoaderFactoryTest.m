@@ -122,4 +122,13 @@
     XCTAssertEqual(authoriser.numberOfCallsToAuthoriseRequest, 1, @"The factory did not send an authorise request to the authoriser");
 }
 
+- (void)testOfflineChangesCachePolicy
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    self.factory.offline = YES;
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    XCTAssertEqual(request.cachePolicy, NSURLRequestReturnCacheDataDontLoad, @"The factory did not change the request cache policy to no load when being set to offline");
+}
+
 @end
