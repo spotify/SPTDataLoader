@@ -57,4 +57,11 @@
     XCTAssertEqualObjects(self.request.headers, @{ @"Header" : @"Value" }, @"The headers should reflect the added header");
 }
 
+- (void)testRemoveHeader
+{
+    [self.request addValue:@"Value" forHeader:@"Header"];
+    [self.request removeHeader:@"Header"];
+    XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should not contain anything after removal");
+}
+
 @end
