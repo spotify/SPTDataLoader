@@ -53,7 +53,7 @@
 
 - (void)cancelAllLoads
 {
-    NSArray *cancellationTokens = self.cancellationTokens.allObjects;
+    NSArray *cancellationTokens = [self.cancellationTokens.allObjects copy];
     [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
 }
 
