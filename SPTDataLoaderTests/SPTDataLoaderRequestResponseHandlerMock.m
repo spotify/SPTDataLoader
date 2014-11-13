@@ -3,6 +3,7 @@
 @interface SPTDataLoaderRequestResponseHandlerMock ()
 
 @property (nonatomic, assign, readwrite) NSUInteger numberOfFailedResponseCalls;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfCancelledRequestCalls;
 
 @end
 
@@ -22,7 +23,7 @@
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
-    
+    self.numberOfCancelledRequestCalls++;
 }
 
 - (void)receivedDataChunk:(NSData *)data forRequest:(SPTDataLoaderRequest *)request

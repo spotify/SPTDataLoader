@@ -5,5 +5,6 @@
 @interface SPTDataLoaderRequestResponseHandlerMock : NSObject <SPTDataLoaderRequestResponseHandler>
 
 @property (nonatomic, assign, readonly) NSUInteger numberOfFailedResponseCalls;
+@property (nonatomic, assign, readonly) NSUInteger numberOfCancelledRequestCalls;
 
 @end

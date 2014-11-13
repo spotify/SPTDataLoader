@@ -164,6 +164,7 @@
     [self.requestResponseHandler cancelledRequest:self.request];
     [self.task cancel];
     self.isExecuting = NO;
+    
     [super cancel];
 }
 
