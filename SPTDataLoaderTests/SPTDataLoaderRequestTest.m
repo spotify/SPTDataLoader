@@ -38,4 +38,10 @@
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should be empty when initially setting up the request");
 }
 
+- (void)testAddValueToNilHeader
+{
+    [self.request addValue:@"Value" forHeader:nil];
+    XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should not reflect an added value with an empty header");
+}
+
 @end
