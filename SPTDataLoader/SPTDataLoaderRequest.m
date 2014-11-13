@@ -79,6 +79,8 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
         [urlRequest addValue:value forHTTPHeaderField:key];
     }
     
+    urlRequest.cachePolicy = self.cachePolicy;
+    
     return urlRequest;
 }
 
@@ -92,6 +94,7 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
     copy.body = [self.body copy];
     copy.mutableHeaders = [self.mutableHeaders mutableCopy];
     copy.chunks = self.chunks;
+    copy.cachePolicy = self.cachePolicy;
     return copy;
 }
 
