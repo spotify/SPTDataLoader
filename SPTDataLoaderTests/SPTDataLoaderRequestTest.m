@@ -98,4 +98,11 @@
     XCTAssertEqual(self.request.cachePolicy, request.cachePolicy, @"The URL request does not share the same cache policy as the request");
 }
 
+- (void)testURLRequestMethod
+{
+    self.request.method = SPTDataLoaderRequestMethodGet;
+    NSURLRequest *request = self.request.urlRequest;
+    XCTAssertEqualObjects(request.HTTPMethod, @"GET", @"The URL request did not set its HTTP method properly");
+}
+
 @end
