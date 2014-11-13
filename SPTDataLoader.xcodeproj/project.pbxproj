@@ -24,6 +24,7 @@
 		056E51E61A111E7E00E8716C /* SPTDataLoaderRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E51E51A111E7E00E8716C /* SPTDataLoaderRequestOperation.m */; };
 		056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
 		059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */; };
+		059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		056E523E1A113A2B00E8716C /* SPTExpTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTExpTime.m; sourceTree = "<group>"; };
 		059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerMock.h; sourceTree = "<group>"; };
 		059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerMock.m; sourceTree = "<group>"; };
+		059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactoryTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,12 +166,8 @@
 			children = (
 				050E069A1A10C62100A10A0E /* Supporting Files */,
 				056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */,
-				056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */,
-				056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */,
-				0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */,
-				0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */,
-				059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */,
-				059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */,
+				059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */,
+				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
 			path = SPTDataLoaderTests;
 			sourceTree = "<group>";
@@ -208,6 +206,19 @@
 				056A04BB1A13D2BD00FA72AD /* README.md */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		059940951A14E7DA006D6BE9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */,
+				056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */,
+				0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */,
+				0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */,
+				059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */,
+				059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,6 +331,7 @@
 				059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */,
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
+				059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */,
 				056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
