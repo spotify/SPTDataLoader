@@ -161,7 +161,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         httpDateFormatter = [NSDateFormatter new];
-        [httpDateFormatter setDateFormat:@"EEE',' dd' 'MMM' 'yyyy' HH':'mm':'ss zzz"];
+        [httpDateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
     });
     
     NSTimeInterval retryAfterSeconds = [headers[SPTDataLoaderResponseHeaderRetryAfter] doubleValue];

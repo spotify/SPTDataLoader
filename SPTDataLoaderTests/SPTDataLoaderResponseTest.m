@@ -124,4 +124,16 @@
     XCTAssertEqual(floor(testDate.timeIntervalSince1970), floor(self.response.retryAfter.timeIntervalSince1970), @"The relative retry-after was not as expected");
 }
 
+- (void)testAbsoluteRetryAfter
+{
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:@{ @"Retry-After" : @"Fri, 31 Dec 1999 23:59:59 GMT" }];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    NSDate *testDate = [NSDate dateWithTimeIntervalSince1970:946684799.0];
+    XCTAssertEqual(floor(testDate.timeIntervalSince1970), floor(self.response.retryAfter.timeIntervalSince1970), @"The absolute retry-after was not as expected");
+}
+
 @end
