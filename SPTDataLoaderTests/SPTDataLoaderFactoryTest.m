@@ -1,40 +1,41 @@
-//
-//  SPTDataLoaderFactoryTest.m
-//  SPTDataLoader
-//
-//  Created by Will Sackfield on 2014-11-13.
-//  Copyright (c) 2014 spotify. All rights reserved.
-//
-
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "SPTDataLoaderFactory+Private.h"
+
 @interface SPTDataLoaderFactoryTest : XCTestCase
+
+@property (nonatomic, strong) SPTDataLoaderFactory *factory;
 
 @end
 
 @implementation SPTDataLoaderFactoryTest
 
-- (void)setUp {
+#pragma mark XCTestCase
+
+- (void)setUp
+{
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:nil];
 }
 
-- (void)tearDown {
+- (void)tearDown
+{
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+#pragma mark SPTDataLoaderFactoryTest
+
+- (void)testNotNil
+{
+    XCTAssertNotNil(self.factory, @"The factory created should not be nil");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testCreateDataLoader
+{
+    SPTDataLoader *dataLoader = [self.factory createDataLoader];
+    XCTAssertNotNil(dataLoader, @"The data loader created by the factory is nil");
 }
 
 @end
