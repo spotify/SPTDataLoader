@@ -79,5 +79,9 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
  * The body of data contained in the response
  */
 @property (nonatomic, strong, readonly) NSData *body;
+/**
+ * The time the request took
+ */
+@property (nonatomic, assign, readonly) NSTimeInterval requestTime;
 
 @end

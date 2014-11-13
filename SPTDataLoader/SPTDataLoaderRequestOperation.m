@@ -16,6 +16,7 @@
 @property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
 @property (nonatomic, strong) SPTExpTime *expTime;
+@property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
 
 @property (atomic, assign) BOOL isFinished;
 @property (atomic, assign) BOOL isExecuting;
@@ -74,6 +75,7 @@
     }
     
     self.response.body = self.receivedData;
+    self.response.requestTime = CFAbsoluteTimeGetCurrent() - self.absoluteStartTime;
     
     if (self.response.error) {
         if (self.response.retryAfter) {
@@ -142,6 +144,7 @@
         self.isExecuting = YES;
         self.isFinished = NO;
         
+        self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
         [self.task resume];
     } else {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^ {

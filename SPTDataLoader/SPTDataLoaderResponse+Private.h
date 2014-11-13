@@ -15,6 +15,10 @@
  * Allows private consumers to alter the data for the response
  */
 @property (nonatomic, strong, readwrite) NSData *body;
+/**
+ * Allows private consumers to alter the request time for the response
+ */
+@property (nonatomic, assign, readwrite) NSTimeInterval requestTime;
 
 /**
  * Class constructor
