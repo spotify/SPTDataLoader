@@ -7,6 +7,8 @@
 #import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 #import "SPTDataLoaderDelegateMock.h"
+#import "SPTCancellationTokenDelegateMock.h"
+#import "SPTCancellationTokenImplementation.h"
 
 @interface SPTDataLoaderTest : XCTestCase
 
@@ -59,6 +61,28 @@
     self.delegate.supportChunks = NO;
     [self.dataLoader performRequest:request];
     XCTAssertFalse(self.requestResponseHandlerDelegate.lastRequestPerformed.chunks, @"The data loader should remove chunk support from the request if its delegate does not support it");
+}
+
+- (void)testCancelAllLoads
+{
+    NSMutableArray *cancellationTokens = [NSMutableArray new];
+    NSMutableArray *cancellationTokenDelegates = [NSMutableArray new];
+    self.requestResponseHandlerDelegate.tokenCreator =  ^ id<SPTCancellationToken> {
+        SPTCancellationTokenDelegateMock *cancellationTokenDelegate = [SPTCancellationTokenDelegateMock new];
+        id<SPTCancellationToken> cancellationToken = [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:cancellationTokenDelegate];
+        [cancellationTokens addObject:cancellationToken];
+        [cancellationTokenDelegates addObject:cancellationTokenDelegate];
+        return cancellationToken;
+    };
+    for (NSInteger i = 0; i < 5; ++i) {
+        SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+        [self.dataLoader performRequest:request];
+    }
+    [self.dataLoader cancelAllLoads];
+    for (id<SPTCancellationToken> cancellationToken in cancellationTokens) {
+        SPTCancellationTokenDelegateMock *delegateMock = cancellationToken.delegate;
+        XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1, @"The cancellation tokens delegate was not called");
+    }
 }
 
 @end

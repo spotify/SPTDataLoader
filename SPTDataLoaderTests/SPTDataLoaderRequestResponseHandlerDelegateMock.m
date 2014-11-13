@@ -6,6 +6,11 @@
                                     performRequest:(SPTDataLoaderRequest *)request
 {
     self.lastRequestPerformed = request;
+    
+    if (self.tokenCreator) {
+        return self.tokenCreator();
+    }
+    
     return nil;
 }
 
