@@ -26,6 +26,7 @@
 		059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */; };
 		059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */; };
 		0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
+		0599409F1A14F60F006D6BE9 /* SPTDataLoaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactoryTest.m; sourceTree = "<group>"; };
 		0599409B1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerDelegateMock.h; sourceTree = "<group>"; };
 		0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerDelegateMock.m; sourceTree = "<group>"; };
+		0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				050E069A1A10C62100A10A0E /* Supporting Files */,
 				056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */,
 				059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */,
+				0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
 			path = SPTDataLoaderTests;
@@ -334,6 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */,
+				0599409F1A14F60F006D6BE9 /* SPTDataLoaderTest.m in Sources */,
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
 				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,
