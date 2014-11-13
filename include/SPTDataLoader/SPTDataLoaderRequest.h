@@ -42,6 +42,10 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  * The method used to send the request
  */
 @property (nonatomic, assign) SPTDataLoaderRequestMethod method;
+/**
+ * Any user information tied to this request
+ */
+@property (nonatomic, strong) NSDictionary *userInfo;
 
 /**
  * Class constructor
