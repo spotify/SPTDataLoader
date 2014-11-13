@@ -61,4 +61,14 @@
     XCTAssertTrue(shouldRetry, @"The response should retry when given the HTTP status code of Not Found");
 }
 
+- (void)testShouldRetryForCertificateRejection
+{
+    NSError *connectonError = [NSError errorWithDomain:NSURLErrorDomain
+                                                  code:NSURLErrorClientCertificateRejected
+                                              userInfo:nil];
+    self.response.error = connectonError;
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertFalse(shouldRetry, @"The response should not retry when the certificate was rejected");
+}
+
 @end
