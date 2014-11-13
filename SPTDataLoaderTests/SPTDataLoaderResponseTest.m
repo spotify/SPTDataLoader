@@ -49,4 +49,16 @@
     XCTAssertFalse(shouldRetry, @"The response should not retry when given the HTTP status code of OK");
 }
 
+- (void)testShouldRetryWithNotFoundHTTPStatusCode
+{
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:nil];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertTrue(shouldRetry, @"The response should retry when given the HTTP status code of Not Found");
+}
+
 @end
