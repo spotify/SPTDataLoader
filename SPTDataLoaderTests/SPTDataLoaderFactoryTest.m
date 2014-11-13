@@ -76,4 +76,14 @@
     XCTAssertEqual(requestResponseHandler.numberOfCancelledRequestCalls, 1, @"The factory did not relay a cancelled request to the correct handler");
 }
 
+- (void)testReceivedDataChunk
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.factory receivedDataChunk:nil forResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfReceivedDataRequestCalls, 1, @"The factory did not relay a received data chunk response to the correct handler");
+}
+
 @end
