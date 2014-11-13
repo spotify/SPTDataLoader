@@ -2,22 +2,23 @@
 
 #import <SPTDataLoader/SPTCancellationTokenFactoryImplementation.h>
 #import <SPTDataLoader/SPTCancellationToken.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderResolver.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
-#import "SPTDataLoaderRateLimiter.h"
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTDataLoaderResolver.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
+
+@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, strong) SPTDataLoaderResolver *resolver;
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
-@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
-@property (nonatomic, strong) SPTDataLoaderResolver *resolver;
 
 @end
 
@@ -26,11 +27,15 @@
 #pragma mark SPTDataLoaderService
 
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
+                                   rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(SPTDataLoaderResolver *)resolver
 {
-    return [[self alloc] initWithUserAgent:userAgent];
+    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver];
 }
 
 - (instancetype)initWithUserAgent:(NSString *)userAgent
+                      rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
+                         resolver:(SPTDataLoaderResolver *)resolver
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
     
@@ -39,6 +44,9 @@
     if (!(self = [super init])) {
         return nil;
     }
+    
+    _rateLimiter = rateLimiter;
+    _resolver = resolver;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
@@ -53,8 +61,6 @@
     _sessionQueue.maxConcurrentOperationCount = 1;
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
-    _rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
-    _resolver = [SPTDataLoaderResolver new];
     
     return self;
 }

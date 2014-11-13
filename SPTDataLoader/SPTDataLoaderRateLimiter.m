@@ -1,4 +1,4 @@
-#import "SPTDataLoaderRateLimiter.h"
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 
 #import "SPTDataLoaderRequest.h"
 

@@ -2,6 +2,8 @@
 
 #import <SPTDataLoader/SPTDataLoaderService.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderResolver.h>
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "NSURLSessionMock.h"
@@ -15,6 +17,8 @@
 @interface SPTDataLoaderServiceTest : XCTestCase
 
 @property (nonatomic ,strong) SPTDataLoaderService *service;
+@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, strong) SPTDataLoaderResolver *resolver;
 @property (nonatomic, strong) NSURLSessionMock *session;
 
 @end
@@ -27,7 +31,11 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"];
+    self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
+    self.resolver = [SPTDataLoaderResolver new];
+    self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
+                                                            rateLimiter:self.rateLimiter
+                                                               resolver:self.resolver];
     self.service.session = [NSURLSessionMock new];
 }
 
@@ -64,6 +72,15 @@
     
     NSURLSessionDataTask *dataTask = self.session.lastDataTask;
     [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:nil completionHandler:nil];
+}
+
+- (void)testResolverChangingAddress
+{
+    [self.resolver setAddresses:@[ @"192.168.0.1" ] forHost:@"spclient.wg.spotify.com"];
+    
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]];
+    [self.service requestResponseHandler:nil performRequest:request];
+    XCTAssertEqualObjects(request.URL.absoluteString, @"https://192.168.0.1/thing");
 }
 
 @end

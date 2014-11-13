@@ -1,4 +1,4 @@
-#import "SPTDataLoaderResolver.h"
+#import <SPTDataLoader/SPTDataLoaderResolver.h>
 
 #import "SPTDataLoaderResolverAddress.h"
 

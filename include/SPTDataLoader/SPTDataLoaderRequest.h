@@ -29,6 +29,12 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
 @property (nonatomic, assign) BOOL chunks;
 
 /**
+ * Class constructor
+ * @param URL The URL to query
+ */
++ (instancetype)requestWithURL:(NSURL *)URL;
+
+/**
  * Adds a header value
  * @param value The value of the header field
  * @param header The header field to add the value to

@@ -13,6 +13,50 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 
 @implementation SPTDataLoaderRequest
 
+#pragma mark SPTDataLoaderRequest
+
++ (instancetype)requestWithURL:(NSURL *)URL
+{
+    return [[self alloc] initWithURL:URL];
+}
+
+- (instancetype)initWithURL:(NSURL *)URL
+{
+    if (!(self = [super init])) {
+        return nil;
+    }
+    
+    _URL = URL;
+    
+    _mutableHeaders = [NSMutableDictionary new];
+    
+    return self;
+}
+
+- (NSDictionary *)headers
+{
+    return [self.mutableHeaders copy];
+}
+
+- (void)addValue:(NSString *)value forHeader:(NSString *)header
+{
+    if (!header) {
+        return;
+    }
+    
+    if (!value && header) {
+        [self.mutableHeaders removeObjectForKey:header];
+        return;
+    }
+    
+    self.mutableHeaders[header] = value;
+}
+
+- (void)removeHeader:(NSString *)header
+{
+    [self.mutableHeaders removeObjectForKey:header];
+}
+
 #pragma mark Private
 
 - (NSURLRequest *)urlRequest
@@ -49,45 +93,6 @@ NSString * const SPTDataLoaderRequestHostHeader = @"Host";
     copy.mutableHeaders = [self.mutableHeaders mutableCopy];
     copy.chunks = self.chunks;
     return copy;
-}
-
-#pragma mark SPTDataLoaderRequest
-
-- (NSDictionary *)headers
-{
-    return [self.mutableHeaders copy];
-}
-
-- (void)addValue:(NSString *)value forHeader:(NSString *)header
-{
-    if (!header) {
-        return;
-    }
-    
-    if (!value && header) {
-        [self.mutableHeaders removeObjectForKey:header];
-        return;
-    }
-    
-    self.mutableHeaders[header] = value;
-}
-
-- (void)removeHeader:(NSString *)header
-{
-    [self.mutableHeaders removeObjectForKey:header];
-}
-
-#pragma mark NSObject
-
-- (id)init
-{
-    if (!(self = [super init])) {
-        return nil;
-    }
-    
-    _mutableHeaders = [NSMutableDictionary new];
-    
-    return self;
 }
 
 @end
