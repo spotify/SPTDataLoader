@@ -94,4 +94,10 @@
     XCTAssertEqual(authoriserMock.numberOfCallsToAuthoriseRequest, 1, @"The service did not check the requests authorisation");
 }
 
+- (void)testRequestAuthorised
+{
+    // Test no crash occurs on optional delegate method
+    [self.service requestResponseHandler:nil authorisedRequest:nil];
+}
+
 @end
