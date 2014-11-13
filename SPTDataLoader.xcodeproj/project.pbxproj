@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0504CB8D1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */; };
 		0504CB8F1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */; };
+		0504CB911A151C8600AD54EF /* SPTDataLoaderRequestOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB901A151C8600AD54EF /* SPTDataLoaderRequestOperationTest.m */; };
 		050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
 		050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
 		050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementationTest.m; sourceTree = "<group>"; };
 		0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementationTest.m; sourceTree = "<group>"; };
+		0504CB901A151C8600AD54EF /* SPTDataLoaderRequestOperationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestOperationTest.m; sourceTree = "<group>"; };
 		050E068A1A10C62100A10A0E /* libSPTDataLoader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSPTDataLoader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		050E068F1A10C62100A10A0E /* SPTDataLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoader.m; sourceTree = "<group>"; };
 		050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPTDataLoaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +193,7 @@
 				059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */,
 				0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */,
 				0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */,
+				0504CB901A151C8600AD54EF /* SPTDataLoaderRequestOperationTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
 			path = SPTDataLoaderTests;
@@ -370,6 +373,7 @@
 				059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */,
 				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,
 				059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */,
+				0504CB911A151C8600AD54EF /* SPTDataLoaderRequestOperationTest.m in Sources */,
 				056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
