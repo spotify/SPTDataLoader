@@ -1,12 +1,14 @@
 #import <SPTDataLoader/SPTDataLoaderFactory.h>
 
+#import "SPTDataLoaderRequestResponseHandler.h"
+
 @protocol SPTDataLoaderRequestResponseHandlerDelegate;
 @protocol SPTDataLoaderAuthoriser;
 
 /**
  * The private API for the data loader factory for internal use in the SPTDataLoader library
  */
-@interface SPTDataLoaderFactory (Private)
+@interface SPTDataLoaderFactory (Private) <SPTDataLoaderRequestResponseHandler>
 
 /**
  * Class constructor

@@ -6,7 +6,7 @@
 #import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderResponse+Private.h"
 
-@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandler, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
+@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 
 @property (nonatomic, copy) NSArray *authorisers;
 
