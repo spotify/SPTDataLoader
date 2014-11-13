@@ -4,7 +4,7 @@
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
 {
-    
+    self.numberOfCallsToSuccessfulResponse++;
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveErrorResponse:(SPTDataLoaderResponse *)response

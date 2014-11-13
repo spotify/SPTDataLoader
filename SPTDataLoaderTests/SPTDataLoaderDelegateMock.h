@@ -5,5 +5,6 @@
 @interface SPTDataLoaderDelegateMock : NSObject <SPTDataLoaderDelegate>
 
 @property (nonatomic, assign) BOOL supportChunks;
+@property (nonatomic, assign) NSUInteger numberOfCallsToSuccessfulResponse;
 
 @end

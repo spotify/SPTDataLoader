@@ -9,6 +9,7 @@
 #import "SPTDataLoaderDelegateMock.h"
 #import "SPTCancellationTokenDelegateMock.h"
 #import "SPTCancellationTokenImplementation.h"
+#import "SPTDataLoaderResponse+Private.h"
 
 @interface SPTDataLoaderTest : XCTestCase
 
@@ -83,6 +84,14 @@
         SPTCancellationTokenDelegateMock *delegateMock = cancellationToken.delegate;
         XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1, @"The cancellation tokens delegate was not called");
     }
+}
+
+- (void)testRelaySuccessfulResponseToDelegate
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader successfulResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1, @"The data loader did not relay a successful response to the delegate");
 }
 
 @end
