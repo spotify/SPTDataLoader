@@ -6,5 +6,6 @@
 
 @property (nonatomic, strong) SPTDataLoaderRequest *lastRequestPerformed;
 @property (nonatomic, strong) SPTDataLoaderRequest *lastRequestAuthorised;
+@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestFailed;
 
 @end

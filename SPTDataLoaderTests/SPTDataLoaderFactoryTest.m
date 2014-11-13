@@ -150,4 +150,11 @@
     XCTAssertEqual(request, self.delegate.lastRequestAuthorised, @"The factory did not relay the request authorisation success to it's delegate");
 }
 
+- (void)testRelayAuthorisationFailureToDelegate
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory dataLoaderAuthoriser:nil didFailToAuthoriseRequest:request withError:nil];
+    XCTAssertEqual(request, self.delegate.lastRequestFailed, @"The factory did not relay the request authorisation failure to it's delegate");
+}
+
 @end

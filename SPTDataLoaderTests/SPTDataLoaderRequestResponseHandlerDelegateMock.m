@@ -19,7 +19,7 @@
       failedToAuthoriseRequest:(SPTDataLoaderRequest *)request
                          error:(NSError *)error
 {
-    
+    self.lastRequestFailed = request;
 }
 
 @end
