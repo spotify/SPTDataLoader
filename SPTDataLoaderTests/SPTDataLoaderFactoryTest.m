@@ -86,4 +86,14 @@
     XCTAssertEqual(requestResponseHandler.numberOfReceivedDataRequestCalls, 1, @"The factory did not relay a received data chunk response to the correct handler");
 }
 
+- (void)testReceivedInitialResponse
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.factory receivedInitialResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfReceivedInitialResponseCalls, 1, @"The factory did not relay a received data chunk response to the correct handler");
+}
+
 @end
