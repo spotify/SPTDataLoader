@@ -51,4 +51,10 @@
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should remove a header when added with an empty value");
 }
 
+- (void)testAddValueToHeader
+{
+    [self.request addValue:@"Value" forHeader:@"Header"];
+    XCTAssertEqualObjects(self.request.headers, @{ @"Header" : @"Value" }, @"The headers should reflect the added header");
+}
+
 @end
