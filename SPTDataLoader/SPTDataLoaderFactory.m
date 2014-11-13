@@ -1,6 +1,7 @@
 #import <SPTDataLoader/SPTDataLoaderFactory.h>
 
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
@@ -111,6 +112,10 @@
 - (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                     performRequest:(SPTDataLoaderRequest *)request
 {
+    if (self.offline) {
+        request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    }
+    
     [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
     return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
