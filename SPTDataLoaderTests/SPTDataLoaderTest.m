@@ -94,4 +94,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1, @"The data loader did not relay a successful response to the delegate");
 }
 
+- (void)testRelayFailureResponseToDelegate
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader failedResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1, @"The data loader did not relay a error response to the delegate");
+}
+
 @end

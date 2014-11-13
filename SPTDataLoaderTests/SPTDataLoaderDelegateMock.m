@@ -9,7 +9,7 @@
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveErrorResponse:(SPTDataLoaderResponse *)response
 {
-    
+    self.numberOfCallsToErrorResponse++;
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request
