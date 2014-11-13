@@ -81,4 +81,12 @@
     XCTAssertTrue(shouldRetry, @"The response should retry when the connection timed out");
 }
 
+- (void)testShouldRetryDefault
+{
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertFalse(shouldRetry, @"The response should not retry without having a reason to");
+}
+
 @end
