@@ -15,6 +15,7 @@
 		055AEE761A16302700A490BF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 055AEE741A16302700A490BF /* LaunchScreen.xib */; };
 		055AEE821A16302700A490BF /* SPTDataLoaderDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE811A16302700A490BF /* SPTDataLoaderDemoTests.m */; };
 		055AEE941A16304900A490BF /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 055AEE911A16304100A490BF /* libSPTDataLoader.a */; };
+		055AEE971A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE961A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		055AEE801A16302700A490BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		055AEE811A16302700A490BF /* SPTDataLoaderDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderDemoTests.m; sourceTree = "<group>"; };
 		055AEE8B1A16304100A490BF /* SPTDataLoader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SPTDataLoader.xcodeproj; path = ../../SPTDataLoader.xcodeproj; sourceTree = "<group>"; };
+		055AEE951A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserDummy.h; sourceTree = "<group>"; };
+		055AEE961A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserDummy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,8 @@
 				055AEE6A1A16302700A490BF /* AppDelegate.m */,
 				055AEE6C1A16302700A490BF /* ViewController.h */,
 				055AEE6D1A16302700A490BF /* ViewController.m */,
+				055AEE951A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.h */,
+				055AEE961A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m */,
 				055AEE6F1A16302700A490BF /* Main.storyboard */,
 				055AEE721A16302700A490BF /* Images.xcassets */,
 				055AEE741A16302700A490BF /* LaunchScreen.xib */,
@@ -272,6 +277,7 @@
 				055AEE6E1A16302700A490BF /* ViewController.m in Sources */,
 				055AEE6B1A16302700A490BF /* AppDelegate.m in Sources */,
 				055AEE681A16302700A490BF /* main.m in Sources */,
+				055AEE971A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +356,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../include,
+					../../include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -391,7 +397,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../include,
+					../../include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
