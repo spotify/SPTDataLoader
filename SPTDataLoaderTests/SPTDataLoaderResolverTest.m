@@ -39,4 +39,13 @@
     XCTAssertEqualObjects(URL.host, address, @"The address should be identical to the URL host if no overrides are supplied");
 }
 
+- (void)testAddressGivenIfReachableForHostOverride
+{
+    NSString *overrideAddresss = @"192.168.0.1";
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    [self.resolver setAddresses:@[ overrideAddresss ] forHost:URL.host];
+    NSString *host = [self.resolver addressForHost:URL.host];
+    XCTAssertEqualObjects(host, overrideAddresss, @"The address should be overridden");
+}
+
 @end
