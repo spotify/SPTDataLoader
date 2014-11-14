@@ -78,4 +78,17 @@
     XCTAssertEqual(floor([self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request]), 59.0, @"The retry-after header was not relayed to the rate limiter");
 }
 
+- (void)testRetry
+{
+    self.request.retryCount = 10;
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                                  statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
+                                                                 HTTPVersion:@"1.1"
+                                                                headerFields:@{ @"Retry-After" : @"60" }];
+    [self.operation receiveResponse:httpResponse];
+    [self.operation completeWithError:nil];
+    XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 0, @"The operation did relay a successful response onto its request response handler when it should have silently retried");
+    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 0, @"The operation did relay a failed response onto its request response handler when it should have silently retried");
+}
+
 @end
