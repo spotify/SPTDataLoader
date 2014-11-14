@@ -38,7 +38,9 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (NSDictionary *)headers
 {
-    return [self.mutableHeaders copy];
+    @synchronized(self) {
+        return [self.mutableHeaders copy];
+    }
 }
 
 - (void)addValue:(NSString *)value forHeader:(NSString *)header
@@ -47,17 +49,21 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
         return;
     }
     
-    if (!value && header) {
-        [self.mutableHeaders removeObjectForKey:header];
-        return;
+    @synchronized(self) {
+        if (!value && header) {
+            [self.mutableHeaders removeObjectForKey:header];
+            return;
+        }
+        
+        self.mutableHeaders[header] = value;
     }
-    
-    self.mutableHeaders[header] = value;
 }
 
 - (void)removeHeader:(NSString *)header
 {
-    [self.mutableHeaders removeObjectForKey:header];
+    @synchronized(self) {
+        [self.mutableHeaders removeObjectForKey:header];
+    }
 }
 
 #pragma mark Private
@@ -77,8 +83,9 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
         urlRequest.HTTPBody = self.body;
     }
     
-    for (NSString *key in self.headers) {
-        NSString *value = self.headers[key];
+    NSDictionary *headers = self.headers;
+    for (NSString *key in headers) {
+        NSString *value = headers[key];
         [urlRequest addValue:value forHTTPHeaderField:key];
     }
     
@@ -95,7 +102,9 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     __typeof(self) copy = [self.class requestWithURL:self.URL];
     copy.retryCount = self.retryCount;
     copy.body = [self.body copy];
-    copy.mutableHeaders = [self.mutableHeaders mutableCopy];
+    @synchronized(self) {
+        copy.mutableHeaders = [self.mutableHeaders mutableCopy];
+    }
     copy.chunks = self.chunks;
     copy.cachePolicy = self.cachePolicy;
     copy.method = self.method;
