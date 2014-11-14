@@ -119,4 +119,12 @@
     XCTAssertEqual(self.task.numberOfCallsToResume, 1, @"The task should be resumed on start if no backoff and rate-limiting is applied");
 }
 
+- (void)testStartWhenCancelled
+{
+    [self.operation cancel];
+    [self.operation start];
+    XCTAssertTrue(self.operation.isFinished, @"The operation should be finished if cancelled before start");
+    XCTAssertFalse(self.operation.isExecuting, @"The operation should not be executing if cancelled before start");
+}
+
 @end

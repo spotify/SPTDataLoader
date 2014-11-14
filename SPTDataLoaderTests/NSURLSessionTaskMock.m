@@ -7,4 +7,9 @@
     self.numberOfCallsToResume++;
 }
 
+- (void)cancel
+{
+    
+}
+
 @end
