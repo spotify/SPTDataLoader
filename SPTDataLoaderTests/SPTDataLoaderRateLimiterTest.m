@@ -70,4 +70,13 @@
     XCTAssertEqual(requestsPerSecond, self.requestsPerSecond, @"The requests per second for a URL is not falling back to the default specified in the class constructor");
 }
 
+- (void)testRequestsPerSecondCustom
+{
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    double requestsPerSecond = 20.0;
+    [self.rateLimiter setRequestsPerSecond:requestsPerSecond forURL:URL];
+    double reportedRequestsPerSecond = [self.rateLimiter requestsPerSecondForURL:URL];
+    XCTAssertEqual(requestsPerSecond, reportedRequestsPerSecond, @"The requests per second for this URL was not what was explicitly set");
+}
+
 @end
