@@ -139,4 +139,10 @@
     XCTAssertEqual(self.task.numberOfCallsToCancel, 1, @"The operation did not call cancel on the task when cancelled");
 }
 
+- (void)testCancelNotExecuting
+{
+    [self.operation cancel];
+    XCTAssertFalse(self.operation.isExecuting, @"The operation should not be executing after a cancel");
+}
+
 @end
