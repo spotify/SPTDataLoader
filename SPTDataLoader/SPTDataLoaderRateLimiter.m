@@ -41,14 +41,20 @@
     
     // First check if we are not accepting requests until a certain time (i.e. Retry-after header)
     CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
-    CFAbsoluteTime retryAtTime = [self.serviceEndpointRetryAt[serviceKey] doubleValue];
+    CFAbsoluteTime retryAtTime = 0.0;
+    @synchronized(self.serviceEndpointRetryAt) {
+        retryAtTime = [self.serviceEndpointRetryAt[serviceKey] doubleValue];
+    }
     if (currentTime < retryAtTime) {
         return retryAtTime - currentTime;
     }
     
     // Next check that our rate limit is being respected
     double requestsPerSecond = [self requestsPerSecondForServiceKey:serviceKey];
-    CFAbsoluteTime lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
+    CFAbsoluteTime lastExecution = 0.0;
+    @synchronized(self.serviceEndpointLastExecution) {
+        lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
+    }
     CFAbsoluteTime deltaTime = currentTime - lastExecution;
     CFAbsoluteTime cutoffTime = 1.0 / requestsPerSecond;
     CFAbsoluteTime timeInterval = cutoffTime - deltaTime;
@@ -66,7 +72,9 @@
         return;
     }
     
-    self.serviceEndpointLastExecution[serviceKey] = @(CFAbsoluteTimeGetCurrent());
+    @synchronized(self.serviceEndpointLastExecution) {
+        self.serviceEndpointLastExecution[serviceKey] = @(CFAbsoluteTimeGetCurrent());
+    }
 }
 
 - (double)requestsPerSecondForURL:(NSURL *)URL
@@ -76,7 +84,9 @@
 
 - (void)setRequestsPerSecond:(double)requestsPerSecond forURL:(NSURL *)URL
 {
-    self.serviceEndpointRequestsPerSecond[[self serviceKeyFromURL:URL]] = @(requestsPerSecond);
+    @synchronized(self.serviceEndpointRequestsPerSecond) {
+        self.serviceEndpointRequestsPerSecond[[self serviceKeyFromURL:URL]] = @(requestsPerSecond);
+    }
 }
 
 - (void)setRetryAfter:(NSTimeInterval)absoluteTime forURL:(NSURL *)URL
@@ -85,12 +95,16 @@
         return;
     }
     
-    self.serviceEndpointRetryAt[[self serviceKeyFromURL:URL]] = @(absoluteTime);
+    @synchronized(self.serviceEndpointRetryAt) {
+        self.serviceEndpointRetryAt[[self serviceKeyFromURL:URL]] = @(absoluteTime);
+    }
 }
 
 - (double)requestsPerSecondForServiceKey:(NSString *)serviceKey
 {
-    return [self.serviceEndpointRequestsPerSecond[serviceKey] doubleValue] ?: self.requestsPerSecond;
+    @synchronized(self.serviceEndpointRequestsPerSecond) {
+        return [self.serviceEndpointRequestsPerSecond[serviceKey] doubleValue] ?: self.requestsPerSecond;
+    }
 }
 
 - (NSString *)serviceKeyFromURL:(NSURL *)URL
