@@ -6,6 +6,7 @@
 #import "SPTDataLoaderRateLimiter.h"
 #import "SPTDataLoaderResponse.h"
 #import "SPTDataLoaderRequest.h"
+#import "NSURLSessionTaskMock.h"
 
 @interface SPTDataLoaderRequestOperationTest : XCTestCase
 
@@ -14,6 +15,7 @@
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
+@property (nonatomic, strong) NSURLSessionTaskMock *task;
 
 @end
 
@@ -28,8 +30,9 @@
     self.requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]];
+    self.task = [NSURLSessionTaskMock new];
     self.operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:self.request
-                                                                                     task:nil
+                                                                                     task:self.task
                                                                    requestResponseHandler:self.requestResponseHandler
                                                                               rateLimiter:self.rateLimiter];
 }
@@ -108,6 +111,12 @@
                                                                 headerFields:@{ @"Content-Length" : @"60" }];
     NSURLSessionResponseDisposition disposition = [self.operation receiveResponse:httpResponse];
     XCTAssertEqual(disposition, NSURLSessionResponseAllow, @"The operation should have returned an allow disposition");
+}
+
+- (void)testStartCallsResume
+{
+    [self.operation start];
+    XCTAssertEqual(self.task.numberOfCallsToResume, 1, @"The task should be resumed on start if no backoff and rate-limiting is applied");
 }
 
 @end

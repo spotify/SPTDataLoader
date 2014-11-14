@@ -49,9 +49,9 @@
     // Next check that our rate limit is being respected
     double requestsPerSecond = [self requestsPerSecondForServiceKey:serviceKey];
     CFAbsoluteTime lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
-    CFAbsoluteTime deltaTime = CFAbsoluteTimeGetCurrent() - lastExecution;
+    CFAbsoluteTime deltaTime = currentTime - lastExecution;
     CFAbsoluteTime cutoffTime = 1.0 / requestsPerSecond;
-    CFAbsoluteTime timeInterval = deltaTime - cutoffTime;
+    CFAbsoluteTime timeInterval = deltaTime - cutoffTime - currentTime;
     if (timeInterval < 0.0) {
         timeInterval = 0.0;
     }

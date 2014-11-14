@@ -17,6 +17,7 @@
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
 @property (nonatomic, strong) SPTExpTime *expTime;
 @property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
+@property (nonatomic, copy) dispatch_block_t executionBlock;
 
 @property (atomic, assign) BOOL isFinished;
 @property (atomic, assign) BOOL isExecuting;
@@ -52,7 +53,12 @@
     _requestResponseHandler = requestResponseHandler;
     _rateLimiter = rateLimiter;
     
-    _expTime = [SPTExpTime expTimeWithInitialTime:1.0 maxTime:60.0 * 60.0];
+    _expTime = [SPTExpTime expTimeWithInitialTime:0.0 maxTime:60.0 * 60.0];
+    
+    __weak __typeof(self) weakSelf = self;
+    _executionBlock = ^ {
+        [weakSelf checkRateLimiterAndExecute];
+    };
     
     return self;
 }
@@ -127,9 +133,7 @@
     if (!waitTime) {
         [self checkRetryLimiterAndExecute];
     } else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^ {
-            [self checkRateLimiterAndExecute];
-        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
     }
 }
 
@@ -147,9 +151,7 @@
         self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
         [self.task resume];
     } else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^ {
-            [self checkRateLimiterAndExecute];
-        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
     }
 }
 
