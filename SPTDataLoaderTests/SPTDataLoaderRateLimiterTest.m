@@ -7,6 +7,7 @@
 @interface SPTDataLoaderRateLimiterTest : XCTestCase
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, assign) double requestsPerSecond;
 
 @end
 
@@ -18,7 +19,8 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
+    self.requestsPerSecond = 10.0;
+    self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:self.requestsPerSecond];
 }
 
 - (void)tearDown
@@ -59,6 +61,13 @@
 {
     // Test no crash
     [self.rateLimiter executedRequest:nil];
+}
+
+- (void)testRequestsPerSecondDefault
+{
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    double requestsPerSecond = [self.rateLimiter requestsPerSecondForURL:URL];
+    XCTAssertEqual(requestsPerSecond, self.requestsPerSecond, @"The requests per second for a URL is not falling back to the default specified in the class constructor");
 }
 
 @end
