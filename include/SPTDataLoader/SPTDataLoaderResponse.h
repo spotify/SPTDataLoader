@@ -2,6 +2,7 @@
 
 /// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 typedef NS_ENUM(NSInteger, SPTDataLoaderResponseHTTPStatusCode) {
+    SPTDataLoaderResponseHTTPStatusCodeInvalid = 0,
     // Informational
     SPTDataLoaderResponseHTTPStatusCodeContinue = 100,
     SPTDataLoaderResponseHTTPStatusCodeSwitchProtocols = 101,
@@ -83,5 +84,9 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
  * The time the request took
  */
 @property (nonatomic, assign, readonly) NSTimeInterval requestTime;
+/**
+ * The status code of the response
+ */
+@property (nonatomic, assign, readonly) SPTDataLoaderResponseHTTPStatusCode statusCode;
 
 @end

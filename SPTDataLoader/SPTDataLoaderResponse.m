@@ -37,6 +37,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     _error = [self errorForResponse:response];
     _headers = [self headersForResponse:response];
     _retryAfter = [self retryAfterForHeaders:_headers];
+    _statusCode = [self statusCodeForResponse:response];
     
     return self;
 }
@@ -45,6 +46,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 {
     if ([self.error.domain isEqualToString:SPTDataLoaderResponseErrorDomain]) {
         switch (self.error.code) {
+            case SPTDataLoaderResponseHTTPStatusCodeInvalid:
             case SPTDataLoaderResponseHTTPStatusCodeContinue:
             case SPTDataLoaderResponseHTTPStatusCodeSwitchProtocols:
             case SPTDataLoaderResponseHTTPStatusCodeOK:
@@ -171,6 +173,16 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     }
     
     return [httpDateFormatter dateFromString:headers[SPTDataLoaderResponseHeaderRetryAfter]];
+}
+
+- (SPTDataLoaderResponseHTTPStatusCode)statusCodeForResponse:(NSURLResponse *)response
+{
+    if (![self.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        return SPTDataLoaderResponseHTTPStatusCodeInvalid;
+    }
+    
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    return httpResponse.statusCode;
 }
 
 @end
