@@ -133,4 +133,10 @@
     XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1, @"The operation did not relay the canceled message to the request response handler");
 }
 
+- (void)testCancelCancelsTask
+{
+    [self.operation cancel];
+    XCTAssertEqual(self.task.numberOfCallsToCancel, 1, @"The operation did not call cancel on the task when cancelled");
+}
+
 @end

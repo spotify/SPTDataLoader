@@ -9,7 +9,7 @@
 
 - (void)cancel
 {
-    
+    self.numberOfCallsToCancel++;
 }
 
 @end
