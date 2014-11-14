@@ -127,4 +127,10 @@
     XCTAssertFalse(self.operation.isExecuting, @"The operation should not be executing if cancelled before start");
 }
 
+- (void)testRelayCancelToRequestResponseHandler
+{
+    [self.operation cancel];
+    XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1, @"The operation did not relay the canceled message to the request response handler");
+}
+
 @end
