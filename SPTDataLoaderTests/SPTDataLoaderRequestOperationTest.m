@@ -150,4 +150,9 @@
     XCTAssertTrue(self.operation.isConcurrent, @"The operation should be labelled as concurrent");
 }
 
+- (void)testAutomaticallyNotifyKVO
+{
+    XCTAssertTrue([SPTDataLoaderRequestOperation automaticallyNotifiesObserversForKey:nil], @"The operation should always automatically notify KVO");
+}
+
 @end
