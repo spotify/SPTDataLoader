@@ -73,9 +73,11 @@
 
 - (SPTDataLoaderRequestOperation *)operationForTask:(NSURLSessionTask *)task
 {
-    for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
-        if ([operation.task isEqual:task]) {
-            return operation;
+    @synchronized(self) {
+        for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
+            if ([operation.task isEqual:task]) {
+                return operation;
+            }
         }
     }
     
@@ -99,7 +101,9 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
                                                                                                                task:task
                                                                                              requestResponseHandler:requestResponseHandler
                                                                                                         rateLimiter:self.rateLimiter];
-    [self.sessionQueue addOperation:operation];
+    @synchronized(self) {
+        [self.sessionQueue addOperation:operation];
+    }
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
@@ -141,10 +145,12 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
-    for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
-        if ([operation.request.cancellationToken isEqual:cancellationToken]) {
-            [operation cancel];
-            break;
+    @synchronized(self) {
+        for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
+            if ([operation.request.cancellationToken isEqual:cancellationToken]) {
+                [operation cancel];
+                break;
+            }
         }
     }
 }
