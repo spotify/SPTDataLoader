@@ -98,4 +98,16 @@
     XCTAssertEqual(disposition, NSURLSessionResponseCancel, @"The cancelled operation should have returned a cancelled disposition");
 }
 
+- (void)testDataCreationWithContentLengthFromResponse
+{
+    // It's times like these... I wish I had the SPTSingletonSwizzler ;)
+    // Simply don't know how to test NSMutableData dataWithCapacity is called correctly
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                                  statusCode:SPTDataLoaderResponseHTTPStatusCodeOK
+                                                                 HTTPVersion:@"1.1"
+                                                                headerFields:@{ @"Content-Length" : @"60" }];
+    NSURLSessionResponseDisposition disposition = [self.operation receiveResponse:httpResponse];
+    XCTAssertEqual(disposition, NSURLSessionResponseAllow, @"The operation should have returned an allow disposition");
+}
+
 @end
