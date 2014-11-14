@@ -77,19 +77,18 @@
     self.response.body = self.receivedData;
     self.response.requestTime = CFAbsoluteTimeGetCurrent() - self.absoluteStartTime;
     
+    if (self.response.retryAfter) {
+        [self.rateLimiter setRetryAfter:self.response.retryAfter.timeIntervalSinceReferenceDate
+                                 forURL:self.response.request.URL];
+    }
+    
     if (self.response.error) {
-        if (self.response.retryAfter) {
-            [self.rateLimiter setRetryAfter:self.response.retryAfter.timeIntervalSince1970
-                                     forURL:self.response.request.URL];
-        }
-        
         if ([self.response shouldRetry]) {
             if (self.retryCount++ != self.request.retryCount) {
                 [self start];
                 return;
             }
         }
-        
         [self.requestResponseHandler failedResponse:self.response];
         return;
     }
@@ -108,7 +107,7 @@
     
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (httpResponse.expectedContentLength) {
+        if (httpResponse.expectedContentLength > 0) {
             self.receivedData = [NSMutableData dataWithCapacity:httpResponse.expectedContentLength];
         } else {
             self.receivedData = [NSMutableData data];

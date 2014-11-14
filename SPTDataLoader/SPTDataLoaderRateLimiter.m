@@ -79,9 +79,13 @@
     self.serviceEndpointRequestsPerSecond[[self serviceKeyFromURL:URL]] = @(requestsPerSecond);
 }
 
-- (void)setRetryAfter:(NSTimeInterval)retryAfterSeconds forURL:(NSURL *)URL
+- (void)setRetryAfter:(NSTimeInterval)absoluteTime forURL:(NSURL *)URL
 {
-    self.serviceEndpointRetryAt[[self serviceKeyFromURL:URL]] = @(CFAbsoluteTimeGetCurrent() + retryAfterSeconds);
+    if (!URL) {
+        return;
+    }
+    
+    self.serviceEndpointRetryAt[[self serviceKeyFromURL:URL]] = @(absoluteTime);
 }
 
 - (double)requestsPerSecondForServiceKey:(NSString *)serviceKey
