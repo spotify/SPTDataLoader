@@ -45,4 +45,14 @@
     XCTAssertEqual(floor(earliestTime), floor(seconds - 1.0), @"The retry-after limitation was not respected by the rate limiter");
 }
 
+- (void)testEarliestTimeUntilRequestCanBeRealised
+{
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL];
+    [self.rateLimiter executedRequest:request];
+    NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
+    NSString *earliestTimeWithDecimalPrecision = [NSString stringWithFormat:@"%0.1f", earliestTime];
+    XCTAssertEqualObjects(earliestTimeWithDecimalPrecision, @"0.1", @"The requests per second limitation was not respected by the rate limiter");
+}
+
 @end

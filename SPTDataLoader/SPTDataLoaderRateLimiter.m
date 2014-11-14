@@ -51,7 +51,7 @@
     CFAbsoluteTime lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
     CFAbsoluteTime deltaTime = currentTime - lastExecution;
     CFAbsoluteTime cutoffTime = 1.0 / requestsPerSecond;
-    CFAbsoluteTime timeInterval = deltaTime - cutoffTime - currentTime;
+    CFAbsoluteTime timeInterval = cutoffTime - deltaTime;
     if (timeInterval < 0.0) {
         timeInterval = 0.0;
     }
