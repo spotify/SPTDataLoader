@@ -33,6 +33,15 @@
     return self;
 }
 
+- (void)executeDelegateBlock:(dispatch_block_t)block
+{
+    if (self.delegateQueue == dispatch_get_main_queue() && [NSThread isMainThread]) {
+        block();
+    } else {
+        dispatch_async(self.delegateQueue, block);
+    }
+}
+
 #pragma mark SPTDataLoader
 
 - (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
@@ -75,41 +84,41 @@
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
-    dispatch_async(self.delegateQueue, ^ {
+    [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
-    });
+    }];
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
-    dispatch_async(self.delegateQueue, ^ {
+    [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
-    });
+    }];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
-    dispatch_async(self.delegateQueue, ^ {
+    [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didCancelRequest:request];
-    });
+    }];
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     if (didReceiveDataChunkSelectorExists) {
-        dispatch_async(self.delegateQueue, ^ {
+        [self executeDelegateBlock: ^{
             [self.delegate dataLoader:self didReceiveDataChunk:data forResponse:response];
-        });
+        }];
     }
 }
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
     if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveInitialResponse:)]) {
-        dispatch_async(self.delegateQueue, ^ {
+        [self executeDelegateBlock: ^{
             [self.delegate dataLoader:self didReceiveInitialResponse:response];
-        });
+        }];
     }
 }
 
