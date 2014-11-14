@@ -15,9 +15,11 @@
 
 - (NSString *)addressForHost:(NSString *)host
 {
-    for (SPTDataLoaderResolverAddress *address in self.resolverHost[host]) {
-        if (address.reachable) {
-            return address.address;
+    @synchronized(self.resolverHost) {
+        for (SPTDataLoaderResolverAddress *address in self.resolverHost[host]) {
+            if (address.reachable) {
+                return address.address;
+            }
         }
     }
     return host;
@@ -35,7 +37,9 @@
         [mutableAddress addObject:resolverAddress];
     }
     
-    self.resolverHost[host] = mutableAddress;
+    @synchronized(self.resolverHost) {
+        self.resolverHost[host] = mutableAddress;
+    }
 }
 
 - (void)markAddressAsUnreachable:(NSString *)address
@@ -46,7 +50,10 @@
 
 - (SPTDataLoaderResolverAddress *)resolverAddressForAddress:(NSString *)address
 {
-    NSArray *resolverAddresses = self.addresses.allObjects;
+    NSArray *resolverAddresses = nil;
+    @synchronized(self.addresses) {
+        resolverAddresses = [self.addresses.allObjects copy];
+    }
     for (SPTDataLoaderResolverAddress *resolverAddress in resolverAddresses) {
         if ([resolverAddress.address isEqualToString:address]) {
             return resolverAddress;
