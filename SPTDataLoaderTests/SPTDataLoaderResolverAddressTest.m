@@ -32,4 +32,9 @@
     XCTAssertNotNil(self.address, @"The address should not be nil after construction");
 }
 
+- (void)testReachable
+{
+    XCTAssertTrue(self.address.reachable, @"The address should be reachable");
+}
+
 @end
