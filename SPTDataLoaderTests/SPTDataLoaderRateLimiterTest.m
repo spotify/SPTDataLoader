@@ -79,4 +79,10 @@
     XCTAssertEqual(requestsPerSecond, reportedRequestsPerSecond, @"The requests per second for this URL was not what was explicitly set");
 }
 
+- (void)testSetRetryAfterWithNilURL
+{
+    // Test no crash
+    [self.rateLimiter setRetryAfter:60.0 forURL:nil];
+}
+
 @end
