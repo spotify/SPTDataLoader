@@ -32,4 +32,11 @@
     XCTAssertNotNil(self.resolver, @"The resolver should not be nil after construction");
 }
 
+- (void)testDefaultToHostIfNoOverridingAddress
+{
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    NSString *address = [self.resolver addressForHost:URL.host];
+    XCTAssertEqualObjects(URL.host, address, @"The address should be identical to the URL host if no overrides are supplied");
+}
+
 @end
