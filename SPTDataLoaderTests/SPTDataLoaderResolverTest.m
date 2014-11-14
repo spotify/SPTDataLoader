@@ -48,4 +48,14 @@
     XCTAssertEqualObjects(host, overrideAddresss, @"The address should be overridden");
 }
 
+- (void)testAddressNotGivenIfNotReachableForHostOverride
+{
+    NSString *overrideAddresss = @"192.168.0.1";
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    [self.resolver setAddresses:@[ overrideAddresss ] forHost:URL.host];
+    [self.resolver markAddressAsUnreachable:overrideAddresss];
+    NSString *host = [self.resolver addressForHost:URL.host];
+    XCTAssertEqualObjects(host, URL.host, @"The address should not be overridden if unreachable");
+}
+
 @end

@@ -30,6 +30,7 @@
         SPTDataLoaderResolverAddress *resolverAddress = [self resolverAddressForAddress:address];
         if (!resolverAddress) {
             resolverAddress = [SPTDataLoaderResolverAddress dataLoaderResolverAddressWithAddress:address];
+            [self.addresses addObject:resolverAddress];
         }
         [mutableAddress addObject:resolverAddress];
     }
