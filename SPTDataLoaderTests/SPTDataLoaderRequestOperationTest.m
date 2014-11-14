@@ -91,4 +91,11 @@
     XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 0, @"The operation did relay a failed response onto its request response handler when it should have silently retried");
 }
 
+- (void)testCancelledRequestReturnsCancelledDisposition
+{
+    [self.operation cancel];
+    NSURLSessionResponseDisposition disposition = [self.operation receiveResponse:nil];
+    XCTAssertEqual(disposition, NSURLSessionResponseCancel, @"The cancelled operation should have returned a cancelled disposition");
+}
+
 @end
