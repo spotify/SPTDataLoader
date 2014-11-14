@@ -55,4 +55,10 @@
     XCTAssertEqualObjects(earliestTimeWithDecimalPrecision, @"0.1", @"The requests per second limitation was not respected by the rate limiter");
 }
 
+- (void)testExecutedRequestWithNilRequest
+{
+    // Test no crash
+    [self.rateLimiter executedRequest:nil];
+}
+
 @end
