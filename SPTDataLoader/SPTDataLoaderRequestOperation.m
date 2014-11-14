@@ -66,7 +66,9 @@
 - (void)receiveData:(NSData *)data
 {
     [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
-    [self.receivedData appendData:data];
+    @synchronized(self.receivedData) {
+        [self.receivedData appendData:data];
+    }
 }
 
 - (void)completeWithError:(NSError *)error
@@ -145,11 +147,15 @@
     
     NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
     if (!waitTime) {
-        self.isExecuting = YES;
-        self.isFinished = NO;
-        
-        self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
-        [self.task resume];
+        @synchronized(self) {
+            self.isExecuting = YES;
+            self.isFinished = NO;
+            
+            self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
+        }
+        @synchronized(self.task) {
+            [self.task resume];
+        }
     } else {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
     }
@@ -171,8 +177,13 @@
 - (void)cancel
 {
     [self.requestResponseHandler cancelledRequest:self.request];
-    [self.task cancel];
-    self.isExecuting = NO;
+    
+    @synchronized(self.task) {
+        [self.task cancel];
+    }
+    @synchronized(self) {
+        self.isExecuting = NO;
+    }
     
     [super cancel];
 }
