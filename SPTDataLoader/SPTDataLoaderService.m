@@ -38,6 +38,7 @@
                          resolver:(SPTDataLoaderResolver *)resolver
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
+    const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
     
     NSString * const SPTDataLoaderServiceUserAgentHeader = @"User-Agent";
     
@@ -58,7 +59,7 @@
     
     _cancellationTokenFactory = [SPTCancellationTokenFactoryImplementation new];
     _sessionQueue = [NSOperationQueue new];
-    _sessionQueue.maxConcurrentOperationCount = 1;
+    _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
     

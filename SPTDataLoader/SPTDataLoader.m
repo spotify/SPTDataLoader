@@ -90,7 +90,6 @@
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
-    NSAssert(didReceiveDataChunkSelectorExists, @"The SPTDataLoaderDelegate does not implement didReceiveDataChunk yet received a data chunk back");
     if (didReceiveDataChunkSelectorExists) {
         [self.delegate dataLoader:self didReceiveDataChunk:data forResponse:response];
     }

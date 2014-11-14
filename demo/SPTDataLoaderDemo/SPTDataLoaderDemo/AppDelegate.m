@@ -1,14 +1,24 @@
 #import "AppDelegate.h"
 
+#import <SPTDataLoader/SPTDataLoaderService.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderResolver.h>
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong, readwrite) SPTDataLoaderService *service;
 
 @end
 
 @implementation AppDelegate
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    SPTDataLoaderRateLimiter *rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
+    SPTDataLoaderResolver *resolver = [SPTDataLoaderResolver new];
+    self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify-Demo"
+                                                            rateLimiter:rateLimiter
+                                                               resolver:resolver];
     return YES;
 }
 
