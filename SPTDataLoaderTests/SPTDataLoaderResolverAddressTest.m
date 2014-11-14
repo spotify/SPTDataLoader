@@ -37,4 +37,10 @@
     XCTAssertTrue(self.address.reachable, @"The address should be reachable");
 }
 
+- (void)testNotReachableIfFailed
+{
+    [self.address failedToReach];
+    XCTAssertFalse(self.address.reachable, @"The address should not be reachable");
+}
+
 @end
