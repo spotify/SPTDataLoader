@@ -106,12 +106,13 @@
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response];
     [self.requestResponseHandler receivedInitialResponse:self.response];
     
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    
-    if (httpResponse.expectedContentLength) {
-        self.receivedData = [NSMutableData dataWithCapacity:httpResponse.expectedContentLength];
-    } else {
-        self.receivedData = [NSMutableData data];
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.expectedContentLength) {
+            self.receivedData = [NSMutableData dataWithCapacity:httpResponse.expectedContentLength];
+        } else {
+            self.receivedData = [NSMutableData data];
+        }
     }
     
     return NSURLSessionResponseAllow;

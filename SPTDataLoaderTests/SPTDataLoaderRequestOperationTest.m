@@ -52,4 +52,12 @@
     XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1, @"The operation did not relay the successful response onto its request response handler");
 }
 
+- (void)testRelayFailedResponse
+{
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
+    [self.operation receiveResponse:nil];
+    [self.operation completeWithError:error];
+    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 1, @"The operation did not relay the failed response onto its request response handler");
+}
+
 @end
