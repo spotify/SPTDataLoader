@@ -145,4 +145,9 @@
     XCTAssertFalse(self.operation.isExecuting, @"The operation should not be executing after a cancel");
 }
 
+- (void)testIsConcurrent
+{
+    XCTAssertTrue(self.operation.isConcurrent, @"The operation should be labelled as concurrent");
+}
+
 @end
