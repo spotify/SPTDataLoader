@@ -2,6 +2,8 @@
 
 #import "SPTDataLoaderRateLimiter.h"
 
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
+
 @interface SPTDataLoaderRateLimiterTest : XCTestCase
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
@@ -30,6 +32,17 @@
 - (void)testNotNil
 {
     XCTAssertNotNil(self.rateLimiter, @"The rate limiter should not be nil after construction");
+}
+
+- (void)testEarliestTimeUntilRequestCanBeRealisedWithRetryAfter
+{
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL];
+    NSTimeInterval seconds = 60.0;
+    CFAbsoluteTime retryAfter = CFAbsoluteTimeGetCurrent() + seconds;
+    [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
+    NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
+    XCTAssertEqual(floor(earliestTime), floor(seconds - 1.0), @"The retry-after limitation was not respected by the rate limiter");
 }
 
 @end
