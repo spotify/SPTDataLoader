@@ -28,6 +28,7 @@
     _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
     
     _cancellationTokens = [NSHashTable weakObjectsHashTable];
+    _delegateQueue = dispatch_get_main_queue();
     
     return self;
 }
@@ -74,31 +75,41 @@
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
-    [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
+    dispatch_async(self.delegateQueue, ^ {
+        [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
+    });
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
-    [self.delegate dataLoader:self didReceiveErrorResponse:response];
+    dispatch_async(self.delegateQueue, ^ {
+        [self.delegate dataLoader:self didReceiveErrorResponse:response];
+    });
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
-    [self.delegate dataLoader:self didCancelRequest:request];
+    dispatch_async(self.delegateQueue, ^ {
+        [self.delegate dataLoader:self didCancelRequest:request];
+    });
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     if (didReceiveDataChunkSelectorExists) {
-        [self.delegate dataLoader:self didReceiveDataChunk:data forResponse:response];
+        dispatch_async(self.delegateQueue, ^ {
+            [self.delegate dataLoader:self didReceiveDataChunk:data forResponse:response];
+        });
     }
 }
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
     if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveInitialResponse:)]) {
-        [self.delegate dataLoader:self didReceiveInitialResponse:response];
+        dispatch_async(self.delegateQueue, ^ {
+            [self.delegate dataLoader:self didReceiveInitialResponse:response];
+        });
     }
 }
 

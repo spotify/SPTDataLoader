@@ -68,6 +68,11 @@ didReceiveDataChunk:(NSData *)data
  * The object listening to the data loader
  */
 @property (nonatomic, weak) id<SPTDataLoaderDelegate> delegate;
+/**
+ * The queue to call the delegate selectors on
+ * @discussion By default this is the main queue
+ */
+@property (nonatomic, strong) dispatch_queue_t delegateQueue;
 
 /**
  * Performs a request
