@@ -66,9 +66,7 @@
 - (void)receiveData:(NSData *)data
 {
     [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
-    @synchronized(self.receivedData) {
-        [self.receivedData appendData:data];
-    }
+    [self.receivedData appendData:data];
 }
 
 - (void)completeWithError:(NSError *)error
