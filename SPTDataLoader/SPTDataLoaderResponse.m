@@ -34,10 +34,18 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     _request = request;
     _response = response;
     
-    _error = [self errorForResponse:response];
-    _responseHeaders = [self headersForResponse:response];
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse.statusCode >= SPTDataLoaderResponseHTTPStatusCodeBadRequest) {
+            _error = [NSError errorWithDomain:SPTDataLoaderResponseErrorDomain
+                                         code:httpResponse.statusCode
+                                     userInfo:nil];
+        }
+        _headers = httpResponse.allHeaderFields;
+        _statusCode = httpResponse.statusCode;
+    }
+    
     _retryAfter = [self retryAfterForHeaders:_headers];
-    _statusCode = [self statusCodeForResponse:response];
     
     return self;
 }
@@ -134,30 +142,6 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     return NO;
 }
 
-- (NSError *)errorForResponse:(NSURLResponse *)response
-{
-    if (![self.response isKindOfClass:[NSHTTPURLResponse class]]) {
-        return nil;
-    }
-    
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if (httpResponse.statusCode < SPTDataLoaderResponseHTTPStatusCodeBadRequest) {
-        return nil;
-    }
-    
-    return [NSError errorWithDomain:SPTDataLoaderResponseErrorDomain code:httpResponse.statusCode userInfo:nil];
-}
-
-- (NSDictionary *)headersForResponse:(NSURLResponse *)response
-{
-    if (![self.response isKindOfClass:[NSHTTPURLResponse class]]) {
-        return nil;
-    }
-    
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    return httpResponse.allHeaderFields;
-}
-
 - (NSDate *)retryAfterForHeaders:(NSDictionary *)headers
 {
     static NSDateFormatter *httpDateFormatter;
@@ -173,16 +157,6 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     }
     
     return [httpDateFormatter dateFromString:headers[SPTDataLoaderResponseHeaderRetryAfter]];
-}
-
-- (SPTDataLoaderResponseHTTPStatusCode)statusCodeForResponse:(NSURLResponse *)response
-{
-    if (![self.response isKindOfClass:[NSHTTPURLResponse class]]) {
-        return SPTDataLoaderResponseHTTPStatusCodeInvalid;
-    }
-    
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    return httpResponse.statusCode;
 }
 
 @end
