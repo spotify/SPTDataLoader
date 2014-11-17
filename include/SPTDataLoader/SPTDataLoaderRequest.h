@@ -19,7 +19,8 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  */
 @property (nonatomic, strong) NSURL *URL;
 /**
- * The number of times to retry this request
+ * The number of times to retry this request in the event of a failure
+ * @discussion The default is 0
  */
 @property (nonatomic, assign) NSUInteger retryCount;
 /**
