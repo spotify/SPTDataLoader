@@ -35,7 +35,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     _response = response;
     
     _error = [self errorForResponse:response];
-    _headers = [self headersForResponse:response];
+    _responseHeaders = [self headersForResponse:response];
     _retryAfter = [self retryAfterForHeaders:_headers];
     _statusCode = [self statusCodeForResponse:response];
     

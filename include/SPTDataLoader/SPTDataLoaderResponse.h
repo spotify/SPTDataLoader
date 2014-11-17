@@ -72,7 +72,7 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 /**
  * The headers that the server returned with a request
  */
-@property (nonatomic, strong, readonly) NSDictionary *headers;
+@property (nonatomic, strong, readonly) NSDictionary *responseHeaders;
 /**
  * The date at which the request that generated the response can be retried
  */
