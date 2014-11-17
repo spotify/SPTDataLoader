@@ -35,6 +35,10 @@
 
 - (void)executeDelegateBlock:(dispatch_block_t)block
 {
+    if (!block) {
+        return;
+    }
+    
     if (self.delegateQueue == dispatch_get_main_queue() && [NSThread isMainThread]) {
         block();
     } else {
