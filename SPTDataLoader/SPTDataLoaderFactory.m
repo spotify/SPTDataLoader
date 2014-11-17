@@ -59,7 +59,7 @@
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
-    @synchronized(self) {
+    @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
     [requestResponseHandler successfulResponse:response];
@@ -75,7 +75,7 @@
     }
     
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
-    @synchronized(self) {
+    @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
     [requestResponseHandler failedResponse:response];
@@ -84,7 +84,7 @@
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
-    @synchronized(self) {
+    @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
     }
     [requestResponseHandler cancelledRequest:request];
@@ -93,7 +93,7 @@
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
-    @synchronized(self) {
+    @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
     [requestResponseHandler receivedDataChunk:data forResponse:response];
@@ -102,7 +102,7 @@
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
-    @synchronized(self) {
+    @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
     [requestResponseHandler receivedInitialResponse:response];
@@ -138,7 +138,7 @@
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
     }
     
-    @synchronized(self) {
+    @synchronized(self.requestToRequestResponseHandler) {
         [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
     }
     
