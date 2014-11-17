@@ -108,6 +108,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     }
     copy.cachePolicy = self.cachePolicy;
     copy.method = self.method;
+    copy.userInfo = self.userInfo;
     return copy;
 }
 
