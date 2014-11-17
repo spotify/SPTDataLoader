@@ -73,7 +73,7 @@
 
 - (SPTDataLoaderRequestOperation *)operationForTask:(NSURLSessionTask *)task
 {
-    @synchronized(self) {
+    @synchronized(self.sessionQueue) {
         for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
             if ([operation.task isEqual:task]) {
                 return operation;
@@ -101,7 +101,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
                                                                                                                task:task
                                                                                              requestResponseHandler:requestResponseHandler
                                                                                                         rateLimiter:self.rateLimiter];
-    @synchronized(self) {
+    @synchronized(self.sessionQueue) {
         [self.sessionQueue addOperation:operation];
     }
 }
@@ -145,7 +145,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
-    @synchronized(self) {
+    @synchronized(self.sessionQueue) {
         for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
             if ([operation.request.cancellationToken isEqual:cancellationToken]) {
                 [operation cancel];
