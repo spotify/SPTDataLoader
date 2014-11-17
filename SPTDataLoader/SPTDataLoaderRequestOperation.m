@@ -90,7 +90,7 @@
     
     if (self.response.error) {
         if ([self.response shouldRetry]) {
-            if (self.retryCount++ != self.request.retryCount) {
+            if (self.retryCount++ != self.request.maximumRetryCount) {
                 [self start];
                 return;
             }

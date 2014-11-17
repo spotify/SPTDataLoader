@@ -107,13 +107,13 @@
 
 - (void)testCopy
 {
-    self.request.retryCount = 10;
+    self.request.maximumRetryCount = 10;
     self.request.body = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
     [self.request addValue:@"Value" forHeader:@"Header"];
     self.request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
     self.request.method = SPTDataLoaderRequestMethodPost;
     SPTDataLoaderRequest *request = [self.request copy];
-    XCTAssertEqual(request.retryCount, self.request.retryCount, @"The retry count was not copied correctly");
+    XCTAssertEqual(request.maximumRetryCount, self.request.maximumRetryCount, @"The retry count was not copied correctly");
     XCTAssertEqualObjects(request.body, self.request.body, @"The body was not copied correctly");
     XCTAssertEqualObjects(request.headers, self.request.headers, @"The headers were not copied correctly");
     XCTAssertEqual(request.cachePolicy, self.request.cachePolicy, @"The cache policy was not copied correctly");

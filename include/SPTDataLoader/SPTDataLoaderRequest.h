@@ -22,7 +22,7 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  * The number of times to retry this request in the event of a failure
  * @discussion The default is 0
  */
-@property (nonatomic, assign) NSUInteger retryCount;
+@property (nonatomic, assign) NSUInteger maximumRetryCount;
 /**
  * The body of the request
  */
