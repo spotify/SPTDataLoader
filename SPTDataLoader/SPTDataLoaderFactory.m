@@ -58,10 +58,11 @@
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self) {
-        id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
-        [requestResponseHandler successfulResponse:response];
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
+    [requestResponseHandler successfulResponse:response];
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -73,34 +74,38 @@
         return;
     }
     
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self) {
-        id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
-        [requestResponseHandler failedResponse:response];
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
+    [requestResponseHandler failedResponse:response];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self) {
-        id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
-        [requestResponseHandler cancelledRequest:request];
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
     }
+    [requestResponseHandler cancelledRequest:request];
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self) {
-        id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
-        [requestResponseHandler receivedDataChunk:data forResponse:response];
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
+    [requestResponseHandler receivedDataChunk:data forResponse:response];
 }
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self) {
-        id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
-        [requestResponseHandler receivedInitialResponse:response];
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
+    [requestResponseHandler receivedInitialResponse:response];
 }
 
 - (BOOL)shouldAuthoriseRequest:(SPTDataLoaderRequest *)request
