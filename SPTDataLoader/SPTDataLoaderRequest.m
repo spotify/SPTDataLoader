@@ -106,7 +106,6 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     @synchronized(self) {
         copy.mutableHeaders = [self.mutableHeaders mutableCopy];
     }
-    copy.chunks = self.chunks;
     copy.cachePolicy = self.cachePolicy;
     copy.method = self.method;
     return copy;

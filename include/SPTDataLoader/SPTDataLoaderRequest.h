@@ -31,10 +31,6 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  */
 @property (nonatomic, strong, readonly) NSDictionary *headers;
 /**
- * Whether the result of the request should be delivered in chunks
- */
-@property (nonatomic, assign) BOOL chunks;
-/**
  * The cache policy to use for this request
  */
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
