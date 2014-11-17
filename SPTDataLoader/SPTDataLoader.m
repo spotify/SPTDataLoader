@@ -54,10 +54,7 @@
         SPTDataLoaderRequest *copiedRequest = [request copy];
         
         if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)]) {
-            BOOL chunkSupport = [self.delegate dataLoaderShouldSupportChunks:self];
-            if (!chunkSupport) {
-                copiedRequest.chunks = NO;
-            }
+            copiedRequest.chunks = [self.delegate dataLoaderShouldSupportChunks:self];
         }
         
         id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
