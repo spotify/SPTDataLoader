@@ -61,7 +61,7 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 @interface SPTDataLoaderResponse : NSObject
 
 /**
- * The request object that generated the request
+ * The request object that generated the response
  */
 @property (nonatomic, strong, readonly) SPTDataLoaderRequest *request;
 /**
