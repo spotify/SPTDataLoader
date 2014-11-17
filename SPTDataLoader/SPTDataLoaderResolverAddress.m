@@ -2,7 +2,7 @@
 
 @interface SPTDataLoaderResolverAddress ()
 
-@property (nonatomic ,assign) CFAbsoluteTime stalePeriod;
+@property (nonatomic, assign) NSTimeInterval stalePeriod;
 
 @property (nonatomic, assign) CFAbsoluteTime lastFailedTime;
 
@@ -15,7 +15,7 @@
 - (BOOL)isReachable
 {
     CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
-    CFAbsoluteTime deltaTime = currentTime - self.lastFailedTime;
+    NSTimeInterval deltaTime = currentTime - self.lastFailedTime;
     if (deltaTime < 0.0) {
         return YES;
     }
@@ -30,12 +30,14 @@
 
 - (instancetype)initWithAddress:(NSString *)address
 {
+    const NSTimeInterval SPTDataLoaderResolverAddressDefaultStalePeriodOneHour = 60.0 * 60.0;
+    
     if (!(self = [super init])) {
         return nil;
     }
     
     _address = address;
-    _stalePeriod = 60.0 * 60.0;
+    _stalePeriod = SPTDataLoaderResolverAddressDefaultStalePeriodOneHour;
     
     return self;
 }
