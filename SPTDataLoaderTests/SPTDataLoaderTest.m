@@ -55,6 +55,15 @@
     XCTAssertNotNil(self.requestResponseHandlerDelegate.lastRequestPerformed, @"Their should be a valid last request performed");
 }
 
+- (void)testPerformRequestExcludesChunkSupportWhenDelegateDoesNotSupport
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.chunks = YES;
+    self.delegate.supportChunks = NO;
+    [self.dataLoader performRequest:request];
+    XCTAssertFalse(self.requestResponseHandlerDelegate.lastRequestPerformed.chunks, @"The data loader should remove chunk support from the request if its delegate does not support it");
+}
+
 - (void)testCancelAllLoads
 {
     NSMutableArray *cancellationTokens = [NSMutableArray new];

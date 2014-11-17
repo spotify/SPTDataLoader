@@ -53,6 +53,10 @@
     @synchronized(self) {
         SPTDataLoaderRequest *copiedRequest = [request copy];
         
+        if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)]) {
+            copiedRequest.chunks = [self.delegate dataLoaderShouldSupportChunks:self];
+        }
+        
         id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
                                                                                                   performRequest:copiedRequest];
         [self.cancellationTokens addObject:cancellationToken];
