@@ -48,6 +48,10 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  * Any user information tied to this request
  */
 @property (nonatomic, strong) NSDictionary *userInfo;
+/**
+ * An identifier for uniquely identifying the request
+ */
+@property (nonatomic, assign, readonly) int64_t uniqueIdentifier;
 
 /**
  * Class constructor

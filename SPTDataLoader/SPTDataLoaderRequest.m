@@ -2,11 +2,15 @@
 
 #import "SPTDataLoaderRequest+Private.h"
 
+#include <libkern/OSAtomic.h>
+
 NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 
 static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
 
 @interface SPTDataLoaderRequest ()
+
+@property (nonatomic, assign, readwrite) int64_t uniqueIdentifier;
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
 @property (nonatomic, strong) id<SPTCancellationToken> cancellationToken;
@@ -25,6 +29,8 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (instancetype)initWithURL:(NSURL *)URL
 {
+    static int64_t uniqueIdentifierBarrier = 0;
+    
     if (!(self = [super init])) {
         return nil;
     }
@@ -33,6 +39,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     
     _mutableHeaders = [NSMutableDictionary new];
     _method = SPTDataLoaderRequestMethodGet;
+    _uniqueIdentifier = OSAtomicIncrement64Barrier(&uniqueIdentifierBarrier);
     
     return self;
 }
@@ -110,6 +117,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     copy.cachePolicy = self.cachePolicy;
     copy.method = self.method;
     copy.userInfo = self.userInfo;
+    copy.uniqueIdentifier = self.uniqueIdentifier;
     return copy;
 }
 
