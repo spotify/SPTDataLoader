@@ -66,6 +66,7 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 @property (nonatomic, strong, readonly) SPTDataLoaderRequest *request;
 /**
  * The error that the request generated
+ * @warning Will be nil if the request is considered a success
  */
 @property (nonatomic, strong, readonly) NSError *error;
 /**
