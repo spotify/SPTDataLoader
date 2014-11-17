@@ -6,10 +6,10 @@
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
 
 #import "SPTDataLoaderFactory+Private.h"
-#import "SPTDataLoaderRequestOperation.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderRequestTaskHandler.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
@@ -19,6 +19,7 @@
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
+@property (nonatomic, strong) NSMutableArray *handlers;
 
 @end
 
@@ -62,6 +63,7 @@
     _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
+    _handlers = [NSMutableArray new];
     
     return self;
 }
@@ -71,16 +73,17 @@
     return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self authorisers:authorisers];
 }
 
-- (SPTDataLoaderRequestOperation *)operationForTask:(NSURLSessionTask *)task
+- (SPTDataLoaderRequestTaskHandler *)handlerForTask:(NSURLSessionTask *)task
 {
-    @synchronized(self.sessionQueue) {
-        for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
-            if ([operation.task isEqual:task]) {
-                return operation;
-            }
+    NSArray *handlers = nil;
+    @synchronized(self.handlers) {
+        handlers = [self.handlers copy];
+    }
+    for (SPTDataLoaderRequestTaskHandler *handler in self.handlers) {
+        if ([handler.task isEqual:task]) {
+            return handler;
         }
     }
-    
     return nil;
 }
 
@@ -97,13 +100,14 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
-    SPTDataLoaderRequestOperation *operation = [SPTDataLoaderRequestOperation dataLoaderRequestOperationWithRequest:request
-                                                                                                               task:task
-                                                                                             requestResponseHandler:requestResponseHandler
-                                                                                                        rateLimiter:self.rateLimiter];
-    @synchronized(self.sessionQueue) {
-        [self.sessionQueue addOperation:operation];
+    SPTDataLoaderRequestTaskHandler *handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:task
+                                                                                                             request:request
+                                                                                              requestResponseHandler:requestResponseHandler
+                                                                                                         rateLimiter:self.rateLimiter];
+    @synchronized(self.handlers) {
+        [self.handlers addObject:handler];
     }
+    [handler start];
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
@@ -145,12 +149,14 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
-    @synchronized(self.sessionQueue) {
-        for (SPTDataLoaderRequestOperation *operation in self.sessionQueue.operations) {
-            if ([operation.request.cancellationToken isEqual:cancellationToken]) {
-                [operation cancel];
-                break;
-            }
+    NSArray *handlers = nil;
+    @synchronized(self.handlers) {
+        handlers = [self.handlers copy];
+    }
+    for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
+        if ([handler.request.cancellationToken isEqual:cancellationToken]) {
+            [cancellationToken cancel];
+            break;
         }
     }
 }
@@ -162,9 +168,9 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
 {
-    SPTDataLoaderRequestOperation *operation = [self operationForTask:dataTask];
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:dataTask];
     if (completionHandler) {
-        completionHandler([operation receiveResponse:response]);
+        completionHandler([handler receiveResponse:response]);
     }
 }
 
@@ -179,8 +185,8 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
           dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data
 {
-    SPTDataLoaderRequestOperation *operation = [self operationForTask:dataTask];
-    [operation receiveData:data];
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:dataTask];
+    [handler receiveData:data];
 }
 
 #pragma mark NSURLSessionTaskDelegate
@@ -189,8 +195,8 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
               task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error
 {
-    SPTDataLoaderRequestOperation *operation = [self operationForTask:task];
-    [operation completeWithError:error];
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    [handler completeWithError:error];
 }
 
 @end

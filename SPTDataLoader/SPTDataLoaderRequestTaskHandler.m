@@ -1,59 +1,55 @@
-#import "SPTDataLoaderRequestOperation.h"
+#import "SPTDataLoaderRequestTaskHandler.h"
 
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTExpTime.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTDataLoaderRateLimiter.h"
-#import "SPTDataLoaderResponse+Private.h"
+#import "SPTExpTime.h"
 
-@interface SPTDataLoaderRequestOperation () <NSURLSessionTaskDelegate>
+@interface SPTDataLoaderRequestTaskHandler ()
 
+@property (nonatomic, weak) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 
-@property (nonatomic, strong) NSMutableData *receivedData;
-@property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
-@property (nonatomic, strong) SPTExpTime *expTime;
+@property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
+@property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, copy) dispatch_block_t executionBlock;
-
-@property (atomic, assign) BOOL isFinished;
-@property (atomic, assign) BOOL isExecuting;
+@property (nonatomic, strong) SPTExpTime *expTime;
 
 @end
 
-@implementation SPTDataLoaderRequestOperation
+@implementation SPTDataLoaderRequestTaskHandler
 
-#pragma mark SPTDataLoaderRequestOperation
+#pragma mark SPTDataLoaderRequestTaskHandler
 
-+ (instancetype)dataLoaderRequestOperationWithRequest:(SPTDataLoaderRequest *)request
-                                                 task:(NSURLSessionTask *)task
-                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                          rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
++ (instancetype)dataLoaderRequestTaskHandlerWithTask:(NSURLSessionTask *)task
+                                             request:(SPTDataLoaderRequest *)request
+                              requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                         rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
-    return [[self alloc] initWithRequest:request
-                                    task:task
-                  requestResponseHandler:requestResponseHandler
-                             rateLimiter:rateLimiter];
+    return [[self alloc] initWithTask:task
+                              request:request
+               requestResponseHandler:requestResponseHandler
+                          rateLimiter:rateLimiter];
 }
 
-- (instancetype)initWithRequest:(SPTDataLoaderRequest *)request
-                           task:(NSURLSessionTask *)task
-         requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
+- (instancetype)initWithTask:(NSURLSessionTask *)task
+                     request:(SPTDataLoaderRequest *)request
+      requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                 rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
     if (!(self = [super init])) {
         return nil;
     }
     
-    _request = request;
     _task = task;
+    _request = request;
     _requestResponseHandler = requestResponseHandler;
     _rateLimiter = rateLimiter;
-    
-    _expTime = [SPTExpTime expTimeWithInitialTime:0.0 maxTime:60.0 * 60.0];
     
     __weak __typeof(self) weakSelf = self;
     _executionBlock = ^ {
@@ -66,13 +62,17 @@
 - (void)receiveData:(NSData *)data
 {
     [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
-    [self.receivedData appendData:data];
+    if (!self.request.chunks) {
+        [self.receivedData appendData:data];
+    }
 }
 
 - (void)completeWithError:(NSError *)error
 {
-    self.isExecuting = NO;
-    self.isFinished = YES;
+    if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
+        [self.requestResponseHandler cancelledRequest:self.request];
+        return;
+    }
     
     [self.rateLimiter executedRequest:self.request];
     
@@ -104,10 +104,6 @@
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
 {
-    if (self.isCancelled) {
-        return NSURLSessionResponseCancel;
-    }
-    
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response];
     [self.requestResponseHandler receivedInitialResponse:self.response];
     
@@ -115,20 +111,23 @@
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.expectedContentLength > 0) {
             self.receivedData = [NSMutableData dataWithCapacity:httpResponse.expectedContentLength];
-        } else {
-            self.receivedData = [NSMutableData data];
         }
+    }
+    
+    if (!self.receivedData) {
+        self.receivedData = [NSMutableData data];
     }
     
     return NSURLSessionResponseAllow;
 }
 
+- (void)start
+{
+    self.executionBlock();
+}
+
 - (void)checkRateLimiterAndExecute
 {
-    if (self.isCancelled) {
-        return;
-    }
-    
     NSTimeInterval waitTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request];
     if (!waitTime) {
         [self checkRetryLimiterAndExecute];
@@ -139,63 +138,13 @@
 
 - (void)checkRetryLimiterAndExecute
 {
-    if (self.isCancelled) {
-        return;
-    }
-    
     NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
     if (!waitTime) {
-        @synchronized(self) {
-            self.isExecuting = YES;
-            self.isFinished = NO;
-            
-            self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
-        }
-        @synchronized(self.task) {
-            [self.task resume];
-        }
+        self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
+        [self.task resume];
     } else {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
     }
-}
-
-#pragma mark NSOperationQueue
-
-- (void)start
-{
-    if (self.isCancelled) {
-        self.isFinished = YES;
-        self.isExecuting = NO;
-        return;
-    }
-    
-    [self checkRateLimiterAndExecute];
-}
-
-- (void)cancel
-{
-    [self.requestResponseHandler cancelledRequest:self.request];
-    
-    @synchronized(self.task) {
-        [self.task cancel];
-    }
-    @synchronized(self) {
-        self.isExecuting = NO;
-    }
-    
-    [super cancel];
-}
-
-- (BOOL)isConcurrent
-{
-    return YES;
-}
-
-#pragma mark NSKeyValueObserving
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *) key
-{
-    return YES;
 }
 
 @end
