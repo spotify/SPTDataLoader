@@ -88,6 +88,7 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 @property (nonatomic, assign, readonly) NSTimeInterval requestTime;
 /**
  * The status code of the response
+ * @discussion This value does not change depending on the error value
  */
 @property (nonatomic, assign, readonly) SPTDataLoaderResponseHTTPStatusCode statusCode;
 
