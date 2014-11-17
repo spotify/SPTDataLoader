@@ -1,6 +1,7 @@
 #import <SPTDataLoader/SPTDataLoader.h>
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
 
 #import "SPTDataLoader+Private.h"
 
@@ -106,6 +107,11 @@
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
+    // Do not send a callback if the request doesn't support it
+    if (!response.request.chunks) {
+        return;
+    }
+    
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     if (didReceiveDataChunkSelectorExists) {
         [self executeDelegateBlock: ^{
@@ -116,6 +122,11 @@
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
+    // Do not send a callback if the request doesn't support it
+    if (!response.request.chunks) {
+        return;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveInitialResponse:)]) {
         [self executeDelegateBlock: ^{
             [self.delegate dataLoader:self didReceiveInitialResponse:response];
