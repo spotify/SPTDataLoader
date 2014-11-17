@@ -6,6 +6,7 @@
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderRequest+Private.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 
@@ -65,6 +66,13 @@
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
+    // If we failed on authorisation and we have not retried the authorisation, retry it
+    if (response.error.code == SPTDataLoaderResponseHTTPStatusCodeUnauthorised && !response.request.retriedAuthorisation) {
+        response.request.retriedAuthorisation = YES;
+        [self authoriseRequest:response.request];
+        return;
+    }
+    
     @synchronized(self) {
         id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
         [requestResponseHandler failedResponse:response];
