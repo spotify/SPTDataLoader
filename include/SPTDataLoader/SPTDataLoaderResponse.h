@@ -79,6 +79,7 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 @property (nonatomic, strong, readonly) NSDate *retryAfter;
 /**
  * The body of data contained in the response
+ * @warning Will be nil if not body was contained in the response
  */
 @property (nonatomic, strong, readonly) NSData *body;
 /**
