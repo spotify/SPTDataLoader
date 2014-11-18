@@ -109,7 +109,7 @@
 
 - (void)testHeaders
 {
-    XCTAssertEqualObjects(self.response.headers, @{ @"Header" : @"Value" }, @"The headers were not copied from the response");
+    XCTAssertEqualObjects(self.response.responseHeaders, @{ @"Header" : @"Value" }, @"The headers were not copied from the response");
 }
 
 - (void)testRelativeRetryAfter

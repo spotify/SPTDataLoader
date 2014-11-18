@@ -9,7 +9,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 @interface SPTDataLoaderResponse ()
 
 @property (nonatomic, strong, readonly) NSURLResponse *response;
-@property (nonatomic, strong, readwrite) NSDictionary *headers;
+@property (nonatomic, strong, readwrite) NSDictionary *responseHeaders;
 @property (nonatomic, strong, readwrite) NSError *error;
 @property (nonatomic, strong, readwrite) NSData *body;
 @property (nonatomic, assign, readwrite) NSTimeInterval requestTime;
@@ -41,11 +41,11 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
                                          code:httpResponse.statusCode
                                      userInfo:nil];
         }
-        _headers = httpResponse.allHeaderFields;
+        _responseHeaders = httpResponse.allHeaderFields;
         _statusCode = httpResponse.statusCode;
     }
     
-    _retryAfter = [self retryAfterForHeaders:_headers];
+    _retryAfter = [self retryAfterForHeaders:_responseHeaders];
     
     return self;
 }
