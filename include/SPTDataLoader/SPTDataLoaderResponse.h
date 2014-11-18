@@ -75,6 +75,9 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 @property (nonatomic, strong, readonly) NSDictionary *responseHeaders;
 /**
  * The date at which the request that generated the response can be retried
+ * @warning Can be nil if no retry-after is given in the response headers
+ * @discussion This should only show up if the response is an error. It can still show up in a successful response, but
+ * if this occurs it is probably the result of a misconfigured server
  */
 @property (nonatomic, strong, readonly) NSDate *retryAfter;
 /**
