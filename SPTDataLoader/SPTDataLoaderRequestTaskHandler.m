@@ -47,6 +47,8 @@
       requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                  rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
+    const NSTimeInterval SPTDataLoaderRequestTaskHandlerMaximumTime = 60.0;
+    
     if (!(self = [super init])) {
         return nil;
     }
@@ -60,6 +62,7 @@
     _executionBlock = ^ {
         [weakSelf checkRateLimiterAndExecute];
     };
+    _expTime = [SPTExpTime expTimeWithInitialTime:0.0 maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
     
     return self;
 }
