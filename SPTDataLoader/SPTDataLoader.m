@@ -110,9 +110,7 @@
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     // Do not send a callback if the request doesn't support it
-    if (!response.request.chunks) {
-        return;
-    }
+    NSAssert(response.request.chunks, @"The data loader is receiving a data chunk for a response that doesn't support data chunks");
     
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     if (didReceiveDataChunkSelectorExists) {
