@@ -61,8 +61,9 @@
 
 - (void)receiveData:(NSData *)data
 {
-    [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
-    if (!self.request.chunks) {
+    if (self.request.chunks) {
+        [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
+    } else {
         [self.receivedData appendData:data];
     }
 }
