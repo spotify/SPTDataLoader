@@ -130,7 +130,7 @@
 - (void)checkRateLimiterAndExecute
 {
     NSTimeInterval waitTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request];
-    if (!waitTime) {
+    if (waitTime == 0.0) {
         [self checkRetryLimiterAndExecute];
     } else {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
@@ -140,7 +140,7 @@
 - (void)checkRetryLimiterAndExecute
 {
     NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
-    if (!waitTime) {
+    if (waitTime == 0.0) {
         self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
         [self.task resume];
     } else {
