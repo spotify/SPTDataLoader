@@ -17,6 +17,7 @@
 /**
  * Finds the earliest time until a request can be executed
  * @param request The request pending for execution
+ * @discussion A result of 0.0 means the request can be executed immediately
  */
 - (NSTimeInterval)earliestTimeUntilRequestCanBeExecuted:(SPTDataLoaderRequest *)request;
 /**
