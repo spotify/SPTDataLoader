@@ -54,8 +54,8 @@
     @synchronized(self) {
         SPTDataLoaderRequest *copiedRequest = [request copy];
         
-        if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)]) {
-            copiedRequest.chunks = [self.delegate dataLoaderShouldSupportChunks:self];
+        if ([self.delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)] && copiedRequest.chunks) {
+            NSAssert([self.delegate dataLoaderShouldSupportChunks:self], @"The data loader was given a request that required chunks while the delegate does not support chunks");
         }
         
         id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self

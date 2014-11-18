@@ -33,6 +33,7 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
 @property (nonatomic, strong, readonly) NSDictionary *headers;
 /**
  * Whether the result of the request should be delivered in chunks
+ * @discussion This will only generate chunks if the data loader delegate is set up to receive them
  */
 @property (nonatomic, assign) BOOL chunks;
 /**
