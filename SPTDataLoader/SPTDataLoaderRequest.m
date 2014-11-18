@@ -45,7 +45,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (NSDictionary *)headers
 {
-    @synchronized(self) {
+    @synchronized(self.mutableHeaders) {
         return [self.mutableHeaders copy];
     }
 }
@@ -56,7 +56,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
         return;
     }
     
-    @synchronized(self) {
+    @synchronized(self.mutableHeaders) {
         if (!value && header) {
             [self.mutableHeaders removeObjectForKey:header];
             return;
@@ -68,7 +68,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (void)removeHeader:(NSString *)header
 {
-    @synchronized(self) {
+    @synchronized(self.mutableHeaders) {
         [self.mutableHeaders removeObjectForKey:header];
     }
 }
@@ -109,7 +109,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     __typeof(self) copy = [self.class requestWithURL:self.URL];
     copy.maximumRetryCount = self.maximumRetryCount;
     copy.body = [self.body copy];
-    @synchronized(self) {
+    @synchronized(self.mutableHeaders) {
         copy.mutableHeaders = [self.mutableHeaders mutableCopy];
     }
     copy.chunks = self.chunks;
