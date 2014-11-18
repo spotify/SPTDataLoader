@@ -67,10 +67,12 @@
 
 - (void)cancelAllLoads
 {
-    @synchronized(self) {
-        NSArray *cancellationTokens = [self.cancellationTokens.allObjects copy];
-        [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
+    NSArray *cancellationTokens = nil;
+    @synchronized(self.cancellationTokens) {
+        cancellationTokens = [self.cancellationTokens.allObjects copy];
+        [self.cancellationTokens removeAllObjects];
     }
+    [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
 }
 
 #pragma mark NSObject
