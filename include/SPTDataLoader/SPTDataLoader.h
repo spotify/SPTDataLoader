@@ -54,6 +54,7 @@ didReceiveDataChunk:(NSData *)data
  * Called when the data loader receives an initial response for a request
  * @param dataLoader The data loader that received the initial response
  * @param response The response with all values filled out other than its body
+ * @discussion This is guaranteed to be called before the first call of dataLoader:didReceiveDataChunk:forResponse
  */
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response;
 
