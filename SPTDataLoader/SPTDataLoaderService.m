@@ -79,7 +79,7 @@
     @synchronized(self.handlers) {
         handlers = [self.handlers copy];
     }
-    for (SPTDataLoaderRequestTaskHandler *handler in self.handlers) {
+    for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
         if ([handler.task isEqual:task]) {
             return handler;
         }
