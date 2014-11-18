@@ -214,6 +214,9 @@ didCompleteWithError:(NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
     [handler completeWithError:error];
+    @synchronized(self.handlers) {
+        [self.handlers removeObject:handler];
+    }
 }
 
 #pragma mark NSObject
