@@ -13,7 +13,6 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 @property (nonatomic, assign, readwrite) int64_t uniqueIdentifier;
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
-@property (nonatomic, strong) id<SPTCancellationToken> cancellationToken;
 @property (nonatomic, assign) BOOL retriedAuthorisation;
 
 @end

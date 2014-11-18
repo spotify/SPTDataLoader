@@ -29,6 +29,10 @@
  * @discussion This is immutable, the cancellation token should be fed this on its creation
  */
 @property (nonatomic, weak, readonly) id<SPTCancellationTokenDelegate> delegate;
+/**
+ * The object that will be affected by the cancellation
+ */
+@property (nonatomic, strong, readonly) id objectToCancel;
 
 /**
  * Cancels the cancellation token

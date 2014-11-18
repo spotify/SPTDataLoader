@@ -32,7 +32,7 @@
 - (void)testCreateCancellationToken
 {
     id<SPTCancellationTokenDelegate> delegate = [SPTCancellationTokenDelegateMock new];
-    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:delegate];
+    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:delegate cancelObject:nil];
     XCTAssertNotNil(cancellationToken, @"The factory did not provide a valid cancellation token");
     XCTAssertEqual(delegate, cancellationToken.delegate, @"The factory did not set the delegate on the cancellation token");
 }

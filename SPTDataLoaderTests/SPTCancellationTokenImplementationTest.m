@@ -21,7 +21,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.delegate = [SPTCancellationTokenDelegateMock new];
-    self.cancellationToken = [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:self.delegate];
+    self.cancellationToken = [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:self.delegate cancelObject:nil];
 }
 
 - (void)tearDown

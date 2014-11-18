@@ -115,19 +115,20 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 - (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                     performRequest:(SPTDataLoaderRequest *)request
 {
-    request.cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self];
+    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
+                                                                                                       cancelObject:request];
     
     if ([requestResponseHandler respondsToSelector:@selector(shouldAuthoriseRequest:)]) {
         if ([requestResponseHandler shouldAuthoriseRequest:request]) {
             if ([requestResponseHandler respondsToSelector:@selector(authoriseRequest:)]) {
                 [requestResponseHandler authoriseRequest:request];
-                return request.cancellationToken;
+                return cancellationToken;
             }
         }
     }
     
     [self performRequest:request requestResponseHandler:requestResponseHandler];
-    return request.cancellationToken;
+    return cancellationToken;
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
@@ -149,13 +150,18 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
+    if (![cancellationToken.objectToCancel isKindOfClass:[SPTDataLoaderRequest class]]) {
+        return;
+    }
+    SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
+    
     NSArray *handlers = nil;
     @synchronized(self.handlers) {
         handlers = [self.handlers copy];
     }
     for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
-        if ([handler.request.cancellationToken isEqual:cancellationToken]) {
-            [cancellationToken cancel];
+        if ([handler.request isEqual:request]) {
+            [handler.task cancel];
             break;
         }
     }

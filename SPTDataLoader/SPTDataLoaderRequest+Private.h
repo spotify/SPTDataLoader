@@ -12,11 +12,6 @@
  */
 @property (nonatomic, strong, readonly) NSURLRequest *urlRequest;
 /**
- * The cancellation token tied to this request
- * @warning This is not copied when a copy is performed
- */
-@property (nonatomic, strong) id<SPTCancellationToken> cancellationToken;
-/**
  * Whether the request has been retried with authorisation already
  * @warning This is not copied when a copy is performed
  */

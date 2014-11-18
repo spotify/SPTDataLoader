@@ -7,8 +7,10 @@
 #pragma mark SPTCancellationTokenFactory
 
 - (id<SPTCancellationToken>)createCancellationTokenWithDelegate:(id<SPTCancellationTokenDelegate>)delegate
+                                                   cancelObject:(id)cancelObject
 {
-    return [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:delegate];
+    return [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:delegate
+                                                                              cancelObject:cancelObject];
 }
 
 @end

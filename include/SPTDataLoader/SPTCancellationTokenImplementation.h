@@ -10,7 +10,9 @@
 /**
  * Class constructor
  * @param delegate The object listening to the cancellation token
+ * @param cancelObject The object that will be cancelled
  */
-+ (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTCancellationTokenDelegate>)delegate;
++ (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTCancellationTokenDelegate>)delegate
+                                               cancelObject:(id)cancelObject;
 
 @end
