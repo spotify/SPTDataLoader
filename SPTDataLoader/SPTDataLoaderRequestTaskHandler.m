@@ -20,6 +20,11 @@
 @property (nonatomic, copy) dispatch_block_t executionBlock;
 @property (nonatomic, strong) SPTExpTime *expTime;
 
+@property (nonatomic, assign) BOOL calledSuccessfulResponse;
+@property (nonatomic, assign) BOOL calledFailedResponse;
+@property (nonatomic, assign) BOOL calledCancelledRequest;
+@property (nonatomic, assign) BOOL started;
+
 @end
 
 @implementation SPTDataLoaderRequestTaskHandler
@@ -72,6 +77,7 @@
 {
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
         [self.requestResponseHandler cancelledRequest:self.request];
+        self.calledCancelledRequest = YES;
         return;
     }
     
@@ -97,10 +103,12 @@
             }
         }
         [self.requestResponseHandler failedResponse:self.response];
+        self.calledFailedResponse = YES;
         return;
     }
     
     [self.requestResponseHandler successfulResponse:self.response];
+    self.calledSuccessfulResponse = YES;
 }
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
@@ -124,6 +132,7 @@
 
 - (void)start
 {
+    self.started = YES;
     self.executionBlock();
 }
 
@@ -145,6 +154,15 @@
         [self.task resume];
     } else {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
+    }
+}
+
+#pragma mark NSObject
+
+- (void)dealloc
+{
+    if (_started) {
+        NSAssert(_calledCancelledRequest || _calledFailedResponse || _calledSuccessfulResponse, @"A started task was not ended with a call to either its cancel, failed or success callbacks");
     }
 }
 

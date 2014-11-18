@@ -110,6 +110,17 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     [handler start];
 }
 
+- (void)cancelAllLoads
+{
+    NSArray *handlers = nil;
+    @synchronized(self.handlers) {
+        handlers = [self.handlers copy];
+    }
+    for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
+        [handler.task cancel];
+    }
+}
+
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
 - (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
@@ -203,6 +214,13 @@ didCompleteWithError:(NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
     [handler completeWithError:error];
+}
+
+#pragma mark NSObject
+
+- (void)dealloc
+{
+    [self cancelAllLoads];
 }
 
 @end
