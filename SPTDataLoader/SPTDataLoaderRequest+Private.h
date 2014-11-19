@@ -16,5 +16,9 @@
  * @warning This is not copied when a copy is performed
  */
 @property (nonatomic, assign) BOOL retriedAuthorisation;
+/**
+ * The cancellation token associated with the request
+ */
+@property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
 
 @end

@@ -90,10 +90,14 @@
 - (void)performRequest:(SPTDataLoaderRequest *)request
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
+    if (request.cancellationToken.cancelled) {
+        return;
+    }
+    
     NSString *host = [self.resolver addressForHost:request.URL.host];
     if (![host isEqualToString:request.URL.host] && host) {
         [request addValue:request.URL.host forHeader:SPTDataLoaderRequestHostHeader];
-        NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:nil];
+        NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
         requestComponents.host = host;
         request.URL = requestComponents.URL;
     }
@@ -128,6 +132,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 {
     id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
                                                                                                        cancelObject:request];
+    request.cancellationToken = cancellationToken;
     
     if ([requestResponseHandler respondsToSelector:@selector(shouldAuthoriseRequest:)]) {
         if ([requestResponseHandler shouldAuthoriseRequest:request]) {

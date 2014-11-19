@@ -51,5 +51,10 @@
  * @discussion This will invoke one of the delegate methods in response
  */
 - (void)authoriseRequest:(SPTDataLoaderRequest *)request;
+/**
+ * Mark that a request failed authorisation
+ * @param request The request to authorise
+ */
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request;
 
 @end
