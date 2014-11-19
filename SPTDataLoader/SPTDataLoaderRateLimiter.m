@@ -75,6 +75,9 @@
     @synchronized(self.serviceEndpointLastExecution) {
         self.serviceEndpointLastExecution[serviceKey] = @(CFAbsoluteTimeGetCurrent());
     }
+    @synchronized(self.serviceEndpointRetryAt) {
+        [self.serviceEndpointRetryAt removeObjectForKey:serviceKey];
+    }
 }
 
 - (double)requestsPerSecondForURL:(NSURL *)URL
