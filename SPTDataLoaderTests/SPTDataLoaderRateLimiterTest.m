@@ -85,4 +85,16 @@
     [self.rateLimiter setRetryAfter:60.0 forURL:nil];
 }
 
+- (void)testResetRetryAfterAfterSuccessfulExecution
+{
+    NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL];
+    NSTimeInterval seconds = 60.0;
+    CFAbsoluteTime retryAfter = CFAbsoluteTimeGetCurrent() + seconds;
+    [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
+    [self.rateLimiter executedRequest:request];
+    NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
+    XCTAssertEqual(floor(earliestTime), 0.0, @"The earliest time until request can be executed was not reset despite an overwrite of the retry-after rule");
+}
+
 @end
