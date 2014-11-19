@@ -69,6 +69,11 @@
 {
     // If we failed on authorisation and we have not retried the authorisation, retry it
     if (response.error.code == SPTDataLoaderResponseHTTPStatusCodeUnauthorised && !response.request.retriedAuthorisation) {
+        for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
+            if ([authoriser requestRequiresAuthorisation:response.request]) {
+                [authoriser requestFailedAuthorisation:response.request];
+            }
+        }
         response.request.retriedAuthorisation = YES;
         [self authoriseRequest:response.request];
         return;
