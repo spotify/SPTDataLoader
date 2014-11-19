@@ -122,7 +122,7 @@
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.expectedContentLength > 0) {
-            self.receivedData = [NSMutableData dataWithCapacity:httpResponse.expectedContentLength];
+            self.receivedData = [NSMutableData dataWithCapacity:(NSUInteger)httpResponse.expectedContentLength];
         }
     }
     
