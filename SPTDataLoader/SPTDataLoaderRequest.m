@@ -30,7 +30,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (instancetype)initWithURL:(NSURL *)URL
 {
-    static int64_t uniqueIdentifierBarrier = 0;
+    static volatile int64_t uniqueIdentifierBarrier = 0;
     
     if (!(self = [super init])) {
         return nil;
