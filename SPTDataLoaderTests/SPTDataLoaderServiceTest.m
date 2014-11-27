@@ -24,7 +24,6 @@
 @property (nonatomic ,strong) SPTDataLoaderService *service;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
-@property (nonatomic, strong) SPTDataLoaderConsumptionObserverMock *consumptionObserver;
 @property (nonatomic, strong) NSURLSessionMock *session;
 
 @end
@@ -39,11 +38,9 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.resolver = [SPTDataLoaderResolver new];
-    self.consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                             rateLimiter:self.rateLimiter
-                                                               resolver:self.resolver
-                                                    consumptionObserver:self.consumptionObserver];
+                                                               resolver:self.resolver];
     self.session = [NSURLSessionMock new];
     self.service.session = self.session;
 }
@@ -169,8 +166,13 @@
 
 - (void)testConsumptionObserverCalled
 {
+    SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
+    [self.service addConsumptionObserver:consumptionObserver on:dispatch_get_main_queue()];
     [self.service URLSession:self.session task:nil didCompleteWithError:nil];
-    XCTAssertEqual(self.consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when a request ends");
+    XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when a request ends");
+    [self.service removeConsumptionObserver:consumptionObserver];
+    [self.service URLSession:self.session task:nil didCompleteWithError:nil];
+    XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when the observer has been removed");
 }
 
 @end

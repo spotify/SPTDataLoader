@@ -21,13 +21,24 @@
  */
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
-                                      resolver:(SPTDataLoaderResolver *)resolver
-                           consumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver;
+                                      resolver:(SPTDataLoaderResolver *)resolver;
 
 /**
  * Creates a data loader factory
  * @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */
 - (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray *)authorisers;
+/**
+ * Adds a consumption observer
+ * @param consumptionObserver The consumption observer to add to the service
+ * @param queue The queue to call the consumption observer on
+ * @warning This will have a weak reference to the consumption observer
+ */
+- (void)addConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver on:(dispatch_queue_t)queue;
+/**
+ * Removes a consumption observer
+ * @param consumptionObserver The consumption observer to remove from the service
+ */
+- (void)removeConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver;
 
 @end

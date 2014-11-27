@@ -16,12 +16,12 @@
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
-@property (nonatomic, strong) id<SPTDataLoaderConsumptionObserver> consumptionObserver;
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray *handlers;
+@property (nonatomic, strong) NSMapTable *consumptionObservers;
 
 @end
 
@@ -32,18 +32,13 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
-                           consumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver
 {
-    return [[self alloc] initWithUserAgent:userAgent
-                               rateLimiter:rateLimiter
-                                  resolver:resolver
-                       consumptionObserver:consumptionObserver];
+    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver];
 }
 
 - (instancetype)initWithUserAgent:(NSString *)userAgent
                       rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(SPTDataLoaderResolver *)resolver
-              consumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
@@ -56,7 +51,6 @@
     
     _rateLimiter = rateLimiter;
     _resolver = resolver;
-    _consumptionObserver = consumptionObserver;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
@@ -72,6 +66,7 @@
     _sessionQueue.name = NSStringFromClass(self.class);
     _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
     _handlers = [NSMutableArray new];
+    _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
     
     return self;
 }
@@ -79,6 +74,24 @@
 - (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray *)authorisers
 {
     return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self authorisers:authorisers];
+}
+
+- (void)addConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver on:(dispatch_queue_t)queue
+{
+    if (consumptionObserver && queue) {
+        @synchronized(self.consumptionObservers) {
+            [self.consumptionObservers setObject:queue forKey:consumptionObserver];
+        }
+    }
+}
+
+- (void)removeConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver
+{
+    if (consumptionObserver) {
+        @synchronized(self.consumptionObservers) {
+            [self.consumptionObservers removeObjectForKey:consumptionObserver];
+        }
+    }
 }
 
 - (SPTDataLoaderRequestTaskHandler *)handlerForTask:(NSURLSessionTask *)task
@@ -232,16 +245,22 @@ didCompleteWithError:(NSError *)error
     }
     
     SPTDataLoaderRequest *request = handler.request;
-    dispatch_block_t mainThreadBlock = ^ {
-        [self.consumptionObserver endedRequest:request
-                               bytesDownloaded:(int)task.countOfBytesSent
-                                 bytesUploaded:(int)task.countOfBytesReceived];
-    };
     
-    if ([NSThread isMainThread]) {
-        mainThreadBlock();
-    } else {
-        dispatch_async(dispatch_get_main_queue(), mainThreadBlock);
+    @synchronized(self.consumptionObservers) {
+        for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
+            dispatch_block_t observerBlock = ^ {
+                [consumptionObserver endedRequest:request
+                                  bytesDownloaded:(int)task.countOfBytesSent
+                                    bytesUploaded:(int)task.countOfBytesReceived];
+            };
+            
+            dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
+            if ([NSThread isMainThread] && queue == dispatch_get_main_queue()) {
+                observerBlock();
+            } else {
+                dispatch_async(queue, observerBlock);
+            }
+        }
     }
 }
 
