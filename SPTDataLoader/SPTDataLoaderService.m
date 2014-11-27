@@ -4,6 +4,7 @@
 #import <SPTDataLoader/SPTCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
+#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
@@ -15,6 +16,7 @@
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
+@property (nonatomic, strong) id<SPTDataLoaderConsumptionObserver> consumptionObserver;
 
 @property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
@@ -30,13 +32,18 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
+                           consumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver
 {
-    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver];
+    return [[self alloc] initWithUserAgent:userAgent
+                               rateLimiter:rateLimiter
+                                  resolver:resolver
+                       consumptionObserver:consumptionObserver];
 }
 
 - (instancetype)initWithUserAgent:(NSString *)userAgent
                       rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(SPTDataLoaderResolver *)resolver
+              consumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
@@ -49,6 +56,7 @@
     
     _rateLimiter = rateLimiter;
     _resolver = resolver;
+    _consumptionObserver = consumptionObserver;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
@@ -221,6 +229,19 @@ didCompleteWithError:(NSError *)error
     [handler completeWithError:error];
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
+    }
+    
+    SPTDataLoaderRequest *request = handler.request;
+    dispatch_block_t mainThreadBlock = ^ {
+        [self.consumptionObserver endedRequest:request
+                               bytesDownloaded:(int)task.countOfBytesSent
+                                 bytesUploaded:(int)task.countOfBytesReceived];
+    };
+    
+    if ([NSThread isMainThread]) {
+        mainThreadBlock();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), mainThreadBlock);
     }
 }
 

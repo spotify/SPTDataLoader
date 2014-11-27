@@ -78,6 +78,7 @@
 		050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
 		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
 		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
+		051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConsumptionObserver.h; path = include/SPTDataLoader/SPTDataLoaderConsumptionObserver.h; sourceTree = "<group>"; };
 		052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderResponse+Private.h"; sourceTree = "<group>"; };
 		052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRateLimiter.m; sourceTree = "<group>"; };
 		052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolver.m; sourceTree = "<group>"; };
@@ -235,6 +236,7 @@
 				056A04B91A13D10900FA72AD /* SPTExpTime.h */,
 				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
 				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
+				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
 			);
 			name = "Public API";
 			sourceTree = "<group>";
