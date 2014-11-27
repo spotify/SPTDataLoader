@@ -11,6 +11,7 @@
 #import "SPTDataLoaderAuthoriserMock.h"
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
+#import "SPTDataLoaderConsumptionObserverMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate>
 
@@ -23,6 +24,7 @@
 @property (nonatomic ,strong) SPTDataLoaderService *service;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
+@property (nonatomic, strong) SPTDataLoaderConsumptionObserverMock *consumptionObserver;
 @property (nonatomic, strong) NSURLSessionMock *session;
 
 @end
@@ -37,10 +39,11 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.resolver = [SPTDataLoaderResolver new];
+    self.consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                             rateLimiter:self.rateLimiter
                                                                resolver:self.resolver
-                                                    consumptionObserver:nil];
+                                                    consumptionObserver:self.consumptionObserver];
     self.session = [NSURLSessionMock new];
     self.service.session = self.session;
 }
@@ -162,6 +165,12 @@
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     [self.service URLSession:self.session task:self.session.lastDataTask didCompleteWithError:nil];
     XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1, @"The service did not call successfully received response on the request response handler");
+}
+
+- (void)testConsumptionObserverCalled
+{
+    [self.service URLSession:self.session task:nil didCompleteWithError:nil];
+    XCTAssertEqual(self.consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when a request ends");
 }
 
 @end
