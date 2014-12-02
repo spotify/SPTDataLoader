@@ -78,6 +78,10 @@
 
 - (void)completeWithError:(NSError *)error
 {
+    if (!self.response) {
+        self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
+    }
+    
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
         [self.requestResponseHandler cancelledRequest:self.request];
         self.calledCancelledRequest = YES;
