@@ -119,4 +119,10 @@
     XCTAssertEqual(self.task.numberOfCallsToResume, 1, @"The task should be resumed on start if no backoff and rate-limiting is applied");
 }
 
+- (void)testResponseCreatedIfNoInitialDataReceived
+{
+    [self.handler completeWithError:nil];
+    XCTAssertNotNil(self.requestResponseHandler.lastReceivedResponse, @"The response should be created even without an initial receivedResponse call");
+}
+
 @end

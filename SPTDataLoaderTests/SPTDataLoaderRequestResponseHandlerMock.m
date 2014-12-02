@@ -7,6 +7,7 @@
 @property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedDataRequestCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfSuccessfulDataResponseCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedInitialResponseCalls;
+@property (nonatomic, strong, readwrite) SPTDataLoaderResponse *lastReceivedResponse;
 
 @end
 
@@ -17,11 +18,13 @@
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfSuccessfulDataResponseCalls++;
+    self.lastReceivedResponse = response;
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfFailedResponseCalls++;
+    self.lastReceivedResponse = response;
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -32,11 +35,13 @@
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfReceivedDataRequestCalls++;
+    self.lastReceivedResponse = response;
 }
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfReceivedInitialResponseCalls++;
+    self.lastReceivedResponse = response;
 }
 
 @end
