@@ -168,8 +168,9 @@
 
 - (void)dealloc
 {
-    if (_started) {
-        NSAssert(_calledCancelledRequest || _calledFailedResponse || _calledSuccessfulResponse, @"A started task was not ended with a call to either its cancel, failed or success callbacks");
+    // Always call the last error the request completed with if retrying
+    if (_started && !_calledCancelledRequest && !_calledFailedResponse && !_calledSuccessfulResponse) {
+        [self completeWithError:nil];
     }
 }
 
