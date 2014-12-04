@@ -128,6 +128,7 @@
 		059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponseTest.m; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
+		993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_shared.xcconfig; path = ../../other/spotify_shared.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +158,7 @@
 				050E06991A10C62100A10A0E /* SPTDataLoaderTests */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
 				050E068B1A10C62100A10A0E /* Products */,
+				993EF2321A30B1E2001E48D2 /* Build System */,
 			);
 			sourceTree = "<group>";
 		};
@@ -273,6 +275,14 @@
 				050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		993EF2321A30B1E2001E48D2 /* Build System */ = {
+			isa = PBXGroup;
+			children = (
+				993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */,
+			);
+			name = "Build System";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +427,7 @@
 /* Begin XCBuildConfiguration section */
 		050E069C1A10C62100A10A0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -457,6 +468,7 @@
 		};
 		050E069D1A10C62100A10A0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
