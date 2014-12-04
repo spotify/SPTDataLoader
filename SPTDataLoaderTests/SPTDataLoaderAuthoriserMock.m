@@ -22,6 +22,10 @@
     [self.delegate dataLoaderAuthoriser:self authorisedRequest:request];
 }
 
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request
+{
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
     return [self.class new];
