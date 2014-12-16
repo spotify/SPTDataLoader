@@ -2,8 +2,6 @@
 
 #import "SPTDataLoaderRequest+Private.h"
 
-#include <libkern/OSAtomic.h>
-
 NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 
 static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
@@ -30,7 +28,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (instancetype)initWithURL:(NSURL *)URL
 {
-    static volatile int64_t uniqueIdentifierBarrier = 0;
+    static int64_t uniqueIdentifierBarrier = 0;
     
     if (!(self = [super init])) {
         return nil;
@@ -40,7 +38,9 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     
     _mutableHeaders = [NSMutableDictionary new];
     _method = SPTDataLoaderRequestMethodGet;
-    _uniqueIdentifier = OSAtomicIncrement64Barrier(&uniqueIdentifierBarrier);
+    @synchronized(self.class) {
+        _uniqueIdentifier = uniqueIdentifierBarrier++;
+    }
     
     return self;
 }
