@@ -11,6 +11,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequestTaskHandler.h"
+#import "NSDictionary+HeaderSize.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
@@ -251,6 +252,12 @@ didCompleteWithError:(NSError *)error
             dispatch_block_t observerBlock = ^ {
                 int bytesReceived = (int)task.countOfBytesReceived;
                 int bytesSent = (int)task.countOfBytesSent;
+                
+                bytesReceived += task.currentRequest.allHTTPHeaderFields.spt_byteSizeOfHeaders;
+                if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+                    bytesReceived += httpResponse.allHeaderFields.spt_byteSizeOfHeaders;
+                }
                 
                 [consumptionObserver endedRequest:request
                                   bytesDownloaded:bytesReceived
