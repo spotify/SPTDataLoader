@@ -30,4 +30,10 @@
     XCTAssertEqual(headers.spt_byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string keys");
 }
 
+- (void)testNoSizeForNonStringObjects
+{
+    NSDictionary *headers = @{ @"Authorisation" : @(1) };
+    XCTAssertEqual(headers.spt_byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string objects");
+}
+
 @end
