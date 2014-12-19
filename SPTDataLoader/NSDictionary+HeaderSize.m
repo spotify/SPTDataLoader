@@ -12,7 +12,7 @@
         
         NSString *keyString = (NSString *)key;
         headerSize += [keyString dataUsingEncoding:NSUTF8StringEncoding].length;
-        headerSize += [@": " dataUsingEncoding:NSUTF8StringEncoding].length;
+        headerSize += [@": \n" dataUsingEncoding:NSUTF8StringEncoding].length;
         
         id object = self[keyString];
         if (![object isKindOfClass:[NSString class]]) {
