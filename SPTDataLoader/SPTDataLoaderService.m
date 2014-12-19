@@ -249,9 +249,12 @@ didCompleteWithError:(NSError *)error
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
             dispatch_block_t observerBlock = ^ {
+                int bytesReceived = (int)task.countOfBytesReceived;
+                int bytesSent = (int)task.countOfBytesSent;
+                
                 [consumptionObserver endedRequest:request
-                                  bytesDownloaded:(int)task.countOfBytesSent
-                                    bytesUploaded:(int)task.countOfBytesReceived];
+                                  bytesDownloaded:bytesReceived
+                                    bytesUploaded:bytesSent];
             };
             
             dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
