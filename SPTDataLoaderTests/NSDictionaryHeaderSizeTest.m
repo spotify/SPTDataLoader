@@ -36,4 +36,10 @@
     XCTAssertEqual(headers.spt_byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string objects");
 }
 
+- (void)testSize
+{
+    NSDictionary *headers = @{ @"Authorisation" : @"Basic thisismytoken" };
+    XCTAssertEqual(headers.spt_byteSizeOfHeaders, 35, @"The header size in bytes should be 35 inclusive of the \": \" barrier and \\n");
+}
+
 @end
