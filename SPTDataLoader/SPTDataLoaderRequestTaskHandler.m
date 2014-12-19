@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
 @property (nonatomic, assign) NSUInteger retryCount;
+@property (nonatomic, assign) NSUInteger waitCount;
 @property (nonatomic, copy) dispatch_block_t executionBlock;
 @property (nonatomic, strong) SPTExpTime *expTime;
 
@@ -155,13 +156,15 @@
 
 - (void)checkRetryLimiterAndExecute
 {
-    NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
-    if (waitTime == 0.0) {
-        self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
-        [self.task resume];
-    } else {
+    if (self.waitCount < self.retryCount) {
+        self.waitCount++;
+        NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
+        return;
     }
+    
+    self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
+    [self.task resume];
 }
 
 #pragma mark NSObject
