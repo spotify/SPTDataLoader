@@ -27,19 +27,19 @@
 - (void)testNoSizeForNonStringKeys
 {
     NSDictionary *headers = @{ @(1) : @(2) };
-    XCTAssertEqual(headers.spt_byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string keys");
+    XCTAssertEqual(headers.byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string keys");
 }
 
 - (void)testNoSizeForNonStringObjects
 {
     NSDictionary *headers = @{ @"Authorisation" : @(1) };
-    XCTAssertEqual(headers.spt_byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string objects");
+    XCTAssertEqual(headers.byteSizeOfHeaders, 0, @"The header size in bytes should be 0 with no string objects");
 }
 
 - (void)testSize
 {
     NSDictionary *headers = @{ @"Authorisation" : @"Basic thisismytoken" };
-    XCTAssertEqual(headers.spt_byteSizeOfHeaders, 35, @"The header size in bytes should be 35 inclusive of the \": \" barrier and \\n");
+    XCTAssertEqual(headers.byteSizeOfHeaders, 35, @"The header size in bytes should be 35 inclusive of the \": \" barrier and \\n");
 }
 
 @end

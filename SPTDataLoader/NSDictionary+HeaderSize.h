@@ -8,6 +8,6 @@
 /**
  * The size of the header in bytes represented by the dictionary
  */
-@property (nonatomic, assign, readonly) NSInteger spt_byteSizeOfHeaders;
+@property (nonatomic, assign, readonly, getter = spt_byteSizeOfHeaders) NSInteger byteSizeOfHeaders;
 
 @end

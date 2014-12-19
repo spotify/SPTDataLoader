@@ -253,10 +253,10 @@ didCompleteWithError:(NSError *)error
                 int bytesSent = (int)task.countOfBytesSent;
                 int bytesReceived = (int)task.countOfBytesReceived;
                 
-                bytesSent += task.currentRequest.allHTTPHeaderFields.spt_byteSizeOfHeaders;
+                bytesSent += task.currentRequest.allHTTPHeaderFields.byteSizeOfHeaders;
                 if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-                    bytesReceived += httpResponse.allHeaderFields.spt_byteSizeOfHeaders;
+                    bytesReceived += httpResponse.allHeaderFields.byteSizeOfHeaders;
                 }
                 
                 [consumptionObserver endedRequest:request
