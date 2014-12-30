@@ -31,4 +31,9 @@
     return [self.class new];
 }
 
+- (void)refresh
+{
+    
+}
+
 @end
