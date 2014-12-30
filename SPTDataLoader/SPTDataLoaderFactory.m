@@ -10,8 +10,6 @@
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 
-@property (nonatomic, copy) NSArray *authorisers;
-
 @property (nonatomic, strong) NSMapTable *requestToRequestResponseHandler;
 
 @end
