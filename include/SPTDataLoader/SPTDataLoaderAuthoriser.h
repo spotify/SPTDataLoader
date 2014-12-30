@@ -56,5 +56,11 @@
  * @param request The request to authorise
  */
 - (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request;
+/**
+ * Refreshes any kind authorisation
+ * @discussion This is never called by the factory, it is expected that the authoriser will be able to handle refreshes
+ * when the requestFailedAuthorisation: is called. This is for the benefit of outside consumers of this API.
+ */
+- (void)refresh;
 
 @end
