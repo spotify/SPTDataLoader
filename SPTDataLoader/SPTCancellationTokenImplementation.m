@@ -1,4 +1,4 @@
-#import <SPTDataLoader/SPTCancellationTokenImplementation.h>
+#import "SPTCancellationTokenImplementation.h"
 
 @interface SPTCancellationTokenImplementation ()
 

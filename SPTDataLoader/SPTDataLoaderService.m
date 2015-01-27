@@ -1,6 +1,5 @@
 #import <SPTDataLoader/SPTDataLoaderService.h>
 
-#import <SPTDataLoader/SPTCancellationTokenFactoryImplementation.h>
 #import <SPTDataLoader/SPTCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
@@ -12,6 +11,7 @@
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequestTaskHandler.h"
 #import "NSDictionary+HeaderSize.h"
+#import "SPTCancellationTokenFactoryImplementation.h"
 
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
 
