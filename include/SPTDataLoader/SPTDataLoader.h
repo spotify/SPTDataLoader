@@ -30,6 +30,7 @@
 #import <SPTDataLoader/SPTExpTime.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
+#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
 
 /**
  * The protocol used for listening to the result of performing requests on the SPTDataLoader
