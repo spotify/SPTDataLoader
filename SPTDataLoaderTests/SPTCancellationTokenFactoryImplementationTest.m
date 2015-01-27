@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTCancellationTokenFactoryImplementation.h>
+#import "SPTCancellationTokenFactoryImplementation.h"
 
 #import "SPTCancellationTokenDelegateMock.h"
 
