@@ -42,5 +42,5 @@ The data loader service allows rate limiting of URLs to be set explicitly or to 
 For an example of this frameworks usage, see the demo application location in the "demo" folder.
 
 ## CREDITS
-Will Sackfield
-Dmitry Ponomarev
+* Will Sackfield
+* Dmitry Ponomarev
