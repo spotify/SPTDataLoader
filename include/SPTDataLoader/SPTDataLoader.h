@@ -2,9 +2,6 @@
 
 // Because of its name, let this header double as a convenience header
 #import <SPTDataLoader/SPTCancellationToken.h>
-#import <SPTDataLoader/SPTCancellationTokenFactory.h>
-#import <SPTDataLoader/SPTCancellationTokenFactoryImplementation.h>
-#import <SPTDataLoader/SPTCancellationTokenImplementation.h>
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
 #import <SPTDataLoader/SPTDataLoaderFactory.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
