@@ -21,10 +21,7 @@ Categories  :
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
 ## LICENSE
-Copyright (c) 2014 Spotify AB
-
-THIS REPOSITORY IS THE PROPERTY OF SPOTIFY AB
-UNAUTHORIZED ACCESS TO THIS DATA IS STRICTLY PROHIBITED.
+[Apache 2](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## BACKGROUND
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing. Thus we came up with a way to elegantly inject tokens in a Just-in-time manner for requests that require them. We also wanted to learn from our mistakes with our proprietary protocol, and bake in back-off policies early to avoid us DDOSing our own backends with huge amounts of eronious requests.
