@@ -90,11 +90,16 @@
 
 - (void)receiveData:(NSData *)data
 {
-    if (self.request.chunks) {
-        [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
-    } else {
-        [self.receivedData appendData:data];
-    }
+    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+        
+        NSData *dataRange = [NSData dataWithBytes:bytes length:byteRange.length];
+
+        if (self.request.chunks) {
+            [self.requestResponseHandler receivedDataChunk:dataRange forResponse:self.response];
+        } else {
+            [self.receivedData appendData:dataRange];
+        }
+    }];
 }
 
 - (void)completeWithError:(NSError *)error
