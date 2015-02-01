@@ -2,6 +2,7 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)logInButtonTouchedUpInside:(id)sender;
 
 @end
 
