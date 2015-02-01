@@ -1,22 +1,5 @@
 # SPTDataLoader
 
-```
-Project     : SPTDataLoader ObjC HTTP Library
-Maintainer  : Will Sackfield <sackfield@spotify.com>
-System      : client
-Dependencies: 
-Environment : Objective-C
-Categories  :
-[ ]  Infrastructure
-[ ]  Database Maintenance
-[ ]  Shared Library
-[ ]  Media Data Processing
-[ ]  Meta Data Processing
-[ ]  Deep Server
-[ ]  Shallow Server
-[X]  Client
-```
-
 ## DESCRIPTION
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
