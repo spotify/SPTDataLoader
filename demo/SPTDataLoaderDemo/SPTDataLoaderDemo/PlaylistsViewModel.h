@@ -18,11 +18,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface ViewController : UIViewController
+@class PlaylistsViewModel;
+@class SPTDataLoader;
 
-- (IBAction)logInButtonTouchedUpInside:(id)sender;
+@protocol PlaylistsViewModelDelegate <NSObject>
+
+- (void)playlistsViewModelDidLoad:(PlaylistsViewModel *)model;
 
 @end
 
+@interface PlaylistsViewModel : NSObject
+
+@property (nonatomic, weak) id<PlaylistsViewModelDelegate> delegate;
+@property (nonatomic, assign, readonly, getter = isLoaded) BOOL loaded;
+@property (nonatomic, strong, readonly) NSArray *items;
+
+- (instancetype)initWithDataLoader:(SPTDataLoader *)dataLoader;
+
+- (void)load;
+
+@end

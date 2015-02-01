@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0546F00D1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 0546F00C1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.m */; };
+		0546F0101A7E349D00556BD8 /* NSString+OAuthBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 0546F00F1A7E349D00556BD8 /* NSString+OAuthBlob.m */; };
+		0546F0131A7E391D00556BD8 /* PlaylistsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0546F0121A7E391D00556BD8 /* PlaylistsViewModel.m */; };
+		0546F0161A7E393B00556BD8 /* PlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0546F0151A7E393B00556BD8 /* PlaylistsViewController.m */; };
 		055AEE681A16302700A490BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE671A16302700A490BF /* main.m */; };
 		055AEE6B1A16302700A490BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE6A1A16302700A490BF /* AppDelegate.m */; };
 		055AEE6E1A16302700A490BF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE6D1A16302700A490BF /* ViewController.m */; };
@@ -15,7 +19,6 @@
 		055AEE761A16302700A490BF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 055AEE741A16302700A490BF /* LaunchScreen.xib */; };
 		055AEE821A16302700A490BF /* SPTDataLoaderDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE811A16302700A490BF /* SPTDataLoaderDemoTests.m */; };
 		055AEE941A16304900A490BF /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 055AEE911A16304100A490BF /* libSPTDataLoader.a */; };
-		055AEE971A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE961A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0546F00B1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserOAuth.h; sourceTree = "<group>"; };
+		0546F00C1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserOAuth.m; sourceTree = "<group>"; };
+		0546F00E1A7E349D00556BD8 /* NSString+OAuthBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OAuthBlob.h"; sourceTree = "<group>"; };
+		0546F00F1A7E349D00556BD8 /* NSString+OAuthBlob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OAuthBlob.m"; sourceTree = "<group>"; };
+		0546F0111A7E391D00556BD8 /* PlaylistsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistsViewModel.h; sourceTree = "<group>"; };
+		0546F0121A7E391D00556BD8 /* PlaylistsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistsViewModel.m; sourceTree = "<group>"; };
+		0546F0141A7E393B00556BD8 /* PlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistsViewController.h; sourceTree = "<group>"; };
+		0546F0151A7E393B00556BD8 /* PlaylistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistsViewController.m; sourceTree = "<group>"; };
 		055AEE621A16302700A490BF /* SPTDataLoaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPTDataLoaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		055AEE661A16302700A490BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		055AEE671A16302700A490BF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -57,8 +68,6 @@
 		055AEE801A16302700A490BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		055AEE811A16302700A490BF /* SPTDataLoaderDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderDemoTests.m; sourceTree = "<group>"; };
 		055AEE8B1A16304100A490BF /* SPTDataLoader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SPTDataLoader.xcodeproj; path = ../../SPTDataLoader.xcodeproj; sourceTree = "<group>"; };
-		055AEE951A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserDummy.h; sourceTree = "<group>"; };
-		055AEE961A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserDummy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,8 +115,14 @@
 				055AEE6A1A16302700A490BF /* AppDelegate.m */,
 				055AEE6C1A16302700A490BF /* ViewController.h */,
 				055AEE6D1A16302700A490BF /* ViewController.m */,
-				055AEE951A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.h */,
-				055AEE961A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m */,
+				0546F0111A7E391D00556BD8 /* PlaylistsViewModel.h */,
+				0546F0121A7E391D00556BD8 /* PlaylistsViewModel.m */,
+				0546F0141A7E393B00556BD8 /* PlaylistsViewController.h */,
+				0546F0151A7E393B00556BD8 /* PlaylistsViewController.m */,
+				0546F00B1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.h */,
+				0546F00C1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.m */,
+				0546F00E1A7E349D00556BD8 /* NSString+OAuthBlob.h */,
+				0546F00F1A7E349D00556BD8 /* NSString+OAuthBlob.m */,
 				055AEE6F1A16302700A490BF /* Main.storyboard */,
 				055AEE721A16302700A490BF /* Images.xcassets */,
 				055AEE741A16302700A490BF /* LaunchScreen.xib */,
@@ -274,10 +289,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0546F0131A7E391D00556BD8 /* PlaylistsViewModel.m in Sources */,
+				0546F00D1A7E2F6900556BD8 /* SPTDataLoaderAuthoriserOAuth.m in Sources */,
+				0546F0161A7E393B00556BD8 /* PlaylistsViewController.m in Sources */,
 				055AEE6E1A16302700A490BF /* ViewController.m in Sources */,
+				0546F0101A7E349D00556BD8 /* NSString+OAuthBlob.m in Sources */,
 				055AEE6B1A16302700A490BF /* AppDelegate.m in Sources */,
 				055AEE681A16302700A490BF /* main.m in Sources */,
-				055AEE971A1630E400A490BF /* SPTDataLoaderAuthoriserDummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +498,7 @@
 				055AEE871A16302700A490BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		055AEE881A16302700A490BF /* Build configuration list for PBXNativeTarget "SPTDataLoaderDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +507,7 @@
 				055AEE8A1A16302700A490BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

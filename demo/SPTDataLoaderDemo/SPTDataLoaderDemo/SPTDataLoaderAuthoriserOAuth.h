@@ -18,11 +18,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface ViewController : UIViewController
+#import <SPTDataLoader/SPTDataLoader.h>
 
-- (IBAction)logInButtonTouchedUpInside:(id)sender;
+@interface SPTDataLoaderAuthoriserOAuth : NSObject <SPTDataLoaderAuthoriser>
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+                 dataLoaderFactory:(SPTDataLoaderFactory *)dataLoaderFactory NS_DESIGNATED_INITIALIZER;
 
 @end
-

@@ -18,11 +18,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface ViewController : UIViewController
+@interface NSString (OAuthBlob)
 
-- (IBAction)logInButtonTouchedUpInside:(id)sender;
++ (instancetype)spt_OAuthBlob;
 
 @end
-

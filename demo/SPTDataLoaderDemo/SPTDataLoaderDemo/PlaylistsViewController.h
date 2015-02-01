@@ -20,9 +20,10 @@
  */
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@class PlaylistsViewModel;
 
-- (IBAction)logInButtonTouchedUpInside:(id)sender;
+@interface PlaylistsViewController : UITableViewController
+
+- (instancetype)initWithModel:(PlaylistsViewModel *)model;
 
 @end
-
