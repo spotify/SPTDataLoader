@@ -171,7 +171,8 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
-    [self.service URLSession:self.service.session dataTask:self.session.lastDataTask didReceiveData:nil];
+    NSData *data = [@"thing" dataUsingEncoding:NSUTF8StringEncoding];
+    [self.service URLSession:self.service.session dataTask:self.session.lastDataTask didReceiveData:data];
     XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1, @"The service did not call received data on the request response handler");
 }
 
