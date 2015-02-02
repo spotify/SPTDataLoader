@@ -79,7 +79,8 @@
 - (void)testReceiveDataRelayedToRequestResponseHandler
 {
     self.request.chunks = YES;
-    [self.handler receiveData:nil];
+    NSData *data = [@"thing" dataUsingEncoding:NSUTF8StringEncoding];
+    [self.handler receiveData:data];
     XCTAssertEqual(self.requestResponseHandler.numberOfReceivedDataRequestCalls, 1, @"The handler did not relay the received data onto its request response handler");
 }
 
