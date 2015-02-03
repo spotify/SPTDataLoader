@@ -24,6 +24,12 @@ The data loader service allows rate limiting of URLs to be set explicitly or to 
 ## USAGE
 For an example of this frameworks usage, see the demo application location in the "demo" folder.
 
+## CONTRIBUTION
+
+Contribution is welcomed. Open a pull-request or an issue.
+
+You can find our style guide for Objective-C [here](https://github.com/spotify/ios-style).
+
 ## CREDITS
 * Will Sackfield
 * Dmitry Ponomarev
