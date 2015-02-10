@@ -250,7 +250,7 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     didReceiveData:(NSData *)data
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:dataTask];
-    [handler receiveData:data];
+    [handler receiveData:data.copy];
 }
 
 #pragma mark NSURLSessionTaskDelegate
