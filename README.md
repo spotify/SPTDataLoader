@@ -24,6 +24,9 @@ The data loader service allows rate limiting of URLs to be set explicitly or to 
 ## USAGE
 For an example of this frameworks usage, see the demo application location in the "demo" folder.
 
+## CONTRIBUTION
+Contributions are welcomed, have a look at the [CONTRIBUTING.md](https://github.com/spotify/SPTDataLoader/blob/master/CONTRIBUTING.md) document for more information.
+
 ## CREDITS
 * Will Sackfield
 * Dmitry Ponomarev
