@@ -10,7 +10,6 @@
 		0504CB8D1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */; };
 		0504CB8F1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */; };
 		0504CB911A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB901A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m */; };
-		050AB4C81A782D4F005C93CC /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050AB4C61A782D4F005C93CC /* SPTCancellationTokenImplementation.m */; };
 		050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
 		050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
 		050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
@@ -338,7 +337,7 @@
 		050E06821A10C62100A10A0E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = spotify;
 				TargetAttributes = {
 					050E06891A10C62100A10A0E = {
@@ -395,7 +394,6 @@
 				052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */,
 				052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */,
 				050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */,
-				050AB4C81A782D4F005C93CC /* SPTCancellationTokenImplementation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
