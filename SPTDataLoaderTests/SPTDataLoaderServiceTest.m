@@ -185,6 +185,38 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1, @"The service did not call successfully received response on the request response handler");
 }
 
+- (void)testSessionWillCacheResponse
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.skipNSURLCache = NO;
+    
+    [self.service requestResponseHandler:nil performRequest:request];
+    NSCachedURLResponse *dummyResponse = [NSCachedURLResponse new];
+    
+    __block NSCachedURLResponse *blockResponse = nil;
+    void (^completion)(NSCachedURLResponse *) = ^(NSCachedURLResponse *resp) {
+        blockResponse = resp;
+    };
+    [self.service URLSession:self.session dataTask:self.session.lastDataTask willCacheResponse:dummyResponse completionHandler:completion];
+    XCTAssertNotNil(blockResponse, @"The service skipped caching when 'skipNSURLCache' was set to NO");
+}
+
+- (void)testSessionWillNotCacheResponse
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.skipNSURLCache = YES;
+    
+    [self.service requestResponseHandler:nil performRequest:request];
+    NSCachedURLResponse *dummyResponse = [NSCachedURLResponse new];
+    
+    __block NSCachedURLResponse *blockResponse = nil;
+    void (^completion)(NSCachedURLResponse *) = ^(NSCachedURLResponse *resp) {
+        blockResponse = resp;
+    };
+    [self.service URLSession:self.session dataTask:self.session.lastDataTask willCacheResponse:dummyResponse completionHandler:completion];
+    XCTAssertNil(blockResponse, @"The service failed to skip the cache when 'skipNSURLCache' was set to YES");
+}
+
 - (void)testConsumptionObserverCalled
 {
     SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];

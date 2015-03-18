@@ -253,6 +253,17 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     [handler receiveData:data.copy];
 }
 
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+ willCacheResponse:(NSCachedURLResponse *)proposedResponse
+ completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler
+{
+    if (!completionHandler) {
+        return;
+    }
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:dataTask];
+    completionHandler(handler.request.skipNSURLCache ? nil : proposedResponse);
+}
+
 #pragma mark NSURLSessionTaskDelegate
 
 - (void)URLSession:(NSURLSession *)session
