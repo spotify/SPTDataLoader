@@ -136,6 +136,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     }
     copy.chunks = self.chunks;
     copy.cachePolicy = self.cachePolicy;
+    copy.skipNSURLCache = self.skipNSURLCache;
     copy.method = self.method;
     copy.userInfo = self.userInfo;
     copy.uniqueIdentifier = self.uniqueIdentifier;

@@ -61,6 +61,10 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  */
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 /**
+ * Whether or not this request should skip storage in the NSURLCache when completed
+ */
+@property (nonatomic, assign) BOOL skipNSURLCache;
+/**
  * The method used to send the request
  * @discussion The default request method is SPTDataLoaderRequestMethodGet
  */
