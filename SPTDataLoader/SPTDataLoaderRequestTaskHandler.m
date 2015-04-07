@@ -69,6 +69,7 @@
                  rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerMaximumTime = 60.0;
+    const NSTimeInterval SPTDataLoaderRequestTaskHandlerInitialTime = 1.0;
     
     if (!(self = [super init])) {
         return nil;
@@ -83,7 +84,8 @@
     _executionBlock = ^ {
         [weakSelf checkRateLimiterAndExecute];
     };
-    _expTime = [SPTExpTime expTimeWithInitialTime:0.0 maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
+    _expTime = [SPTExpTime expTimeWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
+                                          maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
     
     return self;
 }
@@ -182,9 +184,14 @@
 - (void)checkRetryLimiterAndExecute
 {
     if (self.waitCount < self.retryCount) {
+        if (!self.waitCount) {
+            self.executionBlock();
+        } else {
+            NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
+        }
+        
         self.waitCount++;
-        NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
         return;
     }
     
