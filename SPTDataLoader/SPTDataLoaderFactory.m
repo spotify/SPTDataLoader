@@ -79,6 +79,7 @@
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+        [self.requestToRequestResponseHandler removeObjectForKey:response.request];
     }
     [requestResponseHandler successfulResponse:response];
 }
@@ -100,6 +101,7 @@
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+        [self.requestToRequestResponseHandler removeObjectForKey:response.request];
     }
     [requestResponseHandler failedResponse:response];
 }
@@ -109,6 +111,7 @@
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+        [self.requestToRequestResponseHandler removeObjectForKey:request];
     }
     [requestResponseHandler cancelledRequest:request];
 }
