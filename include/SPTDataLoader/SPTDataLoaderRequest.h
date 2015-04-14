@@ -77,6 +77,11 @@ extern NSString * const SPTDataLoaderRequestHostHeader;
  * An identifier for uniquely identifying the request
  */
 @property (nonatomic, assign, readonly) int64_t uniqueIdentifier;
+/**
+ * The absolute timeout for the request to respect
+ * @discussion The default is 0.0, which is the equivalent of no timeout
+ */
+@property (nonatomic, assign) NSTimeInterval timeout;
 
 /**
  * Class constructor

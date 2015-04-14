@@ -140,6 +140,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     copy.method = self.method;
     copy.userInfo = self.userInfo;
     copy.uniqueIdentifier = self.uniqueIdentifier;
+    copy.timeout = self.timeout;
     return copy;
 }
 
