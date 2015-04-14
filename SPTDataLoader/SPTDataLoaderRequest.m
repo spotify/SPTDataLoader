@@ -23,6 +23,7 @@
 #import "SPTDataLoaderRequest+Private.h"
 
 NSString * const SPTDataLoaderRequestHostHeader = @"Host";
+NSString * const SPTDataLoaderRequestErrorDomain = @"com.spotify.dataloader.request";
 
 static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
 
@@ -140,6 +141,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     copy.method = self.method;
     copy.userInfo = self.userInfo;
     copy.uniqueIdentifier = self.uniqueIdentifier;
+    copy.timeout = self.timeout;
     return copy;
 }
 

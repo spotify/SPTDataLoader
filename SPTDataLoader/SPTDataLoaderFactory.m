@@ -79,6 +79,7 @@
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+        [self.requestToRequestResponseHandler removeObjectForKey:response.request];
     }
     [requestResponseHandler successfulResponse:response];
 }
@@ -100,6 +101,7 @@
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
+        [self.requestToRequestResponseHandler removeObjectForKey:response.request];
     }
     [requestResponseHandler failedResponse:response];
 }
@@ -109,6 +111,7 @@
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+        [self.requestToRequestResponseHandler removeObjectForKey:request];
     }
     [requestResponseHandler cancelledRequest:request];
 }
@@ -163,6 +166,25 @@
     
     @synchronized(self.requestToRequestResponseHandler) {
         [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
+    }
+    
+    // Add an absolute timeout for responses
+    if (request.timeout > 0.0) {
+        __weak __typeof(self) weakSelf = self;
+        __weak __typeof(request) weakRequest = request;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(request.timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (!weakRequest) {
+                return;
+            }
+            
+            SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:weakRequest
+                                                                                          response:nil];
+            NSError *error = [NSError errorWithDomain:SPTDataLoaderRequestErrorDomain
+                                                 code:SPTDataLoaderRequestErrorCodeTimeout
+                                             userInfo:nil];
+            response.error = error;
+            [weakSelf failedResponse:response];
+        });
     }
     
     return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
