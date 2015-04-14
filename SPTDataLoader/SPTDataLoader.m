@@ -28,6 +28,7 @@
 @interface SPTDataLoader ()
 
 @property (nonatomic, strong) NSHashTable *cancellationTokens;
+@property (nonatomic, strong) NSMutableArray *requests;
 
 @end
 
@@ -50,6 +51,7 @@
     
     _cancellationTokens = [NSHashTable weakObjectsHashTable];
     _delegateQueue = dispatch_get_main_queue();
+    _requests = [NSMutableArray new];
     
     return self;
 }
@@ -80,6 +82,9 @@
     @synchronized(self.cancellationTokens) {
         [self.cancellationTokens addObject:cancellationToken];
     }
+    
+    [self.requests addObject:copiedRequest];
+    
     return cancellationToken;
 }
 
@@ -109,6 +114,7 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
+    [self.requests addObject:response.request];
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -116,6 +122,7 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
+    [self.requests addObject:response.request];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -123,6 +130,7 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didCancelRequest:request];
     }];
+    [self.requests addObject:request];
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
