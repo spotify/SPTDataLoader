@@ -27,7 +27,12 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestMethod) {
     SPTDataLoaderRequestMethodDelete
 };
 
+typedef NS_ENUM(NSInteger, SPTDataLoaderRequestErrorCode) {
+    SPTDataLoaderRequestErrorCodeTimeout
+};
+
 extern NSString * const SPTDataLoaderRequestHostHeader;
+extern NSString * const SPTDataLoaderRequestErrorDomain;
 
 /**
  * A representing of the request to make to the backend
