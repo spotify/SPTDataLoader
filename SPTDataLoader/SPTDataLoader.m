@@ -114,7 +114,7 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
-    [self.requests addObject:response.request];
+    [self.requests removeObject:response.request];
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -122,7 +122,7 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
-    [self.requests addObject:response.request];
+    [self.requests removeObject:response.request];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -130,7 +130,7 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didCancelRequest:request];
     }];
-    [self.requests addObject:request];
+    [self.requests removeObject:request];
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
