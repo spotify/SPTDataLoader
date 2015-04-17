@@ -83,7 +83,9 @@
         [self.cancellationTokens addObject:cancellationToken];
     }
     
-    [self.requests addObject:copiedRequest];
+    @synchronized(self.requests) {
+        [self.requests addObject:copiedRequest];
+    }
     
     return cancellationToken;
 }
@@ -114,7 +116,9 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
-    [self.requests removeObject:response.request];
+    @synchronized(self.requests) {
+        [self.requests removeObject:response.request];
+    }
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -122,7 +126,9 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
-    [self.requests removeObject:response.request];
+    @synchronized(self.requests) {
+        [self.requests removeObject:response.request];
+    }
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -130,7 +136,9 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didCancelRequest:request];
     }];
-    [self.requests removeObject:request];
+    @synchronized(self.requests) {
+        [self.requests removeObject:request];
+    }
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
