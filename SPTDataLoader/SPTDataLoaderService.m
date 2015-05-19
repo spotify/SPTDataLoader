@@ -264,6 +264,16 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     completionHandler(handler.request.skipNSURLCache ? nil : proposedResponse);
 }
 
+#if SPTDATALOADER_ALLOW_ALL_CERTS
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+{
+    completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
+}
+#endif
+
 #pragma mark NSURLSessionTaskDelegate
 
 - (void)URLSession:(NSURLSession *)session
