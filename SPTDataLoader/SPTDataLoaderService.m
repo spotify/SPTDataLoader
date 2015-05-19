@@ -264,7 +264,7 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     completionHandler(handler.request.skipNSURLCache ? nil : proposedResponse);
 }
 
-#if DEBUG
+#if SPTDATALOADER_ALLOW_ALL_CERTS
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
