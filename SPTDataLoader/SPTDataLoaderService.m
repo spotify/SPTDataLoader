@@ -250,7 +250,7 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     didReceiveData:(NSData *)data
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:dataTask];
-    [handler receiveData:data.copy];
+    [handler receiveData:data];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
