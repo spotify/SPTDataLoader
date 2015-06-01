@@ -94,8 +94,10 @@
             }
         }
         response.request.retriedAuthorisation = YES;
-        [self authoriseRequest:response.request];
-        return;
+        if ([self shouldAuthoriseRequest:response.request]) {
+            [self authoriseRequest:response.request];
+            return;
+        }
     }
     
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
