@@ -89,10 +89,23 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 @property (nonatomic, assign) NSTimeInterval timeout;
 
 /**
+ * An identifier for the request source.
+ * @discussion This is used for logging purposes to locate where data is downloaded from.
+ */
+@property (nonatomic, strong) NSString *sourceIdentifier;
+
+/**
  * Class constructor
  * @param URL The URL to query
  */
-+ (instancetype)requestWithURL:(NSURL *)URL;
++ (instancetype)requestWithURL:(NSURL *)URL __attribute__ ((deprecated("use requestWithURL:sourceIdentifier: instead")));
+
+/**
+ * Class constructor
+ * @param URL The URL to query
+ * @param sourceIdentifier An identifier for the request source
+ */
++ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier;
 
 /**
  * Adds a header value
