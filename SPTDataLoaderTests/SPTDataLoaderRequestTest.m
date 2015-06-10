@@ -41,7 +41,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    self.request = [SPTDataLoaderRequest requestWithURL:self.URL];
+    self.request = [SPTDataLoaderRequest requestWithURL:self.URL sourceIdentifier:nil];
 }
 
 - (void)tearDown

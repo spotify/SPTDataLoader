@@ -44,17 +44,12 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 + (instancetype)requestWithURL:(NSURL *)URL
 {
-    return [self requestWithURL:URL sourceIdentifier:@"<unknown>"];
+    return [self requestWithURL:URL sourceIdentifier:nil];
 }
 
 + (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
 {
     return [[self alloc] initWithURL:URL sourceIdentifier:sourceIdentifier];
-}
-
-- (instancetype)initWithURL:(NSURL *)URL
-{
-    return [self initWithURL:URL sourceIdentifier:@"<unknown>"];
 }
 
 - (instancetype)initWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
