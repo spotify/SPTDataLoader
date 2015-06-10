@@ -140,8 +140,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    __typeof(self) copy = [self.class requestWithURL:self.URL];
-    copy.sourceIdentifier = self.sourceIdentifier;
+    __typeof(self) copy = [self.class requestWithURL:self.URL sourceIdentifier:self.sourceIdentifier];
     copy.maximumRetryCount = self.maximumRetryCount;
     copy.body = [self.body copy];
     @synchronized(self.mutableHeaders) {
