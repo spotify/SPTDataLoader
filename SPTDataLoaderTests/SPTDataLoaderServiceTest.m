@@ -104,7 +104,8 @@
 {
     [self.resolver setAddresses:@[ @"192.168.0.1" ] forHost:@"spclient.wg.spotify.com"];
     
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
+                                                        sourceIdentifier:nil];
     [self.service requestResponseHandler:nil performRequest:request];
     XCTAssertEqualObjects(request.URL.absoluteString, @"https://192.168.0.1/thing");
 }

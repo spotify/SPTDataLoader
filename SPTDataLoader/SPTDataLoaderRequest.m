@@ -44,25 +44,31 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 + (instancetype)requestWithURL:(NSURL *)URL
 {
-    return [[self alloc] initWithURL:URL];
+    return [self requestWithURL:URL sourceIdentifier:nil];
 }
 
-- (instancetype)initWithURL:(NSURL *)URL
++ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
+{
+    return [[self alloc] initWithURL:URL sourceIdentifier:sourceIdentifier];
+}
+
+- (instancetype)initWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
 {
     static int64_t uniqueIdentifierBarrier = 0;
-    
+
     if (!(self = [super init])) {
         return nil;
     }
-    
+
     _URL = URL;
-    
+    _sourceIdentifier = sourceIdentifier;
+
     _mutableHeaders = [NSMutableDictionary new];
     _method = SPTDataLoaderRequestMethodGet;
     @synchronized(self.class) {
         _uniqueIdentifier = uniqueIdentifierBarrier++;
     }
-    
+
     return self;
 }
 
@@ -129,7 +135,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    __typeof(self) copy = [self.class requestWithURL:self.URL];
+    __typeof(self) copy = [self.class requestWithURL:self.URL sourceIdentifier:self.sourceIdentifier];
     copy.maximumRetryCount = self.maximumRetryCount;
     copy.body = [self.body copy];
     @synchronized(self.mutableHeaders) {
