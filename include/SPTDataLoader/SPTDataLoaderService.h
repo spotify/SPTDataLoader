@@ -46,7 +46,8 @@
  * @param userAgent The user agent to report as when making HTTP requests
  * @param rateLimiter The limiter for limiting requests per second on a per service basis
  * @param resolver The resolver for rerouting requests to different IP addresses
- * @param customURLProtocolClasses Array of NSURLProtocol subclasses
+ * @param customURLProtocolClasses Array of NSURLProtocol Class objects that you want
+ *                                 to use for this DataLoaderService
  */
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
