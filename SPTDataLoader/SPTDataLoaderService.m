@@ -53,13 +53,15 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(NSArray *)customURLProtocolClasses
 {
-    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver];
+    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
 }
 
 - (instancetype)initWithUserAgent:(NSString *)userAgent
                       rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(SPTDataLoaderResolver *)resolver
+         customURLProtocolClasses:(NSArray *)customURLProtocolClasses
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
@@ -77,6 +79,7 @@
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
     configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
     configuration.HTTPShouldUsePipelining = YES;
+    configuration.protocolClasses = customURLProtocolClasses;
     if (userAgent) {
         configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : userAgent };
     }

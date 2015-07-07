@@ -60,7 +60,8 @@
     self.resolver = [SPTDataLoaderResolver new];
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                             rateLimiter:self.rateLimiter
-                                                               resolver:self.resolver];
+                                                               resolver:self.resolver
+                                               customURLProtocolClasses:nil];
     self.session = [NSURLSessionMock new];
     self.service.session = self.session;
 }
