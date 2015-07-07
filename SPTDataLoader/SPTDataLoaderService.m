@@ -53,13 +53,6 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
-{
-    return [self dataLoaderServiceWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:nil];
-}
-
-+ (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
-                                   rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
-                                      resolver:(SPTDataLoaderResolver *)resolver
                       customURLProtocolClasses:(NSArray *)customURLProtocolClasses
 {
     return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
