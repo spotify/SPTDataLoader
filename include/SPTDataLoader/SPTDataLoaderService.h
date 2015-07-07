@@ -44,6 +44,18 @@
                                       resolver:(SPTDataLoaderResolver *)resolver;
 
 /**
+ * Class constructor
+ * @param userAgent The user agent to report as when making HTTP requests
+ * @param rateLimiter The limiter for limiting requests per second on a per service basis
+ * @param resolver The resolver for rerouting requests to different IP addresses
+ * @param customURLProtocolClasses Array of NSURLProtocol subclasses
+ */
++ (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
+                                   rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(NSArray *)customURLProtocolClasses;
+
+/**
  * Creates a data loader factory
  * @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */
