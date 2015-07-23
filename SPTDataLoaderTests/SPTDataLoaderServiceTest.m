@@ -87,7 +87,10 @@
 - (void)testNoOperationForTask
 {
     // Test no crash occurs
-    [self.service URLSession:self.session dataTask:nil didReceiveResponse:nil completionHandler:nil];
+    [self.service URLSession:self.session
+                    dataTask:[NSURLSessionDataTask new]
+          didReceiveResponse:[NSURLResponse new]
+           completionHandler:^(NSURLSessionResponseDisposition disposition){}];
 }
 
 - (void)testOperationForTaskWithValidTask
@@ -97,7 +100,10 @@
     [self.service requestResponseHandler:nil performRequest:request];
     
     NSURLSessionDataTask *dataTask = self.session.lastDataTask;
-    [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:nil completionHandler:nil];
+    [self.service URLSession:self.session
+                    dataTask:dataTask
+          didReceiveResponse:[NSURLResponse new]
+           completionHandler:^(NSURLSessionResponseDisposition disposition){}];
 }
 
 - (void)testResolverChangingAddress
@@ -156,14 +162,14 @@
     void (^completionHandler)(NSURLSessionResponseDisposition) = ^(NSURLSessionResponseDisposition disposition) {
         calledCompletionHandler = YES;
     };
-    [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:nil completionHandler:completionHandler];
+    [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:[NSURLResponse new] completionHandler:completionHandler];
     XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler");
 }
 
 - (void)testSwitchingToDownloadTask
 {
     // Test no crash
-    [self.service URLSession:self.service.session dataTask:nil didBecomeDownloadTask:nil];
+    [self.service URLSession:self.service.session dataTask:[NSURLSessionDataTask new] didBecomeDownloadTask:[NSURLSessionDownloadTask new]];
 }
 
 - (void)testSessionDidReceiveData
@@ -222,10 +228,10 @@
 {
     SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
     [self.service addConsumptionObserver:consumptionObserver on:dispatch_get_main_queue()];
-    [self.service URLSession:self.session task:nil didCompleteWithError:nil];
+    [self.service URLSession:self.session task:[NSURLSessionDataTask new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when a request ends");
     [self.service removeConsumptionObserver:consumptionObserver];
-    [self.service URLSession:self.session task:nil didCompleteWithError:nil];
+    [self.service URLSession:self.session task:[NSURLSessionDataTask new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when the observer has been removed");
 }
 
