@@ -20,9 +20,9 @@
  */
 #import "SPTDataLoaderRequestTaskHandler.h"
 
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import "SPTDataLoaderResponse.h"
+#import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderRateLimiter.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"

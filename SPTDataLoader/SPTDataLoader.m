@@ -18,12 +18,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoader.h>
-
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-
 #import "SPTDataLoader+Private.h"
+
+#import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderResponse.h"
+#import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderDelegate.h"
 
 @interface SPTDataLoader ()
 

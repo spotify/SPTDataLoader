@@ -20,7 +20,7 @@
  */
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
+#import "SPTDataLoaderResolver.h"
 
 @interface SPTDataLoaderResolverTest : XCTestCase
 

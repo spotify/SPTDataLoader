@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import "SPTDataLoaderRateLimiter.h"
 
 #import "SPTDataLoaderRequest.h"
 

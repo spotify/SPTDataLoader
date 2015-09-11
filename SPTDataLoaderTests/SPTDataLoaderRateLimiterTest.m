@@ -22,7 +22,7 @@
 
 #import "SPTDataLoaderRateLimiter.h"
 
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import "SPTDataLoaderRequest.h"
 
 @interface SPTDataLoaderRateLimiterTest : XCTestCase
 

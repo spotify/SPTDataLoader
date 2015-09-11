@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
+#import "SPTDataLoaderConsumptionObserver.h"
 
 @interface SPTDataLoaderConsumptionObserverMock : NSObject <SPTDataLoaderConsumptionObserver>
 

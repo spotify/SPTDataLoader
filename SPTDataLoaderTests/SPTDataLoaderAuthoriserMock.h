@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
+#import "SPTDataLoaderAuthoriser.h"
 
 @interface SPTDataLoaderAuthoriserMock : NSObject <SPTDataLoaderAuthoriser>
 

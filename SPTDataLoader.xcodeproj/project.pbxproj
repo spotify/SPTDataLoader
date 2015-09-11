@@ -134,6 +134,9 @@
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_shared.xcconfig; path = ../../other/spotify_shared.xcconfig; sourceTree = "<group>"; };
+		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
+		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
+		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,17 +242,20 @@
 		056A04AE1A13D0FA00FA72AD /* Public API */ = {
 			isa = PBXGroup;
 			children = (
+				C6515CF11BA2D1A700271211 /* module.modulemap */,
 				056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */,
 				056A04B31A13D10900FA72AD /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
+				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
+				C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */,
+				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
 				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
+				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
 				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
+				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
 				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
 				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
 				056A04B91A13D10900FA72AD /* SPTExpTime.h */,
-				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
-				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
-				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
 			);
 			name = "Public API";
 			sourceTree = "<group>";
@@ -523,6 +529,7 @@
 		050E069F1A10C62100A10A0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -533,6 +540,7 @@
 		050E06A01A10C62100A10A0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
