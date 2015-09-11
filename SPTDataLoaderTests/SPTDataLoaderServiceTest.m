@@ -20,11 +20,11 @@
  */
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTDataLoaderService.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTCancellationToken.h>
+#import "SPTDataLoaderService.h"
+#import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderRateLimiter.h"
+#import "SPTDataLoaderResolver.h"
+#import "SPTCancellationToken.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "NSURLSessionMock.h"

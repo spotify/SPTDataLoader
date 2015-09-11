@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import <SPTDataLoader/SPTCancellationToken.h>
+#import "SPTCancellationToken.h"
 
 @interface SPTCancellationTokenDelegateMock : NSObject <SPTCancellationTokenDelegate>
 

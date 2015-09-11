@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import <SPTDataLoader/SPTDataLoader.h>
+#import "SPTDataLoaderDelegate.h"
 
 @interface SPTDataLoaderDelegateMock : NSObject <SPTDataLoaderDelegate>
 
