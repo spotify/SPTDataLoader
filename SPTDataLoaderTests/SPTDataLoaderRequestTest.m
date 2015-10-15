@@ -107,7 +107,8 @@
     [self.request addValue:@"Value" forHeader:@"Header"];
     NSURLRequest *request = self.request.urlRequest;
     NSDictionary *expectedHeaders = @{ @"Header" : @"Value",
-                                       @"Host" : self.URL.host };
+                                       @"Host" : self.URL.host,
+                                       @"Accept-Language" : [NSBundle mainBundle].preferredLocalizations.firstObject };
     XCTAssertEqualObjects(request.allHTTPHeaderFields, expectedHeaders, @"The headers were not copied appropriately");
 }
 
