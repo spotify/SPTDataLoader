@@ -107,11 +107,16 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 - (NSURLRequest *)urlRequest
 {
     NSString * const SPTDataLoaderRequestContentLengthHeader = @"Content-Length";
+    NSString * const SPTDataLoaderRequestAcceptLanguageHeader = @"Accept-Language";
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.URL];
     
     if (!self.headers[SPTDataLoaderRequestHostHeader]) {
         [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
+    }
+    if (!self.headers[SPTDataLoaderRequestAcceptLanguageHeader]) {
+        NSString *language = [NSBundle mainBundle].preferredLocalizations.firstObject;
+        [urlRequest addValue:language forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
     }
     
     if (self.body) {
