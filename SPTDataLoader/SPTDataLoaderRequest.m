@@ -33,7 +33,6 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
 @property (nonatomic, assign) BOOL retriedAuthorisation;
-
 @property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
 
 @end
@@ -115,8 +114,8 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
         [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
     }
     if (!self.headers[SPTDataLoaderRequestAcceptLanguageHeader]) {
-        NSString *language = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        [urlRequest addValue:language forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
+        [urlRequest addValue:[self.class languageHeaderValue]
+          forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
     }
     
     if (self.body) {
@@ -134,6 +133,27 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     urlRequest.HTTPMethod = NSStringFromSPTDataLoaderRequestMethod(self.method);
     
     return urlRequest;
+}
+
++ (NSString *)languageHeaderValue
+{
+    static NSString * languageHeaderValue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
+        float languageImportanceCounter = 1.0f;
+        NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
+        for (NSString *language in languages) {
+            if (languageImportanceCounter == 1.0f) {
+                [languageHeaderValues addObject:language];
+            } else {
+                [languageHeaderValues addObject:[NSString stringWithFormat:@"%@;q=%f", language, languageImportanceCounter]];
+            }
+            languageImportanceCounter -= (1.0f / languages.count);
+        }
+        languageHeaderValue = [languageHeaderValues componentsJoinedByString:@", "];
+    });
+    return languageHeaderValue;
 }
 
 #pragma mark NSCopying
