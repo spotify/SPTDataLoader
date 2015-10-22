@@ -147,7 +147,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
             if (languageImportanceCounter == 1.0f) {
                 [languageHeaderValues addObject:language];
             } else {
-                [languageHeaderValues addObject:[NSString stringWithFormat:@"%@;q=%f", language, languageImportanceCounter]];
+                [languageHeaderValues addObject:[NSString stringWithFormat:@"%@;q=%.2f", language, languageImportanceCounter]];
             }
             languageImportanceCounter -= (1.0f / languages.count);
         }
