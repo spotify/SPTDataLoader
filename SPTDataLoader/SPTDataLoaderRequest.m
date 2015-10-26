@@ -33,7 +33,6 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
 @property (nonatomic, assign) BOOL retriedAuthorisation;
-
 @property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
 
 @end
@@ -115,8 +114,8 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
         [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
     }
     if (!self.headers[SPTDataLoaderRequestAcceptLanguageHeader]) {
-        NSString *language = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        [urlRequest addValue:language forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
+        [urlRequest addValue:[self.class languageHeaderValue]
+          forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
     }
     
     if (self.body) {
@@ -134,6 +133,50 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     urlRequest.HTTPMethod = NSStringFromSPTDataLoaderRequestMethod(self.method);
     
     return urlRequest;
+}
+
++ (NSString *)languageHeaderValue
+{
+    static NSString * languageHeaderValue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
+        NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
+
+        NSString *(^constructLanguageHeaderValue)(NSString *, float) = ^NSString *(NSString *language, float languageImportance) {
+            NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
+            return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
+        };
+
+        NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
+        if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
+            languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
+        }
+        float languageImportanceCounter = 1.0f;
+        NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
+        BOOL containsEnglish = NO;
+        for (NSString *language in languages) {
+            if (!containsEnglish) {
+                NSString * const SPTDataLoaderRequestLanguageLocaleSeparator = @"-";
+                NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageLocaleSeparator].firstObject;
+                if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
+                    containsEnglish = YES;
+                }
+            }
+
+            if (languageImportanceCounter == 1.0f) {
+                [languageHeaderValues addObject:language];
+            } else {
+                [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
+            }
+            languageImportanceCounter -= (1.0f / languages.count);
+        }
+        if (!containsEnglish) {
+            [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
+        }
+        languageHeaderValue = [languageHeaderValues componentsJoinedByString:@", "];
+    });
+    return languageHeaderValue;
 }
 
 #pragma mark NSCopying

@@ -108,7 +108,7 @@
     NSURLRequest *request = self.request.urlRequest;
     NSDictionary *expectedHeaders = @{ @"Header" : @"Value",
                                        @"Host" : self.URL.host,
-                                       @"Accept-Language" : [NSBundle mainBundle].preferredLocalizations.firstObject };
+                                       @"Accept-Language" : [SPTDataLoaderRequest languageHeaderValue] };
     XCTAssertEqualObjects(request.allHTTPHeaderFields, expectedHeaders, @"The headers were not copied appropriately");
 }
 
