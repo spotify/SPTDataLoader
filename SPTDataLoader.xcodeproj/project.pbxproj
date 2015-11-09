@@ -131,6 +131,7 @@
 		059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponseTest.m; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
+		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_shared.xcconfig; path = ../../other/spotify_shared.xcconfig; sourceTree = "<group>"; };
 		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
@@ -190,6 +191,7 @@
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */,
 				050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */,
+				8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */,
 				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
 				050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */,
 				05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */,
