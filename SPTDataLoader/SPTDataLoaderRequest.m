@@ -22,7 +22,6 @@
 
 #import "SPTDataLoaderRequest+Private.h"
 
-NSString * const SPTDataLoaderRequestHostHeader = @"Host";
 NSString * const SPTDataLoaderRequestErrorDomain = @"com.spotify.dataloader.request";
 
 static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
@@ -110,9 +109,6 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.URL];
     
-    if (!self.headers[SPTDataLoaderRequestHostHeader]) {
-        [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
-    }
     if (!self.headers[SPTDataLoaderRequestAcceptLanguageHeader]) {
         [urlRequest addValue:[self.class languageHeaderValue]
           forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];

@@ -88,12 +88,6 @@
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should not contain anything after removal");
 }
 
-- (void)testURLRequestAddsHostHeader
-{
-    NSURLRequest *request = self.request.urlRequest;
-    XCTAssertEqualObjects(request.allHTTPHeaderFields[@"Host"], self.URL.host, @"The URL request should add a host header field");
-}
-
 - (void)testURLRequestContentLengthHeader
 {
     NSData *data = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
@@ -107,7 +101,6 @@
     [self.request addValue:@"Value" forHeader:@"Header"];
     NSURLRequest *request = self.request.urlRequest;
     NSDictionary *expectedHeaders = @{ @"Header" : @"Value",
-                                       @"Host" : self.URL.host,
                                        @"Accept-Language" : [SPTDataLoaderRequest languageHeaderValue] };
     XCTAssertEqualObjects(request.allHTTPHeaderFields, expectedHeaders, @"The headers were not copied appropriately");
 }
