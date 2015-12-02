@@ -23,7 +23,9 @@
 #import "SPTDataLoaderService.h"
 #import "SPTDataLoaderRequest.h"
 #import "SPTDataLoaderRateLimiter.h"
+#import "SPTDataLoaderRequestTaskHandler.h"
 #import "SPTDataLoaderResolver.h"
+#import "SPTDataLoaderResponse.h"
 #import "SPTCancellationToken.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
@@ -36,6 +38,7 @@
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) NSMutableArray *handlers;
 
 @end
 
@@ -165,6 +168,88 @@
     };
     [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:[NSURLResponse new] completionHandler:completionHandler];
     XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler");
+}
+
+- (void)testRedirectionCallbackAbortsTooManyRedirects
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+                                                        sourceIdentifier:@"-"];
+    [self.service requestResponseHandler:nil performRequest:request];
+    NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
+
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
+                                                                  statusCode:SPTDataLoaderResponseHTTPStatusCodeMovedPermanently
+                                                                 HTTPVersion:@"1.1"
+                                                                headerFields:@{ }];
+
+    __block BOOL calledCompletionHandler = NO;
+    __block BOOL calledCompletionHandlerWithNil = NO;
+    void (^completionHandler)(NSURLRequest *) = ^(NSURLRequest *request) {
+        calledCompletionHandler = YES;
+
+        if (request == nil) {
+            calledCompletionHandlerWithNil = YES;
+        } else {
+            calledCompletionHandlerWithNil = NO;
+        }
+    };
+
+    int const redirectsAmountTooMany = 50;
+
+    // Test that redirection is aborted after too many redirects
+    for (int i = 0; i <= redirectsAmountTooMany; i++) {
+        [self.service URLSession:self.session
+                            task:task
+      willPerformHTTPRedirection:httpResponse
+                      newRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]]
+               completionHandler:completionHandler];
+
+        if (calledCompletionHandlerWithNil) {
+            break;
+        }
+    }
+
+    XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+    XCTAssertTrue(calledCompletionHandlerWithNil, @"The service should stop redirection after too many redirects");
+}
+
+- (void)testRedirectionCallbackDoesNotAbortAfterFewRedirects
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+                                                        sourceIdentifier:@"-"];
+    [self.service requestResponseHandler:nil performRequest:request];
+    NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
+
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
+                                                                  statusCode:SPTDataLoaderResponseHTTPStatusCodeMovedPermanently
+                                                                 HTTPVersion:@"1.1"
+                                                                headerFields:@{ }];
+
+    __block BOOL calledCompletionHandler = NO;
+    __block BOOL calledCompletionHandlerWithNil = NO;
+    void (^completionHandler)(NSURLRequest *) = ^(NSURLRequest *request) {
+        calledCompletionHandler = YES;
+
+        if (request == nil) {
+            calledCompletionHandlerWithNil = YES;
+        } else {
+            calledCompletionHandlerWithNil = NO;
+        }
+    };
+
+    int const redirectsAmountFew = 2;
+
+    // Check that just a few redirects will work fine
+    for (int i = 0; i <= redirectsAmountFew; i++) {
+        [self.service URLSession:self.session
+                            task:task
+      willPerformHTTPRedirection:httpResponse
+                      newRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]]
+               completionHandler:completionHandler];
+    }
+
+    XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+    XCTAssertFalse(calledCompletionHandlerWithNil, @"The service should not stop redirection after too few redirects");
 }
 
 - (void)testSwitchingToDownloadTask

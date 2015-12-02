@@ -66,6 +66,11 @@
  */
 - (void)completeWithError:(NSError *)error;
 /**
+ * Gets called whenever the original request was redirected.
+ * Returns YES to allow redirect, NO to block it.
+ */
+- (BOOL)mayRedirect;
+/**
  * Start the data loader task associated with the request
  */
 - (void)start;

@@ -33,7 +33,7 @@
 #import "NSDictionary+HeaderSize.h"
 #import "SPTCancellationTokenFactoryImplementation.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
@@ -141,7 +141,6 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     
     NSString *host = [self.resolver addressForHost:request.URL.host];
     if (![host isEqualToString:request.URL.host] && host) {
-        [request addValue:request.URL.host forHeader:SPTDataLoaderRequestHostHeader];
         NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
         requestComponents.host = host;
         request.URL = requestComponents.URL;
@@ -316,6 +315,42 @@ didCompleteWithError:(NSError *)error
             }
         }
     }
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
+{
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    if ([handler mayRedirect] == NO) {
+        completionHandler(nil);
+        return;
+    }
+
+    NSURL *newURL = request.URL;
+
+    // Go through SPTDataLoaderResolver dance and update the URL if needed
+    NSString *host = [self.resolver addressForHost:newURL.host];
+    if (![host isEqualToString:newURL.host] && host) {
+        NSURLComponents *newRequestComponents = [NSURLComponents componentsWithURL:newURL resolvingAgainstBaseURL:NO];
+        newRequestComponents.host = host;
+        newURL = newRequestComponents.URL;
+    }
+
+    NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:newURL
+                                                              cachePolicy:request.cachePolicy
+                                                          timeoutInterval:request.timeoutInterval];
+
+    // Sync headers with the original request
+    for (NSString *header in request.allHTTPHeaderFields) {
+        NSString *value = [request valueForHTTPHeaderField:header];
+        [newRequest addValue:value forHTTPHeaderField:header];
+    }
+
+    // Proceed with the updated request
+    completionHandler(newRequest);
 }
 
 #pragma mark NSObject

@@ -31,7 +31,6 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestErrorCode) {
     SPTDataLoaderRequestErrorCodeTimeout
 };
 
-extern NSString * const SPTDataLoaderRequestHostHeader;
 extern NSString * const SPTDataLoaderRequestErrorDomain;
 
 /**

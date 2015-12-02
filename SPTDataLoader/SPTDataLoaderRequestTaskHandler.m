@@ -28,6 +28,8 @@
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTExpTime.h"
 
+static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
+
 @interface SPTDataLoaderRequestTaskHandler ()
 
 @property (nonatomic, weak) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
@@ -38,6 +40,7 @@
 @property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
 @property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, assign) NSUInteger waitCount;
+@property (nonatomic, assign) NSUInteger redirectCount;
 @property (nonatomic, copy) dispatch_block_t executionBlock;
 @property (nonatomic, strong) SPTExpTime *expTime;
 
@@ -163,6 +166,16 @@
     }
     
     return NSURLSessionResponseAllow;
+}
+
+- (BOOL)mayRedirect
+{
+    // Limit the amount of possible redirects
+    if (++self.redirectCount > SPTDataLoaderRequestTaskHandlerMaxRedirects) {
+        return NO;
+    }
+
+    return YES;
 }
 
 - (void)start
