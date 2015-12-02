@@ -323,6 +323,12 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
         newRequest:(NSURLRequest *)request
  completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
 {
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    if ([handler willRedirect] == NO) {
+        completionHandler(nil);
+        return;
+    }
+
     NSURL *newURL = request.URL;
 
     // Go through SPTDataLoaderResolver dance and update the URL if needed
