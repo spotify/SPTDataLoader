@@ -168,7 +168,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     return NSURLSessionResponseAllow;
 }
 
-- (BOOL)willRedirect
+- (BOOL)mayRedirect
 {
     // Limit the amount of possible redirects
     if (++self.redirectCount > SPTDataLoaderRequestTaskHandlerMaxRedirects) {

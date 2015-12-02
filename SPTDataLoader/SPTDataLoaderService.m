@@ -324,7 +324,7 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
  completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
-    if ([handler willRedirect] == NO) {
+    if ([handler mayRedirect] == NO) {
         completionHandler(nil);
         return;
     }

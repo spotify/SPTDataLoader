@@ -170,7 +170,7 @@
     XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler");
 }
 
-- (void)testWillRedirectHandlesTheLimit
+- (void)testRedirectionCallbackAbortsTooManyRedirects
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
                                                         sourceIdentifier:@"-"];
@@ -209,11 +209,11 @@
         }
     }
 
-    XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL redirection completion handler at all");
-    XCTAssertTrue(calledCompletionHandlerWithNil, @"The service did not stop redirection after multiple redirects");
+    XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+    XCTAssertTrue(calledCompletionHandlerWithNil, @"The service should stop redirection after too many redirects");
 }
 
-- (void)testWillRedirectDoesNotAbortAfterFewRedirects
+- (void)testRedirectionCallbackDoesNotAbortAfterFewRedirects
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
                                                         sourceIdentifier:@"-"];
@@ -248,8 +248,8 @@
                completionHandler:completionHandler];
     }
 
-    XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL redirection completion handler at all");
-    XCTAssertFalse(calledCompletionHandlerWithNil, @"The service stopped redirection after too few redirects");
+    XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+    XCTAssertFalse(calledCompletionHandlerWithNil, @"The service should not stop redirection after too few redirects");
 }
 
 - (void)testSwitchingToDownloadTask
