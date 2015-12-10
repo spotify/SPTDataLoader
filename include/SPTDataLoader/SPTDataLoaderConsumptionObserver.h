@@ -20,7 +20,7 @@
  */
 #import <Foundation/Foundation.h>
 
-@class SPTDataLoaderRequest;
+@class SPTDataLoaderResponse;
 
 /**
  * The protocol an observer of the data loaders consumption must conform to
@@ -29,11 +29,12 @@
 
 /**
  * Called when a request ends (either via cancel or receiving a server response
+ * @param response The response the request was ended with
  * @param bytesDownloaded The amount of bytes downloaded
  * @param bytesUploaded The amount of bytes uploaded
  */
-- (void)endedRequest:(SPTDataLoaderRequest *)request
-     bytesDownloaded:(int)bytesDownloaded
-       bytesUploaded:(int)bytesUploaded;
+- (void)endedRequestWithResponse:(SPTDataLoaderResponse *)response
+                 bytesDownloaded:(int)bytesDownloaded
+                   bytesUploaded:(int)bytesUploaded;
 
 @end
