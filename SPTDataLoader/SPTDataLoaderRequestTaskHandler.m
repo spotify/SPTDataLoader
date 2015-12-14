@@ -107,7 +107,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     }];
 }
 
-- (void)completeWithError:(NSError *)error
+- (SPTDataLoaderResponse *)completeWithError:(NSError *)error
 {
     if (!self.response) {
         self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
@@ -116,7 +116,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
         [self.requestResponseHandler cancelledRequest:self.request];
         self.calledCancelledRequest = YES;
-        return;
+        return nil;
     }
     
     [self.rateLimiter executedRequest:self.request];
@@ -137,16 +137,17 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         if ([self.response shouldRetry]) {
             if (self.retryCount++ != self.request.maximumRetryCount) {
                 [self start];
-                return;
+                return nil;
             }
         }
         [self.requestResponseHandler failedResponse:self.response];
         self.calledFailedResponse = YES;
-        return;
+        return self.response;
     }
     
     [self.requestResponseHandler successfulResponse:self.response];
     self.calledSuccessfulResponse = YES;
+    return self.response;
 }
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response

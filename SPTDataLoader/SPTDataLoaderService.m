@@ -283,12 +283,10 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 didCompleteWithError:(NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
-    [handler completeWithError:error];
+    SPTDataLoaderResponse *response = [handler completeWithError:error];
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }
-    
-    SPTDataLoaderRequest *request = handler.request;
     
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
@@ -302,9 +300,9 @@ didCompleteWithError:(NSError *)error
                     bytesReceived += httpResponse.allHeaderFields.byteSizeOfHeaders;
                 }
                 
-                [consumptionObserver endedRequest:request
-                                  bytesDownloaded:bytesReceived
-                                    bytesUploaded:bytesSent];
+                [consumptionObserver endedRequestWithResponse:response
+                                              bytesDownloaded:bytesReceived
+                                                bytesUploaded:bytesSent];
             };
             
             dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
