@@ -23,6 +23,7 @@
 #import <SPTDataLoader/SPTDataLoader.h>
 
 static NSString * const PlaylistsViewModelMeURLString = @"https://api.spotify.com/v1/me";
+static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
 
 @interface PlaylistsViewModel () <SPTDataLoaderDelegate>
 
@@ -59,7 +60,8 @@ static NSString * const PlaylistsViewModelMeURLString = @"https://api.spotify.co
     }
     
     NSURL *meURL = [NSURL URLWithString:PlaylistsViewModelMeURLString];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:meURL];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:meURL
+                                                        sourceIdentifier:PlaylistsViewModelSourceIdentifier];
     [self.dataLoader performRequest:request];
 }
 
@@ -76,7 +78,8 @@ static NSString * const PlaylistsViewModelMeURLString = @"https://api.spotify.co
     
     _userID = userID;
     
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:self.playlistsURL];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:self.playlistsURL
+                                                        sourceIdentifier:PlaylistsViewModelSourceIdentifier];
     [self.dataLoader performRequest:request];
 }
 

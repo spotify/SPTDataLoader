@@ -27,6 +27,8 @@
 #import "PlaylistsViewController.h"
 #import "PlaylistsViewModel.h"
 
+static NSString *AppDelegateSourceIdentifier = @"app";
+
 @interface AppDelegate () <SPTDataLoaderDelegate>
 
 @property (nonatomic, strong, readwrite) SPTDataLoaderService *service;
@@ -45,7 +47,8 @@
     SPTDataLoaderResolver *resolver = [SPTDataLoaderResolver new];
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify-Demo"
                                                             rateLimiter:rateLimiter
-                                                               resolver:resolver];
+                                                               resolver:resolver
+                                               customURLProtocolClasses:nil];
     self.factory = [self.service createDataLoaderFactoryWithAuthorisers:nil];
     self.loader = [self.factory createDataLoader];
     self.loader.delegate = self;
@@ -95,7 +98,8 @@
         }
         
         NSURL *tokenURL = [NSURL URLWithString:@"https://accounts.spotify.com/api/token"];
-        SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:tokenURL];
+        SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:tokenURL
+                                                            sourceIdentifier:AppDelegateSourceIdentifier];
         
         request.method = SPTDataLoaderRequestMethodPost;
         NSDictionary *tokenBodyDictionary = @{ @"grant_type" : @"authorization_code",
@@ -145,6 +149,7 @@
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveErrorResponse:(SPTDataLoaderResponse *)response
 {
+    NSLog(@"Error: %@", response.error);
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request

@@ -22,6 +22,8 @@
 
 #import "NSString+OAuthBlob.h"
 
+static NSString *SPTDataLoaderAuthoriserOAuthSourceIdentifier = @"auth";
+
 @interface SPTDataLoaderAuthoriserOAuth () <SPTDataLoaderDelegate>
 
 @property (nonatomic, strong) SPTDataLoader *dataLoader;
@@ -121,7 +123,8 @@
 - (void)refresh
 {
     NSURL *accountsURL = [NSURL URLWithString:@"https://accounts.spotify.com/api/token"];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:accountsURL];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:accountsURL
+                                                        sourceIdentifier:SPTDataLoaderAuthoriserOAuthSourceIdentifier];
     
     NSArray *authorisationHeaderValues = @[ @"Basic", [NSString spt_OAuthBlob] ];
     [request addValue:[authorisationHeaderValues componentsJoinedByString:@" "] forHeader:@"Authorization"];
@@ -177,6 +180,13 @@
     SPTDataLoaderAuthoriserOAuth *authoriserCopy = [[SPTDataLoaderAuthoriserOAuth alloc] initWithDictionary:tokenDictionary
                                                                                           dataLoaderFactory:self.dataLoaderFactory];
     return authoriserCopy;
+}
+
+#pragma mark NSObject
+
+- (instancetype)init
+{
+    return [self initWithDictionary:nil dataLoaderFactory:nil];
 }
 
 @end
