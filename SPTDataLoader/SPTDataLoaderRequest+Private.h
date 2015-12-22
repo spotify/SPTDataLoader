@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import "SPTDataLoaderRequest.h"
 
 @protocol SPTCancellationToken;
 
@@ -40,5 +40,10 @@
  * The cancellation token associated with the request
  */
 @property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
+
+/**
+ * The value to be added to the Accept-Language header by default
+ */
++ (NSString *)languageHeaderValue;
 
 @end

@@ -18,12 +18,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderService.h>
+#import "SPTDataLoaderService.h"
 
-#import <SPTDataLoader/SPTCancellationToken.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
+#import "SPTCancellationToken.h"
+#import "SPTDataLoaderRateLimiter.h"
+#import "SPTDataLoaderResolver.h"
+#import "SPTDataLoaderConsumptionObserver.h"
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
@@ -33,7 +33,7 @@
 #import "NSDictionary+HeaderSize.h"
 #import "SPTCancellationTokenFactoryImplementation.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
@@ -53,13 +53,15 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(NSArray *)customURLProtocolClasses
 {
-    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver];
+    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
 }
 
 - (instancetype)initWithUserAgent:(NSString *)userAgent
                       rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(SPTDataLoaderResolver *)resolver
+         customURLProtocolClasses:(NSArray *)customURLProtocolClasses
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
@@ -77,6 +79,7 @@
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
     configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
     configuration.HTTPShouldUsePipelining = YES;
+    configuration.protocolClasses = customURLProtocolClasses;
     if (userAgent) {
         configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : userAgent };
     }
@@ -138,7 +141,6 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     
     NSString *host = [self.resolver addressForHost:request.URL.host];
     if (![host isEqualToString:request.URL.host] && host) {
-        [request addValue:request.URL.host forHeader:SPTDataLoaderRequestHostHeader];
         NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
         requestComponents.host = host;
         request.URL = requestComponents.URL;
@@ -253,6 +255,27 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     [handler receiveData:data];
 }
 
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+ willCacheResponse:(NSCachedURLResponse *)proposedResponse
+ completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler
+{
+    if (!completionHandler) {
+        return;
+    }
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:dataTask];
+    completionHandler(handler.request.skipNSURLCache ? nil : proposedResponse);
+}
+
+#if SPTDATALOADER_ALLOW_ALL_CERTS
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+{
+    completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
+}
+#endif
+
 #pragma mark NSURLSessionTaskDelegate
 
 - (void)URLSession:(NSURLSession *)session
@@ -260,12 +283,10 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
 didCompleteWithError:(NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
-    [handler completeWithError:error];
+    SPTDataLoaderResponse *response = [handler completeWithError:error];
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }
-    
-    SPTDataLoaderRequest *request = handler.request;
     
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
@@ -279,9 +300,9 @@ didCompleteWithError:(NSError *)error
                     bytesReceived += httpResponse.allHeaderFields.byteSizeOfHeaders;
                 }
                 
-                [consumptionObserver endedRequest:request
-                                  bytesDownloaded:bytesReceived
-                                    bytesUploaded:bytesSent];
+                [consumptionObserver endedRequestWithResponse:response
+                                              bytesDownloaded:bytesReceived
+                                                bytesUploaded:bytesSent];
             };
             
             dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
@@ -292,6 +313,42 @@ didCompleteWithError:(NSError *)error
             }
         }
     }
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
+{
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    if ([handler mayRedirect] == NO) {
+        completionHandler(nil);
+        return;
+    }
+
+    NSURL *newURL = request.URL;
+
+    // Go through SPTDataLoaderResolver dance and update the URL if needed
+    NSString *host = [self.resolver addressForHost:newURL.host];
+    if (![host isEqualToString:newURL.host] && host) {
+        NSURLComponents *newRequestComponents = [NSURLComponents componentsWithURL:newURL resolvingAgainstBaseURL:NO];
+        newRequestComponents.host = host;
+        newURL = newRequestComponents.URL;
+    }
+
+    NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:newURL
+                                                              cachePolicy:request.cachePolicy
+                                                          timeoutInterval:request.timeoutInterval];
+
+    // Sync headers with the original request
+    for (NSString *header in request.allHTTPHeaderFields) {
+        NSString *value = [request valueForHTTPHeaderField:header];
+        [newRequest addValue:value forHTTPHeaderField:header];
+    }
+
+    // Proceed with the updated request
+    completionHandler(newRequest);
 }
 
 #pragma mark NSObject

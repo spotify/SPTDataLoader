@@ -2,9 +2,9 @@
 
 @implementation SPTDataLoaderConsumptionObserverMock
 
-- (void)endedRequest:(SPTDataLoaderRequest *)request
-     bytesDownloaded:(int)bytesDownloaded
-       bytesUploaded:(int)bytesUploaded
+- (void)endedRequestWithResponse:(SPTDataLoaderResponse *)response
+                 bytesDownloaded:(int)bytesDownloaded
+                   bytesUploaded:(int)bytesUploaded
 {
     self.numberOfCallsToEndedRequest++;
 }

@@ -55,7 +55,8 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]];
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
+                                       sourceIdentifier:nil];
     self.task = [NSURLSessionTaskMock new];
     self.handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:self.task
                                                                                  request:self.request

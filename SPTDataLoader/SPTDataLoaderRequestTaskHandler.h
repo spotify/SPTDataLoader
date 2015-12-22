@@ -22,6 +22,7 @@
 
 @class SPTDataLoaderRequest;
 @class SPTDataLoaderRateLimiter;
+@class SPTDataLoaderResponse;
 @protocol SPTDataLoaderRequestResponseHandler;
 
 /**
@@ -64,7 +65,12 @@
  * Tell the operation the URL session has completed the request
  * @param error An optional error to use if the request was not completed successfully
  */
-- (void)completeWithError:(NSError *)error;
+- (SPTDataLoaderResponse *)completeWithError:(NSError *)error;
+/**
+ * Gets called whenever the original request was redirected.
+ * Returns YES to allow redirect, NO to block it.
+ */
+- (BOOL)mayRedirect;
 /**
  * Start the data loader task associated with the request
  */

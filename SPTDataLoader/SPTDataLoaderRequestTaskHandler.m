@@ -20,13 +20,15 @@
  */
 #import "SPTDataLoaderRequestTaskHandler.h"
 
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import "SPTDataLoaderResponse.h"
+#import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderRateLimiter.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTExpTime.h"
+
+static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 @interface SPTDataLoaderRequestTaskHandler ()
 
@@ -38,6 +40,7 @@
 @property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
 @property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, assign) NSUInteger waitCount;
+@property (nonatomic, assign) NSUInteger redirectCount;
 @property (nonatomic, copy) dispatch_block_t executionBlock;
 @property (nonatomic, strong) SPTExpTime *expTime;
 
@@ -69,6 +72,7 @@
                  rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
 {
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerMaximumTime = 60.0;
+    const NSTimeInterval SPTDataLoaderRequestTaskHandlerInitialTime = 1.0;
     
     if (!(self = [super init])) {
         return nil;
@@ -83,7 +87,8 @@
     _executionBlock = ^ {
         [weakSelf checkRateLimiterAndExecute];
     };
-    _expTime = [SPTExpTime expTimeWithInitialTime:0.0 maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
+    _expTime = [SPTExpTime expTimeWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
+                                          maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
     
     return self;
 }
@@ -102,7 +107,7 @@
     }];
 }
 
-- (void)completeWithError:(NSError *)error
+- (SPTDataLoaderResponse *)completeWithError:(NSError *)error
 {
     if (!self.response) {
         self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
@@ -111,7 +116,7 @@
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
         [self.requestResponseHandler cancelledRequest:self.request];
         self.calledCancelledRequest = YES;
-        return;
+        return nil;
     }
     
     [self.rateLimiter executedRequest:self.request];
@@ -132,16 +137,17 @@
         if ([self.response shouldRetry]) {
             if (self.retryCount++ != self.request.maximumRetryCount) {
                 [self start];
-                return;
+                return nil;
             }
         }
         [self.requestResponseHandler failedResponse:self.response];
         self.calledFailedResponse = YES;
-        return;
+        return self.response;
     }
     
     [self.requestResponseHandler successfulResponse:self.response];
     self.calledSuccessfulResponse = YES;
+    return self.response;
 }
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
@@ -163,6 +169,16 @@
     return NSURLSessionResponseAllow;
 }
 
+- (BOOL)mayRedirect
+{
+    // Limit the amount of possible redirects
+    if (++self.redirectCount > SPTDataLoaderRequestTaskHandlerMaxRedirects) {
+        return NO;
+    }
+
+    return YES;
+}
+
 - (void)start
 {
     self.started = YES;
@@ -182,9 +198,14 @@
 - (void)checkRetryLimiterAndExecute
 {
     if (self.waitCount < self.retryCount) {
+        if (!self.waitCount) {
+            self.executionBlock();
+        } else {
+            NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
+        }
+        
         self.waitCount++;
-        NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
         return;
     }
     

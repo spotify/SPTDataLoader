@@ -18,16 +18,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoader.h>
-
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-
 #import "SPTDataLoader+Private.h"
+
+#import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderResponse.h"
+#import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderDelegate.h"
 
 @interface SPTDataLoader ()
 
 @property (nonatomic, strong) NSHashTable *cancellationTokens;
+@property (nonatomic, strong) NSMutableArray *requests;
 
 @end
 
@@ -50,6 +51,7 @@
     
     _cancellationTokens = [NSHashTable weakObjectsHashTable];
     _delegateQueue = dispatch_get_main_queue();
+    _requests = [NSMutableArray new];
     
     return self;
 }
@@ -80,6 +82,11 @@
     @synchronized(self.cancellationTokens) {
         [self.cancellationTokens addObject:cancellationToken];
     }
+    
+    @synchronized(self.requests) {
+        [self.requests addObject:copiedRequest];
+    }
+    
     return cancellationToken;
 }
 
@@ -109,6 +116,9 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
+    @synchronized(self.requests) {
+        [self.requests removeObject:response.request];
+    }
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -116,6 +126,9 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
+    @synchronized(self.requests) {
+        [self.requests removeObject:response.request];
+    }
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -123,6 +136,9 @@
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didCancelRequest:request];
     }];
+    @synchronized(self.requests) {
+        [self.requests removeObject:request];
+    }
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response

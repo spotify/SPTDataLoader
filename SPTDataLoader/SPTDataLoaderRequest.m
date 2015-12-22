@@ -18,11 +18,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import "SPTDataLoaderRequest.h"
 
 #import "SPTDataLoaderRequest+Private.h"
 
-NSString * const SPTDataLoaderRequestHostHeader = @"Host";
+NSString * const SPTDataLoaderRequestErrorDomain = @"com.spotify.dataloader.request";
 
 static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
 
@@ -32,7 +32,6 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 @property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
 @property (nonatomic, assign) BOOL retriedAuthorisation;
-
 @property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
 
 @end
@@ -43,25 +42,31 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 
 + (instancetype)requestWithURL:(NSURL *)URL
 {
-    return [[self alloc] initWithURL:URL];
+    return [self requestWithURL:URL sourceIdentifier:nil];
 }
 
-- (instancetype)initWithURL:(NSURL *)URL
++ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
+{
+    return [[self alloc] initWithURL:URL sourceIdentifier:sourceIdentifier];
+}
+
+- (instancetype)initWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
 {
     static int64_t uniqueIdentifierBarrier = 0;
-    
+
     if (!(self = [super init])) {
         return nil;
     }
-    
+
     _URL = URL;
-    
+    _sourceIdentifier = sourceIdentifier;
+
     _mutableHeaders = [NSMutableDictionary new];
     _method = SPTDataLoaderRequestMethodGet;
     @synchronized(self.class) {
         _uniqueIdentifier = uniqueIdentifierBarrier++;
     }
-    
+
     return self;
 }
 
@@ -100,11 +105,13 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
 - (NSURLRequest *)urlRequest
 {
     NSString * const SPTDataLoaderRequestContentLengthHeader = @"Content-Length";
+    NSString * const SPTDataLoaderRequestAcceptLanguageHeader = @"Accept-Language";
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.URL];
     
-    if (!self.headers[SPTDataLoaderRequestHostHeader]) {
-        [urlRequest addValue:self.URL.host forHTTPHeaderField:SPTDataLoaderRequestHostHeader];
+    if (!self.headers[SPTDataLoaderRequestAcceptLanguageHeader]) {
+        [urlRequest addValue:[self.class languageHeaderValue]
+          forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
     }
     
     if (self.body) {
@@ -124,11 +131,55 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     return urlRequest;
 }
 
++ (NSString *)languageHeaderValue
+{
+    static NSString * languageHeaderValue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
+        NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
+
+        NSString *(^constructLanguageHeaderValue)(NSString *, float) = ^NSString *(NSString *language, float languageImportance) {
+            NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
+            return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
+        };
+
+        NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
+        if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
+            languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
+        }
+        float languageImportanceCounter = 1.0f;
+        NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
+        BOOL containsEnglish = NO;
+        for (NSString *language in languages) {
+            if (!containsEnglish) {
+                NSString * const SPTDataLoaderRequestLanguageLocaleSeparator = @"-";
+                NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageLocaleSeparator].firstObject;
+                if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
+                    containsEnglish = YES;
+                }
+            }
+
+            if (languageImportanceCounter == 1.0f) {
+                [languageHeaderValues addObject:language];
+            } else {
+                [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
+            }
+            languageImportanceCounter -= (1.0f / languages.count);
+        }
+        if (!containsEnglish) {
+            [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
+        }
+        languageHeaderValue = [languageHeaderValues componentsJoinedByString:@", "];
+    });
+    return languageHeaderValue;
+}
+
 #pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    __typeof(self) copy = [self.class requestWithURL:self.URL];
+    __typeof(self) copy = [self.class requestWithURL:self.URL sourceIdentifier:self.sourceIdentifier];
     copy.maximumRetryCount = self.maximumRetryCount;
     copy.body = [self.body copy];
     @synchronized(self.mutableHeaders) {
@@ -136,9 +187,11 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     }
     copy.chunks = self.chunks;
     copy.cachePolicy = self.cachePolicy;
+    copy.skipNSURLCache = self.skipNSURLCache;
     copy.method = self.method;
     copy.userInfo = self.userInfo;
     copy.uniqueIdentifier = self.uniqueIdentifier;
+    copy.timeout = self.timeout;
     return copy;
 }
 

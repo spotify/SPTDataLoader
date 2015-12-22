@@ -20,7 +20,7 @@
  */
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import "SPTDataLoaderRequest.h"
 
 #import "SPTDataLoaderRequest+Private.h"
 
@@ -41,7 +41,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    self.request = [SPTDataLoaderRequest requestWithURL:self.URL];
+    self.request = [SPTDataLoaderRequest requestWithURL:self.URL sourceIdentifier:nil];
 }
 
 - (void)tearDown
@@ -88,12 +88,6 @@
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should not contain anything after removal");
 }
 
-- (void)testURLRequestAddsHostHeader
-{
-    NSURLRequest *request = self.request.urlRequest;
-    XCTAssertEqualObjects(request.allHTTPHeaderFields[@"Host"], self.URL.host, @"The URL request should add a host header field");
-}
-
 - (void)testURLRequestContentLengthHeader
 {
     NSData *data = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
@@ -107,7 +101,7 @@
     [self.request addValue:@"Value" forHeader:@"Header"];
     NSURLRequest *request = self.request.urlRequest;
     NSDictionary *expectedHeaders = @{ @"Header" : @"Value",
-                                       @"Host" : self.URL.host };
+                                       @"Accept-Language" : [SPTDataLoaderRequest languageHeaderValue] };
     XCTAssertEqualObjects(request.allHTTPHeaderFields, expectedHeaders, @"The headers were not copied appropriately");
 }
 
@@ -132,6 +126,7 @@
     [self.request addValue:@"Value" forHeader:@"Header"];
     self.request.chunks = YES;
     self.request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    self.request.skipNSURLCache = YES;
     self.request.method = SPTDataLoaderRequestMethodPost;
     SPTDataLoaderRequest *request = [self.request copy];
     XCTAssertEqual(request.maximumRetryCount, self.request.maximumRetryCount, @"The retry count was not copied correctly");
@@ -139,6 +134,7 @@
     XCTAssertEqualObjects(request.headers, self.request.headers, @"The headers were not copied correctly");
     XCTAssertEqual(request.chunks, self.request.chunks, @"The chunk was not copied correctly");
     XCTAssertEqual(request.cachePolicy, self.request.cachePolicy, @"The cache policy was not copied correctly");
+    XCTAssertEqual(request.skipNSURLCache, self.request.skipNSURLCache, @"'skipNSURLCache' was not copied correctly");
     XCTAssertEqual(request.method, self.request.method, @"The method was not copied correctly");
 }
 

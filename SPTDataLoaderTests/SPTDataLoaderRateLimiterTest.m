@@ -22,7 +22,7 @@
 
 #import "SPTDataLoaderRateLimiter.h"
 
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import "SPTDataLoaderRequest.h"
 
 @interface SPTDataLoaderRateLimiterTest : XCTestCase
 
@@ -59,7 +59,7 @@
 - (void)testEarliestTimeUntilRequestCanBeRealisedWithRetryAfter
 {
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     NSTimeInterval seconds = 60.0;
     CFAbsoluteTime retryAfter = CFAbsoluteTimeGetCurrent() + seconds;
     [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
@@ -70,7 +70,7 @@
 - (void)testEarliestTimeUntilRequestCanBeRealised
 {
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     [self.rateLimiter executedRequest:request];
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     NSString *earliestTimeWithDecimalPrecision = [NSString stringWithFormat:@"%0.1f", earliestTime];
@@ -108,7 +108,7 @@
 - (void)testResetRetryAfterAfterSuccessfulExecution
 {
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     NSTimeInterval seconds = 60.0;
     CFAbsoluteTime retryAfter = CFAbsoluteTimeGetCurrent() + seconds;
     [self.rateLimiter setRetryAfter:retryAfter forURL:URL];

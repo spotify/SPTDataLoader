@@ -10,7 +10,6 @@
 		0504CB8D1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */; };
 		0504CB8F1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */; };
 		0504CB911A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB901A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m */; };
-		050AB4C81A782D4F005C93CC /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050AB4C61A782D4F005C93CC /* SPTCancellationTokenImplementation.m */; };
 		050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
 		050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
 		050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
@@ -42,6 +41,7 @@
 		059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */; };
 		059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
+		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,9 +70,7 @@
 		0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementationTest.m; sourceTree = "<group>"; };
 		0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementationTest.m; sourceTree = "<group>"; };
 		0504CB901A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandlerTest.m; sourceTree = "<group>"; };
-		050AB4C31A782D4F005C93CC /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenImplementation.h; sourceTree = "<group>"; };
-		050AB4C61A782D4F005C93CC /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
 		050E068A1A10C62100A10A0E /* libSPTDataLoader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSPTDataLoader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		050E068F1A10C62100A10A0E /* SPTDataLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoader.m; sourceTree = "<group>"; };
 		050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPTDataLoaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,7 +132,13 @@
 		059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponseTest.m; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
+		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_shared.xcconfig; path = ../../other/spotify_shared.xcconfig; sourceTree = "<group>"; };
+		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
+		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
+		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
+		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
+		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,10 +194,9 @@
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */,
 				050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */,
+				8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */,
 				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
-				050AB4C31A782D4F005C93CC /* SPTCancellationTokenFactoryImplementation.h */,
 				050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */,
-				050AB4C61A782D4F005C93CC /* SPTCancellationTokenImplementation.m */,
 				05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */,
 				05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */,
 				056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */,
@@ -240,17 +243,20 @@
 		056A04AE1A13D0FA00FA72AD /* Public API */ = {
 			isa = PBXGroup;
 			children = (
+				C6515CF11BA2D1A700271211 /* module.modulemap */,
 				056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */,
 				056A04B31A13D10900FA72AD /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
+				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
+				C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */,
+				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
 				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
+				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
 				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
+				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
 				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
 				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
 				056A04B91A13D10900FA72AD /* SPTExpTime.h */,
-				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
-				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
-				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
 			);
 			name = "Public API";
 			sourceTree = "<group>";
@@ -282,6 +288,8 @@
 				055AEE511A16117E00A490BF /* NSURLSessionTaskMock.m */,
 				050F53851A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.h */,
 				050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */,
+				EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */,
+				EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -338,8 +346,8 @@
 		050E06821A10C62100A10A0E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = spotify;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Spotify;
 				TargetAttributes = {
 					050E06891A10C62100A10A0E = {
 						CreatedOnToolsVersion = 6.1;
@@ -395,7 +403,6 @@
 				052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */,
 				052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */,
 				050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */,
-				050AB4C81A782D4F005C93CC /* SPTCancellationTokenImplementation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +414,7 @@
 				0599409F1A14F60F006D6BE9 /* SPTDataLoaderTest.m in Sources */,
 				05356F151A44B588003A7351 /* NSDictionaryHeaderSizeTest.m in Sources */,
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
+				EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */,
 				055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */,
 				050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */,
 				059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */,
@@ -457,13 +465,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -476,11 +481,9 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -517,10 +520,8 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -528,7 +529,7 @@
 		050E069F1A10C62100A10A0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				DEFINES_MODULE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -539,7 +540,7 @@
 		050E06A01A10C62100A10A0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				DEFINES_MODULE = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -551,7 +552,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -560,6 +561,7 @@
 				);
 				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -568,11 +570,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
