@@ -7,5 +7,3 @@ bundle exec slather coverage \
     --output-directory slather-report \
     --scheme SPTDataLoader \
     SPTDataLoader.xcodeproj
-
-bundle exec slather
