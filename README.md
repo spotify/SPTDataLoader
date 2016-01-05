@@ -1,4 +1,4 @@
-# SPTDataLoader
+![SPTDataLoader](banner@2x.png)
 
 [![Coverage Status](https://coveralls.io/repos/spotify/SPTDataLoader/badge.svg?branch=master&service=github)](https://coveralls.io/github/spotify/SPTDataLoader?branch=master)
 [![Build Status](https://api.travis-ci.org/spotify/SPTDataLoader.svg)](https://travis-ci.org/spotify/SPTDataLoader)
