@@ -1,7 +1,12 @@
 osx_image: xcode7.2
 language: objective-c
+env:
+  global:
+    - LC_CTYPE=en_US.UTF-8
+    - LANG=en_US.UTF-8
 before_install: 
   - bundle install --without=documentation
 script:
-  - xcodebuild build test -project SPTDataLoader.xcodeproj -scheme SPTDataLoader -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES -enableCodeCoverage YES
+  - set -o pipefail
+  - xcodebuild build test -project SPTDataLoader.xcodeproj -scheme SPTDataLoader -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES -enableCodeCoverage YES | xcpretty -c -f `xcpretty-travis-formatter`;
 after_success: ./slather.sh
