@@ -1,8 +1,8 @@
-![SPTDataLoader](banner@2x.png)
+<img alt="SPTDataLoader" src="banner@2x.png" width="100%" max-width="888">
 
 [![Coverage Status](https://coveralls.io/repos/spotify/SPTDataLoader/badge.svg?branch=master&service=github)](https://coveralls.io/github/spotify/SPTDataLoader?branch=master)
 [![Build Status](https://api.travis-ci.org/spotify/SPTDataLoader.svg)](https://travis-ci.org/spotify/SPTDataLoader)
-[![License](https://img.shields.io/github/license/spotify/apollo.svg)](LICENSE.txt)
+[![License](https://img.shields.io/github/license/spotify/SPTDataLoader.svg)](LICENSE)
 
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
