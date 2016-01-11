@@ -308,14 +308,14 @@
     XCTAssertNil(blockResponse, @"The service failed to skip the cache when 'skipNSURLCache' was set to YES");
 }
 
-- (void)DISABLED_testConsumptionObserverCalled
+- (void)testConsumptionObserverCalled
 {
     SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
     [self.service addConsumptionObserver:consumptionObserver on:dispatch_get_main_queue()];
-    [self.service URLSession:self.session task:[NSURLSessionDataTask new] didCompleteWithError:nil];
+    [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when a request ends");
     [self.service removeConsumptionObserver:consumptionObserver];
-    [self.service URLSession:self.session task:[NSURLSessionDataTask new] didCompleteWithError:nil];
+    [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when the observer has been removed");
 }
 
