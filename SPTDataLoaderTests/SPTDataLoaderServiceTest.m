@@ -34,6 +34,7 @@
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderConsumptionObserverMock.h"
+#import "NSURLSessionDataTaskMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate>
 
@@ -143,8 +144,6 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1, @"The service did not call a failed response on a failed authorisation attempt");
 }
 
-/**
- * Apparently this is crashing due to an SDK failure: http://osdir.com/ml/general/2014-10/msg10892.html
 - (void)testCancellationTokenCancelsOperation
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
@@ -152,9 +151,8 @@
     id<SPTCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
                                                                        performRequest:request];
     [cancellationToken cancel];
-    XCTAssertEqual(requestResponseHandlerMock.numberOfCancelledRequestCalls, 1, @"The service did not call a cancelled request on a cancellation token cancelling");
+    XCTAssertEqual(self.session.lastDataTask.numberOfCallsToCancel, 1, @"The service did not call a cancelled request on a cancellation token cancelling");
 }
- */
 
 - (void)testSessionDidReceiveResponse
 {
