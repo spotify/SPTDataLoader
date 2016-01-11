@@ -97,7 +97,7 @@
            completionHandler:^(NSURLSessionResponseDisposition disposition){}];
 }
 
-- (void)DISABLED_testOperationForTaskWithValidTask
+- (void)testOperationForTaskWithValidTask
 {
     // Test no crash occurs
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
@@ -110,7 +110,7 @@
            completionHandler:^(NSURLSessionResponseDisposition disposition){}];
 }
 
-- (void)DISABLED_testResolverChangingAddress
+- (void)testResolverChangingAddress
 {
     [self.resolver setAddresses:@[ @"192.168.0.1" ] forHost:@"spclient.wg.spotify.com"];
     
@@ -120,7 +120,7 @@
     XCTAssertEqualObjects(request.URL.absoluteString, @"https://192.168.0.1/thing");
 }
 
-- (void)DISABLED_testAuthenticatingRequest
+- (void)testAuthenticatingRequest
 {
     SPTDataLoaderAuthoriserMock *authoriserMock = [SPTDataLoaderAuthoriserMock new];
     SPTDataLoaderFactory *factory = [self.service createDataLoaderFactoryWithAuthorisers:@[ authoriserMock ]];
@@ -129,7 +129,7 @@
     XCTAssertEqual(authoriserMock.numberOfCallsToAuthoriseRequest, 1, @"The service did not check the requests authorisation");
 }
 
-- (void)DISABLED_testRequestAuthorised
+- (void)testRequestAuthorised
 {
     // Test no crash occurs on optional delegate method
     [self.service requestResponseHandler:nil authorisedRequest:nil];
@@ -156,7 +156,7 @@
 }
  */
 
-- (void)DISABLED_testSessionDidReceiveResponse
+- (void)testSessionDidReceiveResponse
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.service requestResponseHandler:nil performRequest:request];
@@ -258,7 +258,7 @@
     [self.service URLSession:self.service.session dataTask:[NSURLSessionDataTask new] didBecomeDownloadTask:[NSURLSessionDownloadTask new]];
 }
 
-- (void)DISABLED_testSessionDidReceiveData
+- (void)testSessionDidReceiveData
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
@@ -269,7 +269,7 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1, @"The service did not call received data on the request response handler");
 }
 
-- (void)DISABLED_testSessionDidComplete
+- (void)testSessionDidComplete
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
@@ -278,7 +278,7 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1, @"The service did not call successfully received response on the request response handler");
 }
 
-- (void)DISABLED_testSessionWillCacheResponse
+- (void)testSessionWillCacheResponse
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.skipNSURLCache = NO;
@@ -294,7 +294,7 @@
     XCTAssertNotNil(blockResponse, @"The service skipped caching when 'skipNSURLCache' was set to NO");
 }
 
-- (void)DISABLED_testSessionWillNotCacheResponse
+- (void)testSessionWillNotCacheResponse
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.skipNSURLCache = YES;
