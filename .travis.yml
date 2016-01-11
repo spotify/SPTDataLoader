@@ -11,4 +11,4 @@ env:
     - LANG=en_US.UTF-8
 before_install: ./ci/before_install.sh
 script: ./ci/script.sh
-after_success: ./slather.sh
+after_success: ./ci/after_success.sh
