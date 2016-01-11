@@ -11,7 +11,5 @@ env:
     - LANG=en_US.UTF-8
 before_install: 
   - bundle install --without=documentation
-script:
-  - set -o pipefail
-  - xcodebuild build test -project SPTDataLoader.xcodeproj -scheme SPTDataLoader -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES -enableCodeCoverage YES | xcpretty -c -f `xcpretty-travis-formatter`;
+script: ./ci/script.sh
 after_success: ./slather.sh
