@@ -2,6 +2,11 @@
 
 @implementation NSURLSessionDataTaskMock
 
+@synthesize countOfBytesSent;
+@synthesize countOfBytesReceived;
+@synthesize currentRequest;
+@synthesize response;
+
 - (void)resume
 {
     self.numberOfCallsToResume++;
