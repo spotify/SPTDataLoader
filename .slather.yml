@@ -1,2 +1,5 @@
 coverage_service: coveralls
+ci_service: travis_ci
 xcodeproj: SPTDataLoader.xcodeproj
+source_directory: SPTDataLoader
+ignore: "../**/Developer/*"
