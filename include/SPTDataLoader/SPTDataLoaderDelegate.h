@@ -25,14 +25,15 @@
  * @param response The object describing the response
  */
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveErrorResponse:(SPTDataLoaderResponse *)response;
+
+@optional
+
 /**
  * Called when the data loader cancels a request
  * @param dataLoader The data loader that cancelled the request
  * @param request The object describing the request that was cancelled
  */
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request;
-
-@optional
 
 /**
  * Whether the data loader delegate will support chunks being called back
