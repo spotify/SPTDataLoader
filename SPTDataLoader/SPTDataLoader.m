@@ -133,9 +133,11 @@
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
-    [self executeDelegateBlock: ^{
-        [self.delegate dataLoader:self didCancelRequest:request];
-    }];
+    if ([self.delegate respondsToSelector:@selector(dataLoader:didCancelRequest:)]) {
+        [self executeDelegateBlock: ^{
+            [self.delegate dataLoader:self didCancelRequest:request];
+        }];
+    }
     @synchronized(self.requests) {
         [self.requests removeObject:request];
     }
