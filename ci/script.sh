@@ -9,3 +9,5 @@ xcrun xcodebuild build test \
     ONLY_ACTIVE_ARCH=YES \
     -enableCodeCoverage YES \
          | xcpretty -c -f `xcpretty-travis-formatter`
+
+pod spec lint SPTDataLoader.podspec
