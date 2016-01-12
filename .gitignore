@@ -12,6 +12,3 @@ build/
 
 # Carthage
 Carthage/Build
-
-# Slather
-slather-report/
