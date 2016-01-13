@@ -19,6 +19,7 @@
  * under the License.
  */
 #import "ViewController.h"
+#import "ClientKeys.h"
 
 #import <SPTDataLoader/SPTDataLoaderFactory.h>
 #import <SPTDataLoader/SPTDataLoaderService.h>
@@ -46,9 +47,9 @@
     accountsComponents.path = @"/authorize";
     
     NSURLQueryItem *responseTypeQueryItem = [NSURLQueryItem queryItemWithName:@"response_type" value:@"code"];
-    NSURLQueryItem *clientIDQueryItem = [NSURLQueryItem queryItemWithName:@"client_id" value:@"c0af246cb182480cb614d27026bfc9c3"];
+    NSURLQueryItem *clientIDQueryItem = [NSURLQueryItem queryItemWithName:@"client_id" value:SPOTIFY_CLIENT_ID];
     NSURLQueryItem *scopeQueryItem = [NSURLQueryItem queryItemWithName:@"scope" value:@"playlist-read-private"];
-    NSURLQueryItem *redirectURIQueryItem = [NSURLQueryItem queryItemWithName:@"redirect_uri" value:@"sptdataloaderdemo://login"];
+    NSURLQueryItem *redirectURIQueryItem = [NSURLQueryItem queryItemWithName:@"redirect_uri" value:SPOTIFY_REDIRECT_URI];
     NSURLQueryItem *stateQueryItem = [NSURLQueryItem queryItemWithName:@"state" value:@"AAAAAAAAAAAAAAAA"];
     
     accountsComponents.queryItems = @[ responseTypeQueryItem, clientIDQueryItem, scopeQueryItem, redirectURIQueryItem, stateQueryItem ];
