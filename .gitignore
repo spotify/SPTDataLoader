@@ -12,3 +12,7 @@ build/
 
 # Carthage
 Carthage/Build
+
+# Bundler
+.bundle
+vendor
