@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "SPTDataLoader"
-    s.version      = "1.0.1"
+    s.version      = "1.0.2"
     s.summary      = "SPTDataLoader is Spotify's HTTP library for Objective-C"
 
     s.description  = <<-DESC
@@ -11,10 +11,12 @@ Pod::Spec.new do |s|
                         making HTTP requests.
                      DESC
 
+    s.ios.deployment_target = "6.0"
+    s.osx.deployment_target = "10.8"
+
     s.homepage     = "https://github.com/spotify/SPTDataLoader"
     s.license      = "Apache 2.0"
     s.author       = { "Will Sackfield" => "sackfield@spotify.com" }
-    s.platform     = :ios, "7.0"
     s.source       = { :git => "https://github.com/spotify/SPTDataLoader.git", :tag => s.version }
     s.source_files = "include/SPTDataLoader/*.h", "SPTDataLoader/*.{h,m}"
     s.public_header_files = "include/SPTDataLoader/*.h"
