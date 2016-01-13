@@ -5,7 +5,7 @@ set -euo pipefail
 xcrun xcodebuild build test \
 	NSUnbufferedIO=YES \
     -project SPTDataLoader.xcodeproj \
-    -scheme SPTDataLoader \
+    -scheme "$SCHEME" \
     -sdk "$TEST_SDK" \
     -destination "$TEST_DEST" \
     -enableCodeCoverage YES \
