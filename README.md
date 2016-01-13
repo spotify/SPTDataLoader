@@ -8,6 +8,7 @@
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
 - [x] 📱 iOS 7.0+
+- [x] 💻 OS X 10.8+
 
 ## Architecture :triangular_ruler:
 `SPTDataLoader` is designed as an HTTP stack with 3 additional layers on top of `NSURLSession`.
