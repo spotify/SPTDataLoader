@@ -38,6 +38,7 @@
         return nil;
     }
     
+    self.title = NSLocalizedString(@"Playlists", @"");
     _model = model;
     _model.delegate = self;
     
@@ -86,6 +87,14 @@
     cell.textLabel.text = self.model.items[indexPath.row][@"name"];
     
     return cell;
+}
+
+#pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO: do something here
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
