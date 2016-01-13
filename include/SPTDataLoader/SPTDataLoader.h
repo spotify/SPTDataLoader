@@ -22,6 +22,9 @@
 
 #import <SPTDataLoader/SPTDataLoaderConvenience.h>
 
+@protocol SPTDataLoaderDelegate;
+@class SPTDataLoaderRequest;
+
 #if SPT_BUILDING_FRAMEWORK
 //! Project version number for SPTDataLoader.
 FOUNDATION_EXPORT double SPTDataLoaderVersionNumber;
