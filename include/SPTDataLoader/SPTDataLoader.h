@@ -20,9 +20,15 @@
  */
 #import <Foundation/Foundation.h>
 
-@protocol SPTDataLoaderDelegate;
-@class SPTDataLoaderRequest;
-@protocol SPTCancellationToken;
+#import <SPTDataLoader/SPTDataLoaderConvenience.h>
+
+#if SPT_BUILDING_FRAMEWORK
+//! Project version number for SPTDataLoader.
+FOUNDATION_EXPORT double SPTDataLoaderVersionNumber;
+
+//! Project version string for SPTDataLoader.
+FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
+#endif // SPT_BUILDING_FRAMEWORK
 
 /**
  * The object used for performing requests
