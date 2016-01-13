@@ -2,13 +2,13 @@
 
 set -euo pipefail
 
-xcrun xcodebuild build test \
+xcrun xcodebuild $BUILD_ACTIONS \
 	NSUnbufferedIO=YES \
     -project SPTDataLoader.xcodeproj \
     -scheme "$SCHEME" \
     -sdk "$TEST_SDK" \
     -destination "$TEST_DEST" \
-    -enableCodeCoverage YES \
+    $EXTRA_ARGUMENTS \
          | xcpretty -c -f `xcpretty-travis-formatter`
 
 pod spec lint SPTDataLoader.podspec --quick
