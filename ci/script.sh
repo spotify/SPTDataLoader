@@ -5,8 +5,8 @@ set -euo pipefail
 xcrun xcodebuild build test \
     -project SPTDataLoader.xcodeproj \
     -scheme SPTDataLoader \
-    -sdk iphonesimulator \
-    ONLY_ACTIVE_ARCH=YES \
+    -sdk $TEST_SDK \
+    -destination "platform=iOS Simulator,OS=$OS,name=$NAME" \
     -enableCodeCoverage YES \
          | xcpretty -c -f `xcpretty-travis-formatter`
 
