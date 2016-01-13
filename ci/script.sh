@@ -11,4 +11,4 @@ xcrun xcodebuild build test \
     -enableCodeCoverage YES \
          | xcpretty -c -f `xcpretty-travis-formatter`
 
-pod spec lint SPTDataLoader.podspec
+pod spec lint SPTDataLoader.podspec --quick
