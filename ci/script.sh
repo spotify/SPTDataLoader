@@ -3,6 +3,7 @@
 set -euo pipefail
 
 xcrun xcodebuild build test \
+	NSUnbufferedIO=YES \
     -project SPTDataLoader.xcodeproj \
     -scheme SPTDataLoader \
     -sdk $TEST_SDK \
