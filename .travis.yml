@@ -35,6 +35,7 @@ env:
     - TEST_SDK=appletvsimulator TEST_DEST="OS=9.1,name=Apple TV 1080p"                  SCHEME="$SCHEME_TV_FRAMEWORK"           BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE"
     - TEST_SDK=appletvsimulator TEST_DEST="OS=9.0,name=Apple TV 1080p"                  SCHEME="$SCHEME_TV_FRAMEWORK"           BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE"
 
+before_install: ./ci/before_install.sh
 bundler_args: --without documentation --without development --deployment --jobs=3 --retry=3
 script: ./ci/script.sh
 after_success: ./ci/after_success.sh
