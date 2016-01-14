@@ -1190,6 +1190,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 armv7s armv7 arm64 armv7k";
 			};
 			name = Debug;
 		};
@@ -1202,6 +1203,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 armv7s armv7 arm64 armv7k";
 			};
 			name = Release;
 		};
