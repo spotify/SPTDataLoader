@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/viteinfinite/slather
-  revision: 19cd9648ebccf351b79e8513136c091c98650e9e
-  branch: feature-profdata
+  remote: https://github.com/venmo/slather
+  revision: 7a0921b2470b32839e1e2085305d7088b977f6c1
+  branch: master
   specs:
-    slather (1.8.2)
+    slather (1.8.3)
       clamp (~> 0.6)
       nokogiri (~> 1.6.3)
       xcodeproj (~> 0.28.2)
