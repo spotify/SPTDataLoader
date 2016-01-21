@@ -108,6 +108,11 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 + (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier;
 
 /**
+ * The value to be added to the Accept-Language header by default
+ */
++ (NSString *)languageHeaderValue;
+
+/**
  * Adds a header value
  * @param value The value of the header field
  * @param header The header field to add the value to
