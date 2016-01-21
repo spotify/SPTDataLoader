@@ -47,5 +47,5 @@ deploy:
     SPTDataLoader.framework.zip
   on:
     repo: spotify/SPTDataLoader
+    tags: true
   script: ./ci/deploy.sh
-  tags: true
