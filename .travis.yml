@@ -48,3 +48,4 @@ deploy:
   on:
     repo: spotify/SPTDataLoader
   script: ./ci/deploy.sh
+  tags: true
