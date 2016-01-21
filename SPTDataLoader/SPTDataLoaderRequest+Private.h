@@ -41,9 +41,4 @@
  */
 @property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
 
-/**
- * The value to be added to the Accept-Language header by default
- */
-+ (NSString *)languageHeaderValue;
-
 @end
