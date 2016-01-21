@@ -39,3 +39,13 @@ before_install: ./ci/before_install.sh
 bundler_args: --without documentation --without development --deployment --jobs=3 --retry=3
 script: ./ci/script.sh
 after_success: ./ci/after_success.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: ANvlZh4vgRuTeUE9IenqsiKU0iqHVVJGDmqjvqmg0PMcN6QgR7leAAf45cQvPwKeJqS7DeXHFLq7gs0c7gfofBluFpt/UdCcHb1L7aXG+14uPVp6f5ggK5ZUxXwWfkW4s1xtAvDvQmGo7qB9Q/EaUSHJvH2vOBPlaaFc+h6C7M4=
+  file:
+    SPTDataLoader.framework.zip
+  on:
+    repo: spotify/SPTDataLoader
+  script: ./ci/deploy.sh
+  tags: true
