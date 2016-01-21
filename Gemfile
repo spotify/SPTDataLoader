@@ -6,4 +6,3 @@ gem 'slather',
   :branch   => "master"
 gem 'xcpretty'
 gem 'xcpretty-travis-formatter'
-gem 'carthage'
