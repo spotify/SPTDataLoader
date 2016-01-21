@@ -35,6 +35,14 @@ At Spotify we have begun moving to a decentralised HTTP architecture, and in doi
 
 Thus we came up with a way to elegantly inject tokens in a Just-in-time manner for requests that require them. We also wanted to learn from our mistakes with our proprietary protocol, and bake in back-off policies early to avoid us DDOSing our own backends with huge amounts of eronious requests.
 
+## Documentation :books:
+See the [`SPTDataLoader` documentation](http://cocoadocs.org/docsets/SPTDataLoader) on CocoaDocs.org for the full documentation.
+
+You can also add it to Dash if you want to using the following Dash feed:
+```
+dash-feed://http%3A%2F%2Fcocoadocs.org%2Fdocsets%2FSPTDataLoader%2FSPTDataLoader.xml
+```
+
 ## Contributing :mailbox_with_mail:
 Contributions are welcomed, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information.
 
