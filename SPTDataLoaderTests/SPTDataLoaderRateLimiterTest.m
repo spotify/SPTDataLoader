@@ -87,7 +87,7 @@
 {
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
     double requestsPerSecond = [self.rateLimiter requestsPerSecondForURL:URL];
-    XCTAssertEqual(requestsPerSecond, self.requestsPerSecond, @"The requests per second for a URL is not falling back to the default specified in the class constructor");
+    XCTAssertEqualWithAccuracy(requestsPerSecond, self.requestsPerSecond, 1.0, @"The requests per second for a URL is not falling back to the default specified in the class constructor");
 }
 
 - (void)testRequestsPerSecondCustom
@@ -96,7 +96,7 @@
     double requestsPerSecond = 20.0;
     [self.rateLimiter setRequestsPerSecond:requestsPerSecond forURL:URL];
     double reportedRequestsPerSecond = [self.rateLimiter requestsPerSecondForURL:URL];
-    XCTAssertEqual(requestsPerSecond, reportedRequestsPerSecond, @"The requests per second for this URL was not what was explicitly set");
+    XCTAssertEqualWithAccuracy(requestsPerSecond, reportedRequestsPerSecond, 1.0, @"The requests per second for this URL was not what was explicitly set");
 }
 
 - (void)testSetRetryAfterWithNilURL
@@ -114,7 +114,7 @@
     [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
     [self.rateLimiter executedRequest:request];
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
-    XCTAssertEqual(floor(earliestTime), 0.0, @"The earliest time until request can be executed was not reset despite an overwrite of the retry-after rule");
+    XCTAssertEqualWithAccuracy(earliestTime, 0.0, 1.0, @"The earliest time until request can be executed was not reset despite an overwrite of the retry-after rule");
 }
 
 @end
