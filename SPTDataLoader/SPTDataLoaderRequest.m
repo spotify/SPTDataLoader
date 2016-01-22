@@ -138,6 +138,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
     dispatch_once(&onceToken, ^{
         const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
         NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
+        NSString * const SPTDataLoaderRequestLanguageHeaderValuesJoiner = @", ";
 
         NSString *(^constructLanguageHeaderValue)(NSString *, float) = ^NSString *(NSString *language, float languageImportance) {
             NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
@@ -170,7 +171,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
         if (!containsEnglish) {
             [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
         }
-        languageHeaderValue = [languageHeaderValues componentsJoinedByString:@", "];
+        languageHeaderValue = [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
     });
     return languageHeaderValue;
 }

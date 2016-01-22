@@ -23,6 +23,8 @@
 #import "NSString+OAuthBlob.h"
 
 static NSString *SPTDataLoaderAuthoriserOAuthSourceIdentifier = @"auth";
+static NSString *SPTDataLoaderAuthoriserHeaderValuesJoiner = @" ";
+static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
 
 @interface SPTDataLoaderAuthoriserOAuth () <SPTDataLoaderDelegate>
 
@@ -71,7 +73,7 @@ static NSString *SPTDataLoaderAuthoriserOAuthSourceIdentifier = @"auth";
 - (void)authorisePendingRequest:(SPTDataLoaderRequest *)request
 {
     NSArray *authorizationValueArray = @[ self.tokenType, self.accessToken ];
-    [request addValue:[authorizationValueArray componentsJoinedByString:@" "] forHeader:@"Authorization"];
+    [request addValue:[authorizationValueArray componentsJoinedByString:SPTDataLoaderAuthoriserHeaderValuesJoiner] forHeader:SPTDataLoaderAuthoriserHeader];
     [self.delegate dataLoaderAuthoriser:self authorisedRequest:request];
 }
 
@@ -127,7 +129,7 @@ static NSString *SPTDataLoaderAuthoriserOAuthSourceIdentifier = @"auth";
                                                         sourceIdentifier:SPTDataLoaderAuthoriserOAuthSourceIdentifier];
     
     NSArray *authorisationHeaderValues = @[ @"Basic", [NSString spt_OAuthBlob] ];
-    [request addValue:[authorisationHeaderValues componentsJoinedByString:@" "] forHeader:@"Authorization"];
+    [request addValue:[authorisationHeaderValues componentsJoinedByString:SPTDataLoaderAuthoriserHeaderValuesJoiner] forHeader:SPTDataLoaderAuthoriserHeader];
     [self.dataLoader performRequest:request];
 }
 
