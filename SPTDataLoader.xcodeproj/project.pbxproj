@@ -1132,10 +1132,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
-				VALID_ARCHS = "i386 x86_64 armv7s armv7 arm64";
+				SUPPORTED_PLATFORMS = "$(inherited)";
+				VALID_ARCHS = "$(inherited)";
 			};
 			name = Debug;
 		};
@@ -1177,9 +1177,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTED_PLATFORMS = "$(inherited)";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "i386 x86_64 armv7s armv7 arm64";
+				VALID_ARCHS = "$(inherited)";
 			};
 			name = Release;
 		};
@@ -1188,11 +1188,12 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 armv7s armv7 arm64 armv7k";
+				SUPPORTED_PLATFORMS = "$(inherited)";
+				VALID_ARCHS = "$(inherited)";
 			};
 			name = Debug;
 		};
@@ -1201,11 +1202,12 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 x86_64 armv7s armv7 arm64 armv7k";
+				SUPPORTED_PLATFORMS = "$(inherited)";
+				VALID_ARCHS = "$(inherited)";
 			};
 			name = Release;
 		};
