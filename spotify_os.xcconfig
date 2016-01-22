@@ -14,7 +14,7 @@ ONLY_ACTIVE_ARCH_Release = NO
 // Warnings:
 // Attribution: https://github.com/jonreid/XcodeWarnings
 
-WARNING_CFLAGS = -Weverything -Wno-error=deprecated -Wno-objc-missing-property-synthesis -Wno-gnu-conditional-omitted-operand
+WARNING_CFLAGS = -Weverything -Wno-error=deprecated -Wno-objc-missing-property-synthesis -Wno-gnu-conditional-omitted-operand -Wno-gnu -Wno-documentation-unknown-command
 
 // Apple LLVM 7.0 - Warnings - All languages
 GCC_WARN_CHECK_SWITCH_STATEMENTS = YES

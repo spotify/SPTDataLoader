@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTDataLoaderRequestTaskHandler.h"
 
@@ -82,13 +82,13 @@
     self.request.chunks = YES;
     NSData *data = [@"thing" dataUsingEncoding:NSUTF8StringEncoding];
     [self.handler receiveData:data];
-    XCTAssertEqual(self.requestResponseHandler.numberOfReceivedDataRequestCalls, 1, @"The handler did not relay the received data onto its request response handler");
+    XCTAssertEqual(self.requestResponseHandler.numberOfReceivedDataRequestCalls, 1u, @"The handler did not relay the received data onto its request response handler");
 }
 
 - (void)testRelaySuccessfulResponse
 {
     [self.handler completeWithError:nil];
-    XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1, @"The handler did not relay the successful response onto its request response handler");
+    XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1u, @"The handler did not relay the successful response onto its request response handler");
 }
 
 - (void)testRelayFailedResponse
@@ -96,7 +96,7 @@
     NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
     [self.handler receiveResponse:nil];
     [self.handler completeWithError:error];
-    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 1, @"The handler did not relay the failed response onto its request response handler");
+    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The handler did not relay the failed response onto its request response handler");
 }
 
 - (void)testRelayRetryAfterToRateLimiter
@@ -107,7 +107,7 @@
                                                                 headerFields:@{ @"Retry-After" : @"60" }];
     [self.handler receiveResponse:httpResponse];
     [self.handler completeWithError:nil];
-    XCTAssertEqual(floor([self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request]), 59.0, @"The retry-after header was not relayed to the rate limiter");
+    XCTAssertEqualWithAccuracy([self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request], 59.0, 1.0, @"The retry-after header was not relayed to the rate limiter");
 }
 
 - (void)testRetry
@@ -119,8 +119,8 @@
                                                                 headerFields:@{ @"Retry-After" : @"60" }];
     [self.handler receiveResponse:httpResponse];
     [self.handler completeWithError:nil];
-    XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 0, @"The handler did relay a successful response onto its request response handler when it should have silently retried");
-    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 0, @"The handler did relay a failed response onto its request response handler when it should have silently retried");
+    XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 0u, @"The handler did relay a successful response onto its request response handler when it should have silently retried");
+    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 0u, @"The handler did relay a failed response onto its request response handler when it should have silently retried");
 }
 
 - (void)testDataCreationWithContentLengthFromResponse
@@ -138,7 +138,7 @@
 - (void)testStartCallsResume
 {
     [self.handler start];
-    XCTAssertEqual(self.task.numberOfCallsToResume, 1, @"The task should be resumed on start if no backoff and rate-limiting is applied");
+    XCTAssertEqual(self.task.numberOfCallsToResume, 1u, @"The task should be resumed on start if no backoff and rate-limiting is applied");
 }
 
 - (void)testResponseCreatedIfNoInitialDataReceived

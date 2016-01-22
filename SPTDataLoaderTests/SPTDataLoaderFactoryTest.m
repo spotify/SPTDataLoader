@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTDataLoaderFactory.h"
 
@@ -80,7 +80,7 @@
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.factory successfulResponse:response];
-    XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1, @"The factory did not relay a successful response to the correct handler");
+    XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1u, @"The factory did not relay a successful response to the correct handler");
 }
 
 - (void)testFailedResponse
@@ -90,7 +90,7 @@
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.factory failedResponse:response];
-    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1, @"The factory did not relay a failed response to the correct handler");
+    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory did not relay a failed response to the correct handler");
 }
 
 - (void)testCancelledRequest
@@ -99,7 +99,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     [self.factory cancelledRequest:request];
-    XCTAssertEqual(requestResponseHandler.numberOfCancelledRequestCalls, 1, @"The factory did not relay a cancelled request to the correct handler");
+    XCTAssertEqual(requestResponseHandler.numberOfCancelledRequestCalls, 1u, @"The factory did not relay a cancelled request to the correct handler");
 }
 
 - (void)testReceivedDataChunk
@@ -109,7 +109,7 @@
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.factory receivedDataChunk:nil forResponse:response];
-    XCTAssertEqual(requestResponseHandler.numberOfReceivedDataRequestCalls, 1, @"The factory did not relay a received data chunk response to the correct handler");
+    XCTAssertEqual(requestResponseHandler.numberOfReceivedDataRequestCalls, 1u, @"The factory did not relay a received data chunk response to the correct handler");
 }
 
 - (void)testReceivedInitialResponse
@@ -119,7 +119,7 @@
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.factory receivedInitialResponse:response];
-    XCTAssertEqual(requestResponseHandler.numberOfReceivedInitialResponseCalls, 1, @"The factory did not relay a received data chunk response to the correct handler");
+    XCTAssertEqual(requestResponseHandler.numberOfReceivedInitialResponseCalls, 1u, @"The factory did not relay a received data chunk response to the correct handler");
 }
 
 - (void)testShouldAuthoriseRequest
@@ -144,7 +144,7 @@
     SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ]];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [factory authoriseRequest:request];
-    XCTAssertEqual(authoriser.numberOfCallsToAuthoriseRequest, 1, @"The factory did not send an authorise request to the authoriser");
+    XCTAssertEqual(authoriser.numberOfCallsToAuthoriseRequest, 1u, @"The factory did not send an authorise request to the authoriser");
 }
 
 - (void)testOfflineChangesCachePolicy

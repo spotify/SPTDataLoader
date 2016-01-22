@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTDataLoaderRateLimiter.h"
 
@@ -64,7 +64,7 @@
     CFAbsoluteTime retryAfter = CFAbsoluteTimeGetCurrent() + seconds;
     [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
-    XCTAssertEqual(floor(earliestTime), floor(seconds - 1.0), @"The retry-after limitation was not respected by the rate limiter");
+    XCTAssertEqualWithAccuracy(earliestTime, seconds, 1.0, @"The retry-after limitation was not respected by the rate limiter");
 }
 
 - (void)testEarliestTimeUntilRequestCanBeRealised

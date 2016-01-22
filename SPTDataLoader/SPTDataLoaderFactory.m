@@ -175,7 +175,8 @@
         __weak __typeof(self) weakSelf = self;
         __weak __typeof(request) weakRequest = request;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(request.timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (!weakRequest) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (!strongSelf) {
                 return;
             }
             
@@ -185,7 +186,7 @@
                                                  code:SPTDataLoaderRequestErrorCodeTimeout
                                              userInfo:nil];
             response.error = error;
-            [weakSelf failedResponse:response];
+            [strongSelf failedResponse:response];
         });
     }
     
@@ -197,8 +198,9 @@
 - (void)dataLoaderAuthoriser:(id<SPTDataLoaderAuthoriser>)dataLoaderAuthoriser
            authorisedRequest:(SPTDataLoaderRequest *)request
 {
-    if ([self.requestResponseHandlerDelegate respondsToSelector:@selector(requestResponseHandler:authorisedRequest:)]) {
-        [self.requestResponseHandlerDelegate requestResponseHandler:self authorisedRequest:request];
+    id<SPTDataLoaderRequestResponseHandlerDelegate> requestResponseHandlerDelegate = self.requestResponseHandlerDelegate;
+    if ([requestResponseHandlerDelegate respondsToSelector:@selector(requestResponseHandler:authorisedRequest:)]) {
+        [requestResponseHandlerDelegate requestResponseHandler:self authorisedRequest:request];
     }
 }
 
@@ -206,8 +208,9 @@
    didFailToAuthoriseRequest:(SPTDataLoaderRequest *)request
                    withError:(NSError *)error
 {
-    if ([self.requestResponseHandlerDelegate respondsToSelector:@selector(requestResponseHandler:failedToAuthoriseRequest:error:)]) {
-        [self.requestResponseHandlerDelegate requestResponseHandler:self failedToAuthoriseRequest:request error:error];
+    id<SPTDataLoaderRequestResponseHandlerDelegate> requestResponseHandlerDelegate = self.requestResponseHandlerDelegate;
+    if ([requestResponseHandlerDelegate respondsToSelector:@selector(requestResponseHandler:failedToAuthoriseRequest:error:)]) {
+        [requestResponseHandlerDelegate requestResponseHandler:self failedToAuthoriseRequest:request error:error];
     }
 }
 
