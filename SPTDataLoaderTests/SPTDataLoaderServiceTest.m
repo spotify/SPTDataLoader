@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTDataLoaderService.h"
 #import "SPTDataLoaderRequest.h"
@@ -127,7 +127,7 @@
     SPTDataLoaderFactory *factory = [self.service createDataLoaderFactoryWithAuthorisers:@[ authoriserMock ]];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.service requestResponseHandler:factory performRequest:request];
-    XCTAssertEqual(authoriserMock.numberOfCallsToAuthoriseRequest, 1, @"The service did not check the requests authorisation");
+    XCTAssertEqual(authoriserMock.numberOfCallsToAuthoriseRequest, 1u, @"The service did not check the requests authorisation");
 }
 
 - (void)testRequestAuthorised
@@ -141,7 +141,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.service requestResponseHandler:requestResponseHandlerMock failedToAuthoriseRequest:request error:nil];
-    XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1, @"The service did not call a failed response on a failed authorisation attempt");
+    XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1u, @"The service did not call a failed response on a failed authorisation attempt");
 }
 
 - (void)testCancellationTokenCancelsOperation
@@ -151,7 +151,7 @@
     id<SPTCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
                                                                        performRequest:request];
     [cancellationToken cancel];
-    XCTAssertEqual(self.session.lastDataTask.numberOfCallsToCancel, 1, @"The service did not call a cancelled request on a cancellation token cancelling");
+    XCTAssertEqual(self.session.lastDataTask.numberOfCallsToCancel, 1u, @"The service did not call a cancelled request on a cancellation token cancelling");
 }
 
 - (void)testSessionDidReceiveResponse

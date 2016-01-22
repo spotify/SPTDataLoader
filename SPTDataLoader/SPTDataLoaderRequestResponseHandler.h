@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @class SPTDataLoaderRequest;
 @class SPTDataLoaderResponse;
@@ -105,7 +105,6 @@
 /**
  * Authorise a request
  * @param request The request to be authorise
- * @param cancellationToken The token used to cancel this request
  */
 - (void)authoriseRequest:(SPTDataLoaderRequest *)request;
 

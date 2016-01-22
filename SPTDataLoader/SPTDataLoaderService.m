@@ -33,6 +33,10 @@
 #import "NSDictionary+HeaderSize.h"
 #import "SPTCancellationTokenFactoryImplementation.h"
 
+#ifndef SPTDATALOADER_ALLOW_ALL_CERTS
+#define SPTDATALOADER_ALLOW_ALL_CERTS 0
+#endif
+
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
@@ -140,7 +144,8 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     }
     
     NSString *host = [self.resolver addressForHost:request.URL.host];
-    if (![host isEqualToString:request.URL.host] && host) {
+    NSString *requestHost = request.URL.host;
+    if (![host isEqualToString:requestHost] && host) {
         NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
         requestComponents.host = host;
         request.URL = requestComponents.URL;
@@ -331,7 +336,8 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
 
     // Go through SPTDataLoaderResolver dance and update the URL if needed
     NSString *host = [self.resolver addressForHost:newURL.host];
-    if (![host isEqualToString:newURL.host] && host) {
+    NSString *requestHost = newURL.host;
+    if (![host isEqualToString:requestHost] && host) {
         NSURLComponents *newRequestComponents = [NSURLComponents componentsWithURL:newURL resolvingAgainstBaseURL:NO];
         newRequestComponents.host = host;
         newURL = newRequestComponents.URL;

@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /**
  * An object for keeping track of IP addresses to use for hosts

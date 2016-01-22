@@ -1,4 +1,4 @@
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NSURLSessionDataTaskMock : NSURLSessionDataTask
 
@@ -7,10 +7,10 @@
 
 #pragma mark NSURLSessionTask
 
-@property (copy) NSURLRequest *currentRequest;
-@property (copy) NSURLResponse *response;
+@property (atomic, nullable, readonly, copy) NSURLRequest *currentRequest;
+@property (atomic, nullable, readonly, copy) NSURLResponse *response;
 
-@property int64_t countOfBytesSent;
-@property int64_t countOfBytesReceived;
+@property (atomic, readonly) int64_t countOfBytesSent;
+@property (atomic, readonly) int64_t countOfBytesReceived;
 
 @end

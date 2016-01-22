@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTCancellationTokenFactoryImplementation.h"
 
@@ -54,7 +54,8 @@
     id<SPTCancellationTokenDelegate> delegate = [SPTCancellationTokenDelegateMock new];
     id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:delegate cancelObject:nil];
     XCTAssertNotNil(cancellationToken, @"The factory did not provide a valid cancellation token");
-    XCTAssertEqual(delegate, cancellationToken.delegate, @"The factory did not set the delegate on the cancellation token");
+    id<SPTCancellationTokenDelegate> cancellationTokenDelegate = cancellationToken.delegate;
+    XCTAssertEqual(delegate, cancellationTokenDelegate, @"The factory did not set the delegate on the cancellation token");
 }
 
 @end

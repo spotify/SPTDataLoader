@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTCancellationTokenImplementation.h"
 
@@ -56,7 +56,7 @@
 {
     [self.cancellationToken cancel];
     SPTCancellationTokenDelegateMock *delegateMock = (SPTCancellationTokenDelegateMock *)self.delegate;
-    XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1, @"The delegate cancel method should only have been called once");
+    XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The delegate cancel method should only have been called once");
     XCTAssertTrue(self.cancellationToken.cancelled, @"The cancellation token did not set itself to cancelled despite being cancelled");
 }
 
@@ -65,7 +65,7 @@
     [self.cancellationToken cancel];
     [self.cancellationToken cancel];
     SPTCancellationTokenDelegateMock *delegateMock = (SPTCancellationTokenDelegateMock *)self.delegate;
-    XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1, @"The delegate cancel method should only have been called once");
+    XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The delegate cancel method should only have been called once");
 }
 
 @end

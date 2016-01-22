@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 typedef NS_ENUM(NSInteger, SPTDataLoaderResponseHTTPStatusCode) {

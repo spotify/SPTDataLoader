@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <XCTest/XCTest.h>
+@import XCTest;
 
 #import "SPTDataLoaderRequest.h"
 
@@ -91,7 +91,7 @@
     [self.dataLoader cancelAllLoads];
     for (id<SPTCancellationToken> cancellationToken in cancellationTokens) {
         SPTCancellationTokenDelegateMock *delegateMock = cancellationToken.delegate;
-        XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1, @"The cancellation tokens delegate was not called");
+        XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The cancellation tokens delegate was not called");
     }
 }
 
@@ -100,7 +100,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader successfulResponse:response];
-    XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1, @"The data loader did not relay a successful response to the delegate");
+    XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1u, @"The data loader did not relay a successful response to the delegate");
 }
 
 - (void)testRelayFailureResponseToDelegate
@@ -108,14 +108,14 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader failedResponse:response];
-    XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1, @"The data loader did not relay a error response to the delegate");
+    XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1u, @"The data loader did not relay a error response to the delegate");
 }
 
 - (void)testRelayCancelledRequestToDelegate
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.dataLoader cancelledRequest:request];
-    XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 1, @"The data loader did not relay a cancelled request to the delegate");
+    XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 1u, @"The data loader did not relay a cancelled request to the delegate");
 }
 
 - (void)testRelayReceivedDataChunkToDelegate
@@ -124,7 +124,7 @@
     request.chunks = YES;
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader receivedDataChunk:nil forResponse:response];
-    XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1, @"The data loader did not relay a received data chunk response to the delegate");
+    XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1u, @"The data loader did not relay a received data chunk response to the delegate");
 }
 
 - (void)testRelayReceivedInitialResponseToDelegate
@@ -133,7 +133,7 @@
     request.chunks = YES;
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader receivedInitialResponse:response];
-    XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1, @"The data loader did not relay a received initial response to the delegate");
+    XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1u, @"The data loader did not relay a received initial response to the delegate");
 }
 
 @end
