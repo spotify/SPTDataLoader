@@ -16,6 +16,7 @@ env:
     - SCHEME_OSX_FRAMEWORK="SPTDataLoader-OSX"
     - SCHEME_TV_FRAMEWORK="SPTDataLoader-TV"
     - SCHEME_WATCH_FRAMEWORK="SPTDataLoader-Watch"
+    - SCHEME_DEMO="SPTDataLoader-Demo"
     - BUILD="build"
     - BUILD_TEST="build test"
     - ENABLE_CODE_COVERAGE="-enableCodeCoverage YES"
@@ -34,6 +35,7 @@ env:
     - TEST_SDK=watchsimulator   TEST_DEST="OS=2.0,name=Apple Watch - 38mm"              SCHEME="$SCHEME_WATCH_FRAMEWORK"        BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""
     - TEST_SDK=appletvsimulator TEST_DEST="OS=9.1,name=Apple TV 1080p"                  SCHEME="$SCHEME_TV_FRAMEWORK"           BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE"
     - TEST_SDK=appletvsimulator TEST_DEST="OS=9.0,name=Apple TV 1080p"                  SCHEME="$SCHEME_TV_FRAMEWORK"           BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE"
+    - TEST_SDK=iphonesimulator  TEST_DEST="platform=iOS Simulator,OS=8.1,name=iPhone 5" SCHEME="$SCHEME_DEMO"                   BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""
 
 before_install: ./ci/before_install.sh
 bundler_args: --without documentation --without development --deployment --jobs=3 --retry=3
