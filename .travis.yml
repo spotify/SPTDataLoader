@@ -16,7 +16,7 @@ env:
     - SCHEME_OSX_FRAMEWORK="SPTDataLoader-OSX"
     - SCHEME_TV_FRAMEWORK="SPTDataLoader-TV"
     - SCHEME_WATCH_FRAMEWORK="SPTDataLoader-Watch"
-    - SCHEME_DEMO="SPTDataLoader-Demo"
+    - SCHEME_DEMO="SPTDataLoaderDemo"
     - BUILD="build"
     - BUILD_TEST="build test"
     - ENABLE_CODE_COVERAGE="-enableCodeCoverage YES"
