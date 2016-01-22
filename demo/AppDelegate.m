@@ -20,7 +20,7 @@
  */
 #import "AppDelegate.h"
 
-#import <SPTDataLoader/SPTDataLoader.h>
+@import SPTDataLoader;
 
 #import "SPTDataLoaderAuthoriserOAuth.h"
 #import "NSString+OAuthBlob.h"

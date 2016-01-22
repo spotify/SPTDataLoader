@@ -77,14 +77,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.model.items.count;
+    return (NSInteger)self.model.items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(self.class)];
     
-    cell.textLabel.text = self.model.items[indexPath.row][@"name"];
+    cell.textLabel.text = self.model.items[(NSUInteger)indexPath.row][@"name"];
     
     return cell;
 }
