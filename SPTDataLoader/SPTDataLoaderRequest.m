@@ -24,7 +24,7 @@
 
 NSString * const SPTDataLoaderRequestErrorDomain = @"com.spotify.dataloader.request";
 
-static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
+static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
 
 @interface SPTDataLoaderRequest ()
 
@@ -169,7 +169,7 @@ static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequ
             languageImportanceCounter -= (1.0f / languages.count);
         }
         if (!containsEnglish) {
-            [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
+            [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01f)];
         }
         languageHeaderValue = [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
     });
@@ -203,7 +203,7 @@ static NSString * const SPTDataLoaderRequestGetMethodString = @"GET";
 static NSString * const SPTDataLoaderRequestPostMethodString = @"POST";
 static NSString * const SPTDataLoaderRequestPutMethodString = @"PUT";
 
-static NSString * const NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod)
+static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod)
 {
     switch (requestMethod) {
         case SPTDataLoaderRequestMethodDelete: return SPTDataLoaderRequestDeleteMethodString;

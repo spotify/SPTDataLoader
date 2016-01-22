@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 FOUNDATION_EXPORT const double kDefaultJitter;
 
@@ -30,7 +30,7 @@ FOUNDATION_EXPORT const double kDefaultJitter;
 /**
  * Create timer with initial time and max limit
  * @param time0 initial time to start counting delay from
- * @param manTime Upper limit which shouldnt be exceeded when calculatin new delay value
+ * @param maxTime Upper limit which shouldnt be exceeded when calculatin new delay value
  */
 + (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0 maxTime:(NSTimeInterval)maxTime;
 
@@ -39,7 +39,7 @@ FOUNDATION_EXPORT const double kDefaultJitter;
  * Default jitter gives vary good results. If you stil want to use your own jitter please do verification of delay values
  * you get from the timer once before puttin core into production.
  * @param time0 initial time to start counting delay from
- * @param manTime Upper limit which shouldnt be exceeded when calculatin new delay value
+ * @param maxTime Upper limit which shouldnt be exceeded when calculatin new delay value
  * @param jitter Jitter value for calculated delay
  */
 + (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0 maxTime:(NSTimeInterval)maxTime jitter:(double)jitter;

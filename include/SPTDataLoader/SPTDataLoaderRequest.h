@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 typedef NS_ENUM(NSInteger, SPTDataLoaderRequestMethod) {
     SPTDataLoaderRequestMethodGet,

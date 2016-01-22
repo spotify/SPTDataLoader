@@ -18,13 +18,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import <SPTDataLoader/SPTDataLoaderConvenience.h>
 
 @protocol SPTDataLoaderDelegate;
 @class SPTDataLoaderRequest;
 
+#ifndef SPT_BUILDING_FRAMEWORK
+#define SPT_BUILDING_FRAMEWORK 0
+#endif
 #if SPT_BUILDING_FRAMEWORK
 //! Project version number for SPTDataLoader.
 FOUNDATION_EXPORT double SPTDataLoaderVersionNumber;

@@ -109,12 +109,13 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 - (SPTDataLoaderResponse *)completeWithError:(NSError *)error
 {
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = self.requestResponseHandler;
     if (!self.response) {
         self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
     }
     
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
-        [self.requestResponseHandler cancelledRequest:self.request];
+        [requestResponseHandler cancelledRequest:self.request];
         self.calledCancelledRequest = YES;
         return nil;
     }
@@ -140,12 +141,12 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
                 return nil;
             }
         }
-        [self.requestResponseHandler failedResponse:self.response];
+        [requestResponseHandler failedResponse:self.response];
         self.calledFailedResponse = YES;
         return self.response;
     }
     
-    [self.requestResponseHandler successfulResponse:self.response];
+    [requestResponseHandler successfulResponse:self.response];
     self.calledSuccessfulResponse = YES;
     return self.response;
 }

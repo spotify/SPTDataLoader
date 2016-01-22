@@ -175,8 +175,9 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     if (retryAfterSeconds != 0.0) {
         return [NSDate dateWithTimeIntervalSinceNow:retryAfterSeconds];
     }
-    
-    return [httpDateFormatter dateFromString:headers[SPTDataLoaderResponseHeaderRetryAfter]];
+
+    NSString *retryAfterValue = headers[SPTDataLoaderResponseHeaderRetryAfter];
+    return [httpDateFormatter dateFromString:retryAfterValue];
 }
 
 @end

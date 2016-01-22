@@ -20,19 +20,24 @@
  */
 #import "SPTExpTime.h"
 
-#include <math.h>
-#include <stdlib.h>
+@import Darwin.C.math;
+@import Darwin.C.stdlib;
 
 static const double kDefaultGrow = M_E;
 const double kDefaultJitter = 0.11304999836;
 
+@interface SPTExpTime ()
+
+@property (nonatomic, assign) NSTimeInterval currTime;
+@property (nonatomic, assign) double growFactor;
+@property (nonatomic, assign) NSTimeInterval maxTime;
+@property (nonatomic, assign) double jitter;
+@property (nonatomic, assign) NSTimeInterval initialTime;
+
+@end
+
 @implementation SPTExpTime
 {
-    NSTimeInterval _initialTime;
-    NSTimeInterval _maxTime;
-    NSTimeInterval _currTime;
-    double _growFactor;
-    double _jitter;
     double _prevSigma;
 }
 
@@ -75,37 +80,37 @@ const double kDefaultJitter = 0.11304999836;
 
 - (NSTimeInterval)calculateNext
 {
-    NSTimeInterval t = _currTime * _growFactor;
+    NSTimeInterval t = self.currTime * self.growFactor;
     
-    if (t > _maxTime) {
-        t = _maxTime;
+    if (t > self.maxTime) {
+        t = self.maxTime;
     }
     
-    if (_jitter < 0.0001) {
-        _currTime = t;
+    if (self.jitter < 0.0001) {
+        self.currTime = t;
     }
     else {
-        const double sigma = _jitter * t;
-        _currTime = [[self class] normalWithMu:t sigma:sigma];
+        const double sigma = self.jitter * t;
+        self.currTime = [[self class] normalWithMu:t sigma:sigma];
     }
     
-    if (_currTime > _maxTime) {
-        _currTime = _maxTime;
+    if (self.currTime > self.maxTime) {
+        self.currTime = self.maxTime;
     }
     
-    return _currTime;
+    return self.currTime;
 }
 
 - (NSTimeInterval)timeIntervalAndCalculateNext
 {
-    const NSTimeInterval ret = _currTime;
+    const NSTimeInterval ret = self.currTime;
     [self calculateNext];
     return ret;
 }
 
 - (NSTimeInterval)timeInterval
 {
-    return _currTime;
+    return self.currTime;
 }
 
 #define EXPT_MODULO ((u_int32_t)RAND_MAX)
@@ -138,7 +143,7 @@ const double kDefaultJitter = 0.11304999836;
 
 - (void)reset
 {
-    _currTime = _initialTime;
+    self.currTime = self.initialTime;
 }
 
 @end
