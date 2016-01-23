@@ -38,9 +38,6 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 @end
 
 @implementation SPTDataLoaderExponentialTimer
-{
-    double _prevSigma;
-}
 
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
                                         maxTime:(NSTimeInterval)maxTime
