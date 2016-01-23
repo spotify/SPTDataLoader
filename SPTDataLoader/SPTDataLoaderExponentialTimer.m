@@ -29,11 +29,11 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 @interface SPTDataLoaderExponentialTimer ()
 
 @property (nonatomic, assign) NSTimeInterval currentTime;
-@property (nonatomic, assign) NSTimeInterval maxTime;
-@property (nonatomic, assign) NSTimeInterval initialTime;
+@property (nonatomic, assign, readonly) NSTimeInterval maxTime;
+@property (nonatomic, assign, readonly) NSTimeInterval initialTime;
 
-@property (nonatomic, assign) double jitter;
-@property (nonatomic, assign) double growFactor;
+@property (nonatomic, assign, readonly) double jitter;
+@property (nonatomic, assign, readonly) double growFactor;
 
 @end
 
