@@ -23,8 +23,14 @@
 @import Darwin.C.math;
 @import Darwin.C.stdlib;
 
+
+#pragma mark - Default Values
+
 static const double SPTDataLoaderExponentialTimerDefaultGrow = M_E;
 const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
+
+
+#pragma mark - SPTDataLoaderExponentialTimer Private Interface
 
 @interface SPTDataLoaderExponentialTimer ()
 
@@ -37,7 +43,12 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 @end
 
+
+#pragma mark - SPTDataLoaderExponentialTimer Implementation
+
 @implementation SPTDataLoaderExponentialTimer
+
+#pragma mark Creating an Exponential Timer Object
 
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
                                         maxTime:(NSTimeInterval)maxTime
@@ -74,6 +85,13 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
     return self;
 }
 
+#pragma mark Accessing and Updating the Delay Value
+
+- (void)reset
+{
+    self.timeInterval = self.initialTime;
+}
+
 - (NSTimeInterval)calculateNext
 {
     NSTimeInterval nextTime = self.timeInterval * self.growFactor;
@@ -104,6 +122,8 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
     return timeInterval;
 }
 
+#pragma mark Calculating Exponential Backoff
+
 #define EXPT_MODULO ((u_int32_t)RAND_MAX)
 #define EXPT_MODULO_F64 ((double)(EXPT_MODULO))
 NS_INLINE double SPTExptRandom()
@@ -126,17 +146,12 @@ NS_INLINE double SPTExptRandom()
         const double c = 1.7155277699214135 * (a - 0.5) / b;
         const double d = c * c / 4.0;
         
-        if (d <= -1.0*log(b)) {
+        if (d <= -1.0 * log(b)) {
             return mu + c * sigma;
         }
     }
     
     return mu + 2.0 * sigma * (SPTExptRandom() / EXPT_MODULO_F64);
-}
-
-- (void)reset
-{
-    self.timeInterval = self.initialTime;
 }
 
 @end
