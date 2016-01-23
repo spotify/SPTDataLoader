@@ -41,14 +41,6 @@ const double kDefaultJitter = 0.11304999836;
     double _prevSigma;
 }
 
-+ (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0
-                               maxTime:(NSTimeInterval)maxTime
-                            growFactor:(double)growFactor
-                                jitter:(double)jitter
-{
-    return [[self alloc] initWithInitialTime:time0 maxTime:maxTime growFactor:growFactor jitter:jitter];
-}
-
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
                                         maxTime:(NSTimeInterval)maxTime
 {
