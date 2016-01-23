@@ -28,7 +28,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 @interface SPTDataLoaderExponentialTimer ()
 
-@property (nonatomic, assign) NSTimeInterval currentTime;
+@property (nonatomic, assign, readwrite) NSTimeInterval timeInterval;
 @property (nonatomic, assign, readonly) NSTimeInterval maxTime;
 @property (nonatomic, assign, readonly) NSTimeInterval initialTime;
 
@@ -66,7 +66,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
     }
     
     _initialTime = initialTime;
-    _currentTime = initialTime;
+    _timeInterval = initialTime;
     _maxTime = maxTime;
     _growFactor = growFactor;
     _jitter = jitter;
@@ -76,36 +76,32 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 - (NSTimeInterval)calculateNext
 {
-    NSTimeInterval t = self.currentTime * self.growFactor;
+    NSTimeInterval t = self.timeInterval * self.growFactor;
     
     if (t > self.maxTime) {
         t = self.maxTime;
     }
     
     if (self.jitter < 0.0001) {
-        self.currentTime = t;
+        self.timeInterval = t;
     } else {
         const double sigma = self.jitter * t;
-        self.currentTime = [self.class normalWithMu:t sigma:sigma];
+        self.timeInterval = [self.class normalWithMu:t sigma:sigma];
     }
     
-    if (self.currentTime > self.maxTime) {
-        self.currentTime = self.maxTime;
+    if (self.timeInterval > self.maxTime) {
+        self.timeInterval = self.maxTime;
     }
     
-    return self.currentTime;
+    return self.timeInterval;
 }
 
 - (NSTimeInterval)timeIntervalAndCalculateNext
 {
-    const NSTimeInterval ret = self.currentTime;
+    const NSTimeInterval timeInterval = self.timeInterval;
     [self calculateNext];
-    return ret;
-}
 
-- (NSTimeInterval)timeInterval
-{
-    return self.currentTime;
+    return timeInterval;
 }
 
 #define EXPT_MODULO ((u_int32_t)RAND_MAX)
@@ -138,7 +134,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 - (void)reset
 {
-    self.currentTime = self.initialTime;
+    self.timeInterval = self.initialTime;
 }
 
 @end
