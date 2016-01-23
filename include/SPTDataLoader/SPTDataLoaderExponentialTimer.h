@@ -23,16 +23,17 @@
 FOUNDATION_EXPORT const double kDefaultJitter;
 
 /**
- * Exponential timer with jitter for proper backoff handling in data transmissions
+ * Exponential timer with jitter for proper backoff handling in data transmissions.
  */
-@interface SPTExpTime : NSObject
+@interface SPTDataLoaderExponentialTimer : NSObject
 
 /**
  * Create timer with initial time and max limit
  * @param time0 initial time to start counting delay from
  * @param maxTime Upper limit which shouldnt be exceeded when calculatin new delay value
  */
-+ (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0 maxTime:(NSTimeInterval)maxTime;
++ (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
+                                        maxTime:(NSTimeInterval)maxTime;
 
 /**
  * Create timer with initial time and max limit and user defined jitter
@@ -42,7 +43,9 @@ FOUNDATION_EXPORT const double kDefaultJitter;
  * @param maxTime Upper limit which shouldnt be exceeded when calculatin new delay value
  * @param jitter Jitter value for calculated delay
  */
-+ (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0 maxTime:(NSTimeInterval)maxTime jitter:(double)jitter;
++ (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
+                                        maxTime:(NSTimeInterval)maxTime
+                                         jitter:(double)jitter;
 
 /**
  * Return current delay value and calculate next

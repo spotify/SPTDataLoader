@@ -26,7 +26,8 @@
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTExpTime.h"
+
+#import "SPTDataLoaderExponentialTimer.h"
 
 static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
@@ -42,7 +43,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 @property (nonatomic, assign) NSUInteger waitCount;
 @property (nonatomic, assign) NSUInteger redirectCount;
 @property (nonatomic, copy) dispatch_block_t executionBlock;
-@property (nonatomic, strong) SPTExpTime *expTime;
+@property (nonatomic, strong) SPTDataLoaderExponentialTimer *exponentialTimer;
 
 @property (nonatomic, assign) BOOL calledSuccessfulResponse;
 @property (nonatomic, assign) BOOL calledFailedResponse;
@@ -87,8 +88,8 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     _executionBlock = ^ {
         [weakSelf checkRateLimiterAndExecute];
     };
-    _expTime = [SPTExpTime expTimeWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
-                                          maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
+    _exponentialTimer = [SPTDataLoaderExponentialTimer exponentialTimerWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
+                                                                               maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
     
     return self;
 }
@@ -202,7 +203,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         if (!self.waitCount) {
             self.executionBlock();
         } else {
-            NSTimeInterval waitTime = self.expTime.timeIntervalAndCalculateNext;
+            NSTimeInterval waitTime = self.exponentialTimer.timeIntervalAndCalculateNext;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
         }
         

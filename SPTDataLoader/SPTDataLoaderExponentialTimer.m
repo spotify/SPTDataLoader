@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import "SPTExpTime.h"
+#import "SPTDataLoaderExponentialTimer.h"
 
 @import Darwin.C.math;
 @import Darwin.C.stdlib;
@@ -26,7 +26,7 @@
 static const double kDefaultGrow = M_E;
 const double kDefaultJitter = 0.11304999836;
 
-@interface SPTExpTime ()
+@interface SPTDataLoaderExponentialTimer ()
 
 @property (nonatomic, assign) NSTimeInterval currTime;
 @property (nonatomic, assign) double growFactor;
@@ -36,7 +36,7 @@ const double kDefaultJitter = 0.11304999836;
 
 @end
 
-@implementation SPTExpTime
+@implementation SPTDataLoaderExponentialTimer
 {
     double _prevSigma;
 }
@@ -46,20 +46,26 @@ const double kDefaultJitter = 0.11304999836;
                             growFactor:(double)growFactor
                                 jitter:(double)jitter
 {
-    return [[SPTExpTime alloc] initWithInitialTime:time0 maxTime:maxTime growFactor:growFactor jitter:jitter];
+    return [[self alloc] initWithInitialTime:time0 maxTime:maxTime growFactor:growFactor jitter:jitter];
 }
 
-+ (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0 maxTime:(NSTimeInterval)maxTime
++ (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
+                                        maxTime:(NSTimeInterval)maxTime
 {
-    return [[SPTExpTime alloc] initWithInitialTime:time0 maxTime:maxTime growFactor:kDefaultGrow jitter:0.0];
+    return [self exponentialTimerWithInitialTime:initialTime maxTime:maxTime jitter:kDefaultGrow];
 }
 
-+ (instancetype)expTimeWithInitialTime:(NSTimeInterval)time0 maxTime:(NSTimeInterval)maxTime jitter:(double)jitter
++ (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
+                                        maxTime:(NSTimeInterval)maxTime
+                                         jitter:(double)jitter
 {
-    return [[SPTExpTime alloc] initWithInitialTime:time0 maxTime:maxTime growFactor:kDefaultGrow jitter:jitter];
+    return [[self alloc] initWithInitialTime:initialTime
+                                     maxTime:maxTime
+                                  growFactor:kDefaultGrow
+                                      jitter:jitter];
 }
 
-- (instancetype)initWithInitialTime:(NSTimeInterval)time0
+- (instancetype)initWithInitialTime:(NSTimeInterval)initialTime
                             maxTime:(NSTimeInterval)maxTime
                          growFactor:(double)growFactor
                              jitter:(double)jitter
@@ -69,8 +75,8 @@ const double kDefaultJitter = 0.11304999836;
         return nil;
     }
     
-    _initialTime = time0;
-    _currTime = time0;
+    _initialTime = initialTime;
+    _currTime = initialTime;
     _maxTime = maxTime;
     _growFactor = growFactor;
     _jitter = jitter;

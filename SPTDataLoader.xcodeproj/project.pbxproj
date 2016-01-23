@@ -31,7 +31,7 @@
 		0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */; };
 		056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */; };
 		056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */; };
-		056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
+		056E523F1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
 		059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */; };
 		059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */; };
 		0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
@@ -54,7 +54,7 @@
 		05A638211C46B55000061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638221C46B55000061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638231C46B55000061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		05A638241C46B55000061E37 /* SPTExpTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTExpTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638241C46B55000061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638261C46B7F800061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
 		05A638281C46B7F800061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		05A6382A1C46B7F800061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
@@ -67,7 +67,7 @@
 		05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
 		05A638381C46B7F800061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
 		05A6383A1C46B7F800061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
-		05A6383B1C46B7F800061E37 /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
+		05A6383B1C46B7F800061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
 		05A6383C1C46B82700061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
 		05A6383D1C46B82700061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		05A6383E1C46B82700061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
@@ -80,7 +80,7 @@
 		05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
 		05A638461C46B82700061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
 		05A638471C46B82700061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
-		05A638481C46B82700061E37 /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
+		05A638481C46B82700061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
 		05A638491C46B84B00061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
 		05A6384A1C46B84B00061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		05A6384B1C46B84B00061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
@@ -93,7 +93,7 @@
 		05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
 		05A638531C46B84B00061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
 		05A638541C46B84B00061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
-		05A638551C46B84B00061E37 /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
+		05A638551C46B84B00061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
 		05A638561C46B85300061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638571C46B85300061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638581C46B85300061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -106,7 +106,7 @@
 		05A6385F1C46B85300061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638601C46B85300061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638611C46B85300061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		05A638621C46B85300061E37 /* SPTExpTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTExpTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638621C46B85300061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638631C46B87100061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
 		05A638641C46B87100061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
 		05A638651C46B87100061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
@@ -119,7 +119,7 @@
 		05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
 		05A6386D1C46B87100061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
 		05A6386E1C46B87100061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
-		05A6386F1C46B87100061E37 /* SPTExpTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTExpTime.m */; };
+		05A6386F1C46B87100061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
 		05A638701C46B87700061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638711C46B87800061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638721C46B87800061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -132,7 +132,7 @@
 		05A638791C46B87800061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A6387A1C46B87800061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A6387B1C46B87800061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		05A6387C1C46B87800061E37 /* SPTExpTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTExpTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6387C1C46B87800061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A6388A1C46B8A400061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A6388B1C46B8A400061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A6388C1C46B8A400061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -145,7 +145,7 @@
 		05A638931C46B8A400061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		05A638961C46B8A400061E37 /* SPTExpTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTExpTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
 		3752416C1C46115C002649F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752416B1C46115C002649F3 /* main.m */; };
 		3752416F1C46115C002649F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752416E1C46115C002649F3 /* AppDelegate.m */; };
@@ -251,14 +251,14 @@
 		056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderRequest.h; path = include/SPTDataLoader/SPTDataLoaderRequest.h; sourceTree = "<group>"; };
 		056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderResponse.h; path = include/SPTDataLoader/SPTDataLoaderResponse.h; sourceTree = "<group>"; };
 		056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderService.h; path = include/SPTDataLoader/SPTDataLoaderService.h; sourceTree = "<group>"; };
-		056A04B91A13D10900FA72AD /* SPTExpTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTExpTime.h; path = include/SPTDataLoader/SPTExpTime.h; sourceTree = "<group>"; };
+		056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderExponentialTimer.h; path = include/SPTDataLoader/SPTDataLoaderExponentialTimer.h; sourceTree = "<group>"; };
 		056A04BB1A13D2BD00FA72AD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceTest.m; sourceTree = "<group>"; };
 		056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionMock.h; sourceTree = "<group>"; };
 		056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionMock.m; sourceTree = "<group>"; };
 		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
 		056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandler.h; sourceTree = "<group>"; };
-		056E523E1A113A2B00E8716C /* SPTExpTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTExpTime.m; sourceTree = "<group>"; };
+		056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimer.m; sourceTree = "<group>"; };
 		05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = spotify_os.xcconfig; sourceTree = "<group>"; };
 		059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerMock.h; sourceTree = "<group>"; };
 		059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerMock.m; sourceTree = "<group>"; };
@@ -407,6 +407,7 @@
 				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
 				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
 				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
+				056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */,
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
 				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
 				052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */,
@@ -421,7 +422,6 @@
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
-				056E523E1A113A2B00E8716C /* SPTExpTime.m */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -465,13 +465,13 @@
 				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
 				C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */,
 				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
+				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
 				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
 				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
 				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
 				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
 				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
 				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
-				056A04B91A13D10900FA72AD /* SPTExpTime.h */,
 			);
 			name = "Public API";
 			sourceTree = "<group>";
@@ -611,7 +611,7 @@
 				05A638211C46B55000061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A638221C46B55000061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638231C46B55000061E37 /* SPTDataLoaderService.h in Headers */,
-				05A638241C46B55000061E37 /* SPTExpTime.h in Headers */,
+				05A638241C46B55000061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +631,7 @@
 				05A6385F1C46B85300061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A638601C46B85300061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638611C46B85300061E37 /* SPTDataLoaderService.h in Headers */,
-				05A638621C46B85300061E37 /* SPTExpTime.h in Headers */,
+				05A638621C46B85300061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,7 +651,7 @@
 				05A638791C46B87800061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A6387A1C46B87800061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A6387B1C46B87800061E37 /* SPTDataLoaderService.h in Headers */,
-				05A6387C1C46B87800061E37 /* SPTExpTime.h in Headers */,
+				05A6387C1C46B87800061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,7 +671,7 @@
 				05A638931C46B8A400061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */,
-				05A638961C46B8A400061E37 /* SPTExpTime.h in Headers */,
+				05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -915,7 +915,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */,
-				056E523F1A113A2B00E8716C /* SPTExpTime.m in Sources */,
+				056E523F1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m in Sources */,
 				05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				05356F131A447295003A7351 /* NSDictionary+HeaderSize.m in Sources */,
 				050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */,
@@ -974,7 +974,7 @@
 				05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				05A638461C46B82700061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A638471C46B82700061E37 /* SPTDataLoaderService.m in Sources */,
-				05A638481C46B82700061E37 /* SPTExpTime.m in Sources */,
+				05A638481C46B82700061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,7 +994,7 @@
 				05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				05A638531C46B84B00061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A638541C46B84B00061E37 /* SPTDataLoaderService.m in Sources */,
-				05A638551C46B84B00061E37 /* SPTExpTime.m in Sources */,
+				05A638551C46B84B00061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1014,7 +1014,7 @@
 				05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				05A6386D1C46B87100061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A6386E1C46B87100061E37 /* SPTDataLoaderService.m in Sources */,
-				05A6386F1C46B87100061E37 /* SPTExpTime.m in Sources */,
+				05A6386F1C46B87100061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1034,7 +1034,7 @@
 				05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				05A638381C46B7F800061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A6383A1C46B7F800061E37 /* SPTDataLoaderService.m in Sources */,
-				05A6383B1C46B7F800061E37 /* SPTExpTime.m in Sources */,
+				05A6383B1C46B7F800061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
