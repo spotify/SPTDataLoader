@@ -139,8 +139,9 @@ NS_INLINE double SPTExptRandom()
      * variables using the ratio of uniform deviates", ACM Trans
      * Math Software, 3, (1977), pp257-260.
     */
-    for (unsigned i = 0; i < 20; ++i) // Try 20 times
-    {
+
+    const int attempts = 20;
+    for (int i = 0; i < attempts; ++i) {
         const double a = SPTExptRandom() / EXPT_MODULO_F64;
         const double b = 1.0 - (SPTExptRandom() / EXPT_MODULO_F64);
         const double c = 1.7155277699214135 * (a - 0.5) / b;
