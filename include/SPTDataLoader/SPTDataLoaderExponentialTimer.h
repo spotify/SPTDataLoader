@@ -72,7 +72,7 @@ FOUNDATION_EXPORT const double kDefaultJitter;
 /**
  * The current delay time interval.
  */
-- (NSTimeInterval)timeInterval;
+@property (nonatomic, assign, readonly) NSTimeInterval timeInterval;
 
 /**
  * Calculate next delay time interval and return it.
