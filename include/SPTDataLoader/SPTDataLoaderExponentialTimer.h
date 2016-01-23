@@ -20,46 +20,64 @@
  */
 @import Foundation;
 
+#pragma mark - Default Jitter Values
+
+/// The default jitter value which should give very good results most of the time.
 FOUNDATION_EXPORT const double kDefaultJitter;
+
+#pragma mark - SPTDataLoaderExponentialTimer Interface
 
 /**
  * Exponential timer with jitter for proper backoff handling in data transmissions.
  */
 @interface SPTDataLoaderExponentialTimer : NSObject
 
+#pragma mark Creating an Exponential Timer Object
+
 /**
- * Create timer with initial time and max limit
- * @param time0 initial time to start counting delay from
- * @param maxTime Upper limit which shouldnt be exceeded when calculatin new delay value
+ * Create a timer with an initial time and maximum limit.
+ *
+ * @param initialTime The initial time to start counting the delay from.
+ * @param maxTime Upper limit which shouldnt be exceeded when calculating a new delay value.
  */
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
                                         maxTime:(NSTimeInterval)maxTime;
 
 /**
  * Create timer with initial time and max limit and user defined jitter
- * Default jitter gives vary good results. If you stil want to use your own jitter please do verification of delay values
- * you get from the timer once before puttin core into production.
- * @param time0 initial time to start counting delay from
- * @param maxTime Upper limit which shouldnt be exceeded when calculatin new delay value
- * @param jitter Jitter value for calculated delay
+ *
+ * @warning The default jitter gives very good results. If you stil want to use your own jitter
+ * please perform verification of the delay values you get from the timer before putting the code
+ * into production.
+ *
+ * @param initialTime The initial time to start counting the delay from.
+ * @param maxTime Upper limit which shouldnt be exceeded when calculating a new delay value.
+ * @param jitter Jitter value for calculating the delay.
  */
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
                                         maxTime:(NSTimeInterval)maxTime
                                          jitter:(double)jitter;
 
+#pragma mark Accessing and Updating the Delay Value
+
 /**
- * Return current delay value and calculate next
- * This is the convenience method for below 
+ * Returns the current delay value while also calculating the next one.
+ *
+ * @note This is the convenience method for `-timeInterval` and `-calculateNext`
+ *
+ * @return The current delay time interval.
  */
 - (NSTimeInterval)timeIntervalAndCalculateNext;
 
 /**
- * Retur current time interval
+ * The current delay time interval.
  */
 - (NSTimeInterval)timeInterval;
 
-/*
- * Calculate next delay and return it
+/**
+ * Calculate next delay time interval and return it.
+ *
+ * @return The time interval for the next delay.
  */
 - (NSTimeInterval)calculateNext;
 
