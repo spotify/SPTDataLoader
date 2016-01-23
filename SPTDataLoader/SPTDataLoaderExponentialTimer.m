@@ -106,7 +106,10 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 #define EXPT_MODULO ((u_int32_t)RAND_MAX)
 #define EXPT_MODULO_F64 ((double)(EXPT_MODULO))
-#define exptRandom() (arc4random_uniform(EXPT_MODULO + 1))
+NS_INLINE double SPTExptRandom()
+{
+    return arc4random_uniform(EXPT_MODULO + 1);
+}
 
 + (NSTimeInterval)normalWithMu:(double)mu sigma:(double)sigma
 {
@@ -118,9 +121,8 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
     */
     for (unsigned i = 0; i < 20; ++i) // Try 20 times
     {
-        const double a = ((double)exptRandom()) / EXPT_MODULO_F64;
-        const double b = 1.0 - (((double)exptRandom()) / EXPT_MODULO_F64);
-        // const static float NV_MAGICCONST = 1.7155277699214135; //4 * exp(-0.5)/sqrt(2.0);
+        const double a = SPTExptRandom() / EXPT_MODULO_F64;
+        const double b = 1.0 - (SPTExptRandom() / EXPT_MODULO_F64);
         const double c = 1.7155277699214135 * (a - 0.5) / b;
         const double d = c * c / 4.0;
         
@@ -129,7 +131,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
         }
     }
     
-    return mu + 2.0 * sigma * (((double)exptRandom()) / EXPT_MODULO_F64);
+    return mu + 2.0 * sigma * (SPTExptRandom() / EXPT_MODULO_F64);
 }
 
 - (void)reset
