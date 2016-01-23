@@ -23,7 +23,7 @@
 #pragma mark - Default Jitter Values
 
 /// The default jitter value which should give very good results most of the time.
-FOUNDATION_EXPORT const double kDefaultJitter;
+FOUNDATION_EXPORT const double SPTDataLoaderExponentialTimerDefaultJitter;
 
 #pragma mark - SPTDataLoaderExponentialTimer Interface
 

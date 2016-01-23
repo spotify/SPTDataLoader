@@ -23,8 +23,8 @@
 @import Darwin.C.math;
 @import Darwin.C.stdlib;
 
-static const double kDefaultGrow = M_E;
-const double kDefaultJitter = 0.11304999836;
+static const double SPTDataLoaderExponentialTimerDefaultGrow = M_E;
+const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 @interface SPTDataLoaderExponentialTimer ()
 
@@ -44,7 +44,7 @@ const double kDefaultJitter = 0.11304999836;
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
                                         maxTime:(NSTimeInterval)maxTime
 {
-    return [self exponentialTimerWithInitialTime:initialTime maxTime:maxTime jitter:kDefaultGrow];
+    return [self exponentialTimerWithInitialTime:initialTime maxTime:maxTime jitter:SPTDataLoaderExponentialTimerDefaultJitter];
 }
 
 + (instancetype)exponentialTimerWithInitialTime:(NSTimeInterval)initialTime
@@ -53,7 +53,7 @@ const double kDefaultJitter = 0.11304999836;
 {
     return [[self alloc] initWithInitialTime:initialTime
                                      maxTime:maxTime
-                                  growFactor:kDefaultGrow
+                                  growFactor:SPTDataLoaderExponentialTimerDefaultGrow
                                       jitter:jitter];
 }
 
