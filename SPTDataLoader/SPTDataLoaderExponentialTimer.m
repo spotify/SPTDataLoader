@@ -76,17 +76,17 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 - (NSTimeInterval)calculateNext
 {
-    NSTimeInterval t = self.timeInterval * self.growFactor;
+    NSTimeInterval nextTime = self.timeInterval * self.growFactor;
     
-    if (t > self.maxTime) {
-        t = self.maxTime;
+    if (nextTime > self.maxTime) {
+        nextTime = self.maxTime;
     }
     
     if (self.jitter < 0.0001) {
-        self.timeInterval = t;
+        self.timeInterval = nextTime;
     } else {
-        const double sigma = self.jitter * t;
-        self.timeInterval = [self.class normalWithMu:t sigma:sigma];
+        const double sigma = self.jitter * nextTime;
+        self.timeInterval = [self.class normalWithMu:nextTime sigma:sigma];
     }
     
     if (self.timeInterval > self.maxTime) {
