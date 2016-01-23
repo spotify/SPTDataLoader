@@ -28,11 +28,12 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 @interface SPTDataLoaderExponentialTimer ()
 
-@property (nonatomic, assign) NSTimeInterval currTime;
-@property (nonatomic, assign) double growFactor;
+@property (nonatomic, assign) NSTimeInterval currentTime;
 @property (nonatomic, assign) NSTimeInterval maxTime;
-@property (nonatomic, assign) double jitter;
 @property (nonatomic, assign) NSTimeInterval initialTime;
+
+@property (nonatomic, assign) double jitter;
+@property (nonatomic, assign) double growFactor;
 
 @end
 
@@ -68,7 +69,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
     }
     
     _initialTime = initialTime;
-    _currTime = initialTime;
+    _currentTime = initialTime;
     _maxTime = maxTime;
     _growFactor = growFactor;
     _jitter = jitter;
@@ -78,37 +79,36 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 - (NSTimeInterval)calculateNext
 {
-    NSTimeInterval t = self.currTime * self.growFactor;
+    NSTimeInterval t = self.currentTime * self.growFactor;
     
     if (t > self.maxTime) {
         t = self.maxTime;
     }
     
     if (self.jitter < 0.0001) {
-        self.currTime = t;
-    }
-    else {
+        self.currentTime = t;
+    } else {
         const double sigma = self.jitter * t;
-        self.currTime = [[self class] normalWithMu:t sigma:sigma];
+        self.currentTime = [self.class normalWithMu:t sigma:sigma];
     }
     
-    if (self.currTime > self.maxTime) {
-        self.currTime = self.maxTime;
+    if (self.currentTime > self.maxTime) {
+        self.currentTime = self.maxTime;
     }
     
-    return self.currTime;
+    return self.currentTime;
 }
 
 - (NSTimeInterval)timeIntervalAndCalculateNext
 {
-    const NSTimeInterval ret = self.currTime;
+    const NSTimeInterval ret = self.currentTime;
     [self calculateNext];
     return ret;
 }
 
 - (NSTimeInterval)timeInterval
 {
-    return self.currTime;
+    return self.currentTime;
 }
 
 #define EXPT_MODULO ((u_int32_t)RAND_MAX)
@@ -141,7 +141,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 - (void)reset
 {
-    self.currTime = self.initialTime;
+    self.currentTime = self.initialTime;
 }
 
 @end
