@@ -36,7 +36,7 @@
 #import "SPTDataLoaderConsumptionObserverMock.h"
 #import "NSURLSessionDataTaskMock.h"
 
-@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate>
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray *handlers;
@@ -319,6 +319,29 @@
     [self.service removeConsumptionObserver:consumptionObserver];
     [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when the observer has been removed");
+}
+
+- (void)testAllowingAllCertificates
+{
+    self.service.allCertificatesAllowed = YES;
+    NSURLSession *session = [NSURLSession new];
+    NSURLSessionTask *task = [NSURLSessionTask new];
+    NSURLAuthenticationChallenge *challenge = [NSURLAuthenticationChallenge new];
+    __block NSInteger completions = 0;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+               completions++;
+           }];
+    self.service.allCertificatesAllowed = NO;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+               completions++;
+           }];
+    XCTAssertEqual(completions, 1, @"There should only be 1 completion once all certificates are not allowed");
 }
 
 @end

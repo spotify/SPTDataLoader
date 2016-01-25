@@ -272,7 +272,7 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
-    if (self.allCertificatesAllowed) {
+    if (self.allCertificatesAllowed && completionHandler) {
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
         completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:trust]);
     }
