@@ -37,7 +37,7 @@
  * builds.
  * @warning This will trigger an assert if all certificates are allowed on release builds.
  */
-@property (nonatomic, assign, readwrite, getter = isAllCertificatesAllowed) BOOL allCertificatesAllowed;
+@property (nonatomic, assign, readwrite, getter = areAllCertificatesAllowed) BOOL allCertificatesAllowed;
 
 /**
  * Class constructor
