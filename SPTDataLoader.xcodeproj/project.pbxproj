@@ -24,6 +24,7 @@
 		052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
 		05356F131A447295003A7351 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
 		05356F151A44B588003A7351 /* NSDictionaryHeaderSizeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */; };
+		05357B401C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 05357B3F1C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m */; };
 		055AEE521A16117E00A490BF /* NSURLSessionTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE511A16117E00A490BF /* NSURLSessionTaskMock.m */; };
 		055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE531A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m */; };
 		055AEE561A162C5E00A490BF /* SPTDataLoaderResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 055AEE551A162C5E00A490BF /* SPTDataLoaderResolverTest.m */; };
@@ -237,6 +238,7 @@
 		05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+HeaderSize.h"; sourceTree = "<group>"; };
 		05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+HeaderSize.m"; sourceTree = "<group>"; };
 		05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryHeaderSizeTest.m; sourceTree = "<group>"; };
+		05357B3F1C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimerTest.m; sourceTree = "<group>"; };
 		055AEE501A16117D00A490BF /* NSURLSessionTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionTaskMock.h; sourceTree = "<group>"; };
 		055AEE511A16117E00A490BF /* NSURLSessionTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionTaskMock.m; sourceTree = "<group>"; };
 		055AEE531A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRateLimiterTest.m; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				055AEE551A162C5E00A490BF /* SPTDataLoaderResolverTest.m */,
 				055AEE571A162F0200A490BF /* SPTDataLoaderResolverAddressTest.m */,
 				05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */,
+				05357B3F1C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
 			path = SPTDataLoaderTests;
@@ -944,6 +947,7 @@
 				0599409F1A14F60F006D6BE9 /* SPTDataLoaderTest.m in Sources */,
 				05356F151A44B588003A7351 /* NSDictionaryHeaderSizeTest.m in Sources */,
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
+				05357B401C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m in Sources */,
 				EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */,
 				055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */,
 				050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */,
