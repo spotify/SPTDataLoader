@@ -32,6 +32,8 @@
 		056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */; };
 		056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */; };
 		056E523F1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
+		057DAC731C57368E001D8FCE /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
+		057DAC751C5736A7001D8FCE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057DAC741C5736A7001D8FCE /* UIKit.framework */; };
 		059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */; };
 		059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */; };
 		0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
@@ -40,7 +42,6 @@
 		059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */; };
 		059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */; };
 		059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */; };
-		05A638111C46B53800061E37 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A6380A1C46B53800061E37 /* SPTDataLoader.framework */; };
 		05A638121C46B53800061E37 /* SPTDataLoader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05A6380A1C46B53800061E37 /* SPTDataLoader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05A638181C46B55000061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638191C46B55000061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -260,6 +261,7 @@
 		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
 		056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandler.h; sourceTree = "<group>"; };
 		056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimer.m; sourceTree = "<group>"; };
+		057DAC741C5736A7001D8FCE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = spotify_os.xcconfig; sourceTree = "<group>"; };
 		059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerMock.h; sourceTree = "<group>"; };
 		059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerMock.m; sourceTree = "<group>"; };
@@ -359,7 +361,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05A638111C46B53800061E37 /* SPTDataLoader.framework in Frameworks */,
+				057DAC751C5736A7001D8FCE /* UIKit.framework in Frameworks */,
+				057DAC731C57368E001D8FCE /* libSPTDataLoader.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +574,7 @@
 		3752416A1C46115C002649F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				057DAC741C5736A7001D8FCE /* UIKit.framework */,
 				3752417B1C46115C002649F3 /* Info.plist */,
 				3752416B1C46115C002649F3 /* main.m */,
 			);
