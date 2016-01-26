@@ -180,4 +180,16 @@
     XCTAssertEqual(request, self.delegate.lastRequestFailed, @"The factory did not relay the request authorisation failure to it's delegate");
 }
 
+- (void)testRetryAuthorisation
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    response.error = [NSError errorWithDomain:@"" code:SPTDataLoaderResponseHTTPStatusCodeUnauthorised userInfo:nil];
+    [self.factory failedResponse:response];
+    [self.factory failedResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory should only fail once after two authorisation failures");
+}
+
 @end
