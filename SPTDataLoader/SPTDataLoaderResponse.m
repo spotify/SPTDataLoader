@@ -56,7 +56,8 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (httpResponse.statusCode >= SPTDataLoaderResponseHTTPStatusCodeBadRequest) {
+        if (httpResponse.statusCode >= SPTDataLoaderResponseHTTPStatusCodeMovedMultipleChoices
+            || httpResponse.statusCode <= SPTDataLoaderResponseHTTPStatusCodeSwitchProtocols) {
             _error = [NSError errorWithDomain:SPTDataLoaderResponseErrorDomain
                                          code:httpResponse.statusCode
                                      userInfo:nil];
