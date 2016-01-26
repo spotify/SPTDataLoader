@@ -10,6 +10,9 @@ ENABLE_NS_ASSERTIONS_Debug = YES
 ENABLE_NS_ASSERTIONS_Release = NO
 ONLY_ACTIVE_ARCH_Debug = YES
 ONLY_ACTIVE_ARCH_Release = NO
+ONLY_ACTIVE_ARCH = $(ONLY_ACTIVE_ARCH_$(CONFIGURATION))
+SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator watchsimulator tvsimulator
+CLANG_MODULES_AUTOLINK = NO
 
 // Warnings:
 // Attribution: https://github.com/jonreid/XcodeWarnings

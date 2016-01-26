@@ -32,6 +32,14 @@
 @interface SPTDataLoaderService : NSObject
 
 /**
+ * Whether all certificates are allowed (e.g. broken certificates don't cause closed connections)
+ * @discussion By default this is NO. You should only turn this on if you are certain it will not be on in release
+ * builds.
+ * @warning This will trigger an assert if all certificates are allowed on release builds.
+ */
+@property (nonatomic, assign, readwrite, getter = areAllCertificatesAllowed) BOOL allCertificatesAllowed;
+
+/**
  * Class constructor
  * @param userAgent The user agent to report as when making HTTP requests
  * @param rateLimiter The limiter for limiting requests per second on a per service basis

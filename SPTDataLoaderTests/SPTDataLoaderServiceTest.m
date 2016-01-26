@@ -36,7 +36,7 @@
 #import "SPTDataLoaderConsumptionObserverMock.h"
 #import "NSURLSessionDataTaskMock.h"
 
-@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate>
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray *handlers;
@@ -182,10 +182,10 @@
 
     __block BOOL calledCompletionHandler = NO;
     __block BOOL calledCompletionHandlerWithNil = NO;
-    void (^completionHandler)(NSURLRequest *) = ^(NSURLRequest *request) {
+    void (^completionHandler)(NSURLRequest *) = ^(NSURLRequest *urlRequest) {
         calledCompletionHandler = YES;
 
-        if (request == nil) {
+        if (urlRequest == nil) {
             calledCompletionHandlerWithNil = YES;
         } else {
             calledCompletionHandlerWithNil = NO;
@@ -196,10 +196,11 @@
 
     // Test that redirection is aborted after too many redirects
     for (int i = 0; i <= redirectsAmountTooMany; i++) {
+        NSURL *URL = [NSURL URLWithString:@"https://localhost"];
         [self.service URLSession:self.session
                             task:task
       willPerformHTTPRedirection:httpResponse
-                      newRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]]
+                      newRequest:[NSURLRequest requestWithURL:URL]
                completionHandler:completionHandler];
 
         if (calledCompletionHandlerWithNil) {
@@ -225,10 +226,10 @@
 
     __block BOOL calledCompletionHandler = NO;
     __block BOOL calledCompletionHandlerWithNil = NO;
-    void (^completionHandler)(NSURLRequest *) = ^(NSURLRequest *request) {
+    void (^completionHandler)(NSURLRequest *) = ^(NSURLRequest *urlRequest) {
         calledCompletionHandler = YES;
 
-        if (request == nil) {
+        if (urlRequest == nil) {
             calledCompletionHandlerWithNil = YES;
         } else {
             calledCompletionHandlerWithNil = NO;
@@ -239,10 +240,11 @@
 
     // Check that just a few redirects will work fine
     for (int i = 0; i <= redirectsAmountFew; i++) {
+        NSURL *URL = [NSURL URLWithString:@"https://localhost"];
         [self.service URLSession:self.session
                             task:task
       willPerformHTTPRedirection:httpResponse
-                      newRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]]
+                      newRequest:[NSURLRequest requestWithURL:URL]
                completionHandler:completionHandler];
     }
 
@@ -264,7 +266,7 @@
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     NSData *data = [@"thing" dataUsingEncoding:NSUTF8StringEncoding];
     [self.service URLSession:self.service.session dataTask:self.session.lastDataTask didReceiveData:data];
-    XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1, @"The service did not call received data on the request response handler");
+    XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1u, @"The service did not call received data on the request response handler");
 }
 
 - (void)testSessionDidComplete
@@ -273,7 +275,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     [self.service URLSession:self.session task:self.session.lastDataTask didCompleteWithError:nil];
-    XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1, @"The service did not call successfully received response on the request response handler");
+    XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1u, @"The service did not call successfully received response on the request response handler");
 }
 
 - (void)testSessionWillCacheResponse
@@ -317,6 +319,29 @@
     [self.service removeConsumptionObserver:consumptionObserver];
     [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when the observer has been removed");
+}
+
+- (void)testAllowingAllCertificates
+{
+    self.service.allCertificatesAllowed = YES;
+    NSURLSession *session = [NSURLSession new];
+    NSURLSessionTask *task = [NSURLSessionTask new];
+    NSURLAuthenticationChallenge *challenge = [NSURLAuthenticationChallenge new];
+    __block NSInteger completions = 0;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+               completions++;
+           }];
+    self.service.allCertificatesAllowed = NO;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+               completions++;
+           }];
+    XCTAssertEqual(completions, 1, @"There should only be 1 completion once all certificates are not allowed");
 }
 
 @end

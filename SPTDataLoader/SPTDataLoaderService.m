@@ -33,10 +33,6 @@
 #import "NSDictionary+HeaderSize.h"
 #import "SPTCancellationTokenFactoryImplementation.h"
 
-#ifndef SPTDATALOADER_ALLOW_ALL_CERTS
-#define SPTDATALOADER_ALLOW_ALL_CERTS 0
-#endif
-
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
@@ -271,15 +267,16 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     completionHandler(handler.request.skipNSURLCache ? nil : proposedResponse);
 }
 
-#if SPTDATALOADER_ALLOW_ALL_CERTS
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
-    completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
+    if (self.allCertificatesAllowed && completionHandler) {
+        SecTrustRef trust = challenge.protectionSpace.serverTrust;
+        completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:trust]);
+    }
 }
-#endif
 
 #pragma mark NSURLSessionTaskDelegate
 

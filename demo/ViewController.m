@@ -21,10 +21,7 @@
 #import "ViewController.h"
 #import "ClientKeys.h"
 
-#import <SPTDataLoader/SPTDataLoaderFactory.h>
-#import <SPTDataLoader/SPTDataLoaderService.h>
-#import <SPTDataLoader/SPTDataLoader.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
+@import SPTDataLoader;
 
 @implementation ViewController
 
@@ -53,8 +50,9 @@
     NSURLQueryItem *stateQueryItem = [NSURLQueryItem queryItemWithName:@"state" value:@"AAAAAAAAAAAAAAAA"];
     
     accountsComponents.queryItems = @[ responseTypeQueryItem, clientIDQueryItem, scopeQueryItem, redirectURIQueryItem, stateQueryItem ];
-    
-    [[UIApplication sharedApplication] openURL:accountsComponents.URL];
+
+    NSURL *URL = accountsComponents.URL;
+    [[UIApplication sharedApplication] openURL:URL];
 }
 
 @end
