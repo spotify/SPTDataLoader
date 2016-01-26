@@ -174,4 +174,14 @@
     XCTAssertFalse(shouldRetry, @"The response should not retry when given the HTTP status code of Invalid");
 }
 
+- (void)testShouldNotRetryForCancelled
+{
+    NSError *connectonError = [NSError errorWithDomain:NSURLErrorDomain
+                                                  code:NSURLErrorCancelled
+                                              userInfo:nil];
+    self.response.error = connectonError;
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertFalse(shouldRetry, @"The response should not retry when the connection was cancelled");
+}
+
 @end
