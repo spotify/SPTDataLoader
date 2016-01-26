@@ -161,4 +161,17 @@
     XCTAssertEqualWithAccuracy(testDate.timeIntervalSince1970, self.response.retryAfter.timeIntervalSince1970, 1.0, @"The absolute retry-after was not as expected");
 }
 
+- (void)testShouldNotRetryWithInvalidHTTPStatusCode
+{
+    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+                                       sourceIdentifier:nil];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeInvalid
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:nil];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    BOOL shouldRetry = [self.response shouldRetry];
+    XCTAssertFalse(shouldRetry, @"The response should not retry when given the HTTP status code of Invalid");
+}
+
 @end
