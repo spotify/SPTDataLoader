@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
     s.summary      = "SPTDataLoader is Spotify's HTTP library for Objective-C"
 
     s.description  = <<-DESC
-                        Authentication and back-off logic is a pain, let's do it
+                        Authentication and back-off logic is a pain, let’s do it
                         once and forget about it! This is a library that allows you
                         to centralise this logic and forget about the ugly parts of
                         making HTTP requests.
@@ -13,6 +13,8 @@ Pod::Spec.new do |s|
 
     s.ios.deployment_target = "6.0"
     s.osx.deployment_target = "10.8"
+    s.tvos.deployment_target = '9.0'
+    s.watchos.deployment_target = '2.0'
 
     s.homepage     = "https://github.com/spotify/SPTDataLoader"
     s.license      = "Apache 2.0"
