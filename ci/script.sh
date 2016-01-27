@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source "./ci/lib/travis_helpers.sh"
 
 set -euo pipefail
 
@@ -16,8 +17,13 @@ xcrun xcodebuild $BUILD_ACTIONS \
 
 
 # License conformance
+travis_fold_open "License conformance"
 ./ci/validate_license_conformance.sh {include/SPTDataLoader/*.h,SPTDataLoader/*.{h,m}}
+travis_fold_close "License conformance"
 
 
-# Lint our CocoaPods specification.
+# Linting
+travis_fold_open "Linting"
+echo "Linting CocoaPods specification"
 pod spec lint SPTDataLoader.podspec --quick
+travis_fold_close "Linting"
