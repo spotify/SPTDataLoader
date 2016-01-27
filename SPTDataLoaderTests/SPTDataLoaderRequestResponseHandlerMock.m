@@ -44,4 +44,13 @@
     self.lastReceivedResponse = response;
 }
 
+- (BOOL)shouldAuthoriseRequest:(SPTDataLoaderRequest *)request
+{
+    return self.isAuthorising;
+}
+
+- (void)authoriseRequest:(SPTDataLoaderRequest *)request
+{
+}
+
 @end
