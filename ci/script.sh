@@ -4,6 +4,12 @@ source "./ci/lib/travis_helpers.sh"
 
 set -euo pipefail
 
+# License conformance
+travis_fold_open "License conformance"
+./ci/validate_license_conformance.sh {include/SPTDataLoader/*.h,SPTDataLoader/*.{h,m}}
+travis_fold_close "License conformance"
+
+
 # Executing build actions
 echo "Executing the build actions: $BUILD_ACTIONS"
 xcrun xcodebuild $BUILD_ACTIONS \
@@ -14,12 +20,6 @@ xcrun xcodebuild $BUILD_ACTIONS \
     -destination "$TEST_DEST" \
     $EXTRA_ARGUMENTS \
         | xcpretty -c -f `xcpretty-travis-formatter`
-
-
-# License conformance
-travis_fold_open "License conformance"
-./ci/validate_license_conformance.sh {include/SPTDataLoader/*.h,SPTDataLoader/*.{h,m}}
-travis_fold_close "License conformance"
 
 
 # Linting
