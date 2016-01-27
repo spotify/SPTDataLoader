@@ -11,9 +11,20 @@
 @synthesize identifier = _identifier;
 @synthesize delegate = _delegate;
 
+- (instancetype)init
+{
+    if (!(self = [super init])) {
+        return nil;
+    }
+
+    _enabled = YES;
+
+    return self;
+}
+
 - (BOOL)requestRequiresAuthorisation:(SPTDataLoaderRequest *)request
 {
-    return YES;
+    return self.enabled;
 }
 
 - (void)authoriseRequest:(SPTDataLoaderRequest *)request
