@@ -147,4 +147,16 @@
     XCTAssertNotNil(self.requestResponseHandler.lastReceivedResponse, @"The response should be created even without an initial receivedResponse call");
 }
 
+- (void)testDataAppendedWhenNotStreaming
+{
+    NSString *dataString = @"TEST";
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    [self.handler receiveResponse:nil];
+    [self.handler receiveData:data];
+    [self.handler receiveData:data];
+    SPTDataLoaderResponse *response = [self.handler completeWithError:nil];
+    NSString *receivedString = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+    XCTAssertEqualObjects([dataString stringByAppendingString:dataString], receivedString);
+}
+
 @end
