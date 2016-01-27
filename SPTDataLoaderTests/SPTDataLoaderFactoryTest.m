@@ -38,6 +38,7 @@
 @property (nonatomic, strong) SPTDataLoaderFactory *factory;
 
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *delegate;
+@property (nonatomic, strong) SPTDataLoaderAuthoriserMock *authoriserMock;
 
 @end
 
@@ -50,8 +51,9 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.delegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
+    self.authoriserMock = [SPTDataLoaderAuthoriserMock new];
     self.factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self.delegate
-                                                                                 authorisers:nil];
+                                                                                 authorisers:@[ self.authoriserMock ]];
 }
 
 - (void)tearDown
@@ -133,6 +135,7 @@
 
 - (void)testShouldNotAuthoriseRequest
 {
+    self.authoriserMock.enabled = NO;
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     BOOL shouldAuthorise = [self.factory shouldAuthoriseRequest:request];
     XCTAssertFalse(shouldAuthorise, @"The factory should not mark the request as authorisable");
@@ -175,6 +178,18 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory dataLoaderAuthoriser:nil didFailToAuthoriseRequest:request withError:nil];
     XCTAssertEqual(request, self.delegate.lastRequestFailed, @"The factory did not relay the request authorisation failure to it's delegate");
+}
+
+- (void)testRetryAuthorisation
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    response.error = [NSError errorWithDomain:@"" code:SPTDataLoaderResponseHTTPStatusCodeUnauthorised userInfo:nil];
+    [self.factory failedResponse:response];
+    [self.factory failedResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory should only fail once after two authorisation failures");
 }
 
 @end
