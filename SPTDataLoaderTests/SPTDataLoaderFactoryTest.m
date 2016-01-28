@@ -31,6 +31,9 @@
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
+
+@property (nonatomic, strong, readwrite) dispatch_queue_t requestTimeoutQueue;
+
 @end
 
 @interface SPTDataLoaderFactoryTest : XCTestCase
@@ -190,6 +193,21 @@
     [self.factory failedResponse:response];
     [self.factory failedResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory should only fail once after two authorisation failures");
+}
+
+- (void)testRequestTimeout
+{
+    self.factory.requestTimeoutQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Test timeout executes in time given"];
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    requestResponseHandler.failedResponseBlock = ^ {
+        [expectation fulfill];
+    };
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.timeout = 0.1;
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    [self waitForExpectationsWithTimeout:0.2 handler:nil];
+    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The request should have been cancelled");
 }
 
 @end

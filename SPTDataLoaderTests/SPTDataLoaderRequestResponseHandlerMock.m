@@ -45,6 +45,9 @@
 {
     self.numberOfFailedResponseCalls++;
     self.lastReceivedResponse = response;
+    if (self.failedResponseBlock) {
+        self.failedResponseBlock();
+    }
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
