@@ -350,8 +350,9 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     requestResponseHandlerMock.authorising = YES;
-    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
-    [request.cancellationToken cancel];
+    id<SPTCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
+                                                                       performRequest:request];
+    [cancellationToken cancel];
     [self.service requestResponseHandler:requestResponseHandlerMock authorisedRequest:request];
     XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");
 }
