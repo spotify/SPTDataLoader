@@ -193,6 +193,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     copy.userInfo = self.userInfo;
     copy.uniqueIdentifier = self.uniqueIdentifier;
     copy.timeout = self.timeout;
+    copy.cancellationToken = self.cancellationToken;
     return copy;
 }
 

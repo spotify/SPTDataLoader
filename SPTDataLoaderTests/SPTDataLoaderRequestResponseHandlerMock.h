@@ -12,5 +12,6 @@
 @property (nonatomic, assign, readonly) NSUInteger numberOfSuccessfulDataResponseCalls;
 @property (nonatomic, assign, readonly) NSUInteger numberOfReceivedInitialResponseCalls;
 @property (nonatomic, strong, readonly) SPTDataLoaderResponse *lastReceivedResponse;
+@property (nonatomic, assign, readwrite, getter = isAuthorising) BOOL authorising;
 
 @end

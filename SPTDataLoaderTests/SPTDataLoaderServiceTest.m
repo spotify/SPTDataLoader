@@ -35,6 +35,7 @@
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderConsumptionObserverMock.h"
 #import "NSURLSessionDataTaskMock.h"
+#import "SPTDataLoaderRequest+Private.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
@@ -342,6 +343,18 @@
                completions++;
            }];
     XCTAssertEqual(completions, 1, @"There should only be 1 completion once all certificates are not allowed");
+}
+
+- (void)testPerformingCancelledRequest
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    requestResponseHandlerMock.authorising = YES;
+    id<SPTCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
+                                                                       performRequest:request];
+    [cancellationToken cancel];
+    [self.service requestResponseHandler:requestResponseHandlerMock authorisedRequest:request];
+    XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");
 }
 
 @end
