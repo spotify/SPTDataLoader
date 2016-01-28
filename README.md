@@ -28,6 +28,37 @@ The authentication in this case is abstract, allowing the creator of the SPTData
 ### Back-off policy :cop:
 The data loader service allows rate limiting of URLs to be set explicitly or to be determined by the server using the “Retry-After” semantic. It allows back-off retrying by using a jittered exponential backoff to prevent the thundering hordes creating a request storm after a predictable exponential period has expired.
 
+## Installation
+SPTDataLoader can be installed it a variety of ways including traditional static libraries, Cocoapods and Carthage.
+
+### Static Library
+Simply include the SPTDataLoader.xcodeproj in your Apps Xcode project, and link your app with it "In the Build Phases section".
+
+### CocoaPods
+We are indexed on [CocoaPods](http://cocoapods.org) and can be installed with the following commands:
+```bash
+$ gem install cocoapods
+```
+Then simply add the following to your Podfile
+```
+pod 'SPTDataLoader'
+```
+
+### Carthage
+We support and build [Carthage](https://github.com/Carthage/Carthage) frameworks on all new releases of our framework, it can be installed with the following commands:
+```bash
+$ brew update
+$ brew install carthage
+```
+You will also need to add the following to your Cartfile:
+```
+github 'spotify/SPTDataLoader' ~> 1.0.1
+```
+After that is all said and done, simply update your Carthage project like so:
+```bash
+carthage update
+```
+
 ## Usage example :eyes:
 For an example of this framework's usage, see the demo application `SPTDataLoaderDemo` in `SPTDataLoader.xcodeproj`. Just follow the instructions in [`ClientKeys.h`](demo/ClientKeys.h).
 
