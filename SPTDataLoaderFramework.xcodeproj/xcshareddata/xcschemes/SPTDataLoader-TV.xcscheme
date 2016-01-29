@@ -17,7 +17,7 @@
                BlueprintIdentifier = "05A637EF1C46B48600061E37"
                BuildableName = "SPTDataLoader.framework"
                BlueprintName = "SPTDataLoader-TV"
-               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+               ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "050E06941A10C62100A10A0E"
-               BuildableName = "SPTDataLoaderTests.xctest"
-               BlueprintName = "SPTDataLoaderTests"
-               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "05A637EF1C46B48600061E37"
-            BuildableName = "SPTDataLoader.framework"
-            BlueprintName = "SPTDataLoader-TV"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -67,7 +48,7 @@
             BlueprintIdentifier = "05A637EF1C46B48600061E37"
             BuildableName = "SPTDataLoader.framework"
             BlueprintName = "SPTDataLoader-TV"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -85,7 +66,7 @@
             BlueprintIdentifier = "05A637EF1C46B48600061E37"
             BuildableName = "SPTDataLoader.framework"
             BlueprintName = "SPTDataLoader-TV"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "375241671C46115C002649F3"
-               BuildableName = "SPTDataLoaderDemo.app"
-               BlueprintName = "SPTDataLoaderDemo"
-               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+               BlueprintIdentifier = "05A638091C46B53800061E37"
+               BuildableName = "SPTDataLoader.framework"
+               BlueprintName = "SPTDataLoader-iOS"
+               ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "375241671C46115C002649F3"
-            BuildableName = "SPTDataLoaderDemo.app"
-            BlueprintName = "SPTDataLoaderDemo"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "375241671C46115C002649F3"
-            BuildableName = "SPTDataLoaderDemo.app"
-            BlueprintName = "SPTDataLoaderDemo"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            BlueprintIdentifier = "05A638091C46B53800061E37"
+            BuildableName = "SPTDataLoader.framework"
+            BlueprintName = "SPTDataLoader-iOS"
+            ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "375241671C46115C002649F3"
-            BuildableName = "SPTDataLoaderDemo.app"
-            BlueprintName = "SPTDataLoaderDemo"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            BlueprintIdentifier = "05A638091C46B53800061E37"
+            BuildableName = "SPTDataLoader.framework"
+            BlueprintName = "SPTDataLoader-iOS"
+            ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
