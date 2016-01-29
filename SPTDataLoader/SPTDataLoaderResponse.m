@@ -181,4 +181,10 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     return [httpDateFormatter dateFromString:retryAfterValue];
 }
 
+- (NSString *)debugDescription
+{
+    return [NSString stringWithFormat:@"%@ { URL: %@ } { status code: %lu, headers: %@ }", [super debugDescription], self.response.URL, self.statusCode, self.responseHeaders];
+}
+
+
 @end
