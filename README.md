@@ -29,35 +29,40 @@ The authentication in this case is abstract, allowing the creator of the SPTData
 The data loader service allows rate limiting of URLs to be set explicitly or to be determined by the server using the “Retry-After” semantic. It allows back-off retrying by using a jittered exponential backoff to prevent the thundering hordes creating a request storm after a predictable exponential period has expired.
 
 ## Installation
-SPTDataLoader can be installed it a variety of ways including traditional static libraries, Cocoapods and Carthage.
+SPTDataLoader can be installed in a variety of ways including traditional static libraries and dynamic frameworks. As well as using either of the dependency managers Cocoapods and Carthage.
 
 ### Static Library
-Simply include the SPTDataLoader.xcodeproj in your Apps Xcode project, and link your app with it "In the Build Phases section".
+Simply include `SPTDataLoader.xcodeproj` in your App’s Xcode project, and link your app with the library in the “Build Phases” section.
 
 ### CocoaPods
-We are indexed on [CocoaPods](http://cocoapods.org) and can be installed with the following commands:
-```bash
+We are indexed on [CocoaPods](http://cocoapods.org), which can be installed using [Ruby gems](https://rubygems.org/):
+```shell
 $ gem install cocoapods
 ```
-Then simply add the following to your Podfile
+Then simply add `SPTDataLoader` to your `Podfile`.
 ```
-pod 'SPTDataLoader'
+pod 'SPTDataLoader', '~> 1.0'
+```
+Lastly let CocoaPods do it thing by running:
+```shell
+$ cocoapods update
 ```
 
 ### Carthage
-We support and build [Carthage](https://github.com/Carthage/Carthage) frameworks on all new releases of our framework, it can be installed with the following commands:
-```bash
+We support [Carthage](https://github.con/Carthage/Carthage) and provide pre-built binary frameworks for all new releases. Start by making sure you have the latest version of Carthage installed, e.g. using [Homebrew](http://brew.sh/):
+```shell
 $ brew update
 $ brew install carthage
 ```
-You will also need to add the following to your Cartfile:
+You will also need to add `SPTDataLoader` to your `Cartfile`:
 ```
-github 'spotify/SPTDataLoader' ~> 1.0.1
+github 'spotify/SPTDataLoader' ~> 1.0
 ```
-After that is all said and done, simply update your Carthage project like so:
-```bash
-carthage update
+After that is all said and done, let Carthage pull in SPTDataLoader like so:
+```shell
+$ carthage update
 ```
+Next up, you need to add the framework to the Xcode project of your App. Lastly link the framework with your App and copy it to the App’s Frameworks directory under the “Build Phases”.
 
 ## Usage example :eyes:
 For an example of this framework's usage, see the demo application `SPTDataLoaderDemo` in `SPTDataLoader.xcodeproj`. Just follow the instructions in [`ClientKeys.h`](demo/ClientKeys.h).
