@@ -16,6 +16,10 @@ SYMBOL_FAIL="✗"
 SYMBOL_SUCCESS="✓"
 
 INVALID_SOURCE_FILES=""
+
+echo "Validating source files for license compliance…"
+echo
+
 # Check each file in our public API and internal sources.
 for SOURCE_FILE in $LICENSED_SOURCE_FILES; do
     # Diff the source file’s first few lines with the license header template. They should not

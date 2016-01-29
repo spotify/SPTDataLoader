@@ -11,7 +11,7 @@ travis_fold_close "License conformance"
 
 
 # Executing build actions
-echo "Executing the build actions: $BUILD_ACTIONS"
+echo "Executing build actions: $BUILD_ACTIONS"
 xcrun xcodebuild $BUILD_ACTIONS \
     NSUnbufferedIO=YES \
     -project SPTDataLoader.xcodeproj \

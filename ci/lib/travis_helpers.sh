@@ -21,6 +21,6 @@ travis_fold() {
 	if [ "$TRAVIS" == "true" ]; then
 		action=$1
 		name=$2
-		echo -en "travis_fold:${action}:${name}\r\033[0K"
+		echo -en "travis_fold:${action}:${name}\r\033[0K\n"
 	fi
 }
