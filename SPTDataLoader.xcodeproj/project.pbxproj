@@ -149,6 +149,7 @@
 		05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
+		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
 		3752416C1C46115C002649F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752416B1C46115C002649F3 /* main.m */; };
 		3752416F1C46115C002649F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752416E1C46115C002649F3 /* AppDelegate.m */; };
 		375241721C46115C002649F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 375241711C46115C002649F3 /* ViewController.m */; };
@@ -287,6 +288,8 @@
 		05A6380E1C46B53800061E37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
+		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
+		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
 		375241681C46115C002649F3 /* SPTDataLoaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPTDataLoaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3752416B1C46115C002649F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3752416D1C46115C002649F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -514,6 +517,8 @@
 				050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */,
 				EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */,
 				EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */,
+				05EEB73D1C5C090B00A82266 /* NSBundleMock.h */,
+				05EEB73E1C5C090B00A82266 /* NSBundleMock.m */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -943,6 +948,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */,
 				059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */,
 				0599409F1A14F60F006D6BE9 /* SPTDataLoaderTest.m in Sources */,
 				05356F151A44B588003A7351 /* NSDictionaryHeaderSizeTest.m in Sources */,
