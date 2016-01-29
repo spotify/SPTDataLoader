@@ -42,6 +42,8 @@
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray *handlers;
 
+- (void)cancelAllLoads;
+
 @end
 
 @interface SPTDataLoaderServiceTest : XCTestCase
@@ -356,16 +358,6 @@
     XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");
 }
 
-- (void)testCancellingLoadsOnDealloc
-{
-    // Sanity check to make sure we don't receive crashes on dealloc
-    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    [self.service requestResponseHandler:requestResponseHandlerMock
-                          performRequest:request];
-    self.service = nil;
-}
-
 - (void)testDidReceiveChallengeWithEmptyCompletionHandlerDoesNotCrash
 {
     NSURLSession *session = [NSURLSession new];
@@ -377,6 +369,19 @@
                         task:task
          didReceiveChallenge:challenge
            completionHandler:NSURLSessionCompletionHandler];
+}
+
+- (void)testCancellingLoads
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderService *service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
+                                                                             rateLimiter:self.rateLimiter
+                                                                                resolver:self.resolver
+                                                                customURLProtocolClasses:nil];
+    // Sanity check to make sure we don't receive crashes on dealloc
+    [service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    [service cancelAllLoads];
 }
 
 @end
