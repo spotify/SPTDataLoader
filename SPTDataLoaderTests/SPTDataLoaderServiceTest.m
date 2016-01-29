@@ -328,21 +328,20 @@
     NSURLSession *session = [NSURLSession new];
     NSURLSessionTask *task = [NSURLSessionTask new];
     NSURLAuthenticationChallenge *challenge = [NSURLAuthenticationChallenge new];
-    __block NSInteger completions = 0;
+    __block NSInteger nonNilCompletions = 0;
+    void(^NSURLSessionCompletionHandler)(NSURLSessionAuthChallengeDisposition, NSURLCredential *) = ^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+        nonNilCompletions += credential != nil ? 1 : 0;
+    };
     [self.service URLSession:session
                         task:task
          didReceiveChallenge:challenge
-           completionHandler:^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
-               completions++;
-           }];
+           completionHandler:NSURLSessionCompletionHandler];
     self.service.allCertificatesAllowed = NO;
     [self.service URLSession:session
                         task:task
          didReceiveChallenge:challenge
-           completionHandler:^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
-               completions++;
-           }];
-    XCTAssertEqual(completions, 1, @"There should only be 1 completion once all certificates are not allowed");
+           completionHandler:NSURLSessionCompletionHandler];
+    XCTAssertEqual(nonNilCompletions, 1, @"There should only be 1 completion once all certificates are not allowed");
 }
 
 - (void)testPerformingCancelledRequest
@@ -365,6 +364,19 @@
     [self.service requestResponseHandler:requestResponseHandlerMock
                           performRequest:request];
     self.service = nil;
+}
+
+- (void)testDidReceiveChallengeWithEmptyCompletionHandlerDoesNotCrash
+{
+    NSURLSession *session = [NSURLSession new];
+    NSURLSessionTask *task = [NSURLSessionTask new];
+    NSURLAuthenticationChallenge *challenge = [NSURLAuthenticationChallenge new];
+    void(^NSURLSessionCompletionHandler)(NSURLSessionAuthChallengeDisposition, NSURLCredential *) = ^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {};
+    NSURLSessionCompletionHandler = nil;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:NSURLSessionCompletionHandler];
 }
 
 @end
