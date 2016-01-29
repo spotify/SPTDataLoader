@@ -206,7 +206,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.timeout = 0.1;
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
-    [self waitForExpectationsWithTimeout:0.2 handler:nil];
+    [self waitForExpectationsWithTimeout:1.0 handler:nil];
     XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The request should have been cancelled");
 }
 
