@@ -18,12 +18,3 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-@import Foundation;
-
-#import "SPTDataLoaderConsumptionObserver.h"
-
-@interface SPTDataLoaderConsumptionObserverMock : NSObject <SPTDataLoaderConsumptionObserver>
-
-@property (nonatomic, assign) NSInteger numberOfCallsToEndedRequest;
-
-@end
