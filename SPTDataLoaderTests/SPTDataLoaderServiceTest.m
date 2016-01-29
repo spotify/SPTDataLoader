@@ -357,4 +357,14 @@
     XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");
 }
 
+- (void)testCancellingLoadsOnDealloc
+{
+    // Sanity check to make sure we don't receive crashes on dealloc
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:requestResponseHandlerMock
+                          performRequest:request];
+    self.service = nil;
+}
+
 @end
