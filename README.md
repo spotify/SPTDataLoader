@@ -91,7 +91,7 @@ self.oauthFactory = [self.service createDataLoaderFactoryWithAuthorisers:@[ oaut
 What we are doing here is using an implementation of an authoriser to funnel all the requests created by this factory into these authorisers.
 
 ### Creating the SPTDataLoader
-Your app should create an SPTDataLoader object per view that wants to make requests (e.g. it is best not too share these between classes). This is so when your view model is deallocated the requests made by your view model will also cancel.
+Your app should create an SPTDataLoader object per view that wants to make requests (e.g. it is best not too share these between classes). This is so when your view model is deallocated the requests made by your view model will also be cancelled.
 ```objc
 SPTDataLoader *dataLoader = [self.oauthFactory createDataLoader];
 ```
