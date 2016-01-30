@@ -280,7 +280,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
         completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:trust]);
     } else {
-        completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
     }
 }
 

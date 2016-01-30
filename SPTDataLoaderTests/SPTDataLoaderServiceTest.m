@@ -384,4 +384,20 @@
     [service cancelAllLoads];
 }
 
+- (void)testDidReceiveChallengeWhenNotAllowingAllCertificatesForwardsResponsiblity
+{
+    NSURLSession *session = [NSURLSession new];
+    NSURLSessionTask *task = [NSURLSessionTask new];
+    NSURLAuthenticationChallenge *challenge = [NSURLAuthenticationChallenge new];
+    __block NSURLSessionAuthChallengeDisposition savedDisposition = NSURLSessionAuthChallengeUseCredential;
+    void(^NSURLSessionCompletionHandler)(NSURLSessionAuthChallengeDisposition, NSURLCredential *) = ^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+        savedDisposition = disposition;
+    };
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:NSURLSessionCompletionHandler];
+    XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengePerformDefaultHandling);
+}
+
 @end
