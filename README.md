@@ -115,6 +115,27 @@ Thus we came up with a way to elegantly inject tokens in a Just-in-time manner f
 We had some block interfaces on our proprietary protocol library, and what we noticed was that it was easy to miss the weakification of the variables used in the blocks, which caused view models to be held around in memory far longer than they should have been.
 Another problem was whether we should use one block or multiple blocks for failures/successes, and what we learned from our old API was that developers could tend to miss failure states from a single block interface (e.g. handle an NSError passed in). Good examples of are animation blocks on UIView that do not take into account the failed BOOL passed in. This makes it necessary to use multiple blocks, however we wanted a contract where the developer was guaranteed to get a callback from the data loader on any of its ending states (even if they put in a nil to the request blocks). The way we achieved this was the use of the delegate pattern.
 Unfortunately the block pattern is useful in a number of different scenarios, however it is far from our main use case at Spotify. To support this we would like to point out that someone can give the userInfo of a request a block and then call that block on the delegate callback if they were so inclined (we have one or two examples of this on our codebase).
+```objc
+- (void)load
+{
+    UILabel *label = [self findLabel];
+    NSURL *URL = [NSURL URLWithString:@"https://www.spotify.com"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@"spotify"];
+    dispatch_block_t block = ^ {
+        label.text = @"Loaded";
+    };
+    request.userInfo = @{ @"block" : block };
+    [self.dataLoader performRequest:request];
+}
+
+- (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
+{
+    dispatch_block_t block = response.request.userInfo[@"block"];
+    if (block) {
+        block();
+    }
+}
+```
 
 ## Documentation :books:
 See the [`SPTDataLoader` documentation](http://cocoadocs.org/docsets/SPTDataLoader) on [CocoaDocs.org](http://cocoadocs.org) for the full documentation.
