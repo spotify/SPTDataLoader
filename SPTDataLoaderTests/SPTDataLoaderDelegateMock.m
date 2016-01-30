@@ -25,6 +25,9 @@
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfCallsToSuccessfulResponse++;
+    if (self.receivedSuccessfulBlock) {
+        self.receivedSuccessfulBlock();
+    }
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveErrorResponse:(SPTDataLoaderResponse *)response

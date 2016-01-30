@@ -136,4 +136,18 @@
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1u, @"The data loader did not relay a received initial response to the delegate");
 }
 
+- (void)testDelegateCallbackOnSeparateQueue
+{
+    self.dataLoader.delegateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Test delegate callback on separate queue"];
+    self.delegate.receivedSuccessfulBlock = ^ {
+        [expectation fulfill];
+    };
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader successfulResponse:response];
+    [self waitForExpectationsWithTimeout:1.0 handler:nil];
+    XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1u, @"The data loader did not relay a successful response to the delegate");
+}
+
 @end

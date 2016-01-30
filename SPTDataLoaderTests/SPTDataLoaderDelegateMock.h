@@ -30,5 +30,6 @@
 @property (nonatomic, assign) NSUInteger numberOfCallsToCancelledRequest;
 @property (nonatomic, assign) NSUInteger numberOfCallsToReceiveDataChunk;
 @property (nonatomic, assign) NSUInteger numberOfCallsToReceivedInitialResponse;
+@property (nonatomic, strong) dispatch_block_t receivedSuccessfulBlock;
 
 @end
