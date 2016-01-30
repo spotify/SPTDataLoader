@@ -24,5 +24,6 @@
 
 @property (nonatomic, assign) NSUInteger numberOfCallsToResume;
 @property (nonatomic, assign) NSUInteger numberOfCallsToCancel;
+@property (nonatomic, strong, readwrite, nullable) dispatch_block_t resumeCallback;
 
 @end
