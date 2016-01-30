@@ -159,4 +159,12 @@
     XCTAssertEqualObjects([dataString stringByAppendingString:dataString], receivedString);
 }
 
+- (void)testCancelledError
+{
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
+    [self.handler receiveResponse:nil];
+    [self.handler completeWithError:error];
+    XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1u, @"The handler did not relay the failed response onto its request response handler");
+}
+
 @end
