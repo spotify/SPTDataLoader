@@ -22,7 +22,10 @@
 
 #import "SPTDataLoaderRequest.h"
 
+@import ObjectiveC;
+
 #import "SPTDataLoaderRequest+Private.h"
+#import "NSBundleMock.h"
 
 @interface SPTDataLoaderRequestTest : XCTestCase
 
@@ -136,6 +139,26 @@
     XCTAssertEqual(request.cachePolicy, self.request.cachePolicy, @"The cache policy was not copied correctly");
     XCTAssertEqual(request.skipNSURLCache, self.request.skipNSURLCache, @"'skipNSURLCache' was not copied correctly");
     XCTAssertEqual(request.method, self.request.method, @"The method was not copied correctly");
+}
+
+- (void)testAcceptLanguageWithNoEnglishLanguages
+{
+    NSBundleMock *bundleMock = [NSBundleMock new];
+    bundleMock.mockPreferredLocalizations = @[ @"fr-CA", @"pt-PT", @"es-419" ];
+
+    Method originalMethod = class_getClassMethod(NSBundle.class, @selector(mainBundle));
+    IMP originalMethodImplementation = method_getImplementation(originalMethod);
+
+    IMP fakeMethodImplementation = imp_implementationWithBlock(^ {
+        return bundleMock;
+    });
+    method_setImplementation(originalMethod, fakeMethodImplementation);
+
+    NSString *languageValues = [SPTDataLoaderRequest languageHeaderValue];
+
+    method_setImplementation(originalMethod, originalMethodImplementation);
+
+    XCTAssertEqualObjects(@"fr-CA, pt-PT;q=0.50, en;q=0.01", languageValues);
 }
 
 @end

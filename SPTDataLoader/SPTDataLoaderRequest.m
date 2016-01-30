@@ -40,11 +40,6 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 #pragma mark SPTDataLoaderRequest
 
-+ (instancetype)requestWithURL:(NSURL *)URL
-{
-    return [self requestWithURL:URL sourceIdentifier:nil];
-}
-
 + (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
 {
     return [[self alloc] initWithURL:URL sourceIdentifier:sourceIdentifier];

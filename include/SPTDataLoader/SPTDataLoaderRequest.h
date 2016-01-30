@@ -97,12 +97,6 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 /**
  * Class constructor
  * @param URL The URL to query
- */
-+ (instancetype)requestWithURL:(NSURL *)URL __attribute__ ((deprecated("use requestWithURL:sourceIdentifier: instead")));
-
-/**
- * Class constructor
- * @param URL The URL to query
  * @param sourceIdentifier An identifier for the request source. May be nil.
  */
 + (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier;
