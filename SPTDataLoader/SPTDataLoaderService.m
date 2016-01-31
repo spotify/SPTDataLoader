@@ -211,9 +211,6 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
-    if (![cancellationToken.objectToCancel isKindOfClass:[SPTDataLoaderRequest class]]) {
-        return;
-    }
     SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
     
     NSArray *handlers = nil;
