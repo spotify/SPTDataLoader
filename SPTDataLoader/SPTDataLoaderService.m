@@ -211,9 +211,6 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
 {
-    if (![cancellationToken.objectToCancel isKindOfClass:[SPTDataLoaderRequest class]]) {
-        return;
-    }
     SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
     
     NSArray *handlers = nil;
@@ -256,7 +253,8 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
     [handler receiveData:data];
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
  willCacheResponse:(NSCachedURLResponse *)proposedResponse
  completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler
 {
