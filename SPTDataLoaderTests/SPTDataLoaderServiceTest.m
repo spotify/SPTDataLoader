@@ -400,4 +400,14 @@
     XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengePerformDefaultHandling);
 }
 
+- (void)testWillCacheResponseWithNilCompletionHandler
+{
+    // Sanity check to ensure we don't crash on a nil completion block
+    void(^willCacheResponseCompletionBlock)(NSCachedURLResponse *) = nil;
+    [self.service URLSession:self.session
+                    dataTask:[NSURLSessionDataTask new]
+           willCacheResponse:[NSCachedURLResponse new]
+           completionHandler:willCacheResponseCompletionBlock];
+}
+
 @end
