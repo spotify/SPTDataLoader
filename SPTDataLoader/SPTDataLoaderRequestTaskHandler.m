@@ -49,6 +49,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 @property (nonatomic, assign) BOOL calledFailedResponse;
 @property (nonatomic, assign) BOOL calledCancelledRequest;
 @property (nonatomic, assign) BOOL started;
+@property (nonatomic, strong, readwrite) dispatch_queue_t retryQueue;
 
 @end
 
@@ -90,6 +91,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     };
     _exponentialTimer = [SPTDataLoaderExponentialTimer exponentialTimerWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
                                                                                maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
+    _retryQueue = dispatch_get_main_queue();
     
     return self;
 }
@@ -193,21 +195,26 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     if (waitTime == 0.0) {
         [self checkRetryLimiterAndExecute];
     } else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                     (int64_t)(waitTime * NSEC_PER_SEC)),
+                       self.retryQueue,
+                       self.executionBlock);
     }
 }
 
 - (void)checkRetryLimiterAndExecute
 {
     if (self.waitCount < self.retryCount) {
-        if (!self.waitCount) {
+        self.waitCount++;
+        if (self.waitCount == 1) {
             self.executionBlock();
         } else {
             NSTimeInterval waitTime = self.exponentialTimer.timeIntervalAndCalculateNext;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(waitTime * NSEC_PER_SEC)), dispatch_get_main_queue(), self.executionBlock);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                         (int64_t)(waitTime * NSEC_PER_SEC)),
+                           self.retryQueue,
+                           self.executionBlock);
         }
-        
-        self.waitCount++;
         return;
     }
     
