@@ -156,6 +156,20 @@ NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com/thing/thing"];
 ```
 It should be noted that when you set the requests per second for a URL, it takes the host, and the first component of the URL and rate limits everything that fits that description.
 
+### Switching Hosts for all requests
+The SPTDataLoaderService takes in a resolver object as one of its arguments. If you choose to make this non-nil, then you can switch the hosts of different requests as they come in. At Spotify we have a number of DNS matches our requests can go through, giving us backups and failsafes in case one of these machines go down. These operations happen in the SPTDataLoaderResolver, where you can specify a number of alternative addresses for the host. An example of Spotify specifying alternative endpoints for its hosts could be:
+```objc
+SPTDataLoaderResolver *resolver = [SPTDataLoaderResolver new];
+NSArray *alternativeAddresses = @[ @"spotify.com",
+                                   @"backup.spotify.com",
+                                   @"backup2.spotify.com",
+                                   @"backup3.spotify.com",
+                                   @"192.168.0.1",
+                                   @"final.spotify.com" ];
+[resolver setAddresses:alternativeAddresses forHost:@"spotify.com"];
+```
+This allows any request made to spotify.com to use any one of these other addresses (in this order) if spotify.com becomes unreachable.
+
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
