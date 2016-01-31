@@ -106,6 +106,46 @@ SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:meURL
 ```
 After you have made the request your data loader will call its delegate regarding results of the requests.
 
+### Handling Streamed Requests
+Sometimes you will want to process HTTP requests as they come in packet by packet rather than receive a large callback at the end, this works better for memory and certain forms of media. For Spotify's purpose, it works for streaming MP3 previews of our songs. An example of using the streaming API:
+```objc
+void AudioSampleListener(void *, AudioFileStreamID, AudioFileStreamPropertyID, UInt32 *);
+void AudioSampleProcessor(void *, UInt32, UInt32, const void *, AudioStreamPacketDescription *);
+
+- (void)load
+{
+    NSURL *URL = [NSURL URLWithString:@"http://i.spotify.com/mp3_preview"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@"preview"];
+    request.chunks = YES;
+    [self.dataLoader performRequest:request];
+}
+
+- (void)dataLoader:(SPTDataLoader *)dataLoader
+didReceiveDataChunk:(NSData *)data
+       forResponse:(SPTDataLoaderResponse *)response
+{
+    void *mp3Data = calloc(data.length, 1);
+    memcpy(mp3Data, data.bytes, data.length);
+    AudioFileStreamParseBytes(_audioFileStream, data.length, mp3Data, 0);
+    free(mp3Data);
+}
+
+- (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response
+{
+    AudioFileStreamOpen((__bridge void *)self,
+                        AudioSampleListener,
+                        AudioSampleProcessor,
+                        kAudioFileMP3Type,
+                        &_audioFileStream);
+}
+
+- (BOOL)dataLoaderShouldSupportChunks:(SPTDataLoader *)dataLoader
+{
+    return YES;
+}
+```
+Be sure to render YES in your delegate to tell the data loader that you support chunks, and to set the requests chunks property to YES.
+
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
