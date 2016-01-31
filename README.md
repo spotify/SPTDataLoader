@@ -7,6 +7,7 @@
 [![Cocoapods](https://img.shields.io/cocoapods/v/SPTDataLoader.svg)](https://cocoapods.org/?q=SPTDataLoader)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Spotify FOSS Slack](https://slackin.spotify.com/badge.svg)](https://slackin.spotify.com)
+[![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/spotify/sptdataloader)](http://clayallsopp.github.io/readme-score?url=https://github.com/spotify/sptdataloader)
 
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
@@ -145,6 +146,15 @@ didReceiveDataChunk:(NSData *)data
 }
 ```
 Be sure to render YES in your delegate to tell the data loader that you support chunks, and to set the requests chunks property to YES.
+
+### Rate limiting specific endpoints
+If you specify a rate limiter in your service, you can give it a default requests per second metric which it applies to all requests coming out your app. (See “[Creating the `SPTDataLoaderService`](#creating-the-sptdataloaderservice)”). However, you can also specify rate limits for specific HTTP endpoints, which may be useful if you want to forcefully control the rate at which clients can make requests to a backend that does large amounts of work.
+```objc
+SPTDataLoaderRateLimiter *rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
+NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com/thing/thing"];
+[rateLimiter setRequestsPerSecond:1 forURL:URL];
+```
+It should be noted that when you set the requests per second for a URL, it takes the host, and the first component of the URL and rate limits everything that fits that description.
 
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
