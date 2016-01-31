@@ -25,6 +25,9 @@
 - (void)resume
 {
     self.numberOfCallsToResume++;
+    if (self.resumeCallback) {
+        self.resumeCallback();
+    }
 }
 
 - (void)cancel

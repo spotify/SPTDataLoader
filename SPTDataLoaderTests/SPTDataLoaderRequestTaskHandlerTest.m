@@ -31,6 +31,7 @@
 @interface SPTDataLoaderRequestTaskHandler ()
 
 @property (nonatomic, assign) NSUInteger retryCount;
+@property (nonatomic, strong, readwrite) dispatch_queue_t retryQueue;
 
 @end
 
@@ -165,6 +166,26 @@
     [self.handler receiveResponse:nil];
     [self.handler completeWithError:error];
     XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1u, @"The handler did not relay the failed response onto its request response handler");
+}
+
+- (void)testRetryWithRateLimiter
+{
+    self.handler.retryQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Retry limit equals maximum retry count"];
+    __weak __typeof(self) weakSelf = self;
+    self.task.resumeCallback = ^ {
+        __strong __typeof(self) strongSelf = weakSelf;
+        NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
+        [strongSelf.handler receiveResponse:nil];
+        [strongSelf.handler completeWithError:error];
+        if (strongSelf.request.maximumRetryCount - 1 == strongSelf.task.numberOfCallsToResume) {
+            [expectation fulfill];
+        }
+    };
+
+    self.request.maximumRetryCount = 4;
+    [self.handler start];
+    [self waitForExpectationsWithTimeout:2.0 handler:nil];
 }
 
 @end
