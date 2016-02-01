@@ -36,6 +36,7 @@
 #import "SPTDataLoaderConsumptionObserverMock.h"
 #import "NSURLSessionDataTaskMock.h"
 #import "SPTDataLoaderRequest+Private.h"
+#import "NSURLSessionTaskMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
@@ -408,6 +409,28 @@
                     dataTask:[NSURLSessionDataTask new]
            willCacheResponse:[NSCachedURLResponse new]
            completionHandler:willCacheResponseCompletionBlock];
+}
+
+- (void)testConsumptionObserverTakesIntoAccountResponseHeaders
+{
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Test consumption observer response headers"];
+    SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
+    consumptionObserver.endedRequestCallback = ^ {
+        [expectation fulfill];
+    };
+    [self.service addConsumptionObserver:consumptionObserver
+                                      on:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
+    NSDictionary *headerFields = @{ @"Content-Size" : @"1000" };
+    NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com"];
+    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:URL
+                                                              statusCode:400
+                                                             HTTPVersion:@"1.1"
+                                                            headerFields:headerFields];
+    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
+    task.mockResponse = response;
+    [self.service URLSession:self.session task:task didCompleteWithError:nil];
+    [self waitForExpectationsWithTimeout:1.0 handler:nil];
+    XCTAssertEqual(consumptionObserver.lastBytesDownloaded, 19, @"The last bytes downloaded is incorrect");
 }
 
 @end

@@ -25,5 +25,7 @@
 @interface SPTDataLoaderConsumptionObserverMock : NSObject <SPTDataLoaderConsumptionObserver>
 
 @property (nonatomic, assign) NSInteger numberOfCallsToEndedRequest;
+@property (nonatomic, strong, readwrite, nullable) dispatch_block_t endedRequestCallback;
+@property (nonatomic, assign, readwrite) NSInteger lastBytesDownloaded;
 
 @end
