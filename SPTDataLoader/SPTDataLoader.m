@@ -24,6 +24,7 @@
 #import "SPTDataLoaderResponse.h"
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderDelegate.h"
+#import "SPTDataLoaderResponse+Private.h"
 
 @interface SPTDataLoader ()
 
@@ -71,9 +72,22 @@
 {
     SPTDataLoaderRequest *copiedRequest = [request copy];
     id<SPTDataLoaderDelegate> delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)] && copiedRequest.chunks) {
-        NSAssert([delegate dataLoaderShouldSupportChunks:self], @"The data loader was given a request that required chunks while the delegate does not support chunks");
+
+    // Cancel the request immediately if it requires chunks and the delegate does not support that
+    BOOL chunksSupported = [delegate respondsToSelector:@selector(dataLoaderShouldSupportChunks:)];
+    if (chunksSupported) {
+        chunksSupported = [delegate dataLoaderShouldSupportChunks:self];
     }
+    if (!chunksSupported && copiedRequest.chunks) {
+        NSError *error = [NSError errorWithDomain:SPTDataLoaderRequestErrorDomain
+                                             code:SPTDataLoaderRequestErrorChunkedRequestWithoutChunkedDelegate
+                                         userInfo:nil];
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+        response.error = error;
+        [delegate dataLoader:self didReceiveErrorResponse:response];
+        return nil;
+    }
+
     id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
                                                                                               performRequest:copiedRequest];
     @synchronized(self.cancellationTokens) {

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "375241671C46115C002649F3"
                BuildableName = "SPTDataLoaderDemo.app"
                BlueprintName = "SPTDataLoaderDemo"
-               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+               ReferencedContainer = "container:SPTDataLoaderDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "375241671C46115C002649F3"
             BuildableName = "SPTDataLoaderDemo.app"
             BlueprintName = "SPTDataLoaderDemo"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            ReferencedContainer = "container:SPTDataLoaderDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "375241671C46115C002649F3"
             BuildableName = "SPTDataLoaderDemo.app"
             BlueprintName = "SPTDataLoaderDemo"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            ReferencedContainer = "container:SPTDataLoaderDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "375241671C46115C002649F3"
             BuildableName = "SPTDataLoaderDemo.app"
             BlueprintName = "SPTDataLoaderDemo"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            ReferencedContainer = "container:SPTDataLoaderDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
