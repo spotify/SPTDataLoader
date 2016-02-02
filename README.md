@@ -214,6 +214,43 @@ SPTDataLoaderService allows you to add a consumption observer whose purpose is t
 ```
 Also note that this isn't just the payload, it also includes the headers.
 
+### Creating a custom authoriser
+The SPTDataLoader architecture is designed to centralise authentication around the user level (in this case represented by the factory). In order to do that you must inject an authoriser you made yourself into the factory when it is created. An authoriser in most cases will be injecting an Authorisation header into any request it wants to authorise. An example below shows how a standard authoriser might be constructed for an OAuth flow.
+```objc
+@synthesize delegate = _delegate;
+
+- (NSString *)identifier
+{
+    return @"OAuth";
+}
+
+- (BOOL)requestRequiresAuthorisation:(SPTDataLoaderRequest *)request
+{
+    // Here we check the hostname to see if it one of the hostnames we authorise against
+    // It is also advisable to check whether we are using HTTPS, if we are not we should not inject our Authorisation
+    // header in order to keep it secret from prying eyes
+    return [request.URL.host isEqualToString:@"myauth.com"] && [request.URL.scheme isEqualToString:@"https"];
+}
+
+- (void)authoriseRequest:(SPTDataLoaderRequest *)request
+{
+    [request addValue:@"My Token" forHeader:@"Authorization"];
+    [self.delegate dataLoaderAuthoriser:self authorisedRequest:request];
+}
+
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request
+{
+    // This tells us that the server returned a 400 error code indicating that the authorisation did not work
+    // Commonly this means you should attempt to get another authorisation token
+}
+
+- (void)refresh
+{
+    // Forces a refresh of the authorisation token
+}
+```
+As you can see all we are doing here is playing with the headers. It should be noted that if you receive an authoriseRequest: call the rest of the request will not execute until you have either sent the delegate a signal telling it the request has been authorised or failed to be authorised.
+
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
