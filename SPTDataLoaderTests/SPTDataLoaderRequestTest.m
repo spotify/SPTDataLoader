@@ -161,4 +161,14 @@
     XCTAssertEqualObjects(@"fr-CA, pt-PT;q=0.50, en;q=0.01", languageValues);
 }
 
+- (void)testDebugDescription
+{
+    XCTAssertNotNil(self.request.debugDescription,
+                    @"The debugDescription shouldn't be nil.");
+    
+    NSString *URLString = [NSString stringWithFormat:@"URL: %@", self.URL.absoluteString];
+    XCTAssertTrue([self.request.debugDescription containsString:URLString],
+                  @"The debugDescription should contain the URL of the request.");
+}
+
 @end

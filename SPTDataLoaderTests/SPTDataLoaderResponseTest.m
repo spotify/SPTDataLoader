@@ -184,4 +184,23 @@
     XCTAssertFalse(shouldRetry, @"The response should not retry when the connection was cancelled");
 }
 
+- (void)testDebugDescription
+{
+    XCTAssertNotNil(self.response.debugDescription,
+                    @"The debugDescription shouldn't be nil.");
+    
+    NSString *URLString = [NSString stringWithFormat:@"URL: %@", self.urlResponse.URL];
+    XCTAssertTrue([self.response.debugDescription containsString:URLString],
+                  @"The debugDescription should contain the URL of the response");
+    
+    NSString *statusCodeString = [NSString stringWithFormat:@"status code: %ld", (long)self.response.statusCode];
+    XCTAssertTrue([self.response.debugDescription containsString:statusCodeString],
+                  @"The debugDescription should contain the status code of the response");
+    
+    NSString *headersString = [NSString stringWithFormat:@"headers: %@", self.response.responseHeaders];
+    XCTAssertTrue([self.response.debugDescription containsString:headersString],
+                  @"The debugDescription should contain the headers code of the response");
+}
+
+
 @end

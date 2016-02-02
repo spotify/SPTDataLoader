@@ -171,6 +171,11 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     return languageHeaderValue;
 }
 
+- (NSString *)debugDescription
+{
+    return [NSString stringWithFormat:@"%@ { URL: %@ }", [super debugDescription], self.URL];
+}
+
 #pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
