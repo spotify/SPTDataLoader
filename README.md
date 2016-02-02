@@ -17,6 +17,9 @@ Authentication and back-off logic is a pain, let's do it once and forget about i
 - [x] 📺 tvOS 9.0+
 
 ## Architecture :triangular_ruler:
+
+![alt architecture](https://media.giphy.com/media/2hmZzj3oFq63K/giphy.gif)
+
 `SPTDataLoader` is designed as an HTTP stack with 3 additional layers on top of `NSURLSession`.
 
 - **The Application level**, which controls the rate limiting and back-off policies per service, respecting the “Retry-After” header and knowing when or not it should retry the request.
@@ -30,6 +33,9 @@ The authentication in this case is abstract, allowing the creator of the SPTData
 The data loader service allows rate limiting of URLs to be set explicitly or to be determined by the server using the “Retry-After” semantic. It allows back-off retrying by using a jittered exponential backoff to prevent the thundering hordes creating a request storm after a predictable exponential period has expired.
 
 ## Installation
+
+![alt installation](https://media.giphy.com/media/pWHXHQwyizuUM/giphy.gif)
+
 SPTDataLoader can be installed in a variety of ways including traditional static libraries and dynamic frameworks. As well as using either of the dependency managers Cocoapods and Carthage.
 
 ### Static Library
@@ -66,6 +72,9 @@ $ carthage update
 Next up, you need to add the framework to the Xcode project of your App. Lastly link the framework with your App and copy it to the App’s Frameworks directory under the “Build Phases”.
 
 ## Usage example :eyes:
+
+![alt usage](https://media.giphy.com/media/bnVP5QsC006ru/giphy.gif)
+
 For an example of this framework's usage, see the demo application `SPTDataLoaderDemo` in `SPTDataLoader.xcodeproj`. Just follow the instructions in [`ClientKeys.h`](demo/ClientKeys.h).
 
 ### Creating the SPTDataLoaderService
@@ -252,6 +261,9 @@ The SPTDataLoader architecture is designed to centralise authentication around t
 As you can see all we are doing here is playing with the headers. It should be noted that if you receive an authoriseRequest: call the rest of the request will not execute until you have either sent the delegate a signal telling it the request has been authorised or failed to be authorised.
 
 ## Background story :book:
+
+![alt background-story](https://media.giphy.com/media/oDJfAK3TvEtsQ/giphy.gif)
+
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
 Thus we came up with a way to elegantly inject tokens in a Just-in-time manner for requests that require them. We also wanted to learn from our mistakes with our proprietary protocol, and bake in back-off policies early to avoid us DDOSing our own backends with huge amounts of eronious requests.
@@ -283,6 +295,9 @@ Unfortunately the block pattern is useful in a number of different scenarios, ho
 ```
 
 ## Documentation :books:
+
+![alt documentation](https://media.giphy.com/media/c9128UygOY94A/giphy.gif)
+
 See the [`SPTDataLoader` documentation](http://cocoadocs.org/docsets/SPTDataLoader) on [CocoaDocs.org](http://cocoadocs.org) for the full documentation.
 
 You can also add it to [Dash](https://kapeli.com/dash) if you want to, using the following Dash feed:
@@ -291,7 +306,13 @@ dash-feed://http%3A%2F%2Fcocoadocs.org%2Fdocsets%2FSPTDataLoader%2FSPTDataLoader
 ```
 
 ## Contributing :mailbox_with_mail:
+
+![alt contributing](https://media.giphy.com/media/Adglfa5Qbezmw/giphy.gif)
+
 Contributions are welcomed, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information.
 
 ## License :memo:
+
+![alt license](https://media.giphy.com/media/u8IqS8wf0PrcA/giphy.gif)
+
 The project is available under the [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0) license.
