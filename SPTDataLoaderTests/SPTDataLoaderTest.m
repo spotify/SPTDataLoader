@@ -150,4 +150,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1u, @"The data loader did not relay a successful response to the delegate");
 }
 
+- (void)testErrorDelegateCallbackWhenMismatchInChunkSupport
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.chunks = YES;
+    [self.dataLoader performRequest:request];
+    XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1u);
+}
+
 @end
