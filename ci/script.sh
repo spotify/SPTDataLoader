@@ -16,7 +16,7 @@ until [ $retry_attempts -ge 2 ]
 do
     xcrun xcodebuild $BUILD_ACTIONS \
         NSUnbufferedIO=YES \
-        -project SPTDataLoader.xcodeproj \
+        -project "$PROJECT" \
         -scheme "$SCHEME" \
         -sdk "$TEST_SDK" \
         -destination "$TEST_DEST" \
