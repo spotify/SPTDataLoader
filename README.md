@@ -191,6 +191,29 @@ for (int i = 0; i < 1000; ++i) {
 ```
 This will result in a backoffTime that has drifted far away from its vanilla exponential calculation. Why? Because we add a random jitter to the calculations in order to prevent clients from connecting at the same time, in order to spread the load out evenly when experiencing a reconnect storm. The jitter gets greater along with the exponent.
 
+### Consumption observation
+SPTDataLoaderService allows you to add a consumption observer whose purpose is to monitor the data consumption of the service for both uploads and downloads. This object must conform to the SPTDataLoaderConsumptionObserver protocol. This is quite easy considering it is a single method like so:
+```objc
+- (void)load
+{
+    [self.service addConsumptionObserver:self];
+}
+
+- (void)unload
+{
+    [self.service removeConsumptionObserver:self];
+}
+
+- (void)endedRequestWithResponse:(SPTDataLoaderResponse *)response
+                 bytesDownloaded:(int)bytesDownloaded
+                   bytesUploaded:(int)bytesUploaded
+{
+    NSLog(@"Bytes Downloaded: %d", bytesDownloaded);
+    NSLog(@"Bytes Uploaded: %d", bytesUploaded);
+}
+```
+Also note that this isn't just the payload, it also includes the headers.
+
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
