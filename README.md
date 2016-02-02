@@ -170,6 +170,50 @@ NSArray *alternativeAddresses = @[ @"spotify.com",
 ```
 This allows any request made to spotify.com to use any one of these other addresses (in this order) if spotify.com becomes unreachable.
 
+### Using the jittered exponential timer
+This library contains a class called SPTDataLoaderExponentialTimer which it uses internally to perform backoffs with retries. The reason it is jittered is to prevent the "predictable thundering hoardes" from hammering our services if one of them happens to go down. In order to make use of this class, there are some do's and don'ts. For example, do not initialise the class like so:
+```objc
+SPTDataLoaderExponentialTimer *timer = [SPTDataLoaderExponentialTimer exponentialTimerWithInitialTime:0.0
+                                                                                              maxTime:10.0];
+NSTimeInterval backoffTime = 0.0;
+for (int i = 0; i < 1000; ++i) {
+    backoffTime = timer.timeIntervalAndCalculateNext;
+}
+```
+This will result in the backoffTime remaining at 0. Why? Because 0.0 multiplied by an exponential number is still 0. A good initial time might be 0.5 or 1.0 seconds. You will also notice that the backoffTime will get further away from the raw exponential time the more times you calculate the next interval:
+```objc
+SPTDataLoaderExponentialTimer *timer = [SPTDataLoaderExponentialTimer exponentialTimerWithInitialTime:1.0
+                                                                                              maxTime:1000.0];
+NSTimeInterval backoffTime = 0.0;
+for (int i = 0; i < 1000; ++i) {
+    backoffTime = timer.timeIntervalAndCalculateNext;
+}
+```
+This will result in a backoffTime that has drifted far away from its vanilla exponential calculation. Why? Because we add a random jitter to the calculations in order to prevent clients from connecting at the same time, in order to spread the load out evenly when experiencing a reconnect storm. The jitter gets greater along with the exponent.
+
+### Consumption observation
+SPTDataLoaderService allows you to add a consumption observer whose purpose is to monitor the data consumption of the service for both uploads and downloads. This object must conform to the SPTDataLoaderConsumptionObserver protocol. This is quite easy considering it is a single method like so:
+```objc
+- (void)load
+{
+    [self.service addConsumptionObserver:self];
+}
+
+- (void)unload
+{
+    [self.service removeConsumptionObserver:self];
+}
+
+- (void)endedRequestWithResponse:(SPTDataLoaderResponse *)response
+                 bytesDownloaded:(int)bytesDownloaded
+                   bytesUploaded:(int)bytesUploaded
+{
+    NSLog(@"Bytes Downloaded: %d", bytesDownloaded);
+    NSLog(@"Bytes Uploaded: %d", bytesUploaded);
+}
+```
+Also note that this isn't just the payload, it also includes the headers.
+
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
