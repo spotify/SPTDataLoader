@@ -193,7 +193,7 @@
     XCTAssertTrue([self.response.debugDescription containsString:URLString],
                   @"The debugDescription should contain the URL of the response");
     
-    NSString *statusCodeString = [NSString stringWithFormat:@"status code: %lu", (long)self.response.statusCode];
+    NSString *statusCodeString = [NSString stringWithFormat:@"status code: %ld", (long)self.response.statusCode];
     XCTAssertTrue([self.response.debugDescription containsString:statusCodeString],
                   @"The debugDescription should contain the status code of the response");
     
