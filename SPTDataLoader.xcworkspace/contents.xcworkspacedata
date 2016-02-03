@@ -7,4 +7,7 @@
    <FileRef
       location = "group:SPTDataLoaderDemo.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:SPTDataLoaderFramework.xcodeproj">
+   </FileRef>
 </Workspace>

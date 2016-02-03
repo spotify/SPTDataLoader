@@ -36,41 +36,6 @@
 			remoteGlobalIDString = 050E06951A10C62100A10A0E;
 			remoteInfo = SPTDataLoaderTests;
 		};
-		0513AAA71C6067E000A25F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 375241681C46115C002649F3;
-			remoteInfo = SPTDataLoaderDemo;
-		};
-		0513AAA91C6067E000A25F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05A637E31C46B46300061E37;
-			remoteInfo = "SPTDataLoader-Watch";
-		};
-		0513AAAB1C6067E000A25F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05A637F01C46B48600061E37;
-			remoteInfo = "SPTDataLoader-TV";
-		};
-		0513AAAD1C6067E000A25F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05A637FD1C46B4A700061E37;
-			remoteInfo = "SPTDataLoader-OSX";
-		};
-		0513AAAF1C6067E000A25F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05A6380A1C46B53800061E37;
-			remoteInfo = "SPTDataLoader-iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -149,11 +114,6 @@
 			children = (
 				0513AAA41C6067E000A25F54 /* libSPTDataLoader.a */,
 				0513AAA61C6067E000A25F54 /* SPTDataLoaderTests.xctest */,
-				0513AAA81C6067E000A25F54 /* SPTDataLoaderDemo.app */,
-				0513AAAA1C6067E000A25F54 /* SPTDataLoader.framework */,
-				0513AAAC1C6067E000A25F54 /* SPTDataLoader.framework */,
-				0513AAAE1C6067E000A25F54 /* SPTDataLoader.framework */,
-				0513AAB01C6067E000A25F54 /* SPTDataLoader.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,41 +251,6 @@
 			fileType = wrapper.cfbundle;
 			path = SPTDataLoaderTests.xctest;
 			remoteRef = 0513AAA51C6067E000A25F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0513AAA81C6067E000A25F54 /* SPTDataLoaderDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SPTDataLoaderDemo.app;
-			remoteRef = 0513AAA71C6067E000A25F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0513AAAA1C6067E000A25F54 /* SPTDataLoader.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SPTDataLoader.framework;
-			remoteRef = 0513AAA91C6067E000A25F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0513AAAC1C6067E000A25F54 /* SPTDataLoader.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SPTDataLoader.framework;
-			remoteRef = 0513AAAB1C6067E000A25F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0513AAAE1C6067E000A25F54 /* SPTDataLoader.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SPTDataLoader.framework;
-			remoteRef = 0513AAAD1C6067E000A25F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0513AAB01C6067E000A25F54 /* SPTDataLoader.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SPTDataLoader.framework;
-			remoteRef = 0513AAAF1C6067E000A25F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

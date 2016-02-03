@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "05A637E21C46B46300061E37"
+               BlueprintIdentifier = "05A638091C46B53800061E37"
                BuildableName = "SPTDataLoader.framework"
-               BlueprintName = "SPTDataLoader-Watch"
-               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+               BlueprintName = "SPTDataLoader-iOS"
+               ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "050E06941A10C62100A10A0E"
-               BuildableName = "SPTDataLoaderTests.xctest"
-               BlueprintName = "SPTDataLoaderTests"
-               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "05A637E21C46B46300061E37"
-            BuildableName = "SPTDataLoader.framework"
-            BlueprintName = "SPTDataLoader-Watch"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "05A637E21C46B46300061E37"
+            BlueprintIdentifier = "05A638091C46B53800061E37"
             BuildableName = "SPTDataLoader.framework"
-            BlueprintName = "SPTDataLoader-Watch"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            BlueprintName = "SPTDataLoader-iOS"
+            ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -82,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "05A637E21C46B46300061E37"
+            BlueprintIdentifier = "05A638091C46B53800061E37"
             BuildableName = "SPTDataLoader.framework"
-            BlueprintName = "SPTDataLoader-Watch"
-            ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            BlueprintName = "SPTDataLoader-iOS"
+            ReferencedContainer = "container:SPTDataLoaderFramework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

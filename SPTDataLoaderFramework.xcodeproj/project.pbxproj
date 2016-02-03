@@ -1,0 +1,1004 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05A638181C46B55000061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638191C46B55000061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6381A1C46B55000061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6381B1C46B55000061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6381C1C46B55000061E37 /* SPTDataLoaderConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6381D1C46B55000061E37 /* SPTDataLoaderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6381E1C46B55000061E37 /* SPTDataLoaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6381F1C46B55000061E37 /* SPTDataLoaderRateLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638201C46B55000061E37 /* SPTDataLoaderRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638211C46B55000061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638221C46B55000061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638231C46B55000061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638241C46B55000061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638261C46B7F800061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
+		05A638281C46B7F800061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
+		05A6382A1C46B7F800061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
+		05A6382B1C46B7F800061E37 /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
+		05A6382D1C46B7F800061E37 /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
+		05A6382F1C46B7F800061E37 /* SPTDataLoaderRateLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */; };
+		05A638301C46B7F800061E37 /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
+		05A638341C46B7F800061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
+		05A638351C46B7F800061E37 /* SPTDataLoaderResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */; };
+		05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
+		05A638381C46B7F800061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
+		05A6383A1C46B7F800061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
+		05A6383B1C46B7F800061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
+		05A6383C1C46B82700061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
+		05A6383D1C46B82700061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
+		05A6383E1C46B82700061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
+		05A6383F1C46B82700061E37 /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
+		05A638401C46B82700061E37 /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
+		05A638411C46B82700061E37 /* SPTDataLoaderRateLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */; };
+		05A638421C46B82700061E37 /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
+		05A638431C46B82700061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
+		05A638441C46B82700061E37 /* SPTDataLoaderResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */; };
+		05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
+		05A638461C46B82700061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
+		05A638471C46B82700061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
+		05A638481C46B82700061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
+		05A638491C46B84B00061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
+		05A6384A1C46B84B00061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
+		05A6384B1C46B84B00061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
+		05A6384C1C46B84B00061E37 /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
+		05A6384D1C46B84B00061E37 /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
+		05A6384E1C46B84B00061E37 /* SPTDataLoaderRateLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */; };
+		05A6384F1C46B84B00061E37 /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
+		05A638501C46B84B00061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
+		05A638511C46B84B00061E37 /* SPTDataLoaderResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */; };
+		05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
+		05A638531C46B84B00061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
+		05A638541C46B84B00061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
+		05A638551C46B84B00061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
+		05A638561C46B85300061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638571C46B85300061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638581C46B85300061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638591C46B85300061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6385A1C46B85300061E37 /* SPTDataLoaderConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6385B1C46B85300061E37 /* SPTDataLoaderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6385C1C46B85300061E37 /* SPTDataLoaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6385D1C46B85300061E37 /* SPTDataLoaderRateLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6385E1C46B85300061E37 /* SPTDataLoaderRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6385F1C46B85300061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638601C46B85300061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638611C46B85300061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638621C46B85300061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638631C46B87100061E37 /* NSDictionary+HeaderSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */; };
+		05A638641C46B87100061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
+		05A638651C46B87100061E37 /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
+		05A638661C46B87100061E37 /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
+		05A638671C46B87100061E37 /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
+		05A638681C46B87100061E37 /* SPTDataLoaderRateLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */; };
+		05A638691C46B87100061E37 /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
+		05A6386A1C46B87100061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
+		05A6386B1C46B87100061E37 /* SPTDataLoaderResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */; };
+		05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */; };
+		05A6386D1C46B87100061E37 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
+		05A6386E1C46B87100061E37 /* SPTDataLoaderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */; };
+		05A6386F1C46B87100061E37 /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
+		05A638701C46B87700061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638711C46B87800061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638721C46B87800061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638731C46B87800061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638741C46B87800061E37 /* SPTDataLoaderConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638751C46B87800061E37 /* SPTDataLoaderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638761C46B87800061E37 /* SPTDataLoaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638771C46B87800061E37 /* SPTDataLoaderRateLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638781C46B87800061E37 /* SPTDataLoaderRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638791C46B87800061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6387A1C46B87800061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6387B1C46B87800061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6387C1C46B87800061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6388A1C46B8A400061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6388B1C46B8A400061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6388C1C46B8A400061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6388D1C46B8A400061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6388E1C46B8A400061E37 /* SPTDataLoaderConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A6388F1C46B8A400061E37 /* SPTDataLoaderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638901C46B8A400061E37 /* SPTDataLoaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638911C46B8A400061E37 /* SPTDataLoaderRateLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638921C46B8A400061E37 /* SPTDataLoaderRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638931C46B8A400061E37 /* SPTDataLoaderResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenImplementation.h; sourceTree = "<group>"; };
+		050C30F71C56E5830044DFBE /* project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = project.xcconfig; sourceTree = "<group>"; };
+		050E068F1A10C62100A10A0E /* SPTDataLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoader.m; sourceTree = "<group>"; };
+		050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderService.m; sourceTree = "<group>"; };
+		050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactory.m; sourceTree = "<group>"; };
+		050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequest.m; sourceTree = "<group>"; };
+		050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponse.m; sourceTree = "<group>"; };
+		050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoader+Private.h"; sourceTree = "<group>"; };
+		050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
+		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
+		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
+		051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConsumptionObserver.h; path = include/SPTDataLoader/SPTDataLoaderConsumptionObserver.h; sourceTree = "<group>"; };
+		052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderResponse+Private.h"; sourceTree = "<group>"; };
+		052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRateLimiter.m; sourceTree = "<group>"; };
+		052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolver.m; sourceTree = "<group>"; };
+		052FB1661A127BF900AFE80E /* SPTDataLoaderResolverAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderResolverAddress.h; sourceTree = "<group>"; };
+		052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolverAddress.m; sourceTree = "<group>"; };
+		05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+HeaderSize.h"; sourceTree = "<group>"; };
+		05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+HeaderSize.m"; sourceTree = "<group>"; };
+		0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderRateLimiter.h; path = include/SPTDataLoader/SPTDataLoaderRateLimiter.h; sourceTree = "<group>"; };
+		0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderResolver.h; path = include/SPTDataLoader/SPTDataLoaderResolver.h; sourceTree = "<group>"; };
+		056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTCancellationToken.h; path = include/SPTDataLoader/SPTCancellationToken.h; sourceTree = "<group>"; };
+		056A04B31A13D10900FA72AD /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = include/SPTDataLoader/SPTDataLoader.h; sourceTree = "<group>"; };
+		056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderAuthoriser.h; path = include/SPTDataLoader/SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
+		056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderFactory.h; path = include/SPTDataLoader/SPTDataLoaderFactory.h; sourceTree = "<group>"; };
+		056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderRequest.h; path = include/SPTDataLoader/SPTDataLoaderRequest.h; sourceTree = "<group>"; };
+		056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderResponse.h; path = include/SPTDataLoader/SPTDataLoaderResponse.h; sourceTree = "<group>"; };
+		056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderService.h; path = include/SPTDataLoader/SPTDataLoaderService.h; sourceTree = "<group>"; };
+		056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderExponentialTimer.h; path = include/SPTDataLoader/SPTDataLoaderExponentialTimer.h; sourceTree = "<group>"; };
+		056A04BB1A13D2BD00FA72AD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
+		056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandler.h; sourceTree = "<group>"; };
+		056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimer.m; sourceTree = "<group>"; };
+		05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = spotify_os.xcconfig; sourceTree = "<group>"; };
+		05A637E31C46B46300061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05A637F01C46B48600061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05A6380A1C46B53800061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
+		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
+		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
+		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
+		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
+		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		05A637DF1C46B46300061E37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637EC1C46B48600061E37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637F91C46B4A700061E37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A638061C46B53800061E37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		050E06811A10C62100A10A0E = {
+			isa = PBXGroup;
+			children = (
+				056A04AE1A13D0FA00FA72AD /* Public API */,
+				050E068C1A10C62100A10A0E /* SPTDataLoader */,
+				056A04BA1A13D29C00FA72AD /* Supporting Files */,
+				050E068B1A10C62100A10A0E /* Products */,
+				993EF2321A30B1E2001E48D2 /* Build System */,
+			);
+			sourceTree = "<group>";
+		};
+		050E068B1A10C62100A10A0E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				05A637E31C46B46300061E37 /* SPTDataLoader.framework */,
+				05A637F01C46B48600061E37 /* SPTDataLoader.framework */,
+				05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */,
+				05A6380A1C46B53800061E37 /* SPTDataLoader.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		050E068C1A10C62100A10A0E /* SPTDataLoader */ = {
+			isa = PBXGroup;
+			children = (
+				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
+				05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */,
+				8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */,
+				050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */,
+				050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */,
+				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
+				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
+				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
+				056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */,
+				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
+				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
+				052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */,
+				050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */,
+				056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */,
+				056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */,
+				05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */,
+				05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */,
+				052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */,
+				052FB1661A127BF900AFE80E /* SPTDataLoaderResolverAddress.h */,
+				052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */,
+				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
+				052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */,
+				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
+			);
+			path = SPTDataLoader;
+			sourceTree = "<group>";
+		};
+		056A04AE1A13D0FA00FA72AD /* Public API */ = {
+			isa = PBXGroup;
+			children = (
+				C6515CF11BA2D1A700271211 /* module.modulemap */,
+				056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */,
+				056A04B31A13D10900FA72AD /* SPTDataLoader.h */,
+				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
+				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
+				C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */,
+				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
+				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
+				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
+				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
+				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
+				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
+				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
+				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
+			);
+			name = "Public API";
+			sourceTree = "<group>";
+		};
+		056A04BA1A13D29C00FA72AD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				056A04BB1A13D2BD00FA72AD /* README.md */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		993EF2321A30B1E2001E48D2 /* Build System */ = {
+			isa = PBXGroup;
+			children = (
+				05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */,
+				050C30F71C56E5830044DFBE /* project.xcconfig */,
+			);
+			name = "Build System";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		05A637E01C46B46300061E37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A638181C46B55000061E37 /* SPTCancellationToken.h in Headers */,
+				05A638191C46B55000061E37 /* SPTDataLoader.h in Headers */,
+				05A6381A1C46B55000061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				05A6381B1C46B55000061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
+				05A6381C1C46B55000061E37 /* SPTDataLoaderConvenience.h in Headers */,
+				05A6381D1C46B55000061E37 /* SPTDataLoaderDelegate.h in Headers */,
+				05A6381E1C46B55000061E37 /* SPTDataLoaderFactory.h in Headers */,
+				05A6381F1C46B55000061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				05A638201C46B55000061E37 /* SPTDataLoaderRequest.h in Headers */,
+				05A638211C46B55000061E37 /* SPTDataLoaderResolver.h in Headers */,
+				05A638221C46B55000061E37 /* SPTDataLoaderResponse.h in Headers */,
+				05A638231C46B55000061E37 /* SPTDataLoaderService.h in Headers */,
+				05A638241C46B55000061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637ED1C46B48600061E37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A638561C46B85300061E37 /* SPTCancellationToken.h in Headers */,
+				05A638571C46B85300061E37 /* SPTDataLoader.h in Headers */,
+				05A638581C46B85300061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				05A638591C46B85300061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
+				05A6385A1C46B85300061E37 /* SPTDataLoaderConvenience.h in Headers */,
+				05A6385B1C46B85300061E37 /* SPTDataLoaderDelegate.h in Headers */,
+				05A6385C1C46B85300061E37 /* SPTDataLoaderFactory.h in Headers */,
+				05A6385D1C46B85300061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				05A6385E1C46B85300061E37 /* SPTDataLoaderRequest.h in Headers */,
+				05A6385F1C46B85300061E37 /* SPTDataLoaderResolver.h in Headers */,
+				05A638601C46B85300061E37 /* SPTDataLoaderResponse.h in Headers */,
+				05A638611C46B85300061E37 /* SPTDataLoaderService.h in Headers */,
+				05A638621C46B85300061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637FA1C46B4A700061E37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A638701C46B87700061E37 /* SPTCancellationToken.h in Headers */,
+				05A638711C46B87800061E37 /* SPTDataLoader.h in Headers */,
+				05A638721C46B87800061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				05A638731C46B87800061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
+				05A638741C46B87800061E37 /* SPTDataLoaderConvenience.h in Headers */,
+				05A638751C46B87800061E37 /* SPTDataLoaderDelegate.h in Headers */,
+				05A638761C46B87800061E37 /* SPTDataLoaderFactory.h in Headers */,
+				05A638771C46B87800061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				05A638781C46B87800061E37 /* SPTDataLoaderRequest.h in Headers */,
+				05A638791C46B87800061E37 /* SPTDataLoaderResolver.h in Headers */,
+				05A6387A1C46B87800061E37 /* SPTDataLoaderResponse.h in Headers */,
+				05A6387B1C46B87800061E37 /* SPTDataLoaderService.h in Headers */,
+				05A6387C1C46B87800061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A638071C46B53800061E37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A6388A1C46B8A400061E37 /* SPTCancellationToken.h in Headers */,
+				05A6388B1C46B8A400061E37 /* SPTDataLoader.h in Headers */,
+				05A6388C1C46B8A400061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				05A6388D1C46B8A400061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
+				05A6388E1C46B8A400061E37 /* SPTDataLoaderConvenience.h in Headers */,
+				05A6388F1C46B8A400061E37 /* SPTDataLoaderDelegate.h in Headers */,
+				05A638901C46B8A400061E37 /* SPTDataLoaderFactory.h in Headers */,
+				05A638911C46B8A400061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				05A638921C46B8A400061E37 /* SPTDataLoaderRequest.h in Headers */,
+				05A638931C46B8A400061E37 /* SPTDataLoaderResolver.h in Headers */,
+				05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */,
+				05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */,
+				05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		05A637E21C46B46300061E37 /* SPTDataLoader-Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05A637E81C46B46300061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-Watch" */;
+			buildPhases = (
+				05A637DE1C46B46300061E37 /* Sources */,
+				05A637DF1C46B46300061E37 /* Frameworks */,
+				05A637E01C46B46300061E37 /* Headers */,
+				05A637E11C46B46300061E37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SPTDataLoader-Watch";
+			productName = "SPTDataLoader-Watch";
+			productReference = 05A637E31C46B46300061E37 /* SPTDataLoader.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		05A637EF1C46B48600061E37 /* SPTDataLoader-TV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05A637F51C46B48600061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-TV" */;
+			buildPhases = (
+				05A637EB1C46B48600061E37 /* Sources */,
+				05A637EC1C46B48600061E37 /* Frameworks */,
+				05A637ED1C46B48600061E37 /* Headers */,
+				05A637EE1C46B48600061E37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SPTDataLoader-TV";
+			productName = "SPTDataLoader-TV";
+			productReference = 05A637F01C46B48600061E37 /* SPTDataLoader.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		05A637FC1C46B4A700061E37 /* SPTDataLoader-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05A638021C46B4A700061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-OSX" */;
+			buildPhases = (
+				05A637F81C46B4A700061E37 /* Sources */,
+				05A637F91C46B4A700061E37 /* Frameworks */,
+				05A637FA1C46B4A700061E37 /* Headers */,
+				05A637FB1C46B4A700061E37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SPTDataLoader-OSX";
+			productName = "SPTDataLoader-OSX";
+			productReference = 05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		05A638091C46B53800061E37 /* SPTDataLoader-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05A638131C46B53800061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-iOS" */;
+			buildPhases = (
+				05A638051C46B53800061E37 /* Sources */,
+				05A638061C46B53800061E37 /* Frameworks */,
+				05A638071C46B53800061E37 /* Headers */,
+				05A638081C46B53800061E37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SPTDataLoader-iOS";
+			productName = "SPTDataLoader-iOS";
+			productReference = 05A6380A1C46B53800061E37 /* SPTDataLoader.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		050E06821A10C62100A10A0E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Spotify;
+				TargetAttributes = {
+					05A637E21C46B46300061E37 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					05A637EF1C46B48600061E37 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					05A637FC1C46B4A700061E37 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					05A638091C46B53800061E37 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoaderFramework" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 050E06811A10C62100A10A0E;
+			productRefGroup = 050E068B1A10C62100A10A0E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				05A637E21C46B46300061E37 /* SPTDataLoader-Watch */,
+				05A637EF1C46B48600061E37 /* SPTDataLoader-TV */,
+				05A637FC1C46B4A700061E37 /* SPTDataLoader-OSX */,
+				05A638091C46B53800061E37 /* SPTDataLoader-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		05A637E11C46B46300061E37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637EE1C46B48600061E37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637FB1C46B4A700061E37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A638081C46B53800061E37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		05A637DE1C46B46300061E37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A6383C1C46B82700061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				05A6383D1C46B82700061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */,
+				05A6383E1C46B82700061E37 /* SPTCancellationTokenImplementation.m in Sources */,
+				05A6383F1C46B82700061E37 /* SPTDataLoader.m in Sources */,
+				05A638401C46B82700061E37 /* SPTDataLoaderFactory.m in Sources */,
+				05A638411C46B82700061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
+				05A638421C46B82700061E37 /* SPTDataLoaderRequest.m in Sources */,
+				05A638431C46B82700061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
+				05A638441C46B82700061E37 /* SPTDataLoaderResolver.m in Sources */,
+				05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				05A638461C46B82700061E37 /* SPTDataLoaderResponse.m in Sources */,
+				05A638471C46B82700061E37 /* SPTDataLoaderService.m in Sources */,
+				05A638481C46B82700061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637EB1C46B48600061E37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A638491C46B84B00061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				05A6384A1C46B84B00061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */,
+				05A6384B1C46B84B00061E37 /* SPTCancellationTokenImplementation.m in Sources */,
+				05A6384C1C46B84B00061E37 /* SPTDataLoader.m in Sources */,
+				05A6384D1C46B84B00061E37 /* SPTDataLoaderFactory.m in Sources */,
+				05A6384E1C46B84B00061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
+				05A6384F1C46B84B00061E37 /* SPTDataLoaderRequest.m in Sources */,
+				05A638501C46B84B00061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
+				05A638511C46B84B00061E37 /* SPTDataLoaderResolver.m in Sources */,
+				05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				05A638531C46B84B00061E37 /* SPTDataLoaderResponse.m in Sources */,
+				05A638541C46B84B00061E37 /* SPTDataLoaderService.m in Sources */,
+				05A638551C46B84B00061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A637F81C46B4A700061E37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A638631C46B87100061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				05A638641C46B87100061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */,
+				05A638651C46B87100061E37 /* SPTCancellationTokenImplementation.m in Sources */,
+				05A638661C46B87100061E37 /* SPTDataLoader.m in Sources */,
+				05A638671C46B87100061E37 /* SPTDataLoaderFactory.m in Sources */,
+				05A638681C46B87100061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
+				05A638691C46B87100061E37 /* SPTDataLoaderRequest.m in Sources */,
+				05A6386A1C46B87100061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
+				05A6386B1C46B87100061E37 /* SPTDataLoaderResolver.m in Sources */,
+				05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				05A6386D1C46B87100061E37 /* SPTDataLoaderResponse.m in Sources */,
+				05A6386E1C46B87100061E37 /* SPTDataLoaderService.m in Sources */,
+				05A6386F1C46B87100061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05A638051C46B53800061E37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A638261C46B7F800061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				05A638281C46B7F800061E37 /* SPTCancellationTokenFactoryImplementation.m in Sources */,
+				05A6382A1C46B7F800061E37 /* SPTCancellationTokenImplementation.m in Sources */,
+				05A6382B1C46B7F800061E37 /* SPTDataLoader.m in Sources */,
+				05A6382D1C46B7F800061E37 /* SPTDataLoaderFactory.m in Sources */,
+				05A6382F1C46B7F800061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
+				05A638301C46B7F800061E37 /* SPTDataLoaderRequest.m in Sources */,
+				05A638341C46B7F800061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
+				05A638351C46B7F800061E37 /* SPTDataLoaderResolver.m in Sources */,
+				05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				05A638381C46B7F800061E37 /* SPTDataLoaderResponse.m in Sources */,
+				05A6383A1C46B7F800061E37 /* SPTDataLoaderService.m in Sources */,
+				05A6383B1C46B7F800061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		050E069C1A10C62100A10A0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 050C30F71C56E5830044DFBE /* project.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = "$(inherited)";
+				CLANG_WARN_CONSTANT_CONVERSION = "$(inherited)";
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = "$(inherited)";
+				CLANG_WARN_ENUM_CONVERSION = "$(inherited)";
+				CLANG_WARN_INT_CONVERSION = "$(inherited)";
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = "$(inherited)";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = "$(inherited)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = "$(inherited)";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = "$(inherited)";
+				GCC_WARN_UNUSED_VARIABLE = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
+				SUPPORTED_PLATFORMS = "$(inherited)";
+				VALID_ARCHS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		050E069D1A10C62100A10A0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 050C30F71C56E5830044DFBE /* project.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = "$(inherited)";
+				CLANG_WARN_CONSTANT_CONVERSION = "$(inherited)";
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = "$(inherited)";
+				CLANG_WARN_ENUM_CONVERSION = "$(inherited)";
+				CLANG_WARN_INT_CONVERSION = "$(inherited)";
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = "$(inherited)";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = "$(inherited)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = "$(inherited)";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = "$(inherited)";
+				GCC_WARN_UNUSED_VARIABLE = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				SUPPORTED_PLATFORMS = "$(inherited)";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "$(inherited)";
+			};
+			name = Release;
+		};
+		05A637E91C46B46300061E37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SPT_BUILDING_FRAMEWORK=1",
+					"DEBUG=1",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-Watch";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		05A637EA1C46B46300061E37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SPT_BUILDING_FRAMEWORK=1",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-Watch";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		05A637F61C46B48600061E37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SPT_BUILDING_FRAMEWORK=1",
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-TV";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		05A637F71C46B48600061E37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SPT_BUILDING_FRAMEWORK=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-TV";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		05A638031C46B4A700061E37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SPT_BUILDING_FRAMEWORK=1",
+					"DEBUG=1",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-OSX";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		05A638041C46B4A700061E37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SPT_BUILDING_FRAMEWORK=1",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-OSX";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		05A638141C46B53800061E37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SPT_BUILDING_FRAMEWORK=1",
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-iOS";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		05A638151C46B53800061E37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_MODULES_AUTOLINK = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SPT_BUILDING_FRAMEWORK=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-iOS";
+				PRODUCT_NAME = SPTDataLoader;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoaderFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				050E069C1A10C62100A10A0E /* Debug */,
+				050E069D1A10C62100A10A0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05A637E81C46B46300061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A637E91C46B46300061E37 /* Debug */,
+				05A637EA1C46B46300061E37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05A637F51C46B48600061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-TV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A637F61C46B48600061E37 /* Debug */,
+				05A637F71C46B48600061E37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05A638021C46B4A700061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A638031C46B4A700061E37 /* Debug */,
+				05A638041C46B4A700061E37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05A638131C46B53800061E37 /* Build configuration list for PBXNativeTarget "SPTDataLoader-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A638141C46B53800061E37 /* Debug */,
+				05A638151C46B53800061E37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 050E06821A10C62100A10A0E /* Project object */;
+}
