@@ -171,4 +171,24 @@
                   @"The debugDescription should contain the URL of the request.");
 }
 
+- (void)testAcceptLanguageWithMultipleLanguagesContainingEnglish
+{
+    NSBundleMock *bundleMock = [NSBundleMock new];
+    bundleMock.mockPreferredLocalizations = @[ @"fr-CA", @"en", @"pt-PT" ];
+
+    Method originalMethod = class_getClassMethod(NSBundle.class, @selector(mainBundle));
+    IMP originalMethodImplementation = method_getImplementation(originalMethod);
+
+    IMP fakeMethodImplementation = imp_implementationWithBlock(^ {
+        return bundleMock;
+    });
+    method_setImplementation(originalMethod, fakeMethodImplementation);
+
+    NSString *languageValues = [SPTDataLoaderRequest languageHeaderValue];
+
+    method_setImplementation(originalMethod, originalMethodImplementation);
+
+    XCTAssertEqualObjects(@"fr-CA, en;q=0.50", languageValues);
+}
+
 @end
