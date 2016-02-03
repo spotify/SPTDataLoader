@@ -20,12 +20,18 @@
  */
 @import XCTest;
 
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 @import ObjectiveC;
 
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSBundleMock.h"
+
+@interface SPTDataLoaderRequest ()
+
++ (NSString *)generateLanguageHeaderValue;
+
+@end
 
 @interface SPTDataLoaderRequestTest : XCTestCase
 
@@ -154,7 +160,7 @@
     });
     method_setImplementation(originalMethod, fakeMethodImplementation);
 
-    NSString *languageValues = [SPTDataLoaderRequest languageHeaderValue];
+    NSString *languageValues = [SPTDataLoaderRequest generateLanguageHeaderValue];
 
     method_setImplementation(originalMethod, originalMethodImplementation);
 
@@ -184,11 +190,29 @@
     });
     method_setImplementation(originalMethod, fakeMethodImplementation);
 
-    NSString *languageValues = [SPTDataLoaderRequest languageHeaderValue];
+    NSString *languageValues = [SPTDataLoaderRequest generateLanguageHeaderValue];
 
     method_setImplementation(originalMethod, originalMethodImplementation);
 
     XCTAssertEqualObjects(@"fr-CA, en;q=0.50", languageValues);
+}
+
+- (void)testDeleteMethod
+{
+    self.request.method = SPTDataLoaderRequestMethodDelete;
+    XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"DELETE");
+}
+
+- (void)testPutMethod
+{
+    self.request.method = SPTDataLoaderRequestMethodPut;
+    XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"PUT");
+}
+
+- (void)testPostMethod
+{
+    self.request.method = SPTDataLoaderRequestMethodPost;
+    XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"POST");
 }
 
 @end
