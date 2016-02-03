@@ -61,4 +61,13 @@
     XCTAssertEqualWithAccuracy(currentTimerInterval, 0.0, DBL_EPSILON);
 }
 
+- (void)testMaxTimeReached
+{
+    NSTimeInterval currentTimerInterval = 0.0;
+    for (int i = 0; i < 100; ++i) {
+        currentTimerInterval = [self.timer timeIntervalAndCalculateNext];
+    }
+    XCTAssertLessThanOrEqual(currentTimerInterval, 10.0);
+}
+
 @end
