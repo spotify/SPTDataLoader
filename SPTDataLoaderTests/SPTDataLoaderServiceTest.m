@@ -433,4 +433,33 @@
     XCTAssertEqual(consumptionObserver.lastBytesDownloaded, 19, @"The last bytes downloaded is incorrect");
 }
 
+- (void)testRedirectionToDifferentHostWithHeaders
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+                                                        sourceIdentifier:@"-"];
+    [self.service requestResponseHandler:nil performRequest:request];
+    NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
+
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
+                                                                  statusCode:SPTDataLoaderResponseHTTPStatusCodeMovedPermanently
+                                                                 HTTPVersion:@"1.1"
+                                                                headerFields:@{ }];
+
+    __block BOOL calledCompletionHandler = NO;
+    NSURL *URL = [NSURL URLWithString:@"https://newhost"];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:URL];
+    urlRequest.allHTTPHeaderFields = @{ @"Test-Header" : @"Test-Value" };
+    [self.service URLSession:self.session
+                        task:task
+  willPerformHTTPRedirection:httpResponse
+                  newRequest:urlRequest
+           completionHandler:^(NSURLRequest *newURLRequest) {
+               calledCompletionHandler = YES;
+               XCTAssertEqualObjects(URL.host, newURLRequest.URL.host);
+               XCTAssertEqualObjects(urlRequest.allHTTPHeaderFields, newURLRequest.allHTTPHeaderFields);
+           }];
+
+    XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+}
+
 @end
