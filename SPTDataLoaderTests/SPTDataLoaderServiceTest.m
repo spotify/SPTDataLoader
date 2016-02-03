@@ -36,6 +36,7 @@
 #import "SPTDataLoaderConsumptionObserverMock.h"
 #import "NSURLSessionDataTaskMock.h"
 #import "SPTDataLoaderRequest+Private.h"
+#import "NSURLSessionTaskMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
@@ -398,6 +399,67 @@
          didReceiveChallenge:challenge
            completionHandler:NSURLSessionCompletionHandler];
     XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengePerformDefaultHandling);
+}
+
+- (void)testWillCacheResponseWithNilCompletionHandler
+{
+    // Sanity check to ensure we don't crash on a nil completion block
+    void(^willCacheResponseCompletionBlock)(NSCachedURLResponse *) = nil;
+    [self.service URLSession:self.session
+                    dataTask:[NSURLSessionDataTask new]
+           willCacheResponse:[NSCachedURLResponse new]
+           completionHandler:willCacheResponseCompletionBlock];
+}
+
+- (void)testConsumptionObserverTakesIntoAccountResponseHeaders
+{
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Test consumption observer response headers"];
+    SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
+    consumptionObserver.endedRequestCallback = ^ {
+        [expectation fulfill];
+    };
+    [self.service addConsumptionObserver:consumptionObserver
+                                      on:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
+    NSDictionary *headerFields = @{ @"Content-Size" : @"1000" };
+    NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com"];
+    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:URL
+                                                              statusCode:400
+                                                             HTTPVersion:@"1.1"
+                                                            headerFields:headerFields];
+    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
+    task.mockResponse = response;
+    [self.service URLSession:self.session task:task didCompleteWithError:nil];
+    [self waitForExpectationsWithTimeout:1.0 handler:nil];
+    XCTAssertEqual(consumptionObserver.lastBytesDownloaded, 19, @"The last bytes downloaded is incorrect");
+}
+
+- (void)testRedirectionToDifferentHostWithHeaders
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+                                                        sourceIdentifier:@"-"];
+    [self.service requestResponseHandler:nil performRequest:request];
+    NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
+
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
+                                                                  statusCode:SPTDataLoaderResponseHTTPStatusCodeMovedPermanently
+                                                                 HTTPVersion:@"1.1"
+                                                                headerFields:@{ }];
+
+    __block BOOL calledCompletionHandler = NO;
+    NSURL *URL = [NSURL URLWithString:@"https://newhost"];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:URL];
+    urlRequest.allHTTPHeaderFields = @{ @"Test-Header" : @"Test-Value" };
+    [self.service URLSession:self.session
+                        task:task
+  willPerformHTTPRedirection:httpResponse
+                  newRequest:urlRequest
+           completionHandler:^(NSURLRequest *newURLRequest) {
+               calledCompletionHandler = YES;
+               XCTAssertEqualObjects(URL.host, newURLRequest.URL.host);
+               XCTAssertEqualObjects(urlRequest.allHTTPHeaderFields, newURLRequest.allHTTPHeaderFields);
+           }];
+
+    XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
 }
 
 @end

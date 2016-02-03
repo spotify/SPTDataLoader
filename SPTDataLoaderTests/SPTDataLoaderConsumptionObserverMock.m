@@ -27,6 +27,10 @@
                    bytesUploaded:(int)bytesUploaded
 {
     self.numberOfCallsToEndedRequest++;
+    self.lastBytesDownloaded = bytesDownloaded;
+    if (self.endedRequestCallback) {
+        self.endedRequestCallback();
+    }
 }
 
 @end

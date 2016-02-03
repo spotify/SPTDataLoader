@@ -33,8 +33,6 @@
 		056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */; };
 		056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */; };
 		056E523F1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */; };
-		057DAC731C57368E001D8FCE /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
-		057DAC751C5736A7001D8FCE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057DAC741C5736A7001D8FCE /* UIKit.framework */; };
 		059940431A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */; };
 		059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */; };
 		0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
@@ -43,7 +41,6 @@
 		059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */; };
 		059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */; };
 		059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */; };
-		05A638121C46B53800061E37 /* SPTDataLoader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05A6380A1C46B53800061E37 /* SPTDataLoader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05A638181C46B55000061E37 /* SPTCancellationToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638191C46B55000061E37 /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B31A13D10900FA72AD /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A6381A1C46B55000061E37 /* SPTDataLoaderAuthoriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -150,35 +147,11 @@
 		05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
 		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
-		3752416C1C46115C002649F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752416B1C46115C002649F3 /* main.m */; };
-		3752416F1C46115C002649F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752416E1C46115C002649F3 /* AppDelegate.m */; };
-		375241721C46115C002649F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 375241711C46115C002649F3 /* ViewController.m */; };
-		375241771C46115C002649F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 375241761C46115C002649F3 /* Images.xcassets */; };
-		375241861C4612B5002649F3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 375241821C4612B5002649F3 /* LaunchScreen.xib */; };
-		375241871C4612B5002649F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375241841C4612B5002649F3 /* Main.storyboard */; };
-		375241901C4612CA002649F3 /* NSString+OAuthBlob.m in Sources */ = {isa = PBXBuildFile; fileRef = 375241891C4612CA002649F3 /* NSString+OAuthBlob.m */; };
-		375241911C4612CA002649F3 /* PlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752418B1C4612CA002649F3 /* PlaylistsViewController.m */; };
-		375241921C4612CA002649F3 /* PlaylistsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752418D1C4612CA002649F3 /* PlaylistsViewModel.m */; };
-		375241931C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752418F1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		050E06971A10C62100A10A0E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 050E06891A10C62100A10A0E;
-			remoteInfo = SPTDataLoader;
-		};
-		05A6380F1C46B53800061E37 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 05A638091C46B53800061E37;
-			remoteInfo = "SPTDataLoader-iOS";
-		};
-		375241941C461325002649F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
 			proxyType = 1;
@@ -195,17 +168,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		05A637CE1C46B07F00061E37 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				05A638121C46B53800061E37 /* SPTDataLoader.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -264,7 +226,6 @@
 		056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderRequest+Private.h"; sourceTree = "<group>"; };
 		056E523C1A11348800E8716C /* SPTDataLoaderRequestResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandler.h; sourceTree = "<group>"; };
 		056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimer.m; sourceTree = "<group>"; };
-		057DAC741C5736A7001D8FCE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = spotify_os.xcconfig; sourceTree = "<group>"; };
 		059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerMock.h; sourceTree = "<group>"; };
 		059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerMock.m; sourceTree = "<group>"; };
@@ -290,25 +251,6 @@
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
-		375241681C46115C002649F3 /* SPTDataLoaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPTDataLoaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3752416B1C46115C002649F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3752416D1C46115C002649F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		3752416E1C46115C002649F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		375241701C46115C002649F3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		375241711C46115C002649F3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		375241761C46115C002649F3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		3752417B1C46115C002649F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		375241831C4612B5002649F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		375241851C4612B5002649F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		375241881C4612CA002649F3 /* NSString+OAuthBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OAuthBlob.h"; sourceTree = "<group>"; };
-		375241891C4612CA002649F3 /* NSString+OAuthBlob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OAuthBlob.m"; sourceTree = "<group>"; };
-		3752418A1C4612CA002649F3 /* PlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistsViewController.h; sourceTree = "<group>"; };
-		3752418B1C4612CA002649F3 /* PlaylistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistsViewController.m; sourceTree = "<group>"; };
-		3752418C1C4612CA002649F3 /* PlaylistsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistsViewModel.h; sourceTree = "<group>"; };
-		3752418D1C4612CA002649F3 /* PlaylistsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistsViewModel.m; sourceTree = "<group>"; };
-		3752418E1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserOAuth.h; sourceTree = "<group>"; };
-		3752418F1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserOAuth.m; sourceTree = "<group>"; };
-		375241971C461581002649F3 /* ClientKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientKeys.h; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_shared.xcconfig; path = ../../other/spotify_shared.xcconfig; sourceTree = "<group>"; };
 		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
@@ -362,15 +304,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		375241651C46115C002649F3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				057DAC751C5736A7001D8FCE /* UIKit.framework in Frameworks */,
-				057DAC731C57368E001D8FCE /* libSPTDataLoader.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -380,7 +313,6 @@
 				056A04AE1A13D0FA00FA72AD /* Public API */,
 				050E068C1A10C62100A10A0E /* SPTDataLoader */,
 				050E06991A10C62100A10A0E /* SPTDataLoaderTests */,
-				375241691C46115C002649F3 /* SPTDataLoaderDemo */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
 				05A637E41C46B46300061E37 /* SPTDataLoader-Watch */,
 				05A637F11C46B48600061E37 /* SPTDataLoader-TV */,
@@ -396,7 +328,6 @@
 			children = (
 				050E068A1A10C62100A10A0E /* libSPTDataLoader.a */,
 				050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */,
-				375241681C46115C002649F3 /* SPTDataLoaderDemo.app */,
 				05A637E31C46B46300061E37 /* SPTDataLoader.framework */,
 				05A637F01C46B48600061E37 /* SPTDataLoader.framework */,
 				05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */,
@@ -553,49 +484,6 @@
 				05A6380E1C46B53800061E37 /* Info.plist */,
 			);
 			path = "SPTDataLoader-iOS";
-			sourceTree = "<group>";
-		};
-		375241691C46115C002649F3 /* SPTDataLoaderDemo */ = {
-			isa = PBXGroup;
-			children = (
-				3752416D1C46115C002649F3 /* AppDelegate.h */,
-				3752416E1C46115C002649F3 /* AppDelegate.m */,
-				375241971C461581002649F3 /* ClientKeys.h */,
-				375241881C4612CA002649F3 /* NSString+OAuthBlob.h */,
-				375241891C4612CA002649F3 /* NSString+OAuthBlob.m */,
-				3752418A1C4612CA002649F3 /* PlaylistsViewController.h */,
-				3752418B1C4612CA002649F3 /* PlaylistsViewController.m */,
-				3752418C1C4612CA002649F3 /* PlaylistsViewModel.h */,
-				3752418D1C4612CA002649F3 /* PlaylistsViewModel.m */,
-				3752418E1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.h */,
-				3752418F1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m */,
-				375241701C46115C002649F3 /* ViewController.h */,
-				375241711C46115C002649F3 /* ViewController.m */,
-				375241761C46115C002649F3 /* Images.xcassets */,
-				375241811C4612B5002649F3 /* Base.lproj */,
-				3752416A1C46115C002649F3 /* Supporting Files */,
-			);
-			name = SPTDataLoaderDemo;
-			path = demo;
-			sourceTree = "<group>";
-		};
-		3752416A1C46115C002649F3 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				057DAC741C5736A7001D8FCE /* UIKit.framework */,
-				3752417B1C46115C002649F3 /* Info.plist */,
-				3752416B1C46115C002649F3 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		375241811C4612B5002649F3 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				375241821C4612B5002649F3 /* LaunchScreen.xib */,
-				375241841C4612B5002649F3 /* Main.storyboard */,
-			);
-			path = Base.lproj;
 			sourceTree = "<group>";
 		};
 		993EF2321A30B1E2001E48D2 /* Build System */ = {
@@ -799,26 +687,6 @@
 			productReference = 05A6380A1C46B53800061E37 /* SPTDataLoader.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		375241671C46115C002649F3 /* SPTDataLoaderDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3752417E1C46115C002649F3 /* Build configuration list for PBXNativeTarget "SPTDataLoaderDemo" */;
-			buildPhases = (
-				375241641C46115C002649F3 /* Sources */,
-				375241651C46115C002649F3 /* Frameworks */,
-				375241661C46115C002649F3 /* Resources */,
-				05A637CE1C46B07F00061E37 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				375241951C461325002649F3 /* PBXTargetDependency */,
-				05A638101C46B53800061E37 /* PBXTargetDependency */,
-			);
-			name = SPTDataLoaderDemo;
-			productName = SPTDataLoaderDemo;
-			productReference = 375241681C46115C002649F3 /* SPTDataLoaderDemo.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -846,9 +714,6 @@
 					05A638091C46B53800061E37 = {
 						CreatedOnToolsVersion = 7.2;
 					};
-					375241671C46115C002649F3 = {
-						CreatedOnToolsVersion = 7.2;
-					};
 				};
 			};
 			buildConfigurationList = 050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoader" */;
@@ -866,7 +731,6 @@
 			targets = (
 				050E06891A10C62100A10A0E /* SPTDataLoader */,
 				050E06941A10C62100A10A0E /* SPTDataLoaderTests */,
-				375241671C46115C002649F3 /* SPTDataLoaderDemo */,
 				05A637E21C46B46300061E37 /* SPTDataLoader-Watch */,
 				05A637EF1C46B48600061E37 /* SPTDataLoader-TV */,
 				05A637FC1C46B4A700061E37 /* SPTDataLoader-OSX */,
@@ -908,16 +772,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		375241661C46115C002649F3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				375241871C4612B5002649F3 /* Main.storyboard in Resources */,
-				375241861C4612B5002649F3 /* LaunchScreen.xib in Resources */,
-				375241771C46115C002649F3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1054,20 +908,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		375241641C46115C002649F3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				375241921C4612CA002649F3 /* PlaylistsViewModel.m in Sources */,
-				375241721C46115C002649F3 /* ViewController.m in Sources */,
-				3752416F1C46115C002649F3 /* AppDelegate.m in Sources */,
-				375241911C4612CA002649F3 /* PlaylistsViewController.m in Sources */,
-				375241901C4612CA002649F3 /* NSString+OAuthBlob.m in Sources */,
-				3752416C1C46115C002649F3 /* main.m in Sources */,
-				375241931C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1076,36 +916,7 @@
 			target = 050E06891A10C62100A10A0E /* SPTDataLoader */;
 			targetProxy = 050E06971A10C62100A10A0E /* PBXContainerItemProxy */;
 		};
-		05A638101C46B53800061E37 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 05A638091C46B53800061E37 /* SPTDataLoader-iOS */;
-			targetProxy = 05A6380F1C46B53800061E37 /* PBXContainerItemProxy */;
-		};
-		375241951C461325002649F3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 050E06891A10C62100A10A0E /* SPTDataLoader */;
-			targetProxy = 375241941C461325002649F3 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		375241821C4612B5002649F3 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				375241831C4612B5002649F3 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		375241841C4612B5002649F3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				375241851C4612B5002649F3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		050E069C1A10C62100A10A0E /* Debug */ = {
@@ -1517,47 +1328,6 @@
 			};
 			name = Release;
 		};
-		3752417C1C46115C002649F3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.spotify.SPTDataLoaderDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3752417D1C46115C002649F3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.spotify.SPTDataLoaderDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1620,15 +1390,6 @@
 			buildConfigurations = (
 				05A638141C46B53800061E37 /* Debug */,
 				05A638151C46B53800061E37 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3752417E1C46115C002649F3 /* Build configuration list for PBXNativeTarget "SPTDataLoaderDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3752417C1C46115C002649F3 /* Debug */,
-				3752417D1C46115C002649F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

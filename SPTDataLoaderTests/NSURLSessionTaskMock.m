@@ -22,14 +22,30 @@
 
 @implementation NSURLSessionTaskMock
 
+#pragma mark NSURLSessionTaskMock
+
 - (void)resume
 {
     self.numberOfCallsToResume++;
+    if (self.resumeCallback) {
+        self.resumeCallback();
+    }
 }
 
 - (void)cancel
 {
     self.numberOfCallsToCancel++;
 }
+
+- (NSURLResponse *)response
+{
+    return self.mockResponse;
+}
+
+#pragma mark NSURLSessionTask
+
+@synthesize countOfBytesSent;
+@synthesize countOfBytesReceived;
+@synthesize currentRequest;
 
 @end
