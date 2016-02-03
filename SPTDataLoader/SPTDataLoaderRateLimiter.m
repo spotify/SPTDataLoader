@@ -126,7 +126,8 @@
 - (double)requestsPerSecondForServiceKey:(NSString *)serviceKey
 {
     @synchronized(self.serviceEndpointRequestsPerSecond) {
-        return [self.serviceEndpointRequestsPerSecond[serviceKey] doubleValue] ?: self.requestsPerSecond;
+        NSNumber *value = self.serviceEndpointRequestsPerSecond[serviceKey];
+        return value ? value.doubleValue : self.requestsPerSecond;
     }
 }
 
