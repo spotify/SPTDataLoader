@@ -149,13 +149,9 @@
 		056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimer.m; sourceTree = "<group>"; };
 		05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = spotify_os.xcconfig; sourceTree = "<group>"; };
 		05A637E31C46B46300061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		05A637E71C46B46300061E37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05A637F01C46B48600061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		05A637F41C46B48600061E37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		05A638011C46B4A700061E37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05A6380A1C46B53800061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		05A6380E1C46B53800061E37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
@@ -203,10 +199,6 @@
 				056A04AE1A13D0FA00FA72AD /* Public API */,
 				050E068C1A10C62100A10A0E /* SPTDataLoader */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
-				05A637E41C46B46300061E37 /* SPTDataLoader-Watch */,
-				05A637F11C46B48600061E37 /* SPTDataLoader-TV */,
-				05A637FE1C46B4A700061E37 /* SPTDataLoader-OSX */,
-				05A6380B1C46B53800061E37 /* SPTDataLoader-iOS */,
 				050E068B1A10C62100A10A0E /* Products */,
 				993EF2321A30B1E2001E48D2 /* Build System */,
 			);
@@ -282,38 +274,6 @@
 				050C30F71C56E5830044DFBE /* project.xcconfig */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		05A637E41C46B46300061E37 /* SPTDataLoader-Watch */ = {
-			isa = PBXGroup;
-			children = (
-				05A637E71C46B46300061E37 /* Info.plist */,
-			);
-			path = "SPTDataLoader-Watch";
-			sourceTree = "<group>";
-		};
-		05A637F11C46B48600061E37 /* SPTDataLoader-TV */ = {
-			isa = PBXGroup;
-			children = (
-				05A637F41C46B48600061E37 /* Info.plist */,
-			);
-			path = "SPTDataLoader-TV";
-			sourceTree = "<group>";
-		};
-		05A637FE1C46B4A700061E37 /* SPTDataLoader-OSX */ = {
-			isa = PBXGroup;
-			children = (
-				05A638011C46B4A700061E37 /* Info.plist */,
-			);
-			path = "SPTDataLoader-OSX";
-			sourceTree = "<group>";
-		};
-		05A6380B1C46B53800061E37 /* SPTDataLoader-iOS */ = {
-			isa = PBXGroup;
-			children = (
-				05A6380E1C46B53800061E37 /* Info.plist */,
-			);
-			path = "SPTDataLoader-iOS";
 			sourceTree = "<group>";
 		};
 		993EF2321A30B1E2001E48D2 /* Build System */ = {
@@ -749,7 +709,7 @@
 					"SPT_BUILDING_FRAMEWORK=1",
 					"DEBUG=1",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-Watch/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-Watch";
@@ -781,7 +741,7 @@
 					"$(inherited)",
 					"SPT_BUILDING_FRAMEWORK=1",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-Watch/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-Watch";
@@ -813,7 +773,7 @@
 					"$(inherited)",
 					"DEBUG=1",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-TV/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-TV";
@@ -845,7 +805,7 @@
 					"SPT_BUILDING_FRAMEWORK=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-TV/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-TV";
@@ -880,7 +840,7 @@
 					"SPT_BUILDING_FRAMEWORK=1",
 					"DEBUG=1",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-OSX/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-OSX";
@@ -913,7 +873,7 @@
 					"$(inherited)",
 					"SPT_BUILDING_FRAMEWORK=1",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-OSX/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-OSX";
@@ -944,7 +904,7 @@
 					"$(inherited)",
 					"DEBUG=1",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-iOS/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -977,7 +937,7 @@
 					"SPT_BUILDING_FRAMEWORK=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "SPTDataLoader-iOS/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
