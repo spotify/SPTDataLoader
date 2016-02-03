@@ -700,7 +700,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -708,8 +708,8 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-Watch";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = watchos;
@@ -733,15 +733,15 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"SPT_BUILDING_FRAMEWORK=1",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-Watch";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = watchos;
@@ -764,7 +764,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"SPT_BUILDING_FRAMEWORK=1",
@@ -772,8 +772,8 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-TV";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = appletvos;
@@ -797,15 +797,15 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"SPT_BUILDING_FRAMEWORK=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-TV";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = appletvos;
@@ -830,7 +830,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -839,8 +839,8 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-OSX";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = macosx;
@@ -864,7 +864,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -872,8 +872,8 @@
 					"SPT_BUILDING_FRAMEWORK=1",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-OSX";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = macosx;
@@ -895,7 +895,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"SPT_BUILDING_FRAMEWORK=1",
@@ -903,9 +903,9 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
+				INSTALL_PATH = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-iOS";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = iphoneos;
@@ -929,16 +929,16 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "$(inherited)";
+				DYLIB_INSTALL_NAME_BASE = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"SPT_BUILDING_FRAMEWORK=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(inherited)";
+				INSTALL_PATH = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-iOS";
 				PRODUCT_NAME = SPTDataLoader;
 				SDKROOT = iphoneos;
