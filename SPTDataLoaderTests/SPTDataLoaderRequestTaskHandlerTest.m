@@ -33,6 +33,8 @@
 @property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, strong, readwrite) dispatch_queue_t retryQueue;
 
+- (void)completeIfInFlight;
+
 @end
 
 @interface SPTDataLoaderRequestTaskHandlerTest : XCTestCase
@@ -186,6 +188,13 @@
     self.request.maximumRetryCount = 4;
     [self.handler start];
     [self waitForExpectationsWithTimeout:2.0 handler:nil];
+}
+
+- (void)testCompletingWhenDeallocatingDuringFlight
+{
+    [self.handler start];
+    [self.handler completeIfInFlight];
+    XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1u);
 }
 
 @end

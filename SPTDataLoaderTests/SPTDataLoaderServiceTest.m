@@ -436,10 +436,13 @@
 
 - (void)testRedirectionToDifferentHostWithHeaders
 {
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL
                                                         sourceIdentifier:@"-"];
     [self.service requestResponseHandler:nil performRequest:request];
     NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
+
+    [self.resolver setAddresses:@[ @"newhost" ] forHost:@"localhost"];
 
     NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
                                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeMovedPermanently
@@ -447,7 +450,6 @@
                                                                 headerFields:@{ }];
 
     __block BOOL calledCompletionHandler = NO;
-    NSURL *URL = [NSURL URLWithString:@"https://newhost"];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:URL];
     urlRequest.allHTTPHeaderFields = @{ @"Test-Header" : @"Test-Value" };
     [self.service URLSession:self.session
@@ -456,7 +458,7 @@
                   newRequest:urlRequest
            completionHandler:^(NSURLRequest *newURLRequest) {
                calledCompletionHandler = YES;
-               XCTAssertEqualObjects(URL.host, newURLRequest.URL.host);
+               XCTAssertEqualObjects(newURLRequest.URL.host, [self.resolver addressForHost:URL.host]);
                XCTAssertEqualObjects(urlRequest.allHTTPHeaderFields, newURLRequest.allHTTPHeaderFields);
            }];
 

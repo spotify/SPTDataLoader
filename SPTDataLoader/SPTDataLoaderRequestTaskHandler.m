@@ -222,14 +222,19 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     [self.task resume];
 }
 
+- (void)completeIfInFlight
+{
+    // Always call the last error the request completed with if retrying
+    if (self.started && !self.calledCancelledRequest && !self.calledFailedResponse && !self.calledSuccessfulResponse) {
+        [self completeWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil]];
+    }
+}
+
 #pragma mark NSObject
 
 - (void)dealloc
 {
-    // Always call the last error the request completed with if retrying
-    if (_started && !_calledCancelledRequest && !_calledFailedResponse && !_calledSuccessfulResponse) {
-        [self completeWithError:nil];
-    }
+    [self completeIfInFlight];
 }
 
 @end

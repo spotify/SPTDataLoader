@@ -158,4 +158,13 @@
     XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1u);
 }
 
+- (void)testNoCallsToReceiveInitialResponseIfRequestDoesNotSupportChunks
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.chunks = NO;
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader receivedInitialResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 0u);
+}
+
 @end
