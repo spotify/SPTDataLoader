@@ -20,13 +20,14 @@
  */
 @import XCTest;
 
-#import "SPTDataLoaderService.h"
-#import "SPTDataLoaderRequest.h"
-#import "SPTDataLoaderRateLimiter.h"
+#import <SPTDataLoader/SPTDataLoaderService.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderResolver.h>
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
+#import <SPTDataLoader/SPTCancellationToken.h>
+
 #import "SPTDataLoaderRequestTaskHandler.h"
-#import "SPTDataLoaderResolver.h"
-#import "SPTDataLoaderResponse.h"
-#import "SPTCancellationToken.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "NSURLSessionMock.h"
@@ -128,7 +129,7 @@
 - (void)testAuthenticatingRequest
 {
     SPTDataLoaderAuthoriserMock *authoriserMock = [SPTDataLoaderAuthoriserMock new];
-    SPTDataLoaderFactory *factory = [self.service createDataLoaderFactoryWithAuthorisers:@[ authoriserMock ]];
+    SPTDataLoaderFactory<SPTDataLoaderRequestResponseHandler> *factory = (SPTDataLoaderFactory<SPTDataLoaderRequestResponseHandler> *)[self.service createDataLoaderFactoryWithAuthorisers:@[ authoriserMock ]];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.service requestResponseHandler:factory performRequest:request];
     XCTAssertEqual(authoriserMock.numberOfCallsToAuthoriseRequest, 1u, @"The service did not check the requests authorisation");

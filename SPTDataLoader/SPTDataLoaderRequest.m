@@ -131,44 +131,49 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     static NSString * languageHeaderValue = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
-        NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
-        NSString * const SPTDataLoaderRequestLanguageHeaderValuesJoiner = @", ";
-
-        NSString *(^constructLanguageHeaderValue)(NSString *, float) = ^NSString *(NSString *language, float languageImportance) {
-            NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
-            return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
-        };
-
-        NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
-        if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
-            languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
-        }
-        float languageImportanceCounter = 1.0f;
-        NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
-        BOOL containsEnglish = NO;
-        for (NSString *language in languages) {
-            if (!containsEnglish) {
-                NSString * const SPTDataLoaderRequestLanguageLocaleSeparator = @"-";
-                NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageLocaleSeparator].firstObject;
-                if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
-                    containsEnglish = YES;
-                }
-            }
-
-            if (languageImportanceCounter == 1.0f) {
-                [languageHeaderValues addObject:language];
-            } else {
-                [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
-            }
-            languageImportanceCounter -= (1.0f / languages.count);
-        }
-        if (!containsEnglish) {
-            [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01f)];
-        }
-        languageHeaderValue = [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
+        languageHeaderValue = [self generateLanguageHeaderValue];
     });
     return languageHeaderValue;
+}
+
++ (NSString *)generateLanguageHeaderValue
+{
+    const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
+    NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
+    NSString * const SPTDataLoaderRequestLanguageHeaderValuesJoiner = @", ";
+
+    NSString *(^constructLanguageHeaderValue)(NSString *, float) = ^NSString *(NSString *language, float languageImportance) {
+        NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
+        return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
+    };
+
+    NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
+    if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
+        languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
+    }
+    float languageImportanceCounter = 1.0f;
+    NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
+    BOOL containsEnglish = NO;
+    for (NSString *language in languages) {
+        if (!containsEnglish) {
+            NSString * const SPTDataLoaderRequestLanguageLocaleSeparator = @"-";
+            NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageLocaleSeparator].firstObject;
+            if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
+                containsEnglish = YES;
+            }
+        }
+
+        if (languageImportanceCounter == 1.0f) {
+            [languageHeaderValues addObject:language];
+        } else {
+            [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
+        }
+        languageImportanceCounter -= (1.0f / languages.count);
+    }
+    if (!containsEnglish) {
+        [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01f)];
+    }
+    return [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
 }
 
 - (NSString *)debugDescription
