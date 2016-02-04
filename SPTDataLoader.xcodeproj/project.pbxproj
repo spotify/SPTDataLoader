@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0504CB8D1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */; };
-		0504CB8F1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */; };
+		0504CB8D1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8C1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m */; };
+		0504CB8F1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB8E1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m */; };
 		0504CB911A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0504CB901A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m */; };
 		050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
 		050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
@@ -16,8 +16,8 @@
 		050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
 		050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
 		050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
-		050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */; };
-		050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */; };
+		050E06BC1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */; };
+		050E06BD1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m */; };
 		050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */; };
 		052FB1621A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */; };
 		052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */; };
@@ -38,7 +38,7 @@
 		0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
 		0599409F1A14F60F006D6BE9 /* SPTDataLoaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */; };
 		059940A21A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A11A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m */; };
-		059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */; };
+		059940A51A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A41A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m */; };
 		059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */; };
 		059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
@@ -69,10 +69,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementationTest.m; sourceTree = "<group>"; };
-		0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementationTest.m; sourceTree = "<group>"; };
+		0504CB8C1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenFactoryImplementationTest.m; sourceTree = "<group>"; };
+		0504CB8E1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenImplementationTest.m; sourceTree = "<group>"; };
 		0504CB901A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandlerTest.m; sourceTree = "<group>"; };
-		050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenImplementation.h; sourceTree = "<group>"; };
+		050AB4C51A782D4F005C93CC /* SPTDataLoaderCancellationTokenImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenImplementation.h; sourceTree = "<group>"; };
 		050C30F71C56E5830044DFBE /* project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = project.xcconfig; sourceTree = "<group>"; };
 		050E068A1A10C62100A10A0E /* libSPTDataLoader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSPTDataLoader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		050E068F1A10C62100A10A0E /* SPTDataLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoader.m; sourceTree = "<group>"; };
@@ -83,8 +83,8 @@
 		050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequest.m; sourceTree = "<group>"; };
 		050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponse.m; sourceTree = "<group>"; };
 		050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoader+Private.h"; sourceTree = "<group>"; };
-		050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
-		050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenImplementation.m; sourceTree = "<group>"; };
+		050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
+		050E06BB1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenImplementation.m; sourceTree = "<group>"; };
 		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
 		050F53851A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderConsumptionObserverMock.h; sourceTree = "<group>"; };
 		050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderConsumptionObserverMock.m; sourceTree = "<group>"; };
@@ -94,6 +94,7 @@
 		052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolver.m; sourceTree = "<group>"; };
 		052FB1661A127BF900AFE80E /* SPTDataLoaderResolverAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderResolverAddress.h; sourceTree = "<group>"; };
 		052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolverAddress.m; sourceTree = "<group>"; };
+		0533D05F1C62F12200D8E09D /* SPTDataLoaderCancellationTokenFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactory.h; sourceTree = "<group>"; };
 		05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+HeaderSize.h"; sourceTree = "<group>"; };
 		05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+HeaderSize.m"; sourceTree = "<group>"; };
 		05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryHeaderSizeTest.m; sourceTree = "<group>"; };
@@ -107,7 +108,7 @@
 		0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderResolver.h; path = include/SPTDataLoader/SPTDataLoaderResolver.h; sourceTree = "<group>"; };
 		0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserMock.h; sourceTree = "<group>"; };
 		0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserMock.m; sourceTree = "<group>"; };
-		056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTCancellationToken.h; path = include/SPTDataLoader/SPTCancellationToken.h; sourceTree = "<group>"; };
+		056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderCancellationToken.h; path = include/SPTDataLoader/SPTDataLoaderCancellationToken.h; sourceTree = "<group>"; };
 		056A04B31A13D10900FA72AD /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = include/SPTDataLoader/SPTDataLoader.h; sourceTree = "<group>"; };
 		056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderAuthoriser.h; path = include/SPTDataLoader/SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
 		056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderFactory.h; path = include/SPTDataLoader/SPTDataLoaderFactory.h; sourceTree = "<group>"; };
@@ -131,15 +132,15 @@
 		0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTest.m; sourceTree = "<group>"; };
 		059940A01A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegateMock.h; sourceTree = "<group>"; };
 		059940A11A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderDelegateMock.m; sourceTree = "<group>"; };
-		059940A31A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenDelegateMock.h; sourceTree = "<group>"; };
-		059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCancellationTokenDelegateMock.m; sourceTree = "<group>"; };
+		059940A31A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenDelegateMock.h; sourceTree = "<group>"; };
+		059940A41A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenDelegateMock.m; sourceTree = "<group>"; };
 		059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTest.m; sourceTree = "<group>"; };
 		059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponseTest.m; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
-		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
+		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
@@ -192,10 +193,11 @@
 			children = (
 				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
 				05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */,
-				8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */,
-				050E06B91A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m */,
-				050AB4C51A782D4F005C93CC /* SPTCancellationTokenImplementation.h */,
-				050E06BB1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m */,
+				0533D05F1C62F12200D8E09D /* SPTDataLoaderCancellationTokenFactory.h */,
+				8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */,
+				050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */,
+				050AB4C51A782D4F005C93CC /* SPTDataLoaderCancellationTokenImplementation.h */,
+				050E06BB1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m */,
 				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
 				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
 				056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */,
@@ -226,8 +228,8 @@
 				0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */,
 				059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */,
 				059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */,
-				0504CB8C1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m */,
-				0504CB8E1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m */,
+				0504CB8C1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m */,
+				0504CB8E1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m */,
 				0504CB901A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m */,
 				055AEE531A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m */,
 				055AEE551A162C5E00A490BF /* SPTDataLoaderResolverTest.m */,
@@ -251,7 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				C6515CF11BA2D1A700271211 /* module.modulemap */,
-				056A04AF1A13D10900FA72AD /* SPTCancellationToken.h */,
+				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
 				056A04B31A13D10900FA72AD /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
 				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
@@ -289,8 +291,8 @@
 				0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */,
 				059940A01A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.h */,
 				059940A11A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m */,
-				059940A31A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.h */,
-				059940A41A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m */,
+				059940A31A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.h */,
+				059940A41A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m */,
 				055AEE501A16117D00A490BF /* NSURLSessionTaskMock.h */,
 				055AEE511A16117E00A490BF /* NSURLSessionTaskMock.m */,
 				050F53851A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.h */,
@@ -401,7 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				050E06BD1A10CFD700A10A0E /* SPTCancellationTokenImplementation.m in Sources */,
+				050E06BD1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				056E523F1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m in Sources */,
 				05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				05356F131A447295003A7351 /* NSDictionary+HeaderSize.m in Sources */,
@@ -413,7 +415,7 @@
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
 				052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */,
 				052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */,
-				050E06BC1A10CFD700A10A0E /* SPTCancellationTokenFactoryImplementation.m in Sources */,
+				050E06BC1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,10 +432,10 @@
 				EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */,
 				055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */,
 				050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */,
-				059940A51A14FA65006D6BE9 /* SPTCancellationTokenDelegateMock.m in Sources */,
+				059940A51A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m in Sources */,
 				059940A21A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m in Sources */,
-				0504CB8F1A151B6D00AD54EF /* SPTCancellationTokenImplementationTest.m in Sources */,
-				0504CB8D1A151B0600AD54EF /* SPTCancellationTokenFactoryImplementationTest.m in Sources */,
+				0504CB8F1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m in Sources */,
+				0504CB8D1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
 				059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */,
 				059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */,

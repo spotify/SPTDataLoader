@@ -20,7 +20,7 @@
  */
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 
-@protocol SPTCancellationToken;
+@protocol SPTDataLoaderCancellationToken;
 
 /**
  * A private delegate API for the objects in the SPTDataLoader library to use
@@ -39,6 +39,6 @@
 /**
  * The cancellation token associated with the request
  */
-@property (nonatomic, weak) id<SPTCancellationToken> cancellationToken;
+@property (nonatomic, weak) id<SPTDataLoaderCancellationToken> cancellationToken;
 
 @end

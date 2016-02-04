@@ -18,26 +18,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import "SPTCancellationTokenImplementation.h"
+#import "SPTDataLoaderCancellationTokenImplementation.h"
 
-@interface SPTCancellationTokenImplementation ()
+@interface SPTDataLoaderCancellationTokenImplementation ()
 
 @property (nonatomic, assign, readwrite, getter = isCancelled) BOOL cancelled;
-@property (nonatomic, weak, readwrite) id<SPTCancellationTokenDelegate> delegate;
+@property (nonatomic, weak, readwrite) id<SPTDataLoaderCancellationTokenDelegate> delegate;
 
 @end
 
-@implementation SPTCancellationTokenImplementation
+@implementation SPTDataLoaderCancellationTokenImplementation
 
-#pragma mark SPTCancellationTokenImplementation
+#pragma mark SPTDataLoaderCancellationTokenImplementation
 
-+ (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTCancellationTokenDelegate>)delegate
++ (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate
                                                cancelObject:(id)cancelObject
 {
     return [[self alloc] initWithDelegate:delegate cancelObject:cancelObject];
 }
 
-- (instancetype)initWithDelegate:(id<SPTCancellationTokenDelegate>)delegate cancelObject:(id)cancelObject
+- (instancetype)initWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate cancelObject:(id)cancelObject
 {
     if (!(self = [super init])) {
         return nil;
@@ -49,7 +49,7 @@
     return self;
 }
 
-#pragma mark SPTCancellationToken
+#pragma mark SPTDataLoaderCancellationToken
 
 @synthesize cancelled = _cancelled;
 @synthesize delegate = _delegate;

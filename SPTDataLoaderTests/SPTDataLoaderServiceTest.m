@@ -25,7 +25,7 @@
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTCancellationToken.h>
+#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 
 #import "SPTDataLoaderRequestTaskHandler.h"
 
@@ -39,7 +39,7 @@
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSURLSessionTaskMock.h"
 
-@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionTaskDelegate>
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray *handlers;
@@ -153,8 +153,8 @@
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    id<SPTCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
-                                                                       performRequest:request];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
+                                                                                 performRequest:request];
     [cancellationToken cancel];
     XCTAssertEqual(self.session.lastDataTask.numberOfCallsToCancel, 1u, @"The service did not call a cancelled request on a cancellation token cancelling");
 }
@@ -353,8 +353,8 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     requestResponseHandlerMock.authorising = YES;
-    id<SPTCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
-                                                                       performRequest:request];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
+                                                                                 performRequest:request];
     [cancellationToken cancel];
     [self.service requestResponseHandler:requestResponseHandlerMock authorisedRequest:request];
     XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");

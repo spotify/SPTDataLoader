@@ -20,17 +20,17 @@
  */
 @import XCTest;
 
-#import "SPTCancellationTokenFactoryImplementation.h"
+#import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
-#import "SPTCancellationTokenDelegateMock.h"
+#import "SPTDataLoaderCancellationTokenDelegateMock.h"
 
-@interface SPTCancellationTokenFactoryImplementationTest : XCTestCase
+@interface SPTDataLoaderCancellationTokenFactoryImplementationTest : XCTestCase
 
-@property (nonatomic, strong) SPTCancellationTokenFactoryImplementation *cancellationTokenFactory;
+@property (nonatomic, strong) SPTDataLoaderCancellationTokenFactoryImplementation *cancellationTokenFactory;
 
 @end
 
-@implementation SPTCancellationTokenFactoryImplementationTest
+@implementation SPTDataLoaderCancellationTokenFactoryImplementationTest
 
 #pragma mark XCTestCase
 
@@ -38,7 +38,7 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.cancellationTokenFactory = [SPTCancellationTokenFactoryImplementation new];
+    self.cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
 }
 
 - (void)tearDown
@@ -51,10 +51,10 @@
 
 - (void)testCreateCancellationToken
 {
-    id<SPTCancellationTokenDelegate> delegate = [SPTCancellationTokenDelegateMock new];
-    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:delegate cancelObject:nil];
+    id<SPTDataLoaderCancellationTokenDelegate> delegate = [SPTDataLoaderCancellationTokenDelegateMock new];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:delegate cancelObject:nil];
     XCTAssertNotNil(cancellationToken, @"The factory did not provide a valid cancellation token");
-    id<SPTCancellationTokenDelegate> cancellationTokenDelegate = cancellationToken.delegate;
+    id<SPTDataLoaderCancellationTokenDelegate> cancellationTokenDelegate = cancellationToken.delegate;
     XCTAssertEqual(delegate, cancellationTokenDelegate, @"The factory did not set the delegate on the cancellation token");
 }
 

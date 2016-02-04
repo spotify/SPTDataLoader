@@ -22,8 +22,8 @@
 
 @implementation SPTDataLoaderRequestResponseHandlerDelegateMock
 
-- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                    performRequest:(SPTDataLoaderRequest *)request
+- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                              performRequest:(SPTDataLoaderRequest *)request
 {
     self.lastRequestPerformed = request;
     

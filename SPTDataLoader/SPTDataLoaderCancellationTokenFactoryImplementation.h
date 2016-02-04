@@ -18,13 +18,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import "SPTCancellationTokenDelegateMock.h"
+@import Foundation;
 
-@implementation SPTCancellationTokenDelegateMock
+#import "SPTDataLoaderCancellationTokenFactory.h"
 
-- (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
-{
-    self.numberOfCallsToCancellationTokenDidCancel++;
-}
+/**
+ * The generic implementation for the cancellation token factory
+ */
+@interface SPTDataLoaderCancellationTokenFactoryImplementation : NSObject <SPTDataLoaderCancellationTokenFactory>
 
 @end

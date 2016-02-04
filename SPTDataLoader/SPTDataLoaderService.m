@@ -20,7 +20,7 @@
  */
 #import "SPTDataLoaderService.h"
 
-#import "SPTCancellationToken.h"
+#import "SPTDataLoaderCancellationToken.h"
 #import "SPTDataLoaderRateLimiter.h"
 #import "SPTDataLoaderResolver.h"
 #import "SPTDataLoaderConsumptionObserver.h"
@@ -31,14 +31,14 @@
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequestTaskHandler.h"
 #import "NSDictionary+HeaderSize.h"
-#import "SPTCancellationTokenFactoryImplementation.h"
+#import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
 
-@property (nonatomic, strong) id<SPTCancellationTokenFactory> cancellationTokenFactory;
+@property (nonatomic, strong) id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray *handlers;
@@ -84,7 +84,7 @@
         configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : userAgent };
     }
     
-    _cancellationTokenFactory = [SPTCancellationTokenFactoryImplementation new];
+    _cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
     _sessionQueue = [NSOperationQueue new];
     _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
     _sessionQueue.name = NSStringFromClass(self.class);
@@ -172,11 +172,11 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                    performRequest:(SPTDataLoaderRequest *)request
+- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                              performRequest:(SPTDataLoaderRequest *)request
 {
-    id<SPTCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
-                                                                                                       cancelObject:request];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
+                                                                                                                 cancelObject:request];
     request.cancellationToken = cancellationToken;
     
     if ([requestResponseHandler respondsToSelector:@selector(shouldAuthoriseRequest:)]) {
@@ -209,7 +209,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 #pragma mark SPTCancellationTokenDelegate
 
-- (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken
+- (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken
 {
     SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
     

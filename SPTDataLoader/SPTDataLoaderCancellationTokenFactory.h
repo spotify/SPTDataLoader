@@ -20,19 +20,20 @@
  */
 @import Foundation;
 
-#import "SPTCancellationToken.h"
+@protocol SPTDataLoaderCancellationToken;
+@protocol SPTDataLoaderCancellationTokenDelegate;
 
 /**
- * The implementation for the cancellation token API
+ * A factory for creating generic cancellation tokens
  */
-@interface SPTCancellationTokenImplementation : NSObject <SPTCancellationToken>
+@protocol SPTDataLoaderCancellationTokenFactory <NSObject>
 
 /**
- * Class constructor
+ * Create a cancellation token
  * @param delegate The object listening to the cancellation token
- * @param cancelObject The object that will be cancelled
+ * @param cancelObject The object related to the cancel function
  */
-+ (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTCancellationTokenDelegate>)delegate
-                                               cancelObject:(id)cancelObject;
+- (id<SPTDataLoaderCancellationToken>)createCancellationTokenWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate
+                                                             cancelObject:(id)cancelObject;
 
 @end

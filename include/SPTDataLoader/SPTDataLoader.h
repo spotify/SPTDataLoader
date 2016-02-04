@@ -55,7 +55,7 @@ FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
  * Performs a request
  * @param request The object describing the kind of request to be performed
  */
-- (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request;
+- (id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request;
 /**
  * Cancels all the currently operating and pending requests
  */

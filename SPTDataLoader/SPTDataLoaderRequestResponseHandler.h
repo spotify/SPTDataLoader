@@ -23,7 +23,7 @@
 @class SPTDataLoaderRequest;
 @class SPTDataLoaderResponse;
 
-@protocol SPTCancellationToken;
+@protocol SPTDataLoaderCancellationToken;
 @protocol SPTDataLoaderRequestResponseHandler;
 
 /**
@@ -37,8 +37,8 @@
  * @param requestResponseHandler The object that can perform requests and responses
  * @param request The object describing the request to perform
  */
-- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                    performRequest:(SPTDataLoaderRequest *)request;
+- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                              performRequest:(SPTDataLoaderRequest *)request;
 
 @optional
 

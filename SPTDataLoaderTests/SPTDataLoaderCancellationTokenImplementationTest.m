@@ -20,19 +20,19 @@
  */
 @import XCTest;
 
-#import "SPTCancellationTokenImplementation.h"
+#import "SPTDataLoaderCancellationTokenImplementation.h"
 
-#import "SPTCancellationTokenDelegateMock.h"
+#import "SPTDataLoaderCancellationTokenDelegateMock.h"
 
-@interface SPTCancellationTokenImplementationTest : XCTestCase
+@interface SPTDataLoaderCancellationTokenImplementationTest : XCTestCase
 
-@property (nonatomic, strong) SPTCancellationTokenImplementation *cancellationToken;
+@property (nonatomic, strong) SPTDataLoaderCancellationTokenImplementation *cancellationToken;
 
-@property (nonatomic, strong) id<SPTCancellationTokenDelegate> delegate;
+@property (nonatomic, strong) id<SPTDataLoaderCancellationTokenDelegate> delegate;
 
 @end
 
-@implementation SPTCancellationTokenImplementationTest
+@implementation SPTDataLoaderCancellationTokenImplementationTest
 
 #pragma mark XCTestCase
 
@@ -40,8 +40,8 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.delegate = [SPTCancellationTokenDelegateMock new];
-    self.cancellationToken = [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:self.delegate cancelObject:nil];
+    self.delegate = [SPTDataLoaderCancellationTokenDelegateMock new];
+    self.cancellationToken = [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:self.delegate cancelObject:nil];
 }
 
 - (void)tearDown
@@ -55,7 +55,7 @@
 - (void)testCancel
 {
     [self.cancellationToken cancel];
-    SPTCancellationTokenDelegateMock *delegateMock = (SPTCancellationTokenDelegateMock *)self.delegate;
+    SPTDataLoaderCancellationTokenDelegateMock *delegateMock = (SPTDataLoaderCancellationTokenDelegateMock *)self.delegate;
     XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The delegate cancel method should only have been called once");
     XCTAssertTrue(self.cancellationToken.cancelled, @"The cancellation token did not set itself to cancelled despite being cancelled");
 }
@@ -64,7 +64,7 @@
 {
     [self.cancellationToken cancel];
     [self.cancellationToken cancel];
-    SPTCancellationTokenDelegateMock *delegateMock = (SPTCancellationTokenDelegateMock *)self.delegate;
+    SPTDataLoaderCancellationTokenDelegateMock *delegateMock = (SPTDataLoaderCancellationTokenDelegateMock *)self.delegate;
     XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The delegate cancel method should only have been called once");
 }
 
