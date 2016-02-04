@@ -140,7 +140,6 @@
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
-		993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_shared.xcconfig; path = ../../other/spotify_shared.xcconfig; sourceTree = "<group>"; };
 		C6515CF11BA2D1A700271211 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
@@ -273,8 +272,6 @@
 			isa = PBXGroup;
 			children = (
 				056A04BB1A13D2BD00FA72AD /* README.md */,
-				05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */,
-				050C30F71C56E5830044DFBE /* project.xcconfig */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -309,7 +306,8 @@
 		993EF2321A30B1E2001E48D2 /* Build System */ = {
 			isa = PBXGroup;
 			children = (
-				993EF2331A30B1FD001E48D2 /* spotify_shared.xcconfig */,
+				05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */,
+				050C30F71C56E5830044DFBE /* project.xcconfig */,
 			);
 			name = "Build System";
 			sourceTree = "<group>";
