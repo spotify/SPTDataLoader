@@ -161,8 +161,8 @@
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (id<SPTCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                    performRequest:(SPTDataLoaderRequest *)request
+- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                              performRequest:(SPTDataLoaderRequest *)request
 {
     if (self.offline) {
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;

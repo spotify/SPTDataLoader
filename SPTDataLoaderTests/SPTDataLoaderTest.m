@@ -25,8 +25,8 @@
 #import "SPTDataLoader+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 #import "SPTDataLoaderDelegateMock.h"
-#import "SPTCancellationTokenDelegateMock.h"
-#import "SPTCancellationTokenImplementation.h"
+#import "SPTDataLoaderCancellationTokenDelegateMock.h"
+#import "SPTDataLoaderCancellationTokenImplementation.h"
 #import "SPTDataLoaderResponse+Private.h"
 
 @interface SPTDataLoaderTest : XCTestCase
@@ -77,9 +77,9 @@
 {
     NSMutableArray *cancellationTokens = [NSMutableArray new];
     NSMutableArray *cancellationTokenDelegates = [NSMutableArray new];
-    self.requestResponseHandlerDelegate.tokenCreator =  ^ id<SPTCancellationToken> {
-        SPTCancellationTokenDelegateMock *cancellationTokenDelegate = [SPTCancellationTokenDelegateMock new];
-        id<SPTCancellationToken> cancellationToken = [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:cancellationTokenDelegate cancelObject:nil];
+    self.requestResponseHandlerDelegate.tokenCreator =  ^ id<SPTDataLoaderCancellationToken> {
+        SPTDataLoaderCancellationTokenDelegateMock *cancellationTokenDelegate = [SPTDataLoaderCancellationTokenDelegateMock new];
+        id<SPTDataLoaderCancellationToken> cancellationToken = [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:cancellationTokenDelegate cancelObject:nil];
         [cancellationTokens addObject:cancellationToken];
         [cancellationTokenDelegates addObject:cancellationTokenDelegate];
         return cancellationToken;
@@ -89,8 +89,8 @@
         [self.dataLoader performRequest:request];
     }
     [self.dataLoader cancelAllLoads];
-    for (id<SPTCancellationToken> cancellationToken in cancellationTokens) {
-        SPTCancellationTokenDelegateMock *delegateMock = cancellationToken.delegate;
+    for (id<SPTDataLoaderCancellationToken> cancellationToken in cancellationTokens) {
+        SPTDataLoaderCancellationTokenDelegateMock *delegateMock = cancellationToken.delegate;
         XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The cancellation tokens delegate was not called");
     }
 }

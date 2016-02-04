@@ -68,7 +68,7 @@
 
 #pragma mark SPTDataLoader
 
-- (id<SPTCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+- (id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
     SPTDataLoaderRequest *copiedRequest = [request copy];
     id<SPTDataLoaderDelegate> delegate = self.delegate;
@@ -88,8 +88,8 @@
         return nil;
     }
 
-    id<SPTCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
-                                                                                              performRequest:copiedRequest];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
+                                                                                                        performRequest:copiedRequest];
     @synchronized(self.cancellationTokens) {
         [self.cancellationTokens addObject:cancellationToken];
     }

@@ -22,7 +22,7 @@
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 
-typedef id<SPTCancellationToken> (^SPTCancellationTokenCreator)();
+typedef id<SPTDataLoaderCancellationToken> (^SPTCancellationTokenCreator)();
 
 @interface SPTDataLoaderRequestResponseHandlerDelegateMock : NSObject <SPTDataLoaderRequestResponseHandlerDelegate>
 

@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTCancellationToken.h>
+#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoader.h>
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
 #import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>

@@ -20,25 +20,25 @@
  */
 @import Foundation;
 
-@protocol SPTCancellationToken;
+@protocol SPTDataLoaderCancellationToken;
 
 /**
  * The protocol an object listening to the cancellation token must conform to
  */
-@protocol SPTCancellationTokenDelegate <NSObject>
+@protocol SPTDataLoaderCancellationTokenDelegate <NSObject>
 
 /**
  * Called when the cancellation token becomes cancelled
  * @param cancellationToken The cancellation token that became cancelled
  */
-- (void)cancellationTokenDidCancel:(id<SPTCancellationToken>)cancellationToken;
+- (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken;
 
 @end
 
 /**
  * A cancellation token used for cancelling specific requests
  */
-@protocol SPTCancellationToken <NSObject>
+@protocol SPTDataLoaderCancellationToken <NSObject>
 
 /**
  * Whether the cancellation token has been cancelled
@@ -48,7 +48,7 @@
  * The object listening to the cancellation token
  * @discussion This is immutable, the cancellation token should be fed this on its creation
  */
-@property (nonatomic, weak, readonly) id<SPTCancellationTokenDelegate> delegate;
+@property (nonatomic, weak, readonly) id<SPTDataLoaderCancellationTokenDelegate> delegate;
 /**
  * The object that will be affected by the cancellation
  */

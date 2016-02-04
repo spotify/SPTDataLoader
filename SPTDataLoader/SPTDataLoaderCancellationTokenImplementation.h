@@ -18,19 +18,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import "SPTCancellationTokenFactoryImplementation.h"
+@import Foundation;
 
-#import "SPTCancellationTokenImplementation.h"
+#import "SPTDataLoaderCancellationToken.h"
 
-@implementation SPTCancellationTokenFactoryImplementation
+/**
+ * The implementation for the cancellation token API
+ */
+@interface SPTDataLoaderCancellationTokenImplementation : NSObject <SPTDataLoaderCancellationToken>
 
-#pragma mark SPTCancellationTokenFactory
-
-- (id<SPTCancellationToken>)createCancellationTokenWithDelegate:(id<SPTCancellationTokenDelegate>)delegate
-                                                   cancelObject:(id)cancelObject
-{
-    return [SPTCancellationTokenImplementation cancellationTokenImplementationWithDelegate:delegate
-                                                                              cancelObject:cancelObject];
-}
+/**
+ * Class constructor
+ * @param delegate The object listening to the cancellation token
+ * @param cancelObject The object that will be cancelled
+ */
++ (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate
+                                               cancelObject:(id)cancelObject;
 
 @end
