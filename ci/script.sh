@@ -28,5 +28,5 @@ done
 
 # Linting
 travis_fold_open "Linting" "Linting CocoaPods specification…"
-pod spec lint SPTDataLoader.podspec --quick
+pod spec lint "$PODSPEC" --quick
 travis_fold_close "Linting"
