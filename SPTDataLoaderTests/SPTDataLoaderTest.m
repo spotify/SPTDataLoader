@@ -123,7 +123,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
-    [self.dataLoader receivedDataChunk:nil forResponse:response];
+    [self.dataLoader receivedDataChunk:[NSData new] forResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1u, @"The data loader did not relay a received data chunk response to the delegate");
 }
 

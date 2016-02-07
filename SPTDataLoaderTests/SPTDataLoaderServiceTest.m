@@ -107,7 +107,10 @@
 {
     // Test no crash occurs
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     
     NSURLSessionDataTask *dataTask = self.session.lastDataTask;
     [self.service URLSession:self.session
@@ -120,9 +123,12 @@
 {
     [self.resolver setAddresses:@[ @"192.168.0.1" ] forHost:@"spclient.wg.spotify.com"];
     
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
                                                         sourceIdentifier:nil];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     XCTAssertEqualObjects(request.URL.absoluteString, @"https://192.168.0.1/thing");
 }
 
@@ -131,21 +137,26 @@
     SPTDataLoaderAuthoriserMock *authoriserMock = [SPTDataLoaderAuthoriserMock new];
     SPTDataLoaderFactory<SPTDataLoaderRequestResponseHandler> *factory = (SPTDataLoaderFactory<SPTDataLoaderRequestResponseHandler> *)[self.service createDataLoaderFactoryWithAuthorisers:@[ authoriserMock ]];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     [self.service requestResponseHandler:factory performRequest:request];
     XCTAssertEqual(authoriserMock.numberOfCallsToAuthoriseRequest, 1u, @"The service did not check the requests authorisation");
 }
 
 - (void)testRequestAuthorised
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     // Test no crash occurs on optional delegate method
     [self.service requestResponseHandler:nil authorisedRequest:nil];
+#pragma clang diagnostic pop
 }
 
 - (void)testRequestAuthorisationFailed
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    [self.service requestResponseHandler:requestResponseHandlerMock failedToAuthoriseRequest:request error:nil];
+    NSError *error = [NSError new];
+    [self.service requestResponseHandler:requestResponseHandlerMock failedToAuthoriseRequest:request error:error];
     XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1u, @"The service did not call a failed response on a failed authorisation attempt");
 }
 
@@ -153,6 +164,7 @@
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
                                                                                  performRequest:request];
     [cancellationToken cancel];
@@ -162,7 +174,10 @@
 - (void)testSessionDidReceiveResponse
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     
     NSURLSessionDataTask *dataTask = self.session.lastDataTask;
     __block BOOL calledCompletionHandler = NO;
@@ -175,9 +190,12 @@
 
 - (void)testRedirectionCallbackAbortsTooManyRedirects
 {
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://localhost"]
                                                         sourceIdentifier:@"-"];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
 
     NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
@@ -219,9 +237,12 @@
 
 - (void)testRedirectionCallbackDoesNotAbortAfterFewRedirects
 {
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://localhost"]
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://localhost"]
                                                         sourceIdentifier:@"-"];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
 
     NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL
@@ -268,6 +289,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     NSData *data = [@"thing" dataUsingEncoding:NSUTF8StringEncoding];
     [self.service URLSession:self.service.session dataTask:self.session.lastDataTask didReceiveData:data];
@@ -278,6 +300,7 @@
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     [self.service URLSession:self.session task:self.session.lastDataTask didCompleteWithError:nil];
     XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1u, @"The service did not call successfully received response on the request response handler");
@@ -288,7 +311,10 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.skipNSURLCache = NO;
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     NSCachedURLResponse *dummyResponse = [NSCachedURLResponse new];
     
     __block NSCachedURLResponse *blockResponse = nil;
@@ -303,8 +329,12 @@
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.skipNSURLCache = YES;
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     NSCachedURLResponse *dummyResponse = [NSCachedURLResponse new];
     
     __block NSCachedURLResponse *blockResponse = nil;
@@ -439,7 +469,10 @@
     NSURL *URL = [NSURL URLWithString:@"https://localhost"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL
                                                         sourceIdentifier:@"-"];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     NSURLSessionTask *task = ((SPTDataLoaderRequestTaskHandler *)[self.service.handlers lastObject]).task;
 
     [self.resolver setAddresses:@[ @"newhost" ] forHost:@"localhost"];
@@ -458,7 +491,7 @@
                   newRequest:urlRequest
            completionHandler:^(NSURLRequest *newURLRequest) {
                calledCompletionHandler = YES;
-               XCTAssertEqualObjects(newURLRequest.URL.host, [self.resolver addressForHost:URL.host]);
+               XCTAssertEqualObjects(newURLRequest.URL.host, [self.resolver addressForHost:(NSString * _Nonnull)URL.host]);
                XCTAssertEqualObjects(urlRequest.allHTTPHeaderFields, newURLRequest.allHTTPHeaderFields);
            }];
 

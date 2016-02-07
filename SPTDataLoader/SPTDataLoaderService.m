@@ -33,7 +33,10 @@
 #import "NSDictionary+HeaderSize.h"
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
+
 
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
@@ -41,8 +44,8 @@
 @property (nonatomic, strong) id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
-@property (nonatomic, strong) NSMutableArray *handlers;
-@property (nonatomic, strong) NSMapTable *consumptionObservers;
+@property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
+@property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
 
 @end
 
@@ -53,7 +56,7 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
-                      customURLProtocolClasses:(NSArray *)customURLProtocolClasses
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
     return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
 }
@@ -61,7 +64,7 @@
 - (instancetype)initWithUserAgent:(NSString *)userAgent
                       rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(SPTDataLoaderResolver *)resolver
-         customURLProtocolClasses:(NSArray *)customURLProtocolClasses
+         customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
@@ -95,7 +98,7 @@
     return self;
 }
 
-- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray *)authorisers
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
 {
     return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self authorisers:authorisers];
 }
@@ -139,12 +142,23 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
         return;
     }
     
-    NSString *host = [self.resolver addressForHost:request.URL.host];
+    if (request.URL.host == nil) {
+        return;
+    }
+    
+    NSString *host = [self.resolver addressForHost:(NSString * _Nonnull)request.URL.host];
     NSString *requestHost = request.URL.host;
     if (![host isEqualToString:requestHost] && host) {
         NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
         requestComponents.host = host;
-        request.URL = requestComponents.URL;
+        
+        NSURL *URL = requestComponents.URL;
+        
+        if (URL == nil) {
+            return;
+        }
+        
+        request.URL = URL;
     }
     
     NSURLRequest *urlRequest = request.urlRequest;
@@ -172,8 +186,8 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                              performRequest:(SPTDataLoaderRequest *)request
+- (nullable id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                                       performRequest:(SPTDataLoaderRequest *)request
 {
     id<SPTDataLoaderCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
                                                                                                                  cancelObject:request];
@@ -268,7 +282,7 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
- completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * __nullable credential))completionHandler
 {
     if (!completionHandler) {
         return;
@@ -286,7 +300,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
-didCompleteWithError:(NSError *)error
+didCompleteWithError:(nullable NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
     SPTDataLoaderResponse *response = [handler completeWithError:error];
@@ -334,9 +348,14 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
     }
 
     NSURL *newURL = request.URL;
+    
+    if (newURL.host == nil) {
+        completionHandler(nil);
+        return;
+    }
 
     // Go through SPTDataLoaderResolver dance and update the URL if needed
-    NSString *host = [self.resolver addressForHost:newURL.host];
+    NSString *host = [self.resolver addressForHost:(NSString * _Nonnull)newURL.host];
     NSString *requestHost = newURL.host;
     if (![host isEqualToString:requestHost] && host) {
         NSURLComponents *newRequestComponents = [NSURLComponents componentsWithURL:newURL resolvingAgainstBaseURL:NO];
@@ -366,3 +385,5 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

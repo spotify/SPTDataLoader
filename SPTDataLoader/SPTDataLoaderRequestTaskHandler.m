@@ -29,6 +29,8 @@
 
 #import "SPTDataLoaderExponentialTimer.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 @interface SPTDataLoaderRequestTaskHandler ()
@@ -37,7 +39,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
-@property (nonatomic, strong) NSMutableData *receivedData;
+@property (nonatomic, strong, nullable) NSMutableData *receivedData;
 @property (nonatomic, assign) CFAbsoluteTime absoluteStartTime;
 @property (nonatomic, assign) NSUInteger retryCount;
 @property (nonatomic, assign) NSUInteger waitCount;
@@ -110,7 +112,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     }];
 }
 
-- (SPTDataLoaderResponse *)completeWithError:(NSError *)error
+- (SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = self.requestResponseHandler;
     if (!self.response) {
@@ -238,3 +240,5 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

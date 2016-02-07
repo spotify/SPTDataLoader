@@ -22,13 +22,15 @@
 
 #import "SPTDataLoaderRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTDataLoaderRateLimiter ()
 
 @property (nonatomic, assign) double requestsPerSecond;
 
-@property (nonatomic, strong) NSMutableDictionary *serviceEndpointRequestsPerSecond;
-@property (nonatomic, strong) NSMutableDictionary *serviceEndpointLastExecution;
-@property (nonatomic, strong) NSMutableDictionary *serviceEndpointRetryAt;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *serviceEndpointRequestsPerSecond;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *serviceEndpointLastExecution;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *serviceEndpointRetryAt;
 
 @end
 
@@ -147,3 +149,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 
 @class SPTDataLoaderResponse;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The protocol an observer of the data loaders consumption must conform to
  */
@@ -38,3 +40,5 @@
                    bytesUploaded:(int)bytesUploaded;
 
 @end
+
+NS_ASSUME_NONNULL_END

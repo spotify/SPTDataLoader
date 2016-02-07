@@ -20,6 +20,8 @@
  */
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * An object for keeping track of IP addresses to use for hosts
  */
@@ -35,7 +37,7 @@
  * @param addresses An NSArray of NSString objects denoting an address
  * @param host The host tied to these addresses
  */
-- (void)setAddresses:(NSArray *)addresses forHost:(NSString *)host;
+- (void)setAddresses:(NSArray<NSString *> *)addresses forHost:(NSString *)host;
 /**
  * Mark an address as unreachable
  * @param address The address that has become unreachable
@@ -43,3 +45,5 @@
 - (void)markAddressAsUnreachable:(NSString *)address;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 
 #import "SPTDataLoaderRequest+Private.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const SPTDataLoaderRequestErrorDomain = @"com.spotify.dataloader.request";
 
 static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMethod requestMethod);
@@ -30,7 +32,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 @property (nonatomic, assign, readwrite) int64_t uniqueIdentifier;
 
-@property (nonatomic, strong) NSMutableDictionary *mutableHeaders;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *mutableHeaders;
 @property (nonatomic, assign) BOOL retriedAuthorisation;
 @property (nonatomic, weak) id<SPTDataLoaderCancellationToken> cancellationToken;
 
@@ -40,12 +42,12 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 #pragma mark SPTDataLoaderRequest
 
-+ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
++ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(nullable NSString *)sourceIdentifier
 {
     return [[self alloc] initWithURL:URL sourceIdentifier:sourceIdentifier];
 }
 
-- (instancetype)initWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier
+- (instancetype)initWithURL:(NSURL *)URL sourceIdentifier:(nullable NSString *)sourceIdentifier
 {
     static int64_t uniqueIdentifierBarrier = 0;
 
@@ -183,7 +185,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 #pragma mark NSCopying
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(nullable NSZone *)zone
 {
     __typeof(self) copy = [self.class requestWithURL:self.URL sourceIdentifier:self.sourceIdentifier];
     copy.maximumRetryCount = self.maximumRetryCount;
@@ -218,3 +220,5 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
         case SPTDataLoaderRequestMethodPut: return SPTDataLoaderRequestPutMethodString;
     }
 }
+
+NS_ASSUME_NONNULL_END

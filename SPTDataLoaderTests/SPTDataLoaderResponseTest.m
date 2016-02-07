@@ -42,7 +42,7 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeOK
@@ -72,7 +72,7 @@
 
 - (void)testShouldRetryWithNotFoundHTTPStatusCode
 {
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
@@ -105,7 +105,7 @@
 
 - (void)testShouldRetryDefault
 {
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
     BOOL shouldRetry = [self.response shouldRetry];
@@ -119,7 +119,7 @@
 
 - (void)testErrorForHTTPStatusCodeNotFound
 {
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
@@ -138,7 +138,7 @@
 
 - (void)testRelativeRetryAfter
 {
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"] sourceIdentifier:nil];
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"] sourceIdentifier:nil];
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
                                                   HTTPVersion:@"1.1"
@@ -150,7 +150,7 @@
 
 - (void)testAbsoluteRetryAfter
 {
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
@@ -163,7 +163,7 @@
 
 - (void)testShouldNotRetryWithInvalidHTTPStatusCode
 {
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
     self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeInvalid

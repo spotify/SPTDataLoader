@@ -24,6 +24,8 @@
 
 @protocol SPTDataLoaderAuthoriser;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol SPTDataLoaderAuthoriserDelegate <NSObject>
 
 /**
@@ -58,7 +60,7 @@
 /**
  * The object listening to the authoriser
  */
-@property (nonatomic, weak) id<SPTDataLoaderAuthoriserDelegate> delegate;
+@property (nonatomic, weak, nullable) id<SPTDataLoaderAuthoriserDelegate> delegate;
 
 /**
  * Whether a request requires authorisation from this authoriser
@@ -84,3 +86,5 @@
 - (void)refresh;
 
 @end
+
+NS_ASSUME_NONNULL_END

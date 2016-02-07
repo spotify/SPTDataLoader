@@ -22,6 +22,8 @@
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The private API for the data loader for internal use in the SPTDataLoader library
  */
@@ -34,3 +36,5 @@
 + (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate;
 
 @end
+
+NS_ASSUME_NONNULL_END

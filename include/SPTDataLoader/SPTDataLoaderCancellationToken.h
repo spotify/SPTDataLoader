@@ -22,6 +22,8 @@
 
 @protocol SPTDataLoaderCancellationToken;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The protocol an object listening to the cancellation token must conform to
  */
@@ -48,11 +50,11 @@
  * The object listening to the cancellation token
  * @discussion This is immutable, the cancellation token should be fed this on its creation
  */
-@property (nonatomic, weak, readonly) id<SPTDataLoaderCancellationTokenDelegate> delegate;
+@property (nonatomic, weak, readonly, nullable) id<SPTDataLoaderCancellationTokenDelegate> delegate;
 /**
  * The object that will be affected by the cancellation
  */
-@property (nonatomic, strong, readonly) id objectToCancel;
+@property (nonatomic, strong, readonly, nullable) id objectToCancel;
 
 /**
  * Cancels the cancellation token
@@ -60,3 +62,5 @@
 - (void)cancel;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -79,8 +79,11 @@
 
 - (void)testExecutedRequestWithNilRequest
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     // Test no crash
     [self.rateLimiter executedRequest:nil];
+#pragma clang diagnostic pop
 }
 
 - (void)testRequestsPerSecondDefault
@@ -101,8 +104,11 @@
 
 - (void)testSetRetryAfterWithNilURL
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     // Test no crash
     [self.rateLimiter setRetryAfter:60.0 forURL:nil];
+#pragma clang diagnostic pop
 }
 
 - (void)testResetRetryAfterAfterSuccessfulExecution

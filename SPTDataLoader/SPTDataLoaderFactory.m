@@ -28,9 +28,11 @@
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
 
-@property (nonatomic, strong) NSMapTable *requestToRequestResponseHandler;
+@property (nonatomic, strong) NSMapTable<SPTDataLoaderRequest *, id<SPTDataLoaderRequestResponseHandler>> *requestToRequestResponseHandler;
 @property (nonatomic, strong, readwrite) dispatch_queue_t requestTimeoutQueue;
 
 @end
@@ -39,14 +41,14 @@
 
 #pragma mark Private
 
-+ (instancetype)dataLoaderFactoryWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
-                                                        authorisers:(NSArray *)authorisers
++ (instancetype)dataLoaderFactoryWithRequestResponseHandlerDelegate:(nullable id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                                        authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
 {
     return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate authorisers:authorisers];
 }
 
-- (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
-                                           authorisers:(NSArray *)authorisers
+- (instancetype)initWithRequestResponseHandlerDelegate:(nullable id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                           authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
 {
     if (!(self = [super init])) {
         return nil;
@@ -161,8 +163,8 @@
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                              performRequest:(SPTDataLoaderRequest *)request
+- (nullable id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                                       performRequest:(SPTDataLoaderRequest *)request
 {
     if (self.offline) {
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
@@ -216,3 +218,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
