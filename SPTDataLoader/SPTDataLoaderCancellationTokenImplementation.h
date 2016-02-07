@@ -22,6 +22,8 @@
 
 #import "SPTDataLoaderCancellationToken.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The implementation for the cancellation token API
  */
@@ -33,6 +35,8 @@
  * @param cancelObject The object that will be cancelled
  */
 + (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate
-                                               cancelObject:(id)cancelObject;
+                                               cancelObject:(nullable id)cancelObject;
 
 @end
+
+NS_ASSUME_NONNULL_END

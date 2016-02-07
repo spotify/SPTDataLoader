@@ -22,14 +22,16 @@
 
 #import "SPTDataLoaderResponse+Private.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const SPTDataLoaderResponseErrorDomain = @"com.sptdataloaderresponse.error";
 
 static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 @interface SPTDataLoaderResponse ()
 
-@property (nonatomic, strong, readonly) NSURLResponse *response;
-@property (nonatomic, strong, readwrite) NSDictionary *responseHeaders;
+@property (nonatomic, strong, readonly, nullable) NSURLResponse *response;
+@property (nonatomic, strong, readwrite) NSDictionary<NSString *, NSString *> *responseHeaders;
 @property (nonatomic, strong, readwrite) NSError *error;
 @property (nonatomic, strong, readwrite) NSData *body;
 @property (nonatomic, assign, readwrite) NSTimeInterval requestTime;
@@ -40,12 +42,12 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 #pragma mark Private
 
-+ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(NSURLResponse *)response
++ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response
 {
     return [[self alloc] initWithRequest:request response:response];
 }
 
-- (instancetype)initWithRequest:(SPTDataLoaderRequest *)request response:(NSURLResponse *)response
+- (instancetype)initWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response
 {
     if (!(self = [super init])) {
         return nil;
@@ -163,7 +165,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     return NO;
 }
 
-- (NSDate *)retryAfterForHeaders:(NSDictionary *)headers
+- (nullable NSDate *)retryAfterForHeaders:(NSDictionary<NSString *, NSString *> *)headers
 {
     static NSDateFormatter *httpDateFormatter;
     static dispatch_once_t onceToken;
@@ -188,3 +190,5 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 
 @end
+
+NS_ASSUME_NONNULL_END

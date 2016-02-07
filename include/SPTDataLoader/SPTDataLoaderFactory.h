@@ -21,6 +21,9 @@
 @import Foundation;
 
 @class SPTDataLoader;
+@protocol SPTDataLoaderAuthoriser;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  * A factory for producing data loaders and automatically authorising requests
@@ -36,7 +39,7 @@
  * The objects authorising HTTP requests for this factory
  * @discussion The NSArray consists of objects conforming to the SPTDataLoaderAuthoriser protocol
  */
-@property (nonatomic, copy, readonly) NSArray *authorisers;
+@property (nonatomic, copy, readonly, nullable) NSArray<id<SPTDataLoaderAuthoriser>> *authorisers;
 
 /**
  * Creates a data loader
@@ -44,3 +47,5 @@
 - (SPTDataLoader *)createDataLoader;
 
 @end
+
+NS_ASSUME_NONNULL_END

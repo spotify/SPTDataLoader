@@ -25,6 +25,8 @@
 @class SPTDataLoaderResponse;
 @protocol SPTDataLoaderRequestResponseHandler;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The handler for performing a URL session task and forwarding the requests to relevant request response handler
  */
@@ -65,7 +67,7 @@
  * Tell the operation the URL session has completed the request
  * @param error An optional error to use if the request was not completed successfully
  */
-- (SPTDataLoaderResponse *)completeWithError:(NSError *)error;
+- (SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error;
 /**
  * Gets called whenever the original request was redirected.
  * Returns YES to allow redirect, NO to block it.
@@ -77,3 +79,5 @@
 - (void)start;
 
 @end
+
+NS_ASSUME_NONNULL_END

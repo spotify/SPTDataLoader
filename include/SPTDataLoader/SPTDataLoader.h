@@ -36,6 +36,8 @@ FOUNDATION_EXPORT double SPTDataLoaderVersionNumber;
 FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
 #endif // SPT_BUILDING_FRAMEWORK
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The object used for performing requests
  */
@@ -44,7 +46,7 @@ FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
 /**
  * The object listening to the data loader
  */
-@property (nonatomic, weak) id<SPTDataLoaderDelegate> delegate;
+@property (nonatomic, weak, nullable) id<SPTDataLoaderDelegate> delegate;
 /**
  * The queue to call the delegate selectors on
  * @discussion By default this is the main queue
@@ -62,3 +64,5 @@ FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
 - (void)cancelAllLoads;
 
 @end
+
+NS_ASSUME_NONNULL_END

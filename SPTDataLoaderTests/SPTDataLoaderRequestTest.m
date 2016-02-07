@@ -73,14 +73,20 @@
 
 - (void)testAddValueToNilHeader
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.request addValue:@"Value" forHeader:nil];
+#pragma clang diagnostic pop
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should not reflect an added value with an empty header");
 }
 
 - (void)testAddNilValueToHeader
 {
     [self.request addValue:@"Value" forHeader:@"Header"];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.request addValue:nil forHeader:@"Header"];
+#pragma clang diagnostic pop
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should remove a header when added with an empty value");
 }
 

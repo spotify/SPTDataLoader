@@ -24,8 +24,8 @@
 
 @interface SPTDataLoaderResolver ()
 
-@property (nonatomic, strong) NSMutableDictionary *resolverHost;
-@property (nonatomic, strong) NSHashTable *addresses;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSArray<SPTDataLoaderResolverAddress *> *> *resolverHost;
+@property (nonatomic, strong) NSHashTable<SPTDataLoaderResolverAddress *> *addresses;
 
 @end
 
@@ -45,7 +45,7 @@
     return host;
 }
 
-- (void)setAddresses:(NSArray *)addresses forHost:(NSString *)host
+- (void)setAddresses:(NSArray<NSString *> *)addresses forHost:(NSString *)host
 {
     NSMutableArray *mutableAddress = [NSMutableArray new];
     for (NSString *address in addresses) {

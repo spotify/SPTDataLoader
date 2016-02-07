@@ -20,6 +20,8 @@
  */
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, SPTDataLoaderRequestMethod) {
     SPTDataLoaderRequestMethodGet,
     SPTDataLoaderRequestMethodPost,
@@ -51,11 +53,11 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 /**
  * The body of the request
  */
-@property (nonatomic, strong) NSData *body;
+@property (nonatomic, strong, nullable) NSData *body;
 /**
  * The headers represented by a dictionary
  */
-@property (nonatomic, strong, readonly) NSDictionary *headers;
+@property (nonatomic, strong, readonly) NSDictionary<NSString *, NSString *> *headers;
 /**
  * Whether the result of the request should be delivered in chunks
  * @discussion This will only generate chunks if the data loader delegate is set up to receive them
@@ -77,7 +79,7 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 /**
  * Any user information tied to this request
  */
-@property (nonatomic, strong) NSDictionary *userInfo;
+@property (nonatomic, strong) NSDictionary<NSObject *, NSObject *> *userInfo;
 /**
  * An identifier for uniquely identifying the request
  */
@@ -93,14 +95,14 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
  *
  * @discussion This is used for logging purposes to locate where data is downloaded from.
  */
-@property (nonatomic, strong) NSString *sourceIdentifier;
+@property (nonatomic, copy, nullable) NSString *sourceIdentifier;
 
 /**
  * Class constructor
  * @param URL The URL to query
  * @param sourceIdentifier An identifier for the request source. May be nil.
  */
-+ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(NSString *)sourceIdentifier;
++ (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(nullable NSString *)sourceIdentifier;
 
 /**
  * The value to be added to the Accept-Language header by default
@@ -120,3 +122,5 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 - (void)removeHeader:(NSString *)header;
 
 @end
+
+NS_ASSUME_NONNULL_END

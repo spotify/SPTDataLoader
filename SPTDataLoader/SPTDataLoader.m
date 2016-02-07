@@ -26,10 +26,12 @@
 #import "SPTDataLoaderDelegate.h"
 #import "SPTDataLoaderResponse+Private.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTDataLoader ()
 
-@property (nonatomic, strong) NSHashTable *cancellationTokens;
-@property (nonatomic, strong) NSMutableArray *requests;
+@property (nonatomic, strong) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
+@property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequest *> *requests;
 
 @end
 
@@ -182,3 +184,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

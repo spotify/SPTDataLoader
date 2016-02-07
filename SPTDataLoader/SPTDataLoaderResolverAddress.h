@@ -20,6 +20,8 @@
  */
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * An object for tracking a resolver addresses reachability
  */
@@ -46,3 +48,5 @@
 - (void)failedToReach;
 
 @end
+
+NS_ASSUME_NONNULL_END

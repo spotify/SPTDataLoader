@@ -22,6 +22,8 @@
 
 @protocol SPTDataLoaderCancellationToken;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * A private delegate API for the objects in the SPTDataLoader library to use
  */
@@ -42,3 +44,5 @@
 @property (nonatomic, weak) id<SPTDataLoaderCancellationToken> cancellationToken;
 
 @end
+
+NS_ASSUME_NONNULL_END

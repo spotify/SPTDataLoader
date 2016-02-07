@@ -20,10 +20,12 @@
  */
 #import "SPTDataLoaderCancellationTokenImplementation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTDataLoaderCancellationTokenImplementation ()
 
+
 @property (nonatomic, assign, readwrite, getter = isCancelled) BOOL cancelled;
-@property (nonatomic, weak, readwrite) id<SPTDataLoaderCancellationTokenDelegate> delegate;
 
 @end
 
@@ -32,12 +34,12 @@
 #pragma mark SPTDataLoaderCancellationTokenImplementation
 
 + (instancetype)cancellationTokenImplementationWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate
-                                               cancelObject:(id)cancelObject
+                                               cancelObject:(nullable id)cancelObject
 {
     return [[self alloc] initWithDelegate:delegate cancelObject:cancelObject];
 }
 
-- (instancetype)initWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate cancelObject:(id)cancelObject
+- (instancetype)initWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate cancelObject:(nullable id)cancelObject
 {
     if (!(self = [super init])) {
         return nil;
@@ -67,3 +69,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

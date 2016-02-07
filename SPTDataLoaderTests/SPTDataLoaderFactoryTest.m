@@ -113,7 +113,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
-    [self.factory receivedDataChunk:nil forResponse:response];
+    [self.factory receivedDataChunk:[NSData new] forResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfReceivedDataRequestCalls, 1u, @"The factory did not relay a received data chunk response to the correct handler");
 }
 
@@ -165,21 +165,27 @@
 - (void)testRelayToDelegateWhenPerformingRequest
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     [self.factory requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
     XCTAssertEqual(request, self.delegate.lastRequestPerformed, @"The factory did not relay the perform request to it's delegate");
 }
 
 - (void)testRelayAuthorisingSuccessToDelegate
 {
+    SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    [self.factory dataLoaderAuthoriser:nil authorisedRequest:request];
+    [self.factory dataLoaderAuthoriser:authoriser authorisedRequest:request];
     XCTAssertEqual(request, self.delegate.lastRequestAuthorised, @"The factory did not relay the request authorisation success to it's delegate");
 }
 
 - (void)testRelayAuthorisationFailureToDelegate
 {
+    SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    [self.factory dataLoaderAuthoriser:nil didFailToAuthoriseRequest:request withError:nil];
+    NSError *error = [NSError new];
+    [self.factory dataLoaderAuthoriser:authoriser didFailToAuthoriseRequest:request withError:error];
     XCTAssertEqual(request, self.delegate.lastRequestFailed, @"The factory did not relay the request authorisation failure to it's delegate");
 }
 

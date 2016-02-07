@@ -58,7 +58,7 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
-    self.request = [SPTDataLoaderRequest requestWithURL:[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
+    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
                                        sourceIdentifier:nil];
     self.task = [NSURLSessionTaskMock new];
     self.handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:self.task
@@ -97,7 +97,7 @@
 - (void)testRelayFailedResponse
 {
     NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
-    [self.handler receiveResponse:nil];
+    [self.handler receiveResponse:[NSURLResponse new]];
     [self.handler completeWithError:error];
     XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The handler did not relay the failed response onto its request response handler");
 }
@@ -154,18 +154,18 @@
 {
     NSString *dataString = @"TEST";
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-    [self.handler receiveResponse:nil];
+    [self.handler receiveResponse:[NSURLResponse new]];
     [self.handler receiveData:data];
     [self.handler receiveData:data];
     SPTDataLoaderResponse *response = [self.handler completeWithError:nil];
-    NSString *receivedString = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+    NSString *receivedString = [[NSString alloc] initWithData:(NSData * _Nonnull)response.body encoding:NSUTF8StringEncoding];
     XCTAssertEqualObjects([dataString stringByAppendingString:dataString], receivedString);
 }
 
 - (void)testCancelledError
 {
     NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
-    [self.handler receiveResponse:nil];
+    [self.handler receiveResponse:[NSURLResponse new]];
     [self.handler completeWithError:error];
     XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1u, @"The handler did not relay the failed response onto its request response handler");
 }
@@ -178,7 +178,7 @@
     self.task.resumeCallback = ^ {
         __strong __typeof(self) strongSelf = weakSelf;
         NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
-        [strongSelf.handler receiveResponse:nil];
+        [strongSelf.handler receiveResponse:[NSURLResponse new]];
         [strongSelf.handler completeWithError:error];
         if (strongSelf.request.maximumRetryCount - 1 == strongSelf.task.numberOfCallsToResume) {
             [expectation fulfill];

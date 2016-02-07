@@ -20,6 +20,8 @@
  */
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * A category for calculating the size of a header represented by an NSDictionary
  */
@@ -31,3 +33,5 @@
 @property (nonatomic, assign, readonly, getter = spt_byteSizeOfHeaders) NSInteger byteSizeOfHeaders;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -24,6 +24,8 @@
 @class SPTDataLoaderResponse;
 @class SPTDataLoaderRequest;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * The protocol used for listening to the result of performing requests on the SPTDataLoader
  * @discussion One of the following callbacks are guaranteed to happen for every request being track by the data loader:
@@ -78,3 +80,5 @@ didReceiveDataChunk:(NSData *)data
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 
 @class SPTDataLoaderRequest;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * A rate limiter for configuring custom rates on a per service basis
  * @discussion A service is defined as the scheme, host and first path component of the URL
@@ -64,3 +66,5 @@
 - (void)setRetryAfter:(NSTimeInterval)absoluteTime forURL:(NSURL *)URL;
 
 @end
+
+NS_ASSUME_NONNULL_END

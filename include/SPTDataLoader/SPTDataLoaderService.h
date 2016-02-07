@@ -23,6 +23,9 @@
 @class SPTDataLoaderFactory;
 @class SPTDataLoaderRateLimiter;
 @class SPTDataLoaderResolver;
+@protocol SPTDataLoaderAuthoriser;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol SPTDataLoaderConsumptionObserver;
 
@@ -50,13 +53,13 @@
 + (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
                                    rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(SPTDataLoaderResolver *)resolver
-                      customURLProtocolClasses:(NSArray *)customURLProtocolClasses;
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses;
 
 /**
  * Creates a data loader factory
  * @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */
-- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray *)authorisers;
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers;
 /**
  * Adds a consumption observer
  * @param consumptionObserver The consumption observer to add to the service
@@ -71,3 +74,5 @@
 - (void)removeConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver;
 
 @end
+
+NS_ASSUME_NONNULL_END

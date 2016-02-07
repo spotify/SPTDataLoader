@@ -22,6 +22,8 @@
 
 #import "SPTDataLoaderCancellationTokenImplementation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation SPTDataLoaderCancellationTokenFactoryImplementation
 
 #pragma mark SPTDataLoaderCancellationTokenFactory
@@ -34,3 +36,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -20,6 +20,8 @@
  */
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 typedef NS_ENUM(NSInteger, SPTDataLoaderResponseHTTPStatusCode) {
     SPTDataLoaderResponseHTTPStatusCodeInvalid = 0,
@@ -88,23 +90,23 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
  * The error that the request generated
  * @warning Will be nil if the request is considered a success
  */
-@property (nonatomic, strong, readonly) NSError *error;
+@property (nonatomic, strong, readonly, nullable) NSError *error;
 /**
  * The headers that the server returned with a request
  */
-@property (nonatomic, strong, readonly) NSDictionary *responseHeaders;
+@property (nonatomic, strong, readonly) NSDictionary<NSString *, NSString *> *responseHeaders;
 /**
  * The date at which the request that generated the response can be retried
  * @warning Can be nil if no retry-after is given in the response headers
  * @discussion This should only show up if the response is an error. It can still show up in a successful response, but
  * if this occurs it is probably the result of a misconfigured server
  */
-@property (nonatomic, strong, readonly) NSDate *retryAfter;
+@property (nonatomic, strong, readonly, nullable) NSDate *retryAfter;
 /**
  * The body of data contained in the response
  * @warning Will be nil if not body was contained in the response
  */
-@property (nonatomic, strong, readonly) NSData *body;
+@property (nonatomic, strong, readonly, nullable) NSData *body;
 /**
  * The time the request took
  */
@@ -116,3 +118,5 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
 @property (nonatomic, assign, readonly) SPTDataLoaderResponseHTTPStatusCode statusCode;
 
 @end
+
+NS_ASSUME_NONNULL_END

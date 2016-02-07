@@ -26,6 +26,8 @@
 @protocol SPTDataLoaderCancellationToken;
 @protocol SPTDataLoaderRequestResponseHandler;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * A private delegate API for the creator of SPTDataLoader to use for routing requests through a user authentication
  * layer
@@ -37,8 +39,8 @@
  * @param requestResponseHandler The object that can perform requests and responses
  * @param request The object describing the request to perform
  */
-- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                              performRequest:(SPTDataLoaderRequest *)request;
+- (nullable id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                                                       performRequest:(SPTDataLoaderRequest *)request;
 
 @optional
 
@@ -66,7 +68,7 @@
 /**
  * The object to delegate performing requests to
  */
-@property (nonatomic, weak, readonly) id<SPTDataLoaderRequestResponseHandlerDelegate> requestResponseHandlerDelegate;
+@property (nonatomic, weak, readonly, nullable) id<SPTDataLoaderRequestResponseHandlerDelegate> requestResponseHandlerDelegate;
 
 /**
  * Call when a response successfully completed
@@ -109,3 +111,5 @@
 - (void)authoriseRequest:(SPTDataLoaderRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END
