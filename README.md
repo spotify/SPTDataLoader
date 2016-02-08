@@ -12,7 +12,7 @@
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
 - [x] 📱 iOS 7.0+
-- [x] 💻 OS X 10.8+
+- [x] 💻 OS X 10.9+
 - [x] ⌚️ watchOS 2.0+
 - [x] 📺 tvOS 9.0+
 
