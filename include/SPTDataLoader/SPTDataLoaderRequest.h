@@ -79,7 +79,7 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
 /**
  * Any user information tied to this request
  */
-@property (nonatomic, strong) NSDictionary<NSObject *, NSObject *> *userInfo;
+@property (nonatomic, strong) NSDictionary *userInfo;
 /**
  * An identifier for uniquely identifying the request
  */
