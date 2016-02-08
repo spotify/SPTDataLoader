@@ -144,7 +144,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
     NSString * const SPTDataLoaderRequestLanguageHeaderValuesJoiner = @", ";
 
-    NSString *(^constructLanguageHeaderValue)(NSString *, float) = ^NSString *(NSString *language, float languageImportance) {
+    NSString *(^constructLanguageHeaderValue)(NSString *, double) = ^NSString *(NSString *language, double languageImportance) {
         NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
         return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
     };
@@ -153,7 +153,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
         languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
     }
-    float languageImportanceCounter = 1.0f;
+    double languageImportanceCounter = 1.0;
     NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
     BOOL containsEnglish = NO;
     for (NSString *language in languages) {
@@ -165,15 +165,15 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
             }
         }
 
-        if (languageImportanceCounter == 1.0f) {
+        if (languageImportanceCounter == 1.0) {
             [languageHeaderValues addObject:language];
         } else {
             [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
         }
-        languageImportanceCounter -= (1.0f / languages.count);
+        languageImportanceCounter -= (1.0 / languages.count);
     }
     if (!containsEnglish) {
-        [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01f)];
+        [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
     }
     return [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
 }
