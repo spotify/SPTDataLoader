@@ -48,7 +48,7 @@ env:
     - PROJECT_LIBRARY="SPTDataLoader.xcodeproj"
     - PROJECT_DEMO="SPTDataLoaderDemo.xcodeproj"
     - PROJECT_FRAMEWORK="SPTDataLoaderFramework.xcodeproj"
-    - PODSPEC="SPTDataLoaderDemo.podspec"
+    - PODSPEC="SPTDataLoader.podspec"
   matrix:
     - TEST_SDK=iphonesimulator  TEST_DEST="platform=iOS Simulator,OS=8.1,name=iPhone 6"   SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
     - TEST_SDK=iphonesimulator  TEST_DEST="platform=iOS Simulator,OS=8.2,name=iPhone 4s"  SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
