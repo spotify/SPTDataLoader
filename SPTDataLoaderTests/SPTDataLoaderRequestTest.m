@@ -18,11 +18,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-@import XCTest;
+#import <XCTest/XCTest.h>
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 
-@import ObjectiveC;
+#import <ObjectiveC/ObjectiveC.h>
 
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSBundleMock.h"

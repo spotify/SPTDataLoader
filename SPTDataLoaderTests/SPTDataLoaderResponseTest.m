@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-@import XCTest;
+#import <XCTest/XCTest.h>
 
 #import "SPTDataLoaderResponse.h"
 #import "SPTDataLoaderRequest.h"

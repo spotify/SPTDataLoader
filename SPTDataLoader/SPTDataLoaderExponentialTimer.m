@@ -20,8 +20,8 @@
  */
 #import "SPTDataLoaderExponentialTimer.h"
 
-@import Darwin.C.math;
-@import Darwin.C.stdlib;
+#import <math.h>
+#import <stdlib.h>
 
 
 #pragma mark - Default Values
