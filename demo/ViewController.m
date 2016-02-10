@@ -21,7 +21,7 @@
 #import "ViewController.h"
 #import "ClientKeys.h"
 
-@import SPTDataLoader;
+#import <SPTDataLoader/SPTDataLoader.h>
 
 @implementation ViewController
 

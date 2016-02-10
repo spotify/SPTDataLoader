@@ -18,9 +18,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-@import XCTest;
+#import <XCTest/XCTest.h>
 
-@import SPTDataLoader;
+#import <SPTDataLoader/SPTDataLoader.h>
 
 @interface SPTDataLoaderExponentialTimerTest : XCTestCase
 

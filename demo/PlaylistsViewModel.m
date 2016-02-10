@@ -20,7 +20,7 @@
  */
 #import "PlaylistsViewModel.h"
 
-@import SPTDataLoader;
+#import <SPTDataLoader/SPTDataLoader.h>
 
 static NSString * const PlaylistsViewModelMeURLString = @"https://api.spotify.com/v1/me";
 static NSString * const PlaylistsViewModelSourceIdentifier = @"me";

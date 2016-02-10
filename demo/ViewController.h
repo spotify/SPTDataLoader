@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
 
