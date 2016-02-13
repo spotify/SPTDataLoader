@@ -16,6 +16,8 @@ Authentication and back-off logic is a pain, let's do it once and forget about i
 - [x] ⌚️ watchOS 2.0+
 - [x] 📺 tvOS 9.0+
 
+Yet another networking library? Well apart from some unique benefits such as built-in rate limiting and powerful request authentication, a significant benefit for you is that any tagged version has been tested in production. We only tag a new release once it’s been used for two weeks by the Spotify app (which has millions of active users a day). As such you can be sure tagged versions are as stable as possible.
+
 ## Architecture :triangular_ruler:
 `SPTDataLoader` is designed as an HTTP stack with 3 additional layers on top of `NSURLSession`.
 
