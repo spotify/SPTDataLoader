@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/spotify/SPTDataLoader/badge.svg?branch=master&service=github)](https://coveralls.io/github/spotify/SPTDataLoader?branch=master)
 [![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/SPTDataLoader.svg)](http://cocoadocs.org/docsets/SPTDataLoader/)
 [![License](https://img.shields.io/github/license/spotify/SPTDataLoader.svg)](LICENSE)
-[![Cocoapods](https://img.shields.io/cocoapods/v/SPTDataLoader.svg)](https://cocoapods.org/?q=SPTDataLoader)
+[![CocoaPods](https://img.shields.io/cocoapods/v/SPTDataLoader.svg)](https://cocoapods.org/?q=SPTDataLoader)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Spotify FOSS Slack](https://slackin.spotify.com/badge.svg)](https://slackin.spotify.com)
 [![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/spotify/sptdataloader)](http://clayallsopp.github.io/readme-score?url=https://github.com/spotify/sptdataloader)
@@ -30,7 +30,7 @@ The authentication in this case is abstract, allowing the creator of the SPTData
 The data loader service allows rate limiting of URLs to be set explicitly or to be determined by the server using the “Retry-After” semantic. It allows back-off retrying by using a jittered exponential backoff to prevent the thundering hordes creating a request storm after a predictable exponential period has expired.
 
 ## Installation
-SPTDataLoader can be installed in a variety of ways including traditional static libraries and dynamic frameworks. As well as using either of the dependency managers Cocoapods and Carthage.
+SPTDataLoader can be installed in a variety of ways including traditional static libraries and dynamic frameworks. As well as using either of the dependency managers CocoaPods and Carthage.
 
 ### Static Library
 Simply include `SPTDataLoader.xcodeproj` in your App’s Xcode project, and link your app with the library in the “Build Phases” section.
