@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file. SPTDataLoad
 
 --
 
+## [1.1.0](https://github.com/spotify/SPTDataLoader/releases/tag/1.1.0)
+_Released on 2016-02-15._
+
+### Added
+* Added support for watchOS and tvOS.
+* Added error handling when a chunked request is made without the delegate supporting chunks.
+
+### Fixed
+* Fixed HTTP errors not being correctly reported if they are not above the 400 HTTP status codes.
+* Fixed a bug allowing infinite retries of requests.
+
+### Removed
+* Removed the non-optional status of cancellation callbacks in the delegate.
+
+### Changed
+* Changed Accept-Language values to be publically accessible.
+* Changed blanket HTTPS certificate accepting a runtime variable rather than a preprocessor macro.
+* Changed the name of SPTCancellationToken to SPTDataLoaderCancellationToken.
+
 ## [1.0.1](https://github.com/spotify/SPTDataLoader/releases/tag/1.0.1)
 _Released on 2015-12-22._
 
@@ -28,7 +47,7 @@ _Released on 2015-12-22._
 * Fixed HTTP redirects not working.
 
 ## [1.0.0](https://github.com/spotify/SPTDataLoader/releases/tag/1.0.0)
-_Released on 2015-02-01.
+_Released on 2015-02-01._
 
 ### Added
 * Initial release of SPTDataLoader.
