@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "SPTDataLoader"
-    s.version      = "1.0.2"
+    s.version      = "1.1.0"
     s.summary      = "SPTDataLoader is Spotify's HTTP library for Objective-C"
 
     s.description  = <<-DESC
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
                      DESC
 
     s.ios.deployment_target = "6.0"
-    s.osx.deployment_target = "10.8"
+    s.osx.deployment_target = "10.9"
     s.tvos.deployment_target = '9.0'
     s.watchos.deployment_target = '2.0'
 
