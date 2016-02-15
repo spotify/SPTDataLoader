@@ -18,6 +18,8 @@ Authentication and back-off logic is a pain, let's do it once and forget about i
 
 Yet another networking library? Well apart from some unique benefits such as built-in rate limiting and powerful request authentication, a significant benefit for you is that any tagged version has been tested in production. We only tag a new release once it’s been used for two weeks by the Spotify app (which has millions of active users a day). As such you can be sure tagged versions are as stable as possible.
 
+As for Spotify, we wanted a light networking library that we had full control over in order to act fast in squashing bugs, and carefully select the feature we needed and were capable of supporting. The architecture also plays very nicely into our MVVM and view aggregation service architectures at Spotify by tying the lifetime of a request to the view.
+
 ## Architecture :triangular_ruler:
 `SPTDataLoader` is designed as an HTTP stack with 3 additional layers on top of `NSURLSession`.
 
