@@ -1,0 +1,3 @@
+[submodule "ci"]
+	path = ci
+	url = https://github.com/spotify/ios-ci.git
