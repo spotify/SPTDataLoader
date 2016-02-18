@@ -22,7 +22,7 @@
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 
-#import <ObjectiveC/ObjectiveC.h>
+#import <objc/runtime.h>
 
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSBundleMock.h"
