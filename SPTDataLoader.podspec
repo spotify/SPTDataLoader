@@ -23,6 +23,5 @@ Pod::Spec.new do |s|
     s.source_files = "include/SPTDataLoader/*.h", "SPTDataLoader/*.{h,m}"
     s.public_header_files = "include/SPTDataLoader/*.h"
     s.xcconfig = { 'OTHER_LDFLAGS' => '-lObjC' }
-    s.module_map = 'include/SPTDataLoader/module.modulemap'
 
 end
