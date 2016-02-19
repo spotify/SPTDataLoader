@@ -49,6 +49,8 @@ env:
     - PROJECT_DEMO="SPTDataLoaderDemo.xcodeproj"
     - PROJECT_FRAMEWORK="SPTDataLoaderFramework.xcodeproj"
     - PODSPEC="SPTDataLoader.podspec"
+    - EXPECTED_LICENSE_HEADER_FILE="./other/expected_license_header.txt"
+    - LICENSED_SOURCE_FILES_GLOB="{{SPTDataLoader,SPTDataLoaderTests,demo}/*.{h,m},include/*/*.h}"
   matrix:
     - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.1,name='iPhone 6'"   SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
     - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.2,name='iPhone 4s'"  SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
