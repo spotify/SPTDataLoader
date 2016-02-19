@@ -137,8 +137,13 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
 {
+    if (response.body == nil) {
+        return;
+    }
+
+    NSData *body = response.body;
     NSError *error = nil;
-    NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:response.body
+    NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:body
                                                                     options:NSJSONReadingAllowFragments
                                                                       error:&error];
     
@@ -161,7 +166,8 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
 {
     @synchronized(self.pendingRequests) {
         for (SPTDataLoaderRequest *pendingRequest in self.pendingRequests) {
-            [self.delegate dataLoaderAuthoriser:self didFailToAuthoriseRequest:pendingRequest withError:response.error];
+            NSError *error = response.error;
+            [self.delegate dataLoaderAuthoriser:self didFailToAuthoriseRequest:pendingRequest withError:error];
         }
     }
 }
