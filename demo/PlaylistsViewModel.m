@@ -109,8 +109,13 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
 {
+    if (response.body == nil) {
+        return;
+    }
+
+    NSData *body = response.body;
     NSError *error = nil;
-    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:response.body
+    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:body
                                                                    options:NSJSONReadingAllowFragments
                                                                      error:&error];
     if (!jsonDictionary) {

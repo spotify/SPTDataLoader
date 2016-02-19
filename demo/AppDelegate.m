@@ -108,8 +108,13 @@ static NSString *AppDelegateSourceIdentifier = @"app";
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
 {
+    if (response.body == nil) {
+        return;
+    }
+
+    NSData *body = response.body;
     NSError *error = nil;
-    NSDictionary *oauthTokenDictionary = [NSJSONSerialization JSONObjectWithData:response.body
+    NSDictionary *oauthTokenDictionary = [NSJSONSerialization JSONObjectWithData:body
                                                                          options:NSJSONReadingAllowFragments
                                                                            error:&error];
     if (!oauthTokenDictionary) {
