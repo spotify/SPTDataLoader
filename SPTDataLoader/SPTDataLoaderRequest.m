@@ -51,17 +51,16 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 {
     static int64_t uniqueIdentifierBarrier = 0;
 
-    if (!(self = [super init])) {
-        return nil;
-    }
+    self = [super init];
+    if (self) {
+        _URL = URL;
+        _sourceIdentifier = sourceIdentifier;
 
-    _URL = URL;
-    _sourceIdentifier = sourceIdentifier;
-
-    _mutableHeaders = [NSMutableDictionary new];
-    _method = SPTDataLoaderRequestMethodGet;
-    @synchronized(self.class) {
-        _uniqueIdentifier = uniqueIdentifierBarrier++;
+        _mutableHeaders = [NSMutableDictionary new];
+        _method = SPTDataLoaderRequestMethodGet;
+        @synchronized(self.class) {
+            _uniqueIdentifier = uniqueIdentifierBarrier++;
+        }
     }
 
     return self;

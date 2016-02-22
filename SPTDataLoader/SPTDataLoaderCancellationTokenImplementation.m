@@ -41,12 +41,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate cancelObject:(nullable id)cancelObject
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _delegate = delegate;
+        _objectToCancel = cancelObject;
     }
-    
-    _delegate = delegate;
-    _objectToCancel = cancelObject;
     
     return self;
 }

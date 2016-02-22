@@ -49,26 +49,25 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 - (instancetype)initWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response
 {
-    if (!(self = [super init])) {
-        return nil;
-    }
-    
-    _request = request;
-    _response = response;
-    
-    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (httpResponse.statusCode >= SPTDataLoaderResponseHTTPStatusCodeMovedMultipleChoices
-            || httpResponse.statusCode <= SPTDataLoaderResponseHTTPStatusCodeSwitchProtocols) {
-            _error = [NSError errorWithDomain:SPTDataLoaderResponseErrorDomain
-                                         code:httpResponse.statusCode
-                                     userInfo:nil];
+    self = [super init];
+    if (self) {
+        _request = request;
+        _response = response;
+
+        if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            if (httpResponse.statusCode >= SPTDataLoaderResponseHTTPStatusCodeMovedMultipleChoices
+                || httpResponse.statusCode <= SPTDataLoaderResponseHTTPStatusCodeSwitchProtocols) {
+                _error = [NSError errorWithDomain:SPTDataLoaderResponseErrorDomain
+                                             code:httpResponse.statusCode
+                                         userInfo:nil];
+            }
+            _responseHeaders = httpResponse.allHeaderFields;
+            _statusCode = httpResponse.statusCode;
         }
-        _responseHeaders = httpResponse.allHeaderFields;
-        _statusCode = httpResponse.statusCode;
+
+        _retryAfter = [self retryAfterForHeaders:_responseHeaders];
     }
-    
-    _retryAfter = [self retryAfterForHeaders:_responseHeaders];
     
     return self;
 }

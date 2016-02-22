@@ -24,8 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SPTDataLoaderResolverAddress ()
 
-@property (nonatomic, assign) NSTimeInterval stalePeriod;
-
+@property (nonatomic, assign, readonly) NSTimeInterval stalePeriod;
 @property (nonatomic, assign) CFAbsoluteTime lastFailedTime;
 
 @end
@@ -53,13 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithAddress:(NSString *)address
 {
     const NSTimeInterval SPTDataLoaderResolverAddressDefaultStalePeriodOneHour = 60.0 * 60.0;
-    
-    if (!(self = [super init])) {
-        return nil;
+
+    self = [super init];
+    if (self) {
+        _address = address;
+        _stalePeriod = SPTDataLoaderResolverAddressDefaultStalePeriodOneHour;
     }
-    
-    _address = address;
-    _stalePeriod = SPTDataLoaderResolverAddressDefaultStalePeriodOneHour;
     
     return self;
 }

@@ -50,18 +50,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithRequestResponseHandlerDelegate:(nullable id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
                                            authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
 {
-    if (!(self = [super init])) {
-        return nil;
-    }
-    
-    _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
-    _authorisers = [authorisers copy];
-    
-    _requestToRequestResponseHandler = [NSMapTable weakToWeakObjectsMapTable];
-    _requestTimeoutQueue = dispatch_get_main_queue();
+    self = [super init];
+    if (self) {
+        _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
+        _authorisers = [authorisers copy];
 
-    for (id<SPTDataLoaderAuthoriser> authoriser in _authorisers) {
-        authoriser.delegate = self;
+        _requestToRequestResponseHandler = [NSMapTable weakToWeakObjectsMapTable];
+        _requestTimeoutQueue = dispatch_get_main_queue();
+
+        for (id<SPTDataLoaderAuthoriser> authoriser in _authorisers) {
+            authoriser.delegate = self;
+        }
     }
     
     return self;
