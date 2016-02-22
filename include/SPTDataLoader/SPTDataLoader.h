@@ -43,21 +43,32 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface SPTDataLoader : NSObject
 
+#pragma mark Delegating Tasks
+
 /**
- * The object listening to the data loader
+ * The object listening to the data loader.
  */
 @property (nonatomic, weak, nullable) id<SPTDataLoaderDelegate> delegate;
 /**
- * The queue to call the delegate selectors on
- * @discussion By default this is the main queue
+ * The queue to call the delegate selectors on.
+ * @discussion By default this is the main queue.
  */
 @property (nonatomic, strong) dispatch_queue_t delegateQueue;
 
+#pragma mark Performing Requests
+
 /**
- * Performs a request
+ * Performs a request and returns a cancellation token associated with it.
+ * @discussion If the request can’t be performed `nil` will be returned and the receiver’s delegate will be sent the
+ * `dataLoader:didReceiveErrorResponse:`. The response object sent to the delegate will contain an `NSError` object
+ * describing what went wrong.
  * @param request The object describing the kind of request to be performed
+ * @return A cancellation token associated with the request, or `nil` if the request coulnd’t be performed.
  */
-- (id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request;
+- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request;
+
+#pragma mark Cancelling Loads
+
 /**
  * Cancels all the currently operating and pending requests
  */

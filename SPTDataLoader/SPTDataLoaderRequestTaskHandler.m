@@ -112,7 +112,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     }];
 }
 
-- (SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error
+- (nullable SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = self.requestResponseHandler;
     if (!self.response) {

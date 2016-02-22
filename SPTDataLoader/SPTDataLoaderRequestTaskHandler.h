@@ -66,8 +66,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Tell the operation the URL session has completed the request
  * @param error An optional error to use if the request was not completed successfully
+ * @return The response object unless the request was cancelled or will be re-tried in which case `nil` is returned.
  */
-- (SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error;
+- (nullable SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error;
 /**
  * Gets called whenever the original request was redirected.
  * Returns YES to allow redirect, NO to block it.

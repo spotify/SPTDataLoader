@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark SPTDataLoader
 
-- (id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
     SPTDataLoaderRequest *copiedRequest = [request copy];
     id<SPTDataLoaderDelegate> delegate = self.delegate;
