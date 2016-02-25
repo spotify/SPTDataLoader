@@ -45,14 +45,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDefaultRequestsPerSecond:(double)requestsPerSecond
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _requestsPerSecond = requestsPerSecond;
+        _serviceEndpointRequestsPerSecond = [NSMutableDictionary new];
+        _serviceEndpointLastExecution = [NSMutableDictionary new];
+        _serviceEndpointRetryAt = [NSMutableDictionary new];
     }
-    
-    _requestsPerSecond = requestsPerSecond;
-    _serviceEndpointRequestsPerSecond = [NSMutableDictionary new];
-    _serviceEndpointLastExecution = [NSMutableDictionary new];
-    _serviceEndpointRetryAt = [NSMutableDictionary new];
     
     return self;
 }
@@ -135,10 +134,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)serviceKeyFromURL:(NSURL *)URL
 {
-    if (!URL) {
-        return nil;
-    }
-    
     NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     NSURLComponents *serviceComponents = [NSURLComponents new];
     serviceComponents.scheme = requestComponents.scheme;

@@ -30,8 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SPTDataLoader ()
 
-@property (nonatomic, strong) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
-@property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequest *> *requests;
+@property (nonatomic, strong, readonly) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
+@property (nonatomic, strong, readonly) NSMutableArray<SPTDataLoaderRequest *> *requests;
 
 @end
 
@@ -46,16 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
+
+        _cancellationTokens = [NSHashTable weakObjectsHashTable];
+        _delegateQueue = dispatch_get_main_queue();
+        _requests = [NSMutableArray new];
     }
-    
-    _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
-    
-    _cancellationTokens = [NSHashTable weakObjectsHashTable];
-    _delegateQueue = dispatch_get_main_queue();
-    _requests = [NSMutableArray new];
-    
     return self;
 }
 
@@ -70,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark SPTDataLoader
 
-- (id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
 {
     SPTDataLoaderRequest *copiedRequest = [request copy];
     id<SPTDataLoaderDelegate> delegate = self.delegate;

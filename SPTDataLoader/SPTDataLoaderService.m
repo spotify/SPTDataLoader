@@ -70,30 +70,29 @@ NS_ASSUME_NONNULL_BEGIN
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
     
     NSString * const SPTDataLoaderServiceUserAgentHeader = @"User-Agent";
-    
-    if (!(self = [super init])) {
-        return nil;
+
+    self = [super init];
+    if (self) {
+        _rateLimiter = rateLimiter;
+        _resolver = resolver;
+
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
+        configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
+        configuration.HTTPShouldUsePipelining = YES;
+        configuration.protocolClasses = customURLProtocolClasses;
+        if (userAgent) {
+            configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : userAgent };
+        }
+
+        _cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
+        _sessionQueue = [NSOperationQueue new];
+        _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
+        _sessionQueue.name = NSStringFromClass(self.class);
+        _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
+        _handlers = [NSMutableArray new];
+        _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
     }
-    
-    _rateLimiter = rateLimiter;
-    _resolver = resolver;
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
-    configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
-    configuration.HTTPShouldUsePipelining = YES;
-    configuration.protocolClasses = customURLProtocolClasses;
-    if (userAgent) {
-        configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : userAgent };
-    }
-    
-    _cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
-    _sessionQueue = [NSOperationQueue new];
-    _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
-    _sessionQueue.name = NSStringFromClass(self.class);
-    _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
-    _handlers = [NSMutableArray new];
-    _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
     
     return self;
 }
@@ -121,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-- (SPTDataLoaderRequestTaskHandler *)handlerForTask:(NSURLSessionTask *)task
+- (nullable SPTDataLoaderRequestTaskHandler *)handlerForTask:(NSURLSessionTask *)task
 {
     NSArray *handlers = nil;
     @synchronized(self.handlers) {

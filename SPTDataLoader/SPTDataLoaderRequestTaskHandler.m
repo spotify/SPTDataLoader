@@ -77,23 +77,22 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 {
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerMaximumTime = 60.0;
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerInitialTime = 1.0;
-    
-    if (!(self = [super init])) {
-        return nil;
+
+    self = [super init];
+    if (self) {
+        _task = task;
+        _request = request;
+        _requestResponseHandler = requestResponseHandler;
+        _rateLimiter = rateLimiter;
+
+        __weak __typeof(self) weakSelf = self;
+        _executionBlock = ^{
+            [weakSelf checkRateLimiterAndExecute];
+        };
+        _exponentialTimer = [SPTDataLoaderExponentialTimer exponentialTimerWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
+                                                                                   maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
+        _retryQueue = dispatch_get_main_queue();
     }
-    
-    _task = task;
-    _request = request;
-    _requestResponseHandler = requestResponseHandler;
-    _rateLimiter = rateLimiter;
-    
-    __weak __typeof(self) weakSelf = self;
-    _executionBlock = ^ {
-        [weakSelf checkRateLimiterAndExecute];
-    };
-    _exponentialTimer = [SPTDataLoaderExponentialTimer exponentialTimerWithInitialTime:SPTDataLoaderRequestTaskHandlerInitialTime
-                                                                               maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
-    _retryQueue = dispatch_get_main_queue();
     
     return self;
 }
@@ -112,7 +111,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     }];
 }
 
-- (SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error
+- (nullable SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = self.requestResponseHandler;
     if (!self.response) {
