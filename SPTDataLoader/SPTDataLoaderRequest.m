@@ -177,9 +177,9 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     return [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
 }
 
-- (NSString *)debugDescription
+- (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ { URL: %@ }", [super debugDescription], self.URL];
+    return [NSString stringWithFormat:@"<%@: %p URL = \"%@\">", self.class, (void *)self, self.URL];
 }
 
 #pragma mark NSCopying
