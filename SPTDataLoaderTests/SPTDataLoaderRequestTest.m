@@ -173,14 +173,14 @@
     XCTAssertEqualObjects(@"fr-CA, pt-PT;q=0.50, en;q=0.01", languageValues);
 }
 
-- (void)testDebugDescription
+- (void)testDescription
 {
-    XCTAssertNotNil(self.request.debugDescription,
-                    @"The debugDescription shouldn't be nil.");
+    XCTAssertNotNil(self.request.description,
+                    @"The description shouldn't be nil.");
     
-    NSString *URLString = [NSString stringWithFormat:@"URL: %@", self.URL.absoluteString];
-    XCTAssertTrue([self.request.debugDescription containsString:URLString],
-                  @"The debugDescription should contain the URL of the request.");
+    NSString *URLString = [NSString stringWithFormat:@"URL = \"%@\"", self.URL.absoluteString];
+    XCTAssertTrue([self.request.description containsString:URLString],
+                  @"The description should contain the URL of the request.");
 }
 
 - (void)testAcceptLanguageWithMultipleLanguagesContainingEnglish
