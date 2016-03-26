@@ -16,9 +16,10 @@ Pod::Spec.new do |s|
     s.tvos.deployment_target    = "9.0"
     s.watchos.deployment_target = "2.0"
 
-    s.homepage  = "https://github.com/spotify/SPTDataLoader"
-    s.license   = "Apache 2.0"
-    s.author    = {
+    s.homepage          = "https://github.com/spotify/SPTDataLoader"
+    s.social_media_url  = "https://twitter.com/spotifyeng"
+    s.license           = "Apache 2.0"
+    s.author            = {
         "Will Sackfield" => "sackfield@spotify.com"
     }
 
