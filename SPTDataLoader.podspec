@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
     s.name         = "SPTDataLoader"
     s.version      = "1.1.0"
-    s.summary      = "SPTDataLoader is Spotify's HTTP library for Objective-C"
+    s.summary      = "SPTDataLoader is Spotify’s HTTP library for Objective-C"
 
     s.description  = <<-DESC
                         Authentication and back-off logic is a pain, let’s do it
