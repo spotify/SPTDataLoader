@@ -40,6 +40,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)policyWithHostsAndCertificatePaths:(NSDictionary<NSString *, NSArray<NSString *> *> *)hostsAndCertificatePaths;
 
+/**
+ * Evaluates an `NSURLAuthenticationChallenge` against known pinned certificates
+ * and public keys.
+ *
+ * @return Whether the challenge server is considered trusted or not.
+ */
 - (BOOL)validateChallenge:(NSURLAuthenticationChallenge *)challenge;
 
 @end
