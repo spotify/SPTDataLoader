@@ -45,7 +45,7 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
 
 @interface SPTDataLoaderServerTrustPolicy ()
 
-@property  (strong, nonatomic) NSDictionary<NSString *, NSArray<NSData *> *> *trustedHostsAndCertificates;
+@property  (nonatomic, strong) NSDictionary<NSString *, NSArray<NSData *> *> *trustedHostsAndCertificates;
 
 @end
 
@@ -131,26 +131,23 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
 - (instancetype)initWithHostsAndCertificatePaths:(NSDictionary<NSString *, NSArray<NSString *> *> *)hostsAndCertificatePaths
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
-
-    NSMutableDictionary<NSString *, NSArray<NSData *> *> *mutableDictionary = [NSMutableDictionary new];
-
-    [hostsAndCertificatePaths enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray<NSString *> * _Nonnull paths, BOOL * _Nonnull stop) {
-        NSMutableArray<NSData *> *certificates = [NSMutableArray new];
-        for (NSString *path in paths) {
-            NSData *data = [NSData dataWithContentsOfFile:path];
-            if (!data) {
-                continue;
+    if (self) {
+        NSMutableDictionary<NSString *, NSArray<NSData *> *> *mutableDictionary = [NSMutableDictionary new];
+        
+        [hostsAndCertificatePaths enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray<NSString *> * _Nonnull paths, BOOL * _Nonnull stop) {
+            NSMutableArray<NSData *> *certificates = [NSMutableArray new];
+            for (NSString *path in paths) {
+                NSData *data = [NSData dataWithContentsOfFile:path];
+                if (!data) {
+                    continue;
+                }
+                [certificates addObject:data];
             }
-            [certificates addObject:data];
-        }
-        mutableDictionary[key] = [certificates copy];
-    }];
-    
-    _trustedHostsAndCertificates = [mutableDictionary copy];
-    
+            mutableDictionary[key] = [certificates copy];
+        }];
+        
+        _trustedHostsAndCertificates = [mutableDictionary copy];
+    }
     return self;
 }
 
