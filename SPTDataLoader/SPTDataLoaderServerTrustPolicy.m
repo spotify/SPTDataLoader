@@ -48,7 +48,7 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
 
 @interface SPTDataLoaderServerTrustPolicy ()
 
-@property  (nonatomic, strong) NSDictionary<NSString *, NSArray<NSData *> *> *trustedHostsAndCertificates;
+@property (nonatomic, strong) NSDictionary<NSString *, NSArray<NSData *> *> *trustedHostsAndCertificates;
 
 @end
 
@@ -66,6 +66,32 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     SecTrustRef trust = challenge.protectionSpace.serverTrust;
     NSString *host = challenge.protectionSpace.host;
     
+    return [self validateWithTrust:trust host:host];
+}
+
+#pragma mark Private
+
+- (nullable NSArray<NSData *> *)certificatesForHost:(NSString *)host
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ like SELF", host];
+    NSArray<NSString *> *allHosts = [self.trustedHostsAndCertificates allKeys];
+    NSArray *hosts = [allHosts filteredArrayUsingPredicate:predicate];
+    
+    if ([hosts count] == 0) {
+        return nil;
+    }
+    
+    NSMutableArray<NSData *> *certificates = [NSMutableArray new];
+    for (NSString *key in hosts) {
+        NSArray<NSData *> *value = self.trustedHostsAndCertificates[key];
+        [certificates addObjectsFromArray:value];
+    }
+    
+    return [certificates copy];
+}
+
+- (BOOL)validateWithTrust:(SecTrustRef)trust host:(NSString *)host
+{
     if (!host) {
         return NO;
     }
@@ -106,27 +132,6 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     }
     
     return NO;
-}
-
-#pragma mark Private
-
-- (nullable NSArray<NSData *> *)certificatesForHost:(NSString *)host
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ like SELF", host];
-    NSArray<NSString *> *allHosts = [self.trustedHostsAndCertificates allKeys];
-    NSArray *hosts = [allHosts filteredArrayUsingPredicate:predicate];
-    
-    if ([hosts count] == 0) {
-        return nil;
-    }
-    
-    NSMutableArray<NSData *> *certificates = [NSMutableArray new];
-    for (NSString *key in hosts) {
-        NSArray<NSData *> *value = self.trustedHostsAndCertificates[key];
-        [certificates addObjectsFromArray:value];
-    }
-    
-    return [certificates copy];
 }
 
 #pragma mark Lifecycle
