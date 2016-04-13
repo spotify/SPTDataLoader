@@ -149,6 +149,7 @@
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
+		F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
 		F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderServerTrustPolicy.h; path = include/SPTDataLoader/SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
 		F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -220,6 +221,7 @@
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */,
 				F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */,
+				F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
 			);
 			path = SPTDataLoader;

@@ -19,6 +19,9 @@
  * under the License.
  */
 #import "SPTDataLoaderServerTrustPolicy.h"
+
+#import "SPTDataLoaderServerTrustPolicy+Private.h"
+
 #import <Security/Security.h>
 
 static BOOL SPTEvaluteTrust(SecTrustRef trust) {
