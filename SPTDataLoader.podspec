@@ -26,6 +26,7 @@ Pod::Spec.new do |s|
     s.source                = { :git => "https://github.com/spotify/SPTDataLoader.git", :tag => s.version }
     s.source_files          = "include/SPTDataLoader/*.h", "SPTDataLoader/*.{h,m}"
     s.public_header_files   = "include/SPTDataLoader/*.h"
+    s.framework             = "Security"
     s.xcconfig              = {
         "OTHER_LDFLAGS" => "-lObjC"
     }
