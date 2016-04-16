@@ -58,13 +58,29 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
 
 + (instancetype)policyWithHostsAndCertificatePaths:(NSDictionary<NSString *, NSArray<NSString *> *> *)hostsAndCertificatePaths
 {
+    if (!hostsAndCertificatePaths) {
+        return nil;
+    }
+    
     return [[self alloc] initWithHostsAndCertificatePaths:hostsAndCertificatePaths];
 }
 
 - (BOOL)validateChallenge:(NSURLAuthenticationChallenge *)challenge
 {
+    NSString *authenticationMethod = [challenge.protectionSpace authenticationMethod];
+    if (![authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        return NO;
+    }
+    
     SecTrustRef trust = challenge.protectionSpace.serverTrust;
+    if (!trust) {
+        return NO;
+    }
+    
     NSString *host = challenge.protectionSpace.host;
+    if (!host) {
+        return NO;
+    }
     
     return [self validateWithTrust:trust host:host];
 }
