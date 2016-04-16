@@ -116,14 +116,14 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 {
     NSArray *paths = SPTDataLoaderServerTrustUnitGoogleTestCertificatePaths();
     XCTAssert(paths, @"Unit test certificate paths should not be nil");
-    XCTAssertEqual(paths.count, 3, @"Unit test certificate paths should be a count of 3");
+    XCTAssertEqual(paths.count, 3u, @"Unit test certificate paths should be a count of 3");
 }
 
 - (void)testSpotifyServerTrustCertificatePathsNotNil
 {
     NSArray *paths = SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths();
     XCTAssert(paths, @"Unit test certificate paths should not be nil");
-    XCTAssertEqual(paths.count, 2, @"Unit test certificate paths should be a count of 3");
+    XCTAssertEqual(paths.count, 2u, @"Unit test certificate paths should be a count of 3");
 }
 
 - (void)testGoogleComServerTrustNotNil
@@ -149,7 +149,10 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 
 - (void)testNil
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     SPTDataLoaderServerTrustPolicy *sut = [SPTDataLoaderServerTrustPolicy policyWithHostsAndCertificatePaths:nil];
+#pragma clang diagnostic pop
     XCTAssertNil(sut, @"Server trust policy instantiated without hosts + certificates should return nil");
 }
 
@@ -161,7 +164,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 - (void)testHostsAndCertificatesCountShouldBeGreaterThanZero
 {
     NSDictionary *trustedHostsAndCertificates = self.serverTrustPolicy.trustedHostsAndCertificates;
-    XCTAssertNotEqual(trustedHostsAndCertificates.count, 0, @"The server trust policy's trusted hosts and associated certificates count should not be zero");
+    XCTAssertNotEqual(trustedHostsAndCertificates.count, 0u, @"The server trust policy's trusted hosts and associated certificates count should not be zero");
 }
 
 - (void)testTrustedHostsShouldHaveCertificates
@@ -171,7 +174,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     
     for (NSString *key in keys) {
         NSArray *trustedCertificates = trustedHostsAndCertificates[key];
-        XCTAssertNotEqual(trustedCertificates.count, 0, @"The server trust policy's trusted hosts should have a minimum of one certificate");
+        XCTAssertNotEqual(trustedCertificates.count, 0u, @"The server trust policy's trusted hosts should have a minimum of one certificate");
     }
 }
 
