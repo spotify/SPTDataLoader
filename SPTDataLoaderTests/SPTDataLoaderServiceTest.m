@@ -26,6 +26,7 @@
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
+#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 
 #import "SPTDataLoaderRequestTaskHandler.h"
 
@@ -38,11 +39,14 @@
 #import "NSURLSessionDataTaskMock.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSURLSessionTaskMock.h"
+#import "SPTDataLoaderServerTrustPolicyMock.h"
+#import "NSURLAuthenticationChallengeMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableArray *handlers;
+@property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
 
 - (void)cancelAllLoads;
 
@@ -430,6 +434,57 @@
          didReceiveChallenge:challenge
            completionHandler:NSURLSessionCompletionHandler];
     XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengePerformDefaultHandling);
+}
+
+- (void)testServerTrustPolicyProvidesProperDispositionAndURLCredentialWhenDidReceiveChallenge
+{
+    NSURLSession *session = [NSURLSession new];
+    NSURLSessionTask *task = [NSURLSessionTask new];
+    
+    NSURLAuthenticationChallengeMock *challenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:nil
+                                                                                                   authenticationMethod:NSURLAuthenticationMethodServerTrust
+                                                                                                            serverTrust:nil];
+    SPTDataLoaderServerTrustPolicyMock *serverTrustPolicy = [SPTDataLoaderServerTrustPolicyMock new];
+    [self.service setServerTrustPolicy:serverTrustPolicy];
+    
+    __block NSURLSessionAuthChallengeDisposition savedDisposition = NSURLSessionAuthChallengeUseCredential;
+    __block NSURLCredential *savedCredential = nil;
+    void(^NSURLSessionCompletionHandler)(NSURLSessionAuthChallengeDisposition, NSURLCredential *) = ^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
+        savedDisposition = disposition;
+        savedCredential = credential;
+    };
+    
+    // Auth Challenge is considered trusted
+    serverTrustPolicy.shouldBeTrusted = YES;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:NSURLSessionCompletionHandler];
+    XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengeUseCredential, @"Server Trust Policy should provide auth challenge disposition of .Use when challenge is considered trusted");
+    XCTAssertNotNil(savedCredential, @"Server Trust Policy should provide url credential when challenge is considered trusted");
+    
+    // Auth Challenge is considered untrusted
+    serverTrustPolicy.shouldBeTrusted = NO;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:NSURLSessionCompletionHandler];
+    
+    XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengeCancelAuthenticationChallenge, @"Server Trust Policy should provide auth challenge disposition of .Cancel when challenge is considered untrusted");
+    XCTAssertNil(savedCredential, @"Server Trust Policy provided url credential, when challenge is considered trusted, should be nil");
+    
+    // Server Trust Policy ignored when `allCertificatesAllowed`
+    self.service.allCertificatesAllowed = YES;
+    serverTrustPolicy.shouldBeTrusted = YES;
+    [self.service URLSession:session
+                        task:task
+         didReceiveChallenge:challenge
+           completionHandler:NSURLSessionCompletionHandler];
+    XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengeUseCredential, @"Server Trust Policy should be bypassed and auth challenge disposition should be .Use when policy is set and `allCertificatesAllowed` is `YES`");
+    XCTAssertNotNil(savedCredential, @"Server Trust Policy should be bypassed and url credential should be non-nil when policy is set and `allCertificatesAllowed` is `YES`");
+    
+    self.service.allCertificatesAllowed = NO;
+    self.service.serverTrustPolicy = nil;
 }
 
 - (void)testWillCacheResponseWithNilCompletionHandler

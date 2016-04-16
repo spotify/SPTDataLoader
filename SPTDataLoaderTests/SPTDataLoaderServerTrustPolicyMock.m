@@ -18,16 +18,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
-#import <SPTDataLoader/SPTDataLoader.h>
-#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
-#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
-#import <SPTDataLoader/SPTDataLoaderDelegate.h>
-#import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
-#import <SPTDataLoader/SPTDataLoaderFactory.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
-#import <SPTDataLoader/SPTDataLoaderService.h>
+#import "SPTDataLoaderServerTrustPolicyMock.h"
+
+@implementation SPTDataLoaderServerTrustPolicyMock
+
+- (BOOL)validateChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    return self.shouldBeTrusted;
+}
+
+@end
