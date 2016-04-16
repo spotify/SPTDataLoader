@@ -49,6 +49,8 @@
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
 		F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
 		F7346A6E1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */; };
+		F7346A741CC2E1B500B8AB41 /* spotify in Resources */ = {isa = PBXBuildFile; fileRef = F7346A711CC2DF8700B8AB41 /* spotify */; };
+		F7346A751CC2E1B800B8AB41 /* google in Resources */ = {isa = PBXBuildFile; fileRef = F7346A701CC2DF8700B8AB41 /* google */; };
 		F7794B011CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */; };
 /* End PBXBuildFile section */
 
@@ -161,6 +163,8 @@
 		F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServerTrustPolicyMock.h; sourceTree = "<group>"; };
 		F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyMock.m; sourceTree = "<group>"; };
 		F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyTest.m; sourceTree = "<group>"; };
+		F7346A701CC2DF8700B8AB41 /* google */ = {isa = PBXFileReference; lastKnownFileType = folder; name = google; path = Certificates/google; sourceTree = "<group>"; };
+		F7346A711CC2DF8700B8AB41 /* spotify */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spotify; path = Certificates/spotify; sourceTree = "<group>"; };
 		F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderServerTrustPolicy.h; path = include/SPTDataLoader/SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
 		F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -267,6 +271,7 @@
 		050E069A1A10C62100A10A0E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7346A6F1CC2DF7500B8AB41 /* Certificates */,
 				050E069B1A10C62100A10A0E /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -352,6 +357,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F7346A6F1CC2DF7500B8AB41 /* Certificates */ = {
+			isa = PBXGroup;
+			children = (
+				F7346A701CC2DF8700B8AB41 /* google */,
+				F7346A711CC2DF8700B8AB41 /* spotify */,
+			);
+			name = Certificates;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -431,6 +445,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7346A741CC2E1B500B8AB41 /* spotify in Resources */,
+				F7346A751CC2E1B800B8AB41 /* google in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +577,7 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -575,6 +592,7 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

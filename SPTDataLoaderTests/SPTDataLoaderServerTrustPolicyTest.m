@@ -27,6 +27,12 @@
 
 #import <Security/Security.h>
 
+#define SPTDataLoaderUnitTestReleaseIfNonNull(value) ({ \
+    if (value != NULL) { \
+        CFRelease(value); \
+    } \
+})
+
 @interface SPTDataLoaderServerTrustPolicyValidationSpy : SPTDataLoaderServerTrustPolicy
 
 @property (nonatomic, assign) BOOL didAttemptValidation;
@@ -43,10 +49,16 @@ static SecTrustRef SPTDataLoaderUnitTestCreateTrustChainForCertPaths(NSArray<NSS
     NSMutableArray *certs = [NSMutableArray arrayWithCapacity:[certPaths count]];
     for (NSString *path in certPaths) {
         NSData *certData = [NSData dataWithContentsOfFile:path];
+        if (!certData) {
+            continue;
+        }
         SecCertificateRef cert = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)certData);
         id object = (__bridge id)cert;
         [certs addObject:object];
         CFRelease(cert);
+    }
+    if (![certs count]) {
+        return NULL;
     }
     SecPolicyRef policy = SecPolicyCreateBasicX509();
     SecTrustRef trust = NULL;
@@ -118,14 +130,14 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 {
     SecTrustRef trust = SPTDataLoaderUnitTestCreateGoogleComServerTrust();
     XCTAssert(trust, @"Unit test trust with provided certificates should not be nil");
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
 - (void)testSpotifyComServerTrustNotNil
 {
     SecTrustRef trust = SPTDataLoaderUnitTestCreateSpotifyComServerTrust();
     XCTAssert(trust, @"Unit test trust with provided certificates should not be nil");
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
 #pragma mark SPTDataLoaderServerTrustPolicyTest
@@ -199,7 +211,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     NSString *host = @"www.spotify.com";
     XCTAssert([self.serverTrustPolicy certificatesForHost:host], @"The server trust policy should consider this host known");
     XCTAssertFalse([self.serverTrustPolicy validateWithTrust:trust host:host], @"The server trust policy should consider an invalid certificate invalid");
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
 - (void)testUnknownHostShouldBeInvalid
@@ -208,7 +220,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     NSString *host = @"www.google.com";
     XCTAssertNil([self.serverTrustPolicy certificatesForHost:host], @"The server trust policy should consider this host unknown");
     XCTAssertFalse([self.serverTrustPolicy validateWithTrust:trust host:host], @"The server trust policy should consider an unknown host invalid");
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
 #pragma mark Positive Validation
@@ -218,7 +230,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     SecTrustRef trust = SPTDataLoaderUnitTestCreateSpotifyComServerTrust();
     NSString *host = @"www.spotify.com";
     XCTAssertTrue([self.serverTrustPolicy validateWithTrust:trust host:host], @"The server trust policy should validate a known host and valid trust");
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
 #pragma mark Authentication Challenge Interface
@@ -263,7 +275,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
         XCTAssertFalse([sut didAttemptValidation], @"The server trust policy should bypass validation of an authentication challenge when it is considered incapable of being validated");
     }
     
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
 - (void)testValidAuthenticationChallengeShouldTriggerValidationAttempt
@@ -275,7 +287,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     NSURLAuthenticationChallengeMock *authenticationChallenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:host
                                                                                                                  authenticationMethod:authenticationMethod
                                                                                                                           serverTrust:trust];
-    CFRelease(trust);
+    SPTDataLoaderUnitTestReleaseIfNonNull(trust);
     NSDictionary<NSString *, NSArray<NSString *> *> *dictionary = @{ @"*.spotify.com": SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths() };
     SPTDataLoaderServerTrustPolicyValidationSpy *sut = [SPTDataLoaderServerTrustPolicyValidationSpy policyWithHostsAndCertificatePaths:dictionary];
     [sut validateChallenge:authenticationChallenge];
