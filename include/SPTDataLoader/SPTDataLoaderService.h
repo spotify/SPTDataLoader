@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @see SPTDataLoaderServerTrustPolicy
  * @param serverTrustPolicy The SPTDataLoaderServerTrustPolicy object
  */
-- (void)setServerTrustPolicy:(SPTDataLoaderServerTrustPolicy *)serverTrustPolicy;
+- (void)setServerTrustPolicy:(nullable SPTDataLoaderServerTrustPolicy *)serverTrustPolicy;
 
 @end
 

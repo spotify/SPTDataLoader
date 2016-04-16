@@ -21,7 +21,10 @@
 #import "NSURLAuthenticationChallengeMock.h"
 
 @interface NSURLProtectionSpaceMock : NSURLProtectionSpace {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-interface-ivars"
     SecTrustRef _mockServerTrust;
+#pragma clang diagnostic pop
 }
 
 @property (nonatomic, copy) NSString *mockHost;
@@ -46,12 +49,15 @@
     mockProtectionSpace.mockHost = host;
     mockProtectionSpace.mockServerTrust = serverTrust;
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     NSURLAuthenticationChallengeMock *mock = [[NSURLAuthenticationChallengeMock alloc] initWithProtectionSpace:mockProtectionSpace
                                                                                             proposedCredential:nil
                                                                                           previousFailureCount:0
                                                                                                failureResponse:nil
                                                                                                          error:NULL
                                                                                                         sender:nil];
+#pragma clang diagnostic pop
     return mock;
 }
 
@@ -83,7 +89,10 @@
 
 - (SecTrustRef)mockServerTrust
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
     return _mockServerTrust;
+#pragma clang diagnostic pop
 }
 
 - (void)setMockServerTrust:(SecTrustRef)trust
@@ -92,11 +101,16 @@
         CFRetain(trust);
     }
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
+    
     if (_mockServerTrust) {
         CFRelease(_mockServerTrust);
     }
     
     _mockServerTrust = trust;
+    
+#pragma clang diagnostic pop
 }
 
 @end
