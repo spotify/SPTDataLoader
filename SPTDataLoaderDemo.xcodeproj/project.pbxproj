@@ -19,6 +19,7 @@
 		375241911C4612CA002649F3 /* PlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752418B1C4612CA002649F3 /* PlaylistsViewController.m */; };
 		375241921C4612CA002649F3 /* PlaylistsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752418D1C4612CA002649F3 /* PlaylistsViewModel.m */; };
 		375241931C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 3752418F1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m */; };
+		F7346A461CC2D01E00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A451CC2D01E00B8AB41 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		3752418E1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserOAuth.h; sourceTree = "<group>"; };
 		3752418F1C4612CA002649F3 /* SPTDataLoaderAuthoriserOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserOAuth.m; sourceTree = "<group>"; };
 		375241971C461581002649F3 /* ClientKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientKeys.h; sourceTree = "<group>"; };
+		F7346A451CC2D01E00B8AB41 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0513AAB11C6067E800A25F54 /* libSPTDataLoader.a in Frameworks */,
+				F7346A461CC2D01E00B8AB41 /* Security.framework in Frameworks */,
 				057DAC751C5736A7001D8FCE /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +99,7 @@
 			children = (
 				375241691C46115C002649F3 /* SPTDataLoaderDemo */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
+				F7346A491CC2D02700B8AB41 /* Frameworks */,
 				050E068B1A10C62100A10A0E /* Products */,
 				993EF2321A30B1E2001E48D2 /* Build System */,
 			);
@@ -177,6 +181,14 @@
 				0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */,
 			);
 			name = "Build System";
+			sourceTree = "<group>";
+		};
+		F7346A491CC2D02700B8AB41 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7346A451CC2D01E00B8AB41 /* Security.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

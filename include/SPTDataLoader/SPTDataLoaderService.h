@@ -23,6 +23,7 @@
 @class SPTDataLoaderFactory;
 @class SPTDataLoaderRateLimiter;
 @class SPTDataLoaderResolver;
+@class SPTDataLoaderServerTrustPolicy;
 @protocol SPTDataLoaderAuthoriser;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -72,6 +73,14 @@ NS_ASSUME_NONNULL_BEGIN
  * @param consumptionObserver The consumption observer to remove from the service
  */
 - (void)removeConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver;
+/**
+ * Sets an server trust policy object. Used when evaluating a servers SSL certificate for the purposes of SSL pinning.
+ * @discussion When `allCertificatesAllowed` is true, the server trust policy will be bypassed
+ * @see allCertificatesAllowed
+ * @see SPTDataLoaderServerTrustPolicy
+ * @param serverTrustPolicy The SPTDataLoaderServerTrustPolicy object
+ */
+- (void)setServerTrustPolicy:(nullable SPTDataLoaderServerTrustPolicy *)serverTrustPolicy;
 
 @end
 

@@ -44,6 +44,14 @@
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
 		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
+		F7346A291CC2C67700B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
+		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
+		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
+		F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
+		F7346A6E1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */; };
+		F7346A741CC2E1B500B8AB41 /* spotify in Resources */ = {isa = PBXBuildFile; fileRef = F7346A711CC2DF8700B8AB41 /* spotify */; };
+		F7346A751CC2E1B800B8AB41 /* google in Resources */ = {isa = PBXBuildFile; fileRef = F7346A701CC2DF8700B8AB41 /* google */; };
+		F7794B011CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +156,17 @@
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
+		F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
+		F7346A281CC2C67700B8AB41 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLAuthenticationChallengeMock.h; sourceTree = "<group>"; };
+		F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLAuthenticationChallengeMock.m; sourceTree = "<group>"; };
+		F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServerTrustPolicyMock.h; sourceTree = "<group>"; };
+		F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyMock.m; sourceTree = "<group>"; };
+		F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyTest.m; sourceTree = "<group>"; };
+		F7346A701CC2DF8700B8AB41 /* google */ = {isa = PBXFileReference; lastKnownFileType = folder; name = google; path = Certificates/google; sourceTree = "<group>"; };
+		F7346A711CC2DF8700B8AB41 /* spotify */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spotify; path = Certificates/spotify; sourceTree = "<group>"; };
+		F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderServerTrustPolicy.h; path = include/SPTDataLoader/SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
+		F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7346A291CC2C67700B8AB41 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */,
+				F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +197,7 @@
 				050E068C1A10C62100A10A0E /* SPTDataLoader */,
 				050E06991A10C62100A10A0E /* SPTDataLoaderTests */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
+				F7346A2A1CC2C68300B8AB41 /* Frameworks */,
 				050E068B1A10C62100A10A0E /* Products */,
 				993EF2321A30B1E2001E48D2 /* Build System */,
 			);
@@ -195,13 +217,13 @@
 			children = (
 				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
 				05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */,
+				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
+				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
 				0533D05F1C62F12200D8E09D /* SPTDataLoaderCancellationTokenFactory.h */,
 				8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */,
 				050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */,
 				050AB4C51A782D4F005C93CC /* SPTDataLoaderCancellationTokenImplementation.h */,
 				050E06BB1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m */,
-				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
-				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
 				056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */,
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
 				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
@@ -216,6 +238,8 @@
 				052FB1671A127BF900AFE80E /* SPTDataLoaderResolverAddress.m */,
 				050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */,
 				052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */,
+				F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */,
+				F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
 			);
 			path = SPTDataLoader;
@@ -226,6 +250,7 @@
 			children = (
 				050E069A1A10C62100A10A0E /* Supporting Files */,
 				056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */,
+				F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */,
 				059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */,
 				0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */,
 				059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */,
@@ -246,6 +271,7 @@
 		050E069A1A10C62100A10A0E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F7346A6F1CC2DF7500B8AB41 /* Certificates */,
 				050E069B1A10C62100A10A0E /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -255,9 +281,9 @@
 			isa = PBXGroup;
 			children = (
 				C6515CF11BA2D1A700271211 /* module.modulemap */,
-				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
 				056A04B31A13D10900FA72AD /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
+				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
 				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
 				C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */,
 				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
@@ -267,6 +293,7 @@
 				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
 				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
 				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
+				F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */,
 				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
 			);
 			name = "Public API";
@@ -285,6 +312,10 @@
 		059940951A14E7DA006D6BE9 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */,
+				F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */,
+				F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */,
+				F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */,
 				056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */,
 				056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */,
 				0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */,
@@ -316,6 +347,23 @@
 				050C30F71C56E5830044DFBE /* project.xcconfig */,
 			);
 			name = "Build System";
+			sourceTree = "<group>";
+		};
+		F7346A2A1CC2C68300B8AB41 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7346A281CC2C67700B8AB41 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F7346A6F1CC2DF7500B8AB41 /* Certificates */ = {
+			isa = PBXGroup;
+			children = (
+				F7346A701CC2DF8700B8AB41 /* google */,
+				F7346A711CC2DF8700B8AB41 /* spotify */,
+			);
+			name = Certificates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +445,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7346A741CC2E1B500B8AB41 /* spotify in Resources */,
+				F7346A751CC2E1B800B8AB41 /* google in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +465,7 @@
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
 				050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */,
 				052FB1621A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m in Sources */,
+				F7794B011CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */,
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
 				052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */,
@@ -434,6 +485,7 @@
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
 				05357B401C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m in Sources */,
 				EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */,
+				F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */,
 				055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */,
 				050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */,
 				059940A51A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m in Sources */,
@@ -442,6 +494,7 @@
 				0504CB8D1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
 				059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */,
+				F7346A6E1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m in Sources */,
 				059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */,
 				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,
 				055AEE521A16117E00A490BF /* NSURLSessionTaskMock.m in Sources */,
@@ -449,6 +502,7 @@
 				059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */,
 				055AEE581A162F0200A490BF /* SPTDataLoaderResolverAddressTest.m in Sources */,
 				0504CB911A151C8600AD54EF /* SPTDataLoaderRequestTaskHandlerTest.m in Sources */,
+				F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */,
 				056A04C41A13DF4C00FA72AD /* NSURLSessionMock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

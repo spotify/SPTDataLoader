@@ -24,6 +24,7 @@
 #import "SPTDataLoaderRateLimiter.h"
 #import "SPTDataLoaderResolver.h"
 #import "SPTDataLoaderConsumptionObserver.h"
+#import "SPTDataLoaderServerTrustPolicy.h"
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
@@ -46,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
+@property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
 
 @end
 
@@ -287,12 +289,27 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         return;
     }
     
-    if (self.allCertificatesAllowed) {
+    NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    NSURLCredential *credential = nil;
+    
+    if (self.areAllCertificatesAllowed) {
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
-        completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:trust]);
+        disposition = NSURLSessionAuthChallengeUseCredential;
+        credential = [NSURLCredential credentialForTrust:trust];
+    } else if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust] && self.serverTrustPolicy) {
+        if ([self.serverTrustPolicy validateChallenge:challenge]) {
+            SecTrustRef trust = challenge.protectionSpace.serverTrust;
+            disposition = NSURLSessionAuthChallengeUseCredential;
+            credential = [NSURLCredential credentialForTrust:trust];
+        } else {
+            disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
+        }
     } else {
-        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+        // No-op
+        // Use default handing
     }
+    
+    completionHandler(disposition, credential);
 }
 
 #pragma mark NSURLSessionTaskDelegate
