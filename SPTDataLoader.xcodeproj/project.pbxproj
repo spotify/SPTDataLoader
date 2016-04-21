@@ -531,6 +531,22 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				WARNING_CFLAGS = (
+					"-Weverything",
+					"-Wno-error=deprecated",
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-gnu-conditional-omitted-operand",
+					"-Wno-gnu",
+					"-Wno-documentation-unknown-command",
+					"-Wno-reserved-id-macro",
+					"-Wno-auto-import",
+					"-Wno-missing-variable-declarations",
+					"-Wno-c++98-compat",
+					"-Werror",
+					"-Wno-direct-ivar-access",
+					"-Wno-padded",
+					"$(SPT_DATALOADER_NON_ERROR_WARNINGS_$(XCODE_VERSION_MINOR))",
+				);
 			};
 			name = Debug;
 		};
@@ -546,6 +562,22 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Weverything",
+					"-Wno-error=deprecated",
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-gnu-conditional-omitted-operand",
+					"-Wno-gnu",
+					"-Wno-documentation-unknown-command",
+					"-Wno-reserved-id-macro",
+					"-Wno-auto-import",
+					"-Wno-missing-variable-declarations",
+					"-Wno-c++98-compat",
+					"-Werror",
+					"-Wno-direct-ivar-access",
+					"-Wno-padded",
+					"$(SPT_DATALOADER_NON_ERROR_WARNINGS_$(XCODE_VERSION_MINOR))",
+				);
 			};
 			name = Release;
 		};
@@ -556,6 +588,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
 			};
 			name = Debug;
 		};
@@ -566,6 +599,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
 			};
 			name = Release;
 		};
