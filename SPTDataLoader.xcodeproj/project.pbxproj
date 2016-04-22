@@ -531,6 +531,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
 				WARNING_CFLAGS = (
 					"-Weverything",
 					"-Wno-error=deprecated",
@@ -561,6 +562,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Weverything",
@@ -588,7 +590,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
 			};
 			name = Debug;
 		};
@@ -599,7 +600,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
 			};
 			name = Release;
 		};
