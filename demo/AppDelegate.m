@@ -22,6 +22,7 @@
 
 #import <SPTDataLoader/SPTDataLoader.h>
 
+#import "ClientKeys.h"
 #import "SPTDataLoaderAuthoriserOAuth.h"
 #import "NSString+OAuthBlob.h"
 #import "PlaylistsViewController.h"
@@ -82,7 +83,7 @@ static NSString *AppDelegateSourceIdentifier = @"app";
         request.method = SPTDataLoaderRequestMethodPost;
         NSDictionary *tokenBodyDictionary = @{ @"grant_type" : @"authorization_code",
                                                @"code" : code,
-                                               @"redirect_uri" : @"sptdataloaderdemo://login" };
+                                               @"redirect_uri" : SPOTIFY_REDIRECT_URI };
         NSMutableArray *tokenBodyParameters = [NSMutableArray new];
         for (NSString *tokenBodyKey in tokenBodyDictionary) {
             NSString *tokenBodyParameter = [@[ tokenBodyKey, tokenBodyDictionary[tokenBodyKey] ] componentsJoinedByString:@"="];
