@@ -134,6 +134,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)serviceKeyFromURL:(NSURL *)URL
 {
+    if (!URL) {
+        return @"";
+    }
+
     NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     NSURLComponents *serviceComponents = [NSURLComponents new];
     serviceComponents.scheme = requestComponents.scheme;
