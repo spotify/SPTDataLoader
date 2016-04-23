@@ -133,7 +133,6 @@
 		056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderExponentialTimer.m; sourceTree = "<group>"; };
 		057AFD5C1C72143F00350C9F /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		057AFD5D1C7222CE00350C9F /* SPTDataLoader.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SPTDataLoader.podspec; sourceTree = "<group>"; };
-		05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = spotify_os.xcconfig; sourceTree = "<group>"; };
 		059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestResponseHandlerMock.h; sourceTree = "<group>"; };
 		059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestResponseHandlerMock.m; sourceTree = "<group>"; };
 		059940961A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactoryTest.m; sourceTree = "<group>"; };
@@ -146,6 +145,7 @@
 		059940A41A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenDelegateMock.m; sourceTree = "<group>"; };
 		059940A61A150275006D6BE9 /* SPTDataLoaderRequestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTest.m; sourceTree = "<group>"; };
 		059940A81A150C90006D6BE9 /* SPTDataLoaderResponseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponseTest.m; sourceTree = "<group>"; };
+		05C602FC1CCBBC5E00143BA4 /* spotify_os.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = spotify_os.xcconfig; path = ci/spotify_os.xcconfig; sourceTree = "<group>"; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 		993EF2321A30B1E2001E48D2 /* Build System */ = {
 			isa = PBXGroup;
 			children = (
-				05896F8A1C51F3850051CC1E /* spotify_os.xcconfig */,
+				05C602FC1CCBBC5E00143BA4 /* spotify_os.xcconfig */,
 				050C30F71C56E5830044DFBE /* project.xcconfig */,
 			);
 			name = "Build System";
