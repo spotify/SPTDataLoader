@@ -547,6 +547,7 @@
 					"-Wno-direct-ivar-access",
 					"-Wno-padded",
 					"$(SPT_DATALOADER_NON_ERROR_WARNINGS_$(XCODE_VERSION_MINOR))",
+					"$(inherited)",
 				);
 			};
 			name = Debug;
@@ -579,6 +580,7 @@
 					"-Wno-direct-ivar-access",
 					"-Wno-padded",
 					"$(SPT_DATALOADER_NON_ERROR_WARNINGS_$(XCODE_VERSION_MINOR))",
+					"$(inherited)",
 				);
 			};
 			name = Release;
