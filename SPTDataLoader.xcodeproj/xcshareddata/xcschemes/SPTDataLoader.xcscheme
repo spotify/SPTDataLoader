@@ -11,13 +11,26 @@
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "YES"
-            hideIssues = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "050E06891A10C62100A10A0E"
                BuildableName = "libSPTDataLoader.a"
                BlueprintName = "SPTDataLoader"
+               ReferencedContainer = "container:SPTDataLoader.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "050E06941A10C62100A10A0E"
+               BuildableName = "SPTDataLoaderTests.xctest"
+               BlueprintName = "SPTDataLoaderTests"
                ReferencedContainer = "container:SPTDataLoader.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
