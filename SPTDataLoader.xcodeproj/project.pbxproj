@@ -523,10 +523,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					include,
-				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
@@ -542,10 +539,7 @@
 			baseConfigurationReference = 050C30F71C56E5830044DFBE /* project.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					include,
-				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
