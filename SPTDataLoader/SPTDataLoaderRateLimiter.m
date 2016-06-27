@@ -128,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     @synchronized(self.serviceEndpointRequestsPerSecond) {
         NSNumber *value = self.serviceEndpointRequestsPerSecond[serviceKey];
-        return value ? value.doubleValue : self.requestsPerSecond;
+        return (value != nil) ? value.doubleValue : self.requestsPerSecond;
     }
 }
 
