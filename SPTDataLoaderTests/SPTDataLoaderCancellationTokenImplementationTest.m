@@ -39,15 +39,8 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
     self.delegate = [SPTDataLoaderCancellationTokenDelegateMock new];
     self.cancellationToken = [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:self.delegate cancelObject:nil];
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
 }
 
 #pragma mark SPTCancellationTokenImplementationTest
