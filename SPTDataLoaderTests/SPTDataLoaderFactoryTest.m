@@ -52,17 +52,10 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
     self.delegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
     self.authoriserMock = [SPTDataLoaderAuthoriserMock new];
     self.factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self.delegate
                                                                                  authorisers:@[ self.authoriserMock ]];
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
 }
 
 #pragma mark SPTDataLoaderFactoryTest

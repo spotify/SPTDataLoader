@@ -99,15 +99,8 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 {
     [super setUp];
     
-    // Put setup code here. This method is called before the invocation of each test method in the class.
     NSDictionary<NSString *, NSArray<NSString *> *> *dictionary = @{ @"*.spotify.com": SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths() };
     self.serverTrustPolicy = [SPTDataLoaderServerTrustPolicy policyWithHostsAndCertificatePaths:dictionary];
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
 }
 
 #pragma mark SPTDataLoaderServerTrustPolicyTestFunctions

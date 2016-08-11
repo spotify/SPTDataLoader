@@ -68,7 +68,6 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.resolver = [SPTDataLoaderResolver new];
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
@@ -77,12 +76,6 @@
                                                customURLProtocolClasses:nil];
     self.session = [NSURLSessionMock new];
     self.service.session = self.session;
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
 }
 
 #pragma mark SPTDataLoaderServiceTest
