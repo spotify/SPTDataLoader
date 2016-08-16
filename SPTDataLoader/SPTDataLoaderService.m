@@ -200,6 +200,21 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                 cancelRequest:(SPTDataLoaderRequest *)request
+{
+    NSArray *handlers = nil;
+    @synchronized(self.handlers) {
+        handlers = [self.handlers copy];
+    }
+    for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
+        if ([handler.request isEqual:request]) {
+            [handler.task cancel];
+            break;
+        }
+    }
+}
+
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
              authorisedRequest:(SPTDataLoaderRequest *)request
 {
     [self performRequest:request requestResponseHandler:requestResponseHandler];
@@ -212,24 +227,6 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     response.error = error;
     [requestResponseHandler failedResponse:response];
-}
-
-#pragma mark SPTCancellationTokenDelegate
-
-- (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken
-{
-    SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
-    
-    NSArray *handlers = nil;
-    @synchronized(self.handlers) {
-        handlers = [self.handlers copy];
-    }
-    for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
-        if ([handler.request isEqual:request]) {
-            [handler.task cancel];
-            break;
-        }
-    }
 }
 
 #pragma mark NSURLSessionDataDelegate

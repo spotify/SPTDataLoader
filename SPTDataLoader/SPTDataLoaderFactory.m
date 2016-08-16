@@ -195,6 +195,12 @@ NS_ASSUME_NONNULL_BEGIN
     [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
 
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                 cancelRequest:(SPTDataLoaderRequest *)request
+{
+    [self.requestResponseHandlerDelegate requestResponseHandler:requestResponseHandler cancelRequest:request];
+}
+
 #pragma mark SPTDataLoaderAuthoriserDelegate
 
 - (void)dataLoaderAuthoriser:(id<SPTDataLoaderAuthoriser>)dataLoaderAuthoriser

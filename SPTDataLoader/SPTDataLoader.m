@@ -190,7 +190,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken
 {
-    [self cancelledRequest:(SPTDataLoaderRequest *)cancellationToken.objectToCancel];
+    SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
+    [self.requestResponseHandlerDelegate requestResponseHandler:self cancelRequest:request];
+    [self cancelledRequest:request];
 }
 
 @end
