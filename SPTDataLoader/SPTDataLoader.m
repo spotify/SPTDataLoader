@@ -116,6 +116,18 @@ NS_ASSUME_NONNULL_BEGIN
     [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
 }
 
+- (BOOL)isRequestExpected:(SPTDataLoaderRequest *)request
+{
+    @synchronized (self.requests) {
+        for (SPTDataLoaderRequest *expectedRequest in self.requests) {
+            if (request.uniqueIdentifier == expectedRequest.uniqueIdentifier) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
 #pragma mark NSObject
 
 - (void)dealloc
@@ -129,6 +141,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+    
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
@@ -139,6 +155,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
@@ -149,6 +169,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
+    if (![self isRequestExpected:request]) {
+        return;
+    }
+
     if ([self.delegate respondsToSelector:@selector(dataLoader:didCancelRequest:)]) {
         [self executeDelegateBlock: ^{
             [self.delegate dataLoader:self didCancelRequest:request];
@@ -161,6 +185,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+
     // Do not send a callback if the request doesn't support it
     NSAssert(response.request.chunks, @"The data loader is receiving a data chunk for a response that doesn't support data chunks");
     
@@ -174,6 +202,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+
     // Do not send a callback if the request doesn't support it
     if (!response.request.chunks) {
         return;
