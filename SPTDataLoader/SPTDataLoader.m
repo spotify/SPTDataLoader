@@ -25,6 +25,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderDelegate.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
 @property (nonatomic, strong, readonly) NSMutableArray<SPTDataLoaderRequest *> *requests;
+@property (nonatomic, strong, readonly) id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory;
 
 @end
 
@@ -53,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
         _cancellationTokens = [NSHashTable weakObjectsHashTable];
         _delegateQueue = dispatch_get_main_queue();
         _requests = [NSMutableArray new];
+        _cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
     }
     return self;
 }
