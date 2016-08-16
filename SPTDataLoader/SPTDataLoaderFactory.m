@@ -162,8 +162,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (nullable id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                                       performRequest:(SPTDataLoaderRequest *)request
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                performRequest:(SPTDataLoaderRequest *)request
 {
     if (self.offline) {
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
@@ -192,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
                        });
     }
     
-    return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
+    [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
 
 #pragma mark SPTDataLoaderAuthoriserDelegate

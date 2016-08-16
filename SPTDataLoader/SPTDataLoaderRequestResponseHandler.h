@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param requestResponseHandler The object that can perform requests and responses
  * @param request The object describing the request to perform
  */
-- (nullable id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                                       performRequest:(SPTDataLoaderRequest *)request;
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                performRequest:(SPTDataLoaderRequest *)request;
 
 @optional
 

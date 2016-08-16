@@ -26,10 +26,11 @@
 #import "SPTDataLoaderDelegate.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
+#import "SPTDataLoaderRequest+Private.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoader ()
+@interface SPTDataLoader () <SPTDataLoaderCancellationTokenDelegate>
 
 @property (nonatomic, strong, readonly) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
 @property (nonatomic, strong, readonly) NSMutableArray<SPTDataLoaderRequest *> *requests;
@@ -91,8 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
         return nil;
     }
 
-    id<SPTDataLoaderCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
-                                                                                                        performRequest:copiedRequest];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
+                                                                                                                 cancelObject:copiedRequest];
+    copiedRequest.cancellationToken = cancellationToken;
     @synchronized(self.cancellationTokens) {
         [self.cancellationTokens addObject:cancellationToken];
     }
@@ -182,6 +184,13 @@ NS_ASSUME_NONNULL_BEGIN
             [self.delegate dataLoader:self didReceiveInitialResponse:response];
         }];
     }
+}
+
+#pragma mark SPTDataLoaderCancellationTokenDelegate
+
+- (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken
+{
+    [self cancelledRequest:(SPTDataLoaderRequest *)cancellationToken.objectToCancel];
 }
 
 @end
