@@ -50,7 +50,7 @@ pod 'SPTDataLoader', '~> 1.1'
 ```
 Lastly let CocoaPods do it thing by running:
 ```shell
-$ cocoapods update
+$ pod update
 ```
 
 ### Carthage
