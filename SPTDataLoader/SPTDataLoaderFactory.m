@@ -22,6 +22,7 @@
 
 #import "SPTDataLoaderAuthoriser.h"
 #import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
@@ -70,7 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (SPTDataLoader *)createDataLoader
 {
-    return [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self];
+    id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
+    return [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self
+                                              cancellationTokenFactory:cancellationTokenFactory];
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandler

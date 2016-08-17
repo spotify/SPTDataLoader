@@ -157,17 +157,6 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1u, @"The service did not call a failed response on a failed authorisation attempt");
 }
 
-- (void)testCancellationTokenCancelsOperation
-{
-    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
-    id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
-                                                                                 performRequest:request];
-    [cancellationToken cancel];
-    XCTAssertEqual(self.session.lastDataTask.numberOfCallsToCancel, 1u, @"The service did not call a cancelled request on a cancellation token cancelling");
-}
-
 - (void)testSessionDidReceiveResponse
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
@@ -373,18 +362,6 @@
          didReceiveChallenge:challenge
            completionHandler:NSURLSessionCompletionHandler];
     XCTAssertEqual(nonNilCompletions, 1, @"There should only be 1 completion once all certificates are not allowed");
-}
-
-- (void)testPerformingCancelledRequest
-{
-    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    requestResponseHandlerMock.authorising = YES;
-    id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
-                                                                                 performRequest:request];
-    [cancellationToken cancel];
-    [self.service requestResponseHandler:requestResponseHandlerMock authorisedRequest:request];
-    XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");
 }
 
 - (void)testDidReceiveChallengeWithEmptyCompletionHandlerDoesNotCrash

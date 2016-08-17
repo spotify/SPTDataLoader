@@ -28,6 +28,7 @@
 #import "SPTDataLoaderCancellationTokenDelegateMock.h"
 #import "SPTDataLoaderCancellationTokenImplementation.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderCancellationTokenFactoryMock.h"
 
 @interface SPTDataLoaderTest : XCTestCase
 
@@ -36,6 +37,7 @@
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *requestResponseHandlerDelegate;
 
 @property (nonatomic, strong) SPTDataLoaderDelegateMock *delegate;
+@property (nonatomic, strong, readwrite) SPTDataLoaderCancellationTokenFactoryMock *factoryMock;
 
 @end
 
@@ -47,7 +49,9 @@
 {
     [super setUp];
     self.requestResponseHandlerDelegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
-    self.dataLoader = [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self.requestResponseHandlerDelegate];
+    self.factoryMock = [SPTDataLoaderCancellationTokenFactoryMock new];
+    self.dataLoader = [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self.requestResponseHandlerDelegate
+                                                         cancellationTokenFactory:self.factoryMock];
     self.delegate = [SPTDataLoaderDelegateMock new];
     self.dataLoader.delegate = self.delegate;
 }
@@ -68,29 +72,23 @@
 
 - (void)testCancelAllLoads
 {
-    NSMutableArray *cancellationTokens = [NSMutableArray new];
-    NSMutableArray *cancellationTokenDelegates = [NSMutableArray new];
-    self.requestResponseHandlerDelegate.tokenCreator =  ^ id<SPTDataLoaderCancellationToken> {
-        SPTDataLoaderCancellationTokenDelegateMock *cancellationTokenDelegate = [SPTDataLoaderCancellationTokenDelegateMock new];
-        id<SPTDataLoaderCancellationToken> cancellationToken = [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:cancellationTokenDelegate cancelObject:nil];
-        [cancellationTokens addObject:cancellationToken];
-        [cancellationTokenDelegates addObject:cancellationTokenDelegate];
-        return cancellationToken;
-    };
-    for (NSInteger i = 0; i < 5; ++i) {
+    SPTDataLoaderCancellationTokenDelegateMock *cancellationTokenDelegateMock = [SPTDataLoaderCancellationTokenDelegateMock new];
+    self.factoryMock.overridingDelegate = cancellationTokenDelegateMock;
+    NSUInteger maximumRequests = 5;
+    for (NSUInteger i = 0; i < maximumRequests; ++i) {
         SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
         [self.dataLoader performRequest:request];
     }
     [self.dataLoader cancelAllLoads];
-    for (id<SPTDataLoaderCancellationToken> cancellationToken in cancellationTokens) {
-        SPTDataLoaderCancellationTokenDelegateMock *delegateMock = cancellationToken.delegate;
-        XCTAssertEqual(delegateMock.numberOfCallsToCancellationTokenDidCancel, 1u, @"The cancellation tokens delegate was not called");
-    }
+    XCTAssertEqual(cancellationTokenDelegateMock.numberOfCallsToCancellationTokenDidCancel,
+                   maximumRequests,
+                   @"The cancellation tokens delegate was not called");
 }
 
 - (void)testRelaySuccessfulResponseToDelegate
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader successfulResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1u, @"The data loader did not relay a successful response to the delegate");
@@ -99,6 +97,7 @@
 - (void)testRelayFailureResponseToDelegate
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader failedResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1u, @"The data loader did not relay a error response to the delegate");
@@ -107,14 +106,17 @@
 - (void)testRelayCancelledRequestToDelegate
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request];
     [self.dataLoader cancelledRequest:request];
     XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 1u, @"The data loader did not relay a cancelled request to the delegate");
 }
 
 - (void)testRelayReceivedDataChunkToDelegate
 {
+    self.delegate.supportChunks = YES;
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
+    [self.dataLoader performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader receivedDataChunk:[NSData new] forResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1u, @"The data loader did not relay a received data chunk response to the delegate");
@@ -122,8 +124,10 @@
 
 - (void)testRelayReceivedInitialResponseToDelegate
 {
+    self.delegate.supportChunks = YES;
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
+    [self.dataLoader performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader receivedInitialResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1u, @"The data loader did not relay a received initial response to the delegate");
@@ -137,6 +141,7 @@
         [expectation fulfill];
     };
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     [self.dataLoader successfulResponse:response];
     [self waitForExpectationsWithTimeout:1.0 handler:nil];

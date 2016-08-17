@@ -22,16 +22,10 @@
 
 @implementation SPTDataLoaderRequestResponseHandlerDelegateMock
 
-- (id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                              performRequest:(SPTDataLoaderRequest *)request
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                performRequest:(SPTDataLoaderRequest *)request
 {
     self.lastRequestPerformed = request;
-    
-    if (self.tokenCreator) {
-        return self.tokenCreator();
-    }
-    
-    return nil;
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
@@ -45,6 +39,12 @@
                          error:(NSError *)error
 {
     self.lastRequestFailed = request;
+}
+
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                 cancelRequest:(SPTDataLoaderRequest *)request
+{
+
 }
 
 @end

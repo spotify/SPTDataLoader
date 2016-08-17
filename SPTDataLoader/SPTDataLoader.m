@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SPTDataLoader () <SPTDataLoaderCancellationTokenDelegate>
 
-@property (nonatomic, strong, readonly) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
+@property (nonatomic, strong, readonly) NSMutableArray<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
 @property (nonatomic, strong, readonly) NSMutableArray<SPTDataLoaderRequest *> *requests;
 @property (nonatomic, strong, readonly) id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory;
 
@@ -43,20 +43,23 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Private
 
 + (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                    cancellationTokenFactory:(nonnull id<SPTDataLoaderCancellationTokenFactory>)cancellationTokenFactory
 {
-    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate];
+    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate
+                                       cancellationTokenFactory:cancellationTokenFactory];
 }
 
 - (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                              cancellationTokenFactory:(id<SPTDataLoaderCancellationTokenFactory>)cancellationTokenFactory
 {
     self = [super init];
     if (self) {
         _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
+        _cancellationTokenFactory = cancellationTokenFactory;
 
-        _cancellationTokens = [NSHashTable weakObjectsHashTable];
+        _cancellationTokens = [NSMutableArray new];
         _delegateQueue = dispatch_get_main_queue();
         _requests = [NSMutableArray new];
-        _cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
     }
     return self;
 }
@@ -102,6 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
     @synchronized(self.requests) {
         [self.requests addObject:copiedRequest];
     }
+
+    [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:copiedRequest];
     
     return cancellationToken;
 }
@@ -110,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSArray *cancellationTokens = nil;
     @synchronized(self.cancellationTokens) {
-        cancellationTokens = [self.cancellationTokens.allObjects copy];
+        cancellationTokens = [self.cancellationTokens copy];
         [self.cancellationTokens removeAllObjects];
     }
     [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
