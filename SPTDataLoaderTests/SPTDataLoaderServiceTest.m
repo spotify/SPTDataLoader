@@ -29,6 +29,7 @@
 #import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 
 #import "SPTDataLoaderRequestTaskHandler.h"
+#import "SPTDataLoaderCancellationTokenImplementation.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "NSURLSessionMock.h"
@@ -41,6 +42,7 @@
 #import "NSURLSessionTaskMock.h"
 #import "SPTDataLoaderServerTrustPolicyMock.h"
 #import "NSURLAuthenticationChallengeMock.h"
+#import "SPTDataLoaderCancellationTokenDelegateMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
@@ -521,6 +523,20 @@
            }];
 
     XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+}
+
+- (void)testDoNotPerformRequestThatIsAlreadyCancelled
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    id<SPTDataLoaderCancellationTokenDelegate> delegate = [SPTDataLoaderCancellationTokenDelegateMock new];
+    SPTDataLoaderCancellationTokenImplementation *cancellationToken = [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:delegate
+                                                                                                                                                   cancelObject:nil];
+    [cancellationToken cancel];
+    request.cancellationToken = cancellationToken;
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertEqual(self.service.handlers.count, 0u);
 }
 
 @end
