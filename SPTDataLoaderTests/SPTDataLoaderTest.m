@@ -189,4 +189,13 @@
     XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 0u);
 }
 
+- (void)testSuccessfulResponseDoesNotEchoToDelegateWithReceivedDataChunkRequest
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    NSData *data = [NSData data];
+    [self.dataLoader receivedDataChunk:data forResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 0u);
+}
+
 @end
