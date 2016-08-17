@@ -548,4 +548,17 @@
     XCTAssertEqual(self.service.handlers.count, 0u);
 }
 
+- (void)testCancellingRequestFromHandler
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionDataTaskMock *task = [NSURLSessionDataTaskMock new];
+    handler.task = task;
+    [self.service requestResponseHandler:requestResponseHandlerMock cancelRequest:request];
+    XCTAssertEqual(task.numberOfCallsToCancel, 1u);
+}
+
 @end
