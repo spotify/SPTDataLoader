@@ -44,7 +44,7 @@
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                  cancelRequest:(SPTDataLoaderRequest *)request
 {
-
+    self.lastRequestCancelled = request;
 }
 
 @end

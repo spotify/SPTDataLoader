@@ -29,5 +29,6 @@ typedef id<SPTDataLoaderCancellationToken> (^SPTCancellationTokenCreator)();
 @property (nonatomic, strong) SPTDataLoaderRequest *lastRequestPerformed;
 @property (nonatomic, strong) SPTDataLoaderRequest *lastRequestAuthorised;
 @property (nonatomic, strong) SPTDataLoaderRequest *lastRequestFailed;
+@property (nonatomic, strong, readwrite) SPTDataLoaderRequest *lastRequestCancelled;
 
 @end

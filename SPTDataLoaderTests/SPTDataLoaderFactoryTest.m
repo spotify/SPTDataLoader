@@ -209,4 +209,12 @@
     XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The request should have been cancelled");
 }
 
+- (void)testForwardCancelToRequestResponseHandlerDelegate
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler cancelRequest:request];
+    XCTAssertEqualObjects(request, self.delegate.lastRequestCancelled);
+}
+
 @end
