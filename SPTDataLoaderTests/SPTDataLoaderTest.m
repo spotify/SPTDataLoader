@@ -207,4 +207,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 0u);
 }
 
+- (void)testCancellingCancellationTokenFiresDelegateCancelMessage
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.dataLoader performRequest:request];
+    [cancellationToken cancel];
+    XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 1u);
+}
+
 @end
