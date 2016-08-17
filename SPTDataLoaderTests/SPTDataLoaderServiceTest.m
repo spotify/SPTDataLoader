@@ -539,4 +539,12 @@
     XCTAssertEqual(self.service.handlers.count, 0u);
 }
 
+- (void)testDoNotPerformRequestThatHasNoURL
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertEqual(self.service.handlers.count, 0u);
+}
+
 @end
