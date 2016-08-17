@@ -173,4 +173,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 0u);
 }
 
+- (void)testSuccessfulResponseDoesNotEchoToDelegateWithFailedRequest
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader failedResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 0u);
+}
+
 @end
