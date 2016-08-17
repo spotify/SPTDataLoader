@@ -25,13 +25,16 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderDelegate.h"
 #import "SPTDataLoaderResponse+Private.h"
+#import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
+#import "SPTDataLoaderRequest+Private.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoader ()
+@interface SPTDataLoader () <SPTDataLoaderCancellationTokenDelegate>
 
-@property (nonatomic, strong, readonly) NSHashTable<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
+@property (nonatomic, strong, readonly) NSMutableArray<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
 @property (nonatomic, strong, readonly) NSMutableArray<SPTDataLoaderRequest *> *requests;
+@property (nonatomic, strong, readonly) id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory;
 
 @end
 
@@ -40,17 +43,21 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Private
 
 + (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                    cancellationTokenFactory:(nonnull id<SPTDataLoaderCancellationTokenFactory>)cancellationTokenFactory
 {
-    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate];
+    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate
+                                       cancellationTokenFactory:cancellationTokenFactory];
 }
 
 - (instancetype)initWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                              cancellationTokenFactory:(id<SPTDataLoaderCancellationTokenFactory>)cancellationTokenFactory
 {
     self = [super init];
     if (self) {
         _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
+        _cancellationTokenFactory = cancellationTokenFactory;
 
-        _cancellationTokens = [NSHashTable weakObjectsHashTable];
+        _cancellationTokens = [NSMutableArray new];
         _delegateQueue = dispatch_get_main_queue();
         _requests = [NSMutableArray new];
     }
@@ -88,8 +95,9 @@ NS_ASSUME_NONNULL_BEGIN
         return nil;
     }
 
-    id<SPTDataLoaderCancellationToken> cancellationToken = [self.requestResponseHandlerDelegate requestResponseHandler:self
-                                                                                                        performRequest:copiedRequest];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
+                                                                                                                 cancelObject:copiedRequest];
+    copiedRequest.cancellationToken = cancellationToken;
     @synchronized(self.cancellationTokens) {
         [self.cancellationTokens addObject:cancellationToken];
     }
@@ -97,6 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
     @synchronized(self.requests) {
         [self.requests addObject:copiedRequest];
     }
+
+    [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:copiedRequest];
     
     return cancellationToken;
 }
@@ -105,10 +115,22 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSArray *cancellationTokens = nil;
     @synchronized(self.cancellationTokens) {
-        cancellationTokens = [self.cancellationTokens.allObjects copy];
+        cancellationTokens = [self.cancellationTokens copy];
         [self.cancellationTokens removeAllObjects];
     }
     [cancellationTokens makeObjectsPerformSelector:@selector(cancel)];
+}
+
+- (BOOL)isRequestExpected:(SPTDataLoaderRequest *)request
+{
+    @synchronized (self.requests) {
+        for (SPTDataLoaderRequest *expectedRequest in self.requests) {
+            if (request.uniqueIdentifier == expectedRequest.uniqueIdentifier) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 
 #pragma mark NSObject
@@ -124,6 +146,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+    
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
@@ -134,6 +160,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
@@ -144,6 +174,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
 {
+    if (![self isRequestExpected:request]) {
+        return;
+    }
+
     if ([self.delegate respondsToSelector:@selector(dataLoader:didCancelRequest:)]) {
         [self executeDelegateBlock: ^{
             [self.delegate dataLoader:self didCancelRequest:request];
@@ -156,6 +190,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+
     // Do not send a callback if the request doesn't support it
     NSAssert(response.request.chunks, @"The data loader is receiving a data chunk for a response that doesn't support data chunks");
     
@@ -169,6 +207,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response
 {
+    if (![self isRequestExpected:response.request]) {
+        return;
+    }
+
     // Do not send a callback if the request doesn't support it
     if (!response.request.chunks) {
         return;
@@ -179,6 +221,15 @@ NS_ASSUME_NONNULL_BEGIN
             [self.delegate dataLoader:self didReceiveInitialResponse:response];
         }];
     }
+}
+
+#pragma mark SPTDataLoaderCancellationTokenDelegate
+
+- (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken
+{
+    SPTDataLoaderRequest *request = (SPTDataLoaderRequest *)cancellationToken.objectToCancel;
+    [self.requestResponseHandlerDelegate requestResponseHandler:self cancelRequest:request];
+    [self cancelledRequest:request];
 }
 
 @end

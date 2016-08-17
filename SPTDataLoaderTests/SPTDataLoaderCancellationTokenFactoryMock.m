@@ -18,17 +18,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+#import "SPTDataLoaderCancellationTokenFactoryMock.h"
 
-#import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderCancellationTokenImplementation.h"
 
-typedef id<SPTDataLoaderCancellationToken> (^SPTCancellationTokenCreator)();
+@implementation SPTDataLoaderCancellationTokenFactoryMock
 
-@interface SPTDataLoaderRequestResponseHandlerDelegateMock : NSObject <SPTDataLoaderRequestResponseHandlerDelegate>
-
-@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestPerformed;
-@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestAuthorised;
-@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestFailed;
-@property (nonatomic, strong, readwrite) SPTDataLoaderRequest *lastRequestCancelled;
+- (id<SPTDataLoaderCancellationToken>)createCancellationTokenWithDelegate:(id<SPTDataLoaderCancellationTokenDelegate>)delegate
+                                                             cancelObject:(id)cancelObject
+{
+    return [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:self.overridingDelegate ?: delegate
+                                                                                        cancelObject:cancelObject];
+}
 
 @end

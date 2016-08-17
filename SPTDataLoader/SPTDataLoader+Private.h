@@ -22,6 +22,8 @@
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 
+@protocol SPTDataLoaderCancellationTokenFactory;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -32,8 +34,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Class constructor
  * @param requestResponseHandlerDelegate The private delegate for delegating the request handling
+ * @param cancellationTokenFactory The object used to create cancellation tokens
  */
-+ (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate;
++ (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                    cancellationTokenFactory:(id<SPTDataLoaderCancellationTokenFactory>)cancellationTokenFactory;
 
 @end
 
