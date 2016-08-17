@@ -199,4 +199,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 0u);
 }
 
+- (void)testSuccessfulResponseDoesNotEchoToDelegateWithReceivedInitialResponseRequest
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader receivedInitialResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 0u);
+}
+
 @end
