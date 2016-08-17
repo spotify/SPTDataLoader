@@ -165,4 +165,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 0u);
 }
 
+- (void)testSuccessfulResponseDoesNotEchoToDelegateWithUntrackedRequest
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader successfulResponse:response];
+    XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 0u);
+}
+
 @end
