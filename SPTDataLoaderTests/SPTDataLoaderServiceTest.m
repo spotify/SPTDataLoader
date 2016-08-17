@@ -382,7 +382,8 @@
 - (void)testCancellingLoads
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
     SPTDataLoaderService *service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                                              rateLimiter:self.rateLimiter
                                                                                 resolver:self.resolver
