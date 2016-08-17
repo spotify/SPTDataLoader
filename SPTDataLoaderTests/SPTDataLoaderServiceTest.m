@@ -29,6 +29,7 @@
 #import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 
 #import "SPTDataLoaderRequestTaskHandler.h"
+#import "SPTDataLoaderCancellationTokenImplementation.h"
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "NSURLSessionMock.h"
@@ -41,6 +42,7 @@
 #import "NSURLSessionTaskMock.h"
 #import "SPTDataLoaderServerTrustPolicyMock.h"
 #import "NSURLAuthenticationChallengeMock.h"
+#import "SPTDataLoaderCancellationTokenDelegateMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate>
 
@@ -155,17 +157,6 @@
     NSError *error = [NSError new];
     [self.service requestResponseHandler:requestResponseHandlerMock failedToAuthoriseRequest:request error:error];
     XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1u, @"The service did not call a failed response on a failed authorisation attempt");
-}
-
-- (void)testCancellationTokenCancelsOperation
-{
-    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
-    id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
-                                                                                 performRequest:request];
-    [cancellationToken cancel];
-    XCTAssertEqual(self.session.lastDataTask.numberOfCallsToCancel, 1u, @"The service did not call a cancelled request on a cancellation token cancelling");
 }
 
 - (void)testSessionDidReceiveResponse
@@ -375,18 +366,6 @@
     XCTAssertEqual(nonNilCompletions, 1, @"There should only be 1 completion once all certificates are not allowed");
 }
 
-- (void)testPerformingCancelledRequest
-{
-    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    requestResponseHandlerMock.authorising = YES;
-    id<SPTDataLoaderCancellationToken> cancellationToken = [self.service requestResponseHandler:requestResponseHandlerMock
-                                                                                 performRequest:request];
-    [cancellationToken cancel];
-    [self.service requestResponseHandler:requestResponseHandlerMock authorisedRequest:request];
-    XCTAssertEqual(self.service.handlers.count, 0u, @"There should be no handlers for an already cancelled request");
-}
-
 - (void)testDidReceiveChallengeWithEmptyCompletionHandlerDoesNotCrash
 {
     NSURLSession *session = [NSURLSession new];
@@ -403,7 +382,8 @@
 - (void)testCancellingLoads
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
     SPTDataLoaderService *service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                                              rateLimiter:self.rateLimiter
                                                                                 resolver:self.resolver
@@ -544,6 +524,41 @@
            }];
 
     XCTAssertTrue(calledCompletionHandler, @"The service should call the URL redirection completion handler at least once");
+}
+
+- (void)testDoNotPerformRequestThatIsAlreadyCancelled
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    id<SPTDataLoaderCancellationTokenDelegate> delegate = [SPTDataLoaderCancellationTokenDelegateMock new];
+    SPTDataLoaderCancellationTokenImplementation *cancellationToken = [SPTDataLoaderCancellationTokenImplementation cancellationTokenImplementationWithDelegate:delegate
+                                                                                                                                                   cancelObject:nil];
+    [cancellationToken cancel];
+    request.cancellationToken = cancellationToken;
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertEqual(self.service.handlers.count, 0u);
+}
+
+- (void)testDoNotPerformRequestThatHasNoURL
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertEqual(self.service.handlers.count, 0u);
+}
+
+- (void)testCancellingRequestFromHandler
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionDataTaskMock *task = [NSURLSessionDataTaskMock new];
+    handler.task = task;
+    [self.service requestResponseHandler:requestResponseHandlerMock cancelRequest:request];
+    XCTAssertEqual(task.numberOfCallsToCancel, 1u);
 }
 
 @end

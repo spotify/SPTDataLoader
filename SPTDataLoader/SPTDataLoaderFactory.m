@@ -22,6 +22,7 @@
 
 #import "SPTDataLoaderAuthoriser.h"
 #import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoader+Private.h"
@@ -70,7 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (SPTDataLoader *)createDataLoader
 {
-    return [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self];
+    id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
+    return [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self
+                                              cancellationTokenFactory:cancellationTokenFactory];
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandler
@@ -162,8 +165,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
-- (nullable id<SPTDataLoaderCancellationToken>)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                                       performRequest:(SPTDataLoaderRequest *)request
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                performRequest:(SPTDataLoaderRequest *)request
 {
     if (self.offline) {
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
@@ -192,7 +195,13 @@ NS_ASSUME_NONNULL_BEGIN
                        });
     }
     
-    return [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
+    [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
+}
+
+- (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
+                 cancelRequest:(SPTDataLoaderRequest *)request
+{
+    [self.requestResponseHandlerDelegate requestResponseHandler:requestResponseHandler cancelRequest:request];
 }
 
 #pragma mark SPTDataLoaderAuthoriserDelegate

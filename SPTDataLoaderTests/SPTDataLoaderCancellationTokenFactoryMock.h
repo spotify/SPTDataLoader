@@ -20,15 +20,10 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderCancellationTokenFactory.h"
 
-typedef id<SPTDataLoaderCancellationToken> (^SPTCancellationTokenCreator)();
+@interface SPTDataLoaderCancellationTokenFactoryMock : NSObject <SPTDataLoaderCancellationTokenFactory>
 
-@interface SPTDataLoaderRequestResponseHandlerDelegateMock : NSObject <SPTDataLoaderRequestResponseHandlerDelegate>
-
-@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestPerformed;
-@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestAuthorised;
-@property (nonatomic, strong) SPTDataLoaderRequest *lastRequestFailed;
-@property (nonatomic, strong, readwrite) SPTDataLoaderRequest *lastRequestCancelled;
+@property (nonatomic, strong, readwrite) id<SPTDataLoaderCancellationTokenDelegate> overridingDelegate;
 
 @end
