@@ -214,4 +214,11 @@
     XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"POST");
 }
 
+- (void)testCopyDoesntIncrementUniqueIdentifierBarrier
+{
+    [self.request copy];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:self.URL sourceIdentifier:nil];
+    XCTAssertEqual(request.uniqueIdentifier - 1, self.request.uniqueIdentifier);
+}
+
 @end

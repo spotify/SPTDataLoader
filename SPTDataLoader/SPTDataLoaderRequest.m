@@ -44,23 +44,26 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 + (instancetype)requestWithURL:(NSURL *)URL sourceIdentifier:(nullable NSString *)sourceIdentifier
 {
-    return [[self alloc] initWithURL:URL sourceIdentifier:sourceIdentifier];
+    static int64_t uniqueIdentifierBarrier = 0;
+    @synchronized(self.class) {
+        return [[self alloc] initWithURL:URL
+                        sourceIdentifier:sourceIdentifier
+                        uniqueIdentifier:uniqueIdentifierBarrier++];
+    }
 }
 
-- (instancetype)initWithURL:(NSURL *)URL sourceIdentifier:(nullable NSString *)sourceIdentifier
+- (instancetype)initWithURL:(NSURL *)URL
+           sourceIdentifier:(nullable NSString *)sourceIdentifier
+           uniqueIdentifier:(int64_t)uniqueIdentifier
 {
-    static int64_t uniqueIdentifierBarrier = 0;
-
     self = [super init];
     if (self) {
         _URL = URL;
         _sourceIdentifier = sourceIdentifier;
+        _uniqueIdentifier = uniqueIdentifier;
 
         _mutableHeaders = [NSMutableDictionary new];
         _method = SPTDataLoaderRequestMethodGet;
-        @synchronized(self.class) {
-            _uniqueIdentifier = uniqueIdentifierBarrier++;
-        }
     }
 
     return self;
@@ -186,7 +189,9 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 - (id)copyWithZone:(nullable NSZone *)zone
 {
-    __typeof(self) copy = [self.class requestWithURL:self.URL sourceIdentifier:self.sourceIdentifier];
+    __typeof(self) copy = [[self.class alloc] initWithURL:self.URL
+                                         sourceIdentifier:self.sourceIdentifier
+                                         uniqueIdentifier:self.uniqueIdentifier];
     copy.maximumRetryCount = self.maximumRetryCount;
     copy.body = [self.body copy];
     @synchronized(self.mutableHeaders) {
@@ -197,7 +202,6 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     copy.skipNSURLCache = self.skipNSURLCache;
     copy.method = self.method;
     copy.userInfo = self.userInfo;
-    copy.uniqueIdentifier = self.uniqueIdentifier;
     copy.timeout = self.timeout;
     copy.cancellationToken = self.cancellationToken;
     return copy;
