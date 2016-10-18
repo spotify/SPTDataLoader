@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file. SPTDataLoad
 
 --
 
+## [1.1.1](https://github.com/spotify/SPTDataLoader/releases/tag/1.1.1)
+_Released on 2016-02-20._
+
+### Added
+* Added support for SSL pinning.
+* Added iOS 10 support.
+
+### Fixed
+* Fixed nil URLs in the rate limiter causing a crash.
+* Fixed requests executing after they have been cancelled due to a race condition.
+* Fixed unique identifiers incrementing by 2 on every request made.
+
+### Removed
+* Removed iOS 7.0 support.
+
 ## [1.1.0](https://github.com/spotify/SPTDataLoader/releases/tag/1.1.0)
 _Released on 2016-02-15._
 
