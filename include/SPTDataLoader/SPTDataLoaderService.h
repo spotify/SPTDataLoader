@@ -51,9 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param customURLProtocolClasses Array of NSURLProtocol Class objects that you want
  *                                 to use for this DataLoaderService. May be nil.
  */
-+ (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
-                                   rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
-                                      resolver:(SPTDataLoaderResolver *)resolver
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
                       customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses;
 
 /**
