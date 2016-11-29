@@ -321,6 +321,9 @@ didCompleteWithError:(nullable NSError *)error
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
             dispatch_block_t observerBlock = ^ {
+                if (response == nil) {
+                    return;
+                }
                 int bytesSent = (int)task.countOfBytesSent;
                 int bytesReceived = (int)task.countOfBytesReceived;
                 
