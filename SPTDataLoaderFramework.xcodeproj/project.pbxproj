@@ -866,6 +866,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_DYLIB_INSTALL_NAME = "@rpath/SPTDataLoader.framework/SPTDataLoader";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-iOS";
 				PRODUCT_NAME = SPTDataLoader;
@@ -896,6 +897,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_DYLIB_INSTALL_NAME = "@rpath/SPTDataLoader.framework/SPTDataLoader";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoader-iOS";
 				PRODUCT_NAME = SPTDataLoader;
