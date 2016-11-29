@@ -309,6 +309,10 @@ didCompleteWithError:(nullable NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
     SPTDataLoaderResponse *response = [handler completeWithError:error];
+    if (response == nil && !handler.cancelled) {
+        return;
+    }
+    
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }

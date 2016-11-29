@@ -35,6 +35,8 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 @interface SPTDataLoaderRequestTaskHandler ()
 
+@property (nonatomic, assign, readwrite, getter = isCancelled) BOOL cancelled;
+
 @property (nonatomic, weak) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 
@@ -121,6 +123,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
         [requestResponseHandler cancelledRequest:self.request];
         self.calledCancelledRequest = YES;
+        self.cancelled = YES;
         return nil;
     }
     

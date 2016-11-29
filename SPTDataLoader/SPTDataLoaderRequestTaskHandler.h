@@ -40,6 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
  * The request response handler to callback to
  */
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
+/**
+ * Whether the request was cancelled
+ */
+@property (nonatomic, assign, readonly, getter = isCancelled) BOOL cancelled;
 
 /**
  * Class constructor
