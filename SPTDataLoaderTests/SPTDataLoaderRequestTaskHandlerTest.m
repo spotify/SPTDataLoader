@@ -190,4 +190,12 @@
     XCTAssertEqual(self.requestResponseHandler.numberOfCancelledRequestCalls, 1u);
 }
 
+- (void)testCancelledWhenReceivingCancelError
+{
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
+    [self.handler receiveResponse:[NSURLResponse new]];
+    [self.handler completeWithError:error];
+    XCTAssertTrue(self.handler.cancelled);
+}
+
 @end
