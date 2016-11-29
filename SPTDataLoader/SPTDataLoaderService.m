@@ -38,8 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 
-@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
-@property (nonatomic, strong) SPTDataLoaderResolver *resolver;
+@property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, strong, nullable) SPTDataLoaderResolver *resolver;
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
@@ -53,17 +53,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark SPTDataLoaderService
 
-+ (instancetype)dataLoaderServiceWithUserAgent:(NSString *)userAgent
-                                   rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
-                                      resolver:(SPTDataLoaderResolver *)resolver
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
                       customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
     return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
 }
 
-- (instancetype)initWithUserAgent:(NSString *)userAgent
-                      rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
-                         resolver:(SPTDataLoaderResolver *)resolver
+- (instancetype)initWithUserAgent:(nullable NSString *)userAgent
+                      rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                         resolver:(nullable SPTDataLoaderResolver *)resolver
          customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;

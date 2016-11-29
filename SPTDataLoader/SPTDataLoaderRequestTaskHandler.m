@@ -38,7 +38,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 @property (nonatomic, assign, readwrite, getter = isCancelled) BOOL cancelled;
 
 @property (nonatomic, weak) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
-@property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
 
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
 @property (nonatomic, strong, nullable) NSMutableData *receivedData;
@@ -64,7 +64,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 + (instancetype)dataLoaderRequestTaskHandlerWithTask:(NSURLSessionTask *)task
                                              request:(SPTDataLoaderRequest *)request
                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                         rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
+                                         rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
 {
     return [[self alloc] initWithTask:task
                               request:request
@@ -75,7 +75,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 - (instancetype)initWithTask:(NSURLSessionTask *)task
                      request:(SPTDataLoaderRequest *)request
       requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                 rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter
+                 rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
 {
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerMaximumTime = 60.0;
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerInitialTime = 1.0;

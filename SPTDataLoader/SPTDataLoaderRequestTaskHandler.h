@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)dataLoaderRequestTaskHandlerWithTask:(NSURLSessionTask *)task
                                              request:(SPTDataLoaderRequest *)request
                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                         rateLimiter:(SPTDataLoaderRateLimiter *)rateLimiter;
+                                         rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter;
 
 /**
  * Call to tell the operation it has received a response
