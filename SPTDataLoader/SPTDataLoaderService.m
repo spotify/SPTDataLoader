@@ -308,6 +308,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 didCompleteWithError:(nullable NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    handler.task = [self.session dataTaskWithRequest:handler.request.urlRequest];
     SPTDataLoaderResponse *response = [handler completeWithError:error];
     if (response == nil && !handler.cancelled) {
         return;
