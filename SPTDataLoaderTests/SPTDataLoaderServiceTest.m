@@ -337,7 +337,16 @@
 {
     SPTDataLoaderConsumptionObserverMock *consumptionObserver = [SPTDataLoaderConsumptionObserverMock new];
     [self.service addConsumptionObserver:consumptionObserver on:dispatch_get_main_queue()];
-    [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
+
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@"-"];
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionTask *task = [NSURLSessionDataTaskMock new];
+    handler.task = task;
+
+    [self.service URLSession:self.session task:task didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when a request ends");
     [self.service removeConsumptionObserver:consumptionObserver];
     [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
@@ -479,13 +488,20 @@
     };
     [self.service addConsumptionObserver:consumptionObserver
                                       on:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
+
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@"-"];
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
+    handler.task = task;
+
     NSDictionary *headerFields = @{ @"Content-Size" : @"1000" };
-    NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com"];
     NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:URL
                                                               statusCode:400
                                                              HTTPVersion:@"1.1"
                                                             headerFields:headerFields];
-    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
     task.mockResponse = response;
     [self.service URLSession:self.session task:task didCompleteWithError:nil];
     [self waitForExpectationsWithTimeout:1.0 handler:nil];
@@ -559,6 +575,43 @@
     handler.task = task;
     [self.service requestResponseHandler:requestResponseHandlerMock cancelRequest:request];
     XCTAssertEqual(task.numberOfCallsToCancel, 1u);
+}
+
+- (void)testNotRemovingHandlerIfRetrying
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    request.maximumRetryCount = 10;
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
+    handler.task = task;
+
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorDNSLookupFailed userInfo:nil];
+    [self.service URLSession:self.session task:task didCompleteWithError:error];
+
+    XCTAssertEqual(self.service.handlers.count, 1u);
+}
+
+- (void)testRecreateTaskOnDidComplete
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    request.maximumRetryCount = 10;
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
+    handler.task = task;
+
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorDNSLookupFailed userInfo:nil];
+    [self.service URLSession:self.session task:task didCompleteWithError:error];
+
+    XCTAssertNotEqualObjects(task, handler.task);
+    XCTAssertNotNil(handler.task);
 }
 
 @end

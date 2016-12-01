@@ -308,7 +308,12 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 didCompleteWithError:(nullable NSError *)error
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    handler.task = [self.session dataTaskWithRequest:handler.request.urlRequest];
     SPTDataLoaderResponse *response = [handler completeWithError:error];
+    if (response == nil && !handler.cancelled) {
+        return;
+    }
+    
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }
@@ -316,6 +321,9 @@ didCompleteWithError:(nullable NSError *)error
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
             dispatch_block_t observerBlock = ^ {
+                if (response == nil) {
+                    return;
+                }
                 int bytesSent = (int)task.countOfBytesSent;
                 int bytesReceived = (int)task.countOfBytesReceived;
                 
