@@ -614,4 +614,23 @@
     XCTAssertNotNil(handler.task);
 }
 
+- (void)testDoNotRecreateTaskWhenNoHandlerAssociatedWithTask
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    request.maximumRetryCount = 10;
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+
+    SPTDataLoaderRequestTaskHandler *handler = self.service.handlers.firstObject;
+    NSURLSessionTaskMock *task = [NSURLSessionTaskMock new];
+    handler.task = task;
+
+    NSURLSessionTaskMock *otherTask = [NSURLSessionTaskMock new];
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorDNSLookupFailed userInfo:nil];
+    [self.service URLSession:self.session task:otherTask didCompleteWithError:error];
+
+    XCTAssertEqualObjects(handler.task, task);
+}
+
 @end
