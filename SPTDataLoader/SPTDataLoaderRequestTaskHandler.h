@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * The task for performing the URL request on
  */
-@property (nonatomic, strong) NSURLSessionTask *task;
+@property (atomic, strong) NSURLSessionTask *task;
 /**
  * The request response handler to callback to
  */
