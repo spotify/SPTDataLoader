@@ -89,7 +89,10 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
  * @discussion The default is 0.0, which is the equivalent of no timeout
  */
 @property (nonatomic, assign) NSTimeInterval timeout;
-
+/**
+ * An input stream that can be used to stream a body
+ */
+@property (nonatomic, strong, readwrite) NSInputStream *bodyStream;
 /**
  * An identifier for the request source. May be nil.
  *
