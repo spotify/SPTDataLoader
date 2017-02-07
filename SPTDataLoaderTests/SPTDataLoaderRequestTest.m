@@ -129,6 +129,7 @@
 
 - (void)testCopy
 {
+    NSInputStream *inputStream = [NSInputStream inputStreamWithData:[NSData data]];
     self.request.maximumRetryCount = 10;
     self.request.body = [@"Test" dataUsingEncoding:NSUTF8StringEncoding];
     [self.request addValue:@"Value" forHeader:@"Header"];
@@ -136,6 +137,7 @@
     self.request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
     self.request.skipNSURLCache = YES;
     self.request.method = SPTDataLoaderRequestMethodPost;
+    self.request.bodyStream = inputStream;
     SPTDataLoaderRequest *request = [self.request copy];
     XCTAssertEqual(request.maximumRetryCount, self.request.maximumRetryCount, @"The retry count was not copied correctly");
     XCTAssertEqualObjects(request.body, self.request.body, @"The body was not copied correctly");
@@ -144,6 +146,7 @@
     XCTAssertEqual(request.cachePolicy, self.request.cachePolicy, @"The cache policy was not copied correctly");
     XCTAssertEqual(request.skipNSURLCache, self.request.skipNSURLCache, @"'skipNSURLCache' was not copied correctly");
     XCTAssertEqual(request.method, self.request.method, @"The method was not copied correctly");
+    XCTAssertEqual(request.bodyStream, self.request.bodyStream, @"The body stream was not copied correctly");
 }
 
 - (void)testAcceptLanguageWithNoEnglishLanguages
@@ -219,6 +222,14 @@
     [self.request copy];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:self.URL sourceIdentifier:nil];
     XCTAssertEqual(request.uniqueIdentifier - 1, self.request.uniqueIdentifier);
+}
+
+- (void)testStreamInUrlRequest
+{
+    NSInputStream *inputStream = [NSInputStream inputStreamWithData:[NSData data]];
+    self.request.bodyStream = inputStream;
+    NSURLRequest *request = self.request.urlRequest;
+    XCTAssertNotNil(request.HTTPBodyStream, @"Should have created an HTTP body stream");
 }
 
 @end
