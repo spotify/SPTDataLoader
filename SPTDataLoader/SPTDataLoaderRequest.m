@@ -112,8 +112,10 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
         [urlRequest addValue:[self.class languageHeaderValue]
           forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
     }
-    
-    if (self.body) {
+
+    if (self.bodyStream != nil) {
+        urlRequest.HTTPBodyStream = self.bodyStream;
+    } else if (self.body) {
         [urlRequest addValue:@(self.body.length).stringValue forHTTPHeaderField:SPTDataLoaderRequestContentLengthHeader];
         urlRequest.HTTPBody = self.body;
     }
@@ -204,6 +206,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     copy.userInfo = self.userInfo;
     copy.timeout = self.timeout;
     copy.cancellationToken = self.cancellationToken;
+    copy.bodyStream = self.bodyStream;
     return copy;
 }
 
