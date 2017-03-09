@@ -27,6 +27,7 @@
 @property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedDataRequestCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfSuccessfulDataResponseCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedInitialResponseCalls;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfNewBodyStreamCalls;
 @property (nonatomic, strong, readwrite) SPTDataLoaderResponse *lastReceivedResponse;
 
 @end
@@ -74,6 +75,12 @@
 
 - (void)authoriseRequest:(SPTDataLoaderRequest *)request
 {
+}
+
+- (void)needsNewBodyStream:(void (^)(NSInputStream * _Nonnull))completionHandler
+                forRequest:(SPTDataLoaderRequest *)request
+{
+    self.numberOfNewBodyStreamCalls++;
 }
 
 @end

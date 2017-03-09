@@ -133,6 +133,28 @@
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1u, @"The data loader did not relay a received initial response to the delegate");
 }
 
+- (void)testRelayBodyStreamPromptToDelegate
+{
+    self.delegate.respondsToBodyStreamPrompts = YES;
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request];
+    [self.dataLoader needsNewBodyStream:^(NSInputStream * _Nonnull _) {} forRequest:request];
+    XCTAssertEqual(self.delegate.numberOfCallsToNeedNewBodyStream, 1u, @"The data loader did not relay a prompt for delivering a new body stream to the delegate");
+}
+
+- (void)testBodyStreamPromptWithoutDelegateSupport
+{
+    NSInputStream * const inputStream = [NSInputStream inputStreamWithData:[NSData data]];
+    self.delegate.respondsToBodyStreamPrompts = NO;
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.bodyStream = inputStream;
+    [self.dataLoader performRequest:request];
+    [self.dataLoader needsNewBodyStream:^(NSInputStream * _Nonnull bodyStream) {
+        XCTAssertNotNil(bodyStream, @"The data loader failed to fall back to using the original input stream when the delegate doesn't respond to the call");
+        XCTAssertEqualObjects(bodyStream, inputStream, @"The data loader failed to fall back to using the original input stream when the delegate doesn't respond to the call");
+    } forRequest:request];
+}
+
 - (void)testDelegateCallbackOnSeparateQueue
 {
     self.dataLoader.delegateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);

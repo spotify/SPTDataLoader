@@ -37,7 +37,6 @@
 @end
 
 @interface SPTDataLoaderFactoryTest : XCTestCase
-
 @property (nonatomic, strong) SPTDataLoaderFactory *factory;
 
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *delegate;
@@ -215,6 +214,16 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler cancelRequest:request];
     XCTAssertEqualObjects(request, self.delegate.lastRequestCancelled);
+}
+
+- (void)testRequestingNewBodyStream
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    [self.factory needsNewBodyStream:^(NSInputStream * _Nonnull _) {} forRequest:request];
+    
+    XCTAssertEqual(requestResponseHandler.numberOfNewBodyStreamCalls, 1u, @"The factory did not relay a prompt for delivering a new body stream to the correct handler");
 }
 
 @end

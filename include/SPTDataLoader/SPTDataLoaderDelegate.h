@@ -79,6 +79,17 @@ didReceiveDataChunk:(NSData *)data
  */
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response;
 
+/**
+ * Called when a data loader request using the @c bodyStream property encounters some sort of redirection that invalidates
+ * the initially provided input stream.
+ * @param dataLoader The data loader that needs a new input stream.
+ * @param completionHandler The completion handler that is to be called with the new input stream.
+ * @param request The request that needs a new input stream.
+ */
+- (void)dataLoader:(SPTDataLoader *)dataLoader
+needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
+        forRequest:(SPTDataLoaderRequest *)request;
+
 @end
 
 NS_ASSUME_NONNULL_END

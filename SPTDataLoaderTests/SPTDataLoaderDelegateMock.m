@@ -22,6 +22,15 @@
 
 @implementation SPTDataLoaderDelegateMock
 
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    if (aSelector == @selector(dataLoader:needsNewBodyStream:forRequest:)) {
+        return self.respondsToBodyStreamPrompts;
+    } else {
+        return [super respondsToSelector:aSelector];
+    }
+}
+
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfCallsToSuccessfulResponse++;
@@ -55,6 +64,11 @@ didReceiveDataChunk:(NSData *)data
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response
 {
     self.numberOfCallsToReceivedInitialResponse++;
+}
+
+- (void)dataLoader:(SPTDataLoader *)dataLoader needsNewBodyStream:(void (^)(NSInputStream * _Nonnull))completionHandler forRequest:(SPTDataLoaderRequest *)request
+{
+    self.numberOfCallsToNeedNewBodyStream++;
 }
 
 @end
