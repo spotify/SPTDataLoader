@@ -163,6 +163,15 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)needsNewBodyStream:(void (^)(NSInputStream * _Nonnull))completionHandler forRequest:(SPTDataLoaderRequest *)request
+{
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
+    @synchronized(self.requestToRequestResponseHandler) {
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+    }
+    [requestResponseHandler needsNewBodyStream:completionHandler forRequest:request];
+}
+
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler

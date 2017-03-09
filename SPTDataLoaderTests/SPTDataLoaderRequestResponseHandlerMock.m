@@ -76,4 +76,9 @@
 {
 }
 
+- (void)needsNewBodyStream:(void (^)(NSInputStream * _Nonnull))completionHandler
+                forRequest:(SPTDataLoaderRequest *)request
+{
+}
+
 @end

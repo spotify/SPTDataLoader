@@ -83,6 +83,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)start;
 
+/**
+ * Provides the task with a new body input stream.
+ */
+- (void)provideNewBodyStreamWithCompletion:(void (^)(NSInputStream * _Nonnull))completionHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END
