@@ -633,4 +633,14 @@
     XCTAssertEqualObjects(handler.task, task);
 }
 
+- (void)testProvidingNewBodyStream
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    [self.service URLSession:self.service.session task:self.session.lastDataTask needNewBodyStream:^(NSInputStream * _Nullable _) {}];
+    XCTAssertEqual(requestResponseHandlerMock.numberOfNewBodyStreamCalls, 1u, @"The service did not forward the prompt for a new body stream to the request response handler");
+}
+
 @end

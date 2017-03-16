@@ -104,6 +104,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response;
 
+/**
+ * Called when a request using the @c bodyStream property encounters some sort of redirection that invalidates
+ * the initially provided input stream.
+ * @param completionHandler The completion handler that is to be called with the new input stream.
+ * @param request The request that needs a new input stream.
+ */
+- (void)needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
+                forRequest:(SPTDataLoaderRequest *)request;
+
 @optional
 
 /**

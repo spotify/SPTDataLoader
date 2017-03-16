@@ -106,6 +106,12 @@
     XCTAssertEqualWithAccuracy([self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request], 59.0, 1.0, @"The retry-after header was not relayed to the rate limiter");
 }
 
+- (void)testRelayNewBodyStreamPrompt
+{
+    [self.handler provideNewBodyStreamWithCompletion:^(NSInputStream * _Nonnull _) {}];
+    XCTAssertEqual(self.requestResponseHandler.numberOfNewBodyStreamCalls, 1u);
+}
+
 - (void)testRetry
 {
     self.handler.retryCount = 10;

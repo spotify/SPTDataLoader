@@ -223,6 +223,20 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
+                forRequest:(SPTDataLoaderRequest *)request
+{
+    if ([self.delegate respondsToSelector:@selector(dataLoader:needsNewBodyStream:forRequest:)]) {
+        [self executeDelegateBlock:^{
+            [self.delegate dataLoader:self
+                   needsNewBodyStream:completionHandler
+                           forRequest:request];
+        }];
+    } else {
+        completionHandler(request.bodyStream);
+    }
+}
+
 #pragma mark SPTDataLoaderCancellationTokenDelegate
 
 - (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken

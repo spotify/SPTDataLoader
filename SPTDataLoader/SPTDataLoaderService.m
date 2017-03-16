@@ -393,6 +393,14 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
     completionHandler(newRequest);
 }
 
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+ needNewBodyStream:(void (^)(NSInputStream * _Nullable))completionHandler
+{
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    [handler provideNewBodyStreamWithCompletion:completionHandler];
+}
+
 #pragma mark NSObject
 
 - (void)dealloc
