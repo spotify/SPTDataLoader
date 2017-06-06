@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
         configuration.HTTPShouldUsePipelining = YES;
         configuration.protocolClasses = customURLProtocolClasses;
         if (userAgent) {
-            configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : userAgent };
+            configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : (NSString * _Nonnull)userAgent };
         }
 
         _sessionQueue = [NSOperationQueue new];
