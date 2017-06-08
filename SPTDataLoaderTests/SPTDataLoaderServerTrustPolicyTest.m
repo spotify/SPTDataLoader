@@ -67,18 +67,19 @@ static SecTrustRef SPTDataLoaderUnitTestCreateTrustChainForCertPaths(NSArray<NSS
     return trust;
 }
 
-static NSArray<NSString *> *SPTDataLoaderServerTrustUnitTestCertificatePathsInDirectory(NSString *inDirectory) {
-    NSBundle *bundle = [NSBundle bundleForClass:[SPTDataLoaderServerTrustPolicyTest class]];
-    NSArray<NSString *> *paths = [bundle pathsForResourcesOfType:@"der" inDirectory:inDirectory];
-    return paths;
+static NSArray<NSString *> *SPTDataLoaderServerTrustUnitTestCertificatePathsInCertBundle(NSString *name) {
+    NSBundle *testBundle = [NSBundle bundleForClass:[SPTDataLoaderServerTrustPolicyTest class]];
+    NSString *bundlePath = [NSString stringWithFormat:@"%@/certs-%@.bundle", [testBundle resourcePath], name];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    return [bundle pathsForResourcesOfType:@"der" inDirectory:@"/"];
 }
 
 static NSArray<NSString *> *SPTDataLoaderServerTrustUnitGoogleTestCertificatePaths() {
-    return SPTDataLoaderServerTrustUnitTestCertificatePathsInDirectory(@"google");
+    return SPTDataLoaderServerTrustUnitTestCertificatePathsInCertBundle(@"google");
 }
 
 static NSArray<NSString *> *SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths() {
-    return SPTDataLoaderServerTrustUnitTestCertificatePathsInDirectory(@"spotify");
+    return SPTDataLoaderServerTrustUnitTestCertificatePathsInCertBundle(@"spotify");
 }
 
 static SecTrustRef SPTDataLoaderUnitTestCreateGoogleComServerTrust() {

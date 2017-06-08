@@ -44,14 +44,14 @@
 		05A3BCB61D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
 		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
+		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
+		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
 		F7346A291CC2C67700B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
 		F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
 		F7346A6E1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */; };
-		F7346A741CC2E1B500B8AB41 /* spotify in Resources */ = {isa = PBXBuildFile; fileRef = F7346A711CC2DF8700B8AB41 /* spotify */; };
-		F7346A751CC2E1B800B8AB41 /* google in Resources */ = {isa = PBXBuildFile; fileRef = F7346A701CC2DF8700B8AB41 /* google */; };
 		F7794B011CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +153,8 @@
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
+		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
+		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
@@ -165,8 +167,6 @@
 		F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServerTrustPolicyMock.h; sourceTree = "<group>"; };
 		F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyMock.m; sourceTree = "<group>"; };
 		F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyTest.m; sourceTree = "<group>"; };
-		F7346A701CC2DF8700B8AB41 /* google */ = {isa = PBXFileReference; lastKnownFileType = folder; name = google; path = Certificates/google; sourceTree = "<group>"; };
-		F7346A711CC2DF8700B8AB41 /* spotify */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spotify; path = Certificates/spotify; sourceTree = "<group>"; };
 		F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderServerTrustPolicy.h; path = include/SPTDataLoader/SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
 		F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,7 +273,8 @@
 		050E069A1A10C62100A10A0E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F7346A6F1CC2DF7500B8AB41 /* Certificates */,
+				6994E68B1EE9F49B00128CDE /* certs-google.bundle */,
+				6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */,
 				050E069B1A10C62100A10A0E /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -360,15 +361,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F7346A6F1CC2DF7500B8AB41 /* Certificates */ = {
-			isa = PBXGroup;
-			children = (
-				F7346A701CC2DF8700B8AB41 /* google */,
-				F7346A711CC2DF8700B8AB41 /* spotify */,
-			);
-			name = Certificates;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -448,8 +440,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7346A741CC2E1B500B8AB41 /* spotify in Resources */,
-				F7346A751CC2E1B800B8AB41 /* google in Resources */,
+				6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */,
+				6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
