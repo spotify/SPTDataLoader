@@ -86,7 +86,8 @@ static NSString *AppDelegateSourceIdentifier = @"app";
                                                @"redirect_uri" : SPOTIFY_REDIRECT_URI };
         NSMutableArray *tokenBodyParameters = [NSMutableArray new];
         for (NSString *tokenBodyKey in tokenBodyDictionary) {
-            NSString *tokenBodyParameter = [@[ tokenBodyKey, tokenBodyDictionary[tokenBodyKey] ] componentsJoinedByString:@"="];
+            id _Nonnull value = (id _Nonnull)tokenBodyDictionary[tokenBodyKey];
+            NSString *tokenBodyParameter = [@[ tokenBodyKey, value ] componentsJoinedByString:@"="];
             [tokenBodyParameters addObject:tokenBodyParameter];
         }
         NSString *tokenBodyString = [tokenBodyParameters componentsJoinedByString:@"&"];

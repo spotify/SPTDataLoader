@@ -125,7 +125,7 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
     
     if ([response.request.URL.absoluteString isEqualToString:PlaylistsViewModelMeURLString]) {
         self.userID = jsonDictionary[@"id"];
-    } else if ([response.request.URL.absoluteString isEqualToString:self.playlistsURL.absoluteString]) {
+    } else if ([response.request.URL.absoluteString isEqualToString:(NSString * _Nonnull)self.playlistsURL.absoluteString]) {
         self.items = jsonDictionary[@"items"];
     }
 }

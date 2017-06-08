@@ -413,7 +413,7 @@
 		050E06821A10C62100A10A0E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Spotify;
 				TargetAttributes = {
 					050E06891A10C62100A10A0E = {
@@ -532,13 +532,6 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0810 = "$(SPT_DATALOADER_NON_ERROR_WARNINGS_0730)";
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0820 = "$(SPT_DATALOADER_NON_ERROR_WARNINGS_0730)";
-				WARNING_CFLAGS = (
-					"$(SPT_DATALOADER_NON_ERROR_WARNINGS_$(XCODE_VERSION_MINOR))",
-					"$(inherited)",
-				);
 			};
 			name = Debug;
 		};
@@ -550,14 +543,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0730 = "-Wno-error=partial-availability";
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0810 = "$(SPT_DATALOADER_NON_ERROR_WARNINGS_0730)";
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0820 = "$(SPT_DATALOADER_NON_ERROR_WARNINGS_0730)";
 				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = (
-					"$(SPT_DATALOADER_NON_ERROR_WARNINGS_$(XCODE_VERSION_MINOR))",
-					"$(inherited)",
-				);
 			};
 			name = Release;
 		};
@@ -568,7 +554,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0810 = "$(SPT_DATALOADER_NON_ERROR_WARNINGS_0730)";
 			};
 			name = Debug;
 		};
@@ -579,7 +564,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SPT_DATALOADER_NON_ERROR_WARNINGS_0810 = "$(SPT_DATALOADER_NON_ERROR_WARNINGS_0730)";
 			};
 			name = Release;
 		};
@@ -594,6 +578,10 @@
 				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"$(inherited)",
+					"-Wno-partial-availability",
+				);
 			};
 			name = Debug;
 		};
@@ -608,6 +596,10 @@
 				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"$(inherited)",
+					"-Wno-partial-availability",
+				);
 			};
 			name = Release;
 		};
