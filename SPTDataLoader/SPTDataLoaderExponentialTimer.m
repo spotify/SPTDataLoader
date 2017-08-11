@@ -127,7 +127,8 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 #define EXPT_MODULO_F64 ((double)(EXPT_MODULO))
 NS_INLINE double SPTExptRandom()
 {
-    return arc4random_uniform(EXPT_MODULO + 1);
+    // We need [0, 1) interval
+    return arc4random_uniform(EXPT_MODULO);
 }
 
 + (NSTimeInterval)normalWithMu:(double)mu sigma:(double)sigma
