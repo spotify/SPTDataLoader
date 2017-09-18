@@ -237,4 +237,12 @@
     XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 1u);
 }
 
+- (void)testCurrentRequests
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request];
+    NSArray<SPTDataLoaderRequest *> *requests = self.dataLoader.currentRequests;
+    XCTAssertEqual(requests.count, 1u);
+}
+
 @end
