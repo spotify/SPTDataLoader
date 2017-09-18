@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * The requests currently under flight in the data loader
  */
-@property (nonatomic, strong, readonly) NSArray<SPTDataLoaderRequest *> *currentRequests;
+@property (nonatomic, copy, readonly) NSArray<SPTDataLoaderRequest *> *currentRequests;
 
 #pragma mark Performing Requests
 
