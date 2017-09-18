@@ -133,6 +133,11 @@ NS_ASSUME_NONNULL_BEGIN
     return NO;
 }
 
+- (NSArray<SPTDataLoaderRequest *> *)currentRequests
+{
+    return [self.requests copy];
+}
+
 #pragma mark NSObject
 
 - (void)dealloc
