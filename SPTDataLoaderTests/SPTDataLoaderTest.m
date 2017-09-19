@@ -22,7 +22,7 @@
 
 #import "SPTDataLoaderRequest.h"
 
-#import "SPTDataLoader+Private.h"
+#import "SPTDataLoaderImplementation+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 #import "SPTDataLoaderDelegateMock.h"
 #import "SPTDataLoaderCancellationTokenDelegateMock.h"

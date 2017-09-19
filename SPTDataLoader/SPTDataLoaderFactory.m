@@ -25,7 +25,7 @@
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
 #import "SPTDataLoaderFactory+Private.h"
-#import "SPTDataLoader+Private.h"
+#import "SPTDataLoaderImplementation+Private.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
 

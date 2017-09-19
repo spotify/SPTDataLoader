@@ -18,16 +18,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
-#import <SPTDataLoader/SPTDataLoader.h>
-#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
-#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
-#import <SPTDataLoader/SPTDataLoaderDelegate.h>
-#import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
-#import <SPTDataLoader/SPTDataLoaderFactory.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
-#import <SPTDataLoader/SPTDataLoaderService.h>
+#import "SPTDataLoaderImplementation.h"
+#import "SPTDataLoaderRequestResponseHandler.h"
+
+@protocol SPTDataLoaderCancellationTokenFactory;
+
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ * The private API for the data loader for internal use in the SPTDataLoader library
+ */
+@interface SPTDataLoader (Private) <SPTDataLoaderRequestResponseHandler>
+
+/**
+ * Class constructor
+ * @param requestResponseHandlerDelegate The private delegate for delegating the request handling
+ * @param cancellationTokenFactory The object used to create cancellation tokens
+ */
++ (instancetype)dataLoaderWithRequestResponseHandlerDelegate:(id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
+                                    cancellationTokenFactory:(id<SPTDataLoaderCancellationTokenFactory>)cancellationTokenFactory;
+
+@end
+
+NS_ASSUME_NONNULL_END
