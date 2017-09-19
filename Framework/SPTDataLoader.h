@@ -32,3 +32,9 @@
 #import "SPTDataLoaderResponse.h"
 #import "SPTDataLoaderServerTrustPolicy.h"
 #import "SPTDataLoaderService.h"
+
+//! Project version number for SPTDataLoader.
+FOUNDATION_EXPORT double SPTDataLoaderVersionNumber;
+
+//! Project version string for SPTDataLoader.
+FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
