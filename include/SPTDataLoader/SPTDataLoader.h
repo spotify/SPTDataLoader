@@ -54,6 +54,10 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion By default this is the main queue.
  */
 @property (nonatomic, strong) dispatch_queue_t delegateQueue;
+/**
+ * The requests currently under flight in the data loader
+ */
+@property (nonatomic, copy, readonly) NSArray<SPTDataLoaderRequest *> *currentRequests;
 
 #pragma mark Performing Requests
 
