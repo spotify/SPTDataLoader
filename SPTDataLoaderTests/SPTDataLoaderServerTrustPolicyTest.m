@@ -19,10 +19,7 @@
  * under the License.
  */
 #import <XCTest/XCTest.h>
-
-#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 #import "SPTDataLoaderServerTrustPolicy+Private.h"
-
 #import "NSURLAuthenticationChallengeMock.h"
 
 #import <Security/Security.h>

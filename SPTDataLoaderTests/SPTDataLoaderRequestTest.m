@@ -19,9 +19,6 @@
  * under the License.
  */
 #import <XCTest/XCTest.h>
-
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-
 #import <objc/runtime.h>
 
 #import "SPTDataLoaderRequest+Private.h"

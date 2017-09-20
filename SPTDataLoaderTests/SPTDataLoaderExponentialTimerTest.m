@@ -20,7 +20,7 @@
  */
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTDataLoader.h>
+#import "SPTDataLoader.h"
 
 @interface SPTDataLoaderExponentialTimerTest : XCTestCase
 
