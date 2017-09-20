@@ -33,12 +33,10 @@
 
 - (instancetype)init
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _enabled = YES;
     }
-
-    _enabled = YES;
-
     return self;
 }
 

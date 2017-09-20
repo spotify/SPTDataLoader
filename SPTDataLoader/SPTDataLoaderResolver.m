@@ -86,13 +86,11 @@
 
 - (instancetype)init
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _resolverHost = [NSMutableDictionary new];
+        _addresses = [NSHashTable weakObjectsHashTable];
     }
-    
-    _resolverHost = [NSMutableDictionary new];
-    _addresses = [NSHashTable weakObjectsHashTable];
-    
     return self;
 }
 

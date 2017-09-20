@@ -71,16 +71,14 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
                          growFactor:(double)growFactor
                              jitter:(double)jitter
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _initialTime = initialTime;
+        _timeInterval = initialTime;
+        _maxTime = maxTime;
+        _growFactor = growFactor;
+        _jitter = jitter;
     }
-    
-    _initialTime = initialTime;
-    _timeInterval = initialTime;
-    _maxTime = maxTime;
-    _growFactor = growFactor;
-    _jitter = jitter;
-  
     return self;
 }
 
