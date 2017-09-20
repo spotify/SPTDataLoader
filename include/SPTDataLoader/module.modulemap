@@ -1,3 +1,0 @@
-module SPTDataLoader {
-    umbrella header "SPTDataLoaderConvenience.h"
-}
