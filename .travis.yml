@@ -6,19 +6,16 @@ branches:
     - master
     - /^release-.*$/
 
-osx_image: xcode7.3
+osx_image: xcode9
 language: objective-c
 
-before_install: ./ci/before_install.sh
 bundler_args: --without documentation --without development --deployment --jobs=3 --retry=3
 
 script:
-  - ./ci/script.sh
+  - bundle exec rake ci:build_and_test
   # This is a workaround for a Travis-CI bug where the log might get cut-off.
   # See the [Travis-CI issue #4716](https://github.com/travis-ci/travis-ci/issues/4716).
   - sleep 3
-
-after_success: ./ci/after_success.sh
 
 deploy:
   provider: releases
@@ -29,43 +26,9 @@ deploy:
   on:
     repo: spotify/SPTDataLoader
     tags: true
-  script: ./ci/deploy.sh
-
+  script: bundle exec rake ci:package
 
 env:
   global:
     - LC_CTYPE=en_US.UTF-8
     - LANG=en_US.UTF-8
-    - SCHEME_IOS_LIBRARY="SPTDataLoader"
-    - SCHEME_IOS_FRAMEWORK="SPTDataLoader-iOS"
-    - SCHEME_OSX_FRAMEWORK="SPTDataLoader-OSX"
-    - SCHEME_TV_FRAMEWORK="SPTDataLoader-TV"
-    - SCHEME_WATCH_FRAMEWORK="SPTDataLoader-Watch"
-    - SCHEME_DEMO="SPTDataLoaderDemo"
-    - BUILD="build"
-    - BUILD_TEST="build test"
-    - ENABLE_CODE_COVERAGE="-enableCodeCoverage YES"
-    - PROJECT_LIBRARY="SPTDataLoader.xcodeproj"
-    - PROJECT_DEMO="SPTDataLoaderDemo.xcodeproj"
-    - PROJECT_FRAMEWORK="SPTDataLoaderFramework.xcodeproj"
-    - PODSPEC="SPTDataLoader.podspec"
-    - EXPECTED_LICENSE_HEADER_FILE="./other/expected_license_header.txt"
-    - LICENSED_SOURCE_FILES_GLOB="{demo,include/SPTDataLoader,SPTDataLoader,SPTDataLoaderTests}/*.{h,m}"
-  matrix:
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.1,name='iPhone 6'"     SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.2,name='iPhone 4s'"    SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.3,name='iPhone 5'"     SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.4,name='iPhone 5s'"    SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=9.0,name='iPhone 6'"     SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=9.1,name='iPhone 5'"     SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=9.2,name='iPhone 6s'"    SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=macosx           TEST_DEST="platform='OS X',arch=x86_64"                         SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=watchsimulator   TEST_DEST="OS=2.1,name='Apple Watch - 38mm'"                    SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=watchsimulator   TEST_DEST="OS=2.0,name='Apple Watch - 38mm'"                    SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=appletvsimulator TEST_DEST="OS=9.1,name='Apple TV 1080p'"                        SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=appletvsimulator TEST_DEST="OS=9.0,name='Apple TV 1080p'"                        SCHEME="$SCHEME_IOS_LIBRARY"            BUILD_ACTIONS="$BUILD_TEST" EXTRA_ARGUMENTS="$ENABLE_CODE_COVERAGE" PROJECT="$PROJECT_LIBRARY"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.1,name='iPhone 6'"     SCHEME="$SCHEME_DEMO"                   BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_DEMO"
-    - TEST_SDK=iphonesimulator  TEST_DEST="platform='iOS Simulator',OS=8.1,name='iPhone 6'"     SCHEME="$SCHEME_IOS_FRAMEWORK"          BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_FRAMEWORK"
-    - TEST_SDK=macosx           TEST_DEST="platform='OS X',arch=x86_64"                         SCHEME="$SCHEME_OSX_FRAMEWORK"          BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_FRAMEWORK"
-    - TEST_SDK=watchsimulator   TEST_DEST="OS=2.0,name='Apple Watch - 38mm'"                    SCHEME="$SCHEME_WATCH_FRAMEWORK"        BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_FRAMEWORK"
-    - TEST_SDK=appletvsimulator TEST_DEST="OS=9.0,name='Apple TV 1080p'"                        SCHEME="$SCHEME_TV_FRAMEWORK"           BUILD_ACTIONS="$BUILD"      EXTRA_ARGUMENTS=""                      PROJECT="$PROJECT_FRAMEWORK"
