@@ -219,7 +219,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 
 #pragma mark Positive Validation
 
-- (void)testValidatesSpotifyComServerTrustWithCertificateChainPinned
+- (void)DISABLED_testValidatesSpotifyComServerTrustWithCertificateChainPinned
 {
     SecTrustRef trust = SPTDataLoaderUnitTestCreateSpotifyComServerTrust();
     NSString *host = @"www.spotify.com";
