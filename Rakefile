@@ -37,7 +37,7 @@ namespace :validate do
   desc 'Validate License Conformance'
   task :license do
     travis_fold('validate-license-conformance') do
-      source_files = Dir['**/*.{h,m,mm}']
+      source_files = `git ls-files`.split("\n").select{|x| x =~ /\.(h|m|mm)$/}
       system('other/validate_license_conformance.sh', 'other/expected_license_header.txt', *source_files) || fail!("License conformance failed")
     end
   end
