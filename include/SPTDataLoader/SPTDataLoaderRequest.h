@@ -26,7 +26,8 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestMethod) {
     SPTDataLoaderRequestMethodGet,
     SPTDataLoaderRequestMethodPost,
     SPTDataLoaderRequestMethodPut,
-    SPTDataLoaderRequestMethodDelete
+    SPTDataLoaderRequestMethodDelete,
+    SPTDataLoaderRequestMethodHead
 };
 
 typedef NS_ENUM(NSInteger, SPTDataLoaderRequestErrorCode) {
