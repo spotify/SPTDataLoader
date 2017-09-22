@@ -232,4 +232,10 @@
     XCTAssertNotNil(request.HTTPBodyStream, @"Should have created an HTTP body stream");
 }
 
+- (void)testHeadMethod
+{
+    self.request.method = SPTDataLoaderRequestMethodHead;
+    XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"HEAD");
+}
+
 @end
