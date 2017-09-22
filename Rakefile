@@ -1,5 +1,7 @@
-require 'active_support/core_ext/object/blank'
+require 'active_support'
+require 'active_support/core_ext'
 require 'colored'
+require 'rubygems'
 require 'shellwords'
 require 'set'
 require 'simctl'
@@ -93,29 +95,11 @@ namespace :test do
   desc 'Run tests on the simulator matrix'
   task :simulators do
     # find devices for each runtime
-    device_mapping = {}
     platforms = Set.new
-
-    for device in SimCtl.list_devices
-      device_plist = device.send(:plist)
-      ident = device_plist.deviceType
-      next unless SIMULATOR_TEST_DEVICE_TYPES.include?(ident)
-
-      device_mapping[ident] ||= {}
-      runtime_mapping = device_mapping[ident]
-
-      runtime = device.send(:plist).runtime
-      next if runtime_mapping[runtime]
-      platform = platform_from_runtime_ident(runtime)
-      platforms << platform
-      runtime_mapping[runtime] = [device, platform]
-    end
-
-    # validate that we have devices
-    for dt in SIMULATOR_TEST_DEVICE_TYPES
-      if device_mapping[dt].blank?
-        fail!("Could not find any devices for #{dt}")
-      end
+    devices = get_test_simulators
+    for device in devices
+      runtime_ident = device.runtime.identifier
+      platforms << platform_from_runtime_ident(runtime_ident)
     end
 
     # build-for-testing for each platform
@@ -134,15 +118,16 @@ namespace :test do
     end
 
     # run tests
-    for device_type, runtimes in device_mapping
-      for runtime, (device, platform) in runtimes
-        device_type = device_type.split('.').last
-        runtime = runtime.split('.').last
-        for bundle in platform_test_bundles[platform]
-          base = File.basename(bundle, '.xctest')
-          travis_fold("testing-#{device_type}-#{runtime}-#{base}") do
-            simctl_test(device, platform, bundle)
-          end
+    for device in devices
+      d_plist = device.send(:plist)
+      device_type = d_plist.deviceType.split('.').last
+      runtime = d_plist.runtime.split('.').last
+      platform = platform_from_runtime_ident(d_plist.runtime)
+
+      for bundle in platform_test_bundles[platform]
+        base = File.basename(bundle, '.xctest')
+        travis_fold("testing-#{device_type}-#{runtime}-#{base}") do
+          simctl_test(device, platform, bundle)
         end
       end
     end
@@ -230,6 +215,40 @@ def simctl_test(device, platform, bundle)
   # capture raw profiles
   env = { 'SIMCTL_CHILD_LLVM_PROFILE_FILE' => "#{profraw_dir}/%p.profraw" }
   system(env, "set -o pipefail && #{full_cmd} 2>&1 | xcpretty") || fail!('tests failed')
+end
+
+#
+# Get the list of test devices
+#
+def get_test_simulators()
+  # get devices by type
+  devices_by_type = SimCtl.list_devices.group_by{ |d|
+    d.send(:plist).deviceType
+  }.slice(*SIMULATOR_TEST_DEVICE_TYPES)
+
+  # get the latest runtime for each device
+  result = []
+
+  for type, devices in devices_by_type
+    mapping = {}
+
+    for device in devices
+      runtime = device.runtime
+      runtime_v = Gem::Version.new(runtime.version)
+      key = runtime_v.segments.first
+      existing = mapping[key]
+
+      if !existing
+        mapping[key] = device
+      elsif runtime_v > Gem::Version.new(existing.runtime.version)
+        mapping[key] = device
+      end
+    end
+
+    result.concat(mapping.values)
+  end
+
+  return result
 end
 
 #
