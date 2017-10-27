@@ -204,4 +204,20 @@
     XCTAssertTrue(self.handler.cancelled);
 }
 
+- (void)testRelayUpdatedCountOfBytesSent
+{
+    self.task.countOfBytesSent = 1u;
+    self.task.countOfBytesExpectedToSend = 2u;
+
+    XCTAssertEqual(self.requestResponseHandler.numberOfUpdatedCountOfBytesSent, 2u, @"The handler did not relay the updated count of bytes sent its request response handler");
+}
+
+- (void)testRelayUpdatedCountOfBytesReceived
+{
+    self.task.countOfBytesReceived = 1u;
+    self.task.countOfBytesExpectedToReceive = 2u;
+    
+    XCTAssertEqual(self.requestResponseHandler.numberOfUpdatedCountOfBytesReceived, 2u, @"The handler did not relay the updated count of bytes received its request response handler");
+}
+
 @end

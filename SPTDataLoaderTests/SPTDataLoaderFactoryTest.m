@@ -226,4 +226,24 @@
     XCTAssertEqual(requestResponseHandler.numberOfNewBodyStreamCalls, 1u, @"The factory did not relay a prompt for delivering a new body stream to the correct handler");
 }
 
+- (void)testUpdatedCountOfBytesReceived
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    [self.factory updatedCountOfBytesReceived:1u countOfBytesExpectedToReceive:2u forRequest:request];
+    
+    XCTAssertEqual(requestResponseHandler.numberOfUpdatedCountOfBytesReceived, 1u, @"The factory did not relay an update of the number of bytes that received from the server");
+}
+
+- (void)testUpdatedCountOfBytesSent
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    [self.factory updatedCountOfBytesSent:1u countOfBytesExpectedToSend:2u forRequest:request];
+    
+    XCTAssertEqual(requestResponseHandler.numberOfUpdatedCountOfBytesSent, 1u, @"The factory did not relay an update of the number of bytes that sent to the server");
+}
+
 @end

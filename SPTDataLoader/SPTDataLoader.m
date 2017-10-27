@@ -242,6 +242,42 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)updatedCountOfBytesReceived:(int64_t)countOfBytesReceived
+      countOfBytesExpectedToReceive:(int64_t)countOfBytesExpectedToReceive
+                         forRequest:(SPTDataLoaderRequest *)request
+{
+    if (![self isRequestExpected:request]) {
+        return;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(dataLoader:updatedCountOfBytesReceived:countOfBytesExpectedToReceive:forRequest:)]) {
+        [self executeDelegateBlock:^{
+            [self.delegate dataLoader:self
+          updatedCountOfBytesReceived:countOfBytesReceived
+        countOfBytesExpectedToReceive:countOfBytesExpectedToReceive
+                           forRequest:request];
+        }];
+    }
+}
+
+- (void)updatedCountOfBytesSent:(int64_t)countOfBytesSent
+     countOfBytesExpectedToSend:(int64_t)countOfBytesExpectedToSend
+                     forRequest:(SPTDataLoaderRequest *)request
+{
+    if (![self isRequestExpected:request]) {
+        return;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(dataLoader:updatedCountOfBytesSent:countOfBytesExpectedToSend:forRequest:)]) {
+        [self executeDelegateBlock:^{
+            [self.delegate dataLoader:self
+              updatedCountOfBytesSent:countOfBytesSent
+           countOfBytesExpectedToSend:countOfBytesExpectedToSend
+                           forRequest:request];
+        }];
+    }
+}
+
 #pragma mark SPTDataLoaderCancellationTokenDelegate
 
 - (void)cancellationTokenDidCancel:(id<SPTDataLoaderCancellationToken>)cancellationToken

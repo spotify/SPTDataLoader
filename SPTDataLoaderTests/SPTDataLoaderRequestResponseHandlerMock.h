@@ -32,6 +32,8 @@
 @property (nonatomic, assign, readonly) NSUInteger numberOfSuccessfulDataResponseCalls;
 @property (nonatomic, assign, readonly) NSUInteger numberOfReceivedInitialResponseCalls;
 @property (nonatomic, assign, readonly) NSUInteger numberOfNewBodyStreamCalls;
+@property (nonatomic, assign, readonly) NSUInteger numberOfUpdatedCountOfBytesReceived;
+@property (nonatomic, assign, readonly) NSUInteger numberOfUpdatedCountOfBytesSent;
 @property (nonatomic, strong, readonly) SPTDataLoaderResponse *lastReceivedResponse;
 @property (nonatomic, assign, readwrite, getter = isAuthorising) BOOL authorising;
 @property (nonatomic, strong, readwrite) dispatch_block_t failedResponseBlock;

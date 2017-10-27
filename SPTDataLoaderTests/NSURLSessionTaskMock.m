@@ -46,6 +46,8 @@
 
 @synthesize countOfBytesSent;
 @synthesize countOfBytesReceived;
+@synthesize countOfBytesExpectedToSend;
+@synthesize countOfBytesExpectedToReceive;
 @synthesize currentRequest;
 
 @end
