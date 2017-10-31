@@ -57,6 +57,16 @@ NS_ASSUME_NONNULL_BEGIN
                       customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses;
 
 /**
+ * Class constructor
+ * @param configuration Custom session configuration
+ * @param rateLimiter The limiter for limiting requests per second on a per service basis
+ * @param resolver The resolver for rerouting requests to different IP addresses
+ */
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver;
+
+/**
  * Creates a data loader factory
  * @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */

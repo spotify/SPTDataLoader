@@ -61,29 +61,44 @@ NS_ASSUME_NONNULL_BEGIN
     return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
 }
 
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+{
+    return [[self alloc] initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+}
+
 - (instancetype)initWithUserAgent:(nullable NSString *)userAgent
                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(nullable SPTDataLoaderResolver *)resolver
          customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
-    const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
     
     NSString * const SPTDataLoaderServiceUserAgentHeader = @"User-Agent";
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
+    configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
+    configuration.HTTPShouldUsePipelining = YES;
+    configuration.protocolClasses = customURLProtocolClasses;
+    if (userAgent) {
+        configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : (NSString * _Nonnull)userAgent };
+    }
+    
+    return [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+}
 
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
+                          rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                             resolver:(nullable SPTDataLoaderResolver *)resolver
+{
+    const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
+    
     self = [super init];
     if (self) {
         _rateLimiter = rateLimiter;
         _resolver = resolver;
-
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
-        configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
-        configuration.HTTPShouldUsePipelining = YES;
-        configuration.protocolClasses = customURLProtocolClasses;
-        if (userAgent) {
-            configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : (NSString * _Nonnull)userAgent };
-        }
 
         _sessionQueue = [NSOperationQueue new];
         _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
