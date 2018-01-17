@@ -70,8 +70,7 @@ namespace :build do
   desc 'Build SPTDataLoaderDemo for the simulator'
   task :demo do
     travis_fold('build-demo') do
-      runtime = SimCtl::Runtime.latest('iOS')
-      device = SimCtl.list_devices.where(os: runtime.name, name: 'iPhone 6').first
+      device = get_device_for_demo_build
       destination = "platform=iOS Simulator,id=#{device.udid}"
       xcodebuild('build', scheme: 'SPTDataLoaderDemo', configuration: 'Debug', destination: destination)
     end
@@ -222,7 +221,8 @@ end
 #
 def get_test_simulators()
   # get devices by type
-  devices_by_type = SimCtl.list_devices.group_by{ |d|
+  available_devices = SimCtl.list_devices.where(available?: true)
+  devices_by_type = available_devices.group_by{ |d|
     d.send(:plist).deviceType
   }.slice(*SIMULATOR_TEST_DEVICE_TYPES)
 
@@ -249,6 +249,16 @@ def get_test_simulators()
   end
 
   return result
+end
+
+#
+# Get the device for building the iOS demo application.
+#
+def get_device_for_demo_build
+  runtime = SimCtl::Runtime.latest('iOS')
+  SimCtl.list_devices.where(available?: true, os: runtime.name).find do |dev|
+    dev.send(:plist).deviceType == 'com.apple.CoreSimulator.SimDeviceType.iPhone-6'
+  end
 end
 
 #
