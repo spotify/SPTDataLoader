@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Spotify AB.
+ * Copyright (c) 2015-2018 Spotify AB.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,7 +20,7 @@
  */
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTDataLoader.h>
+#import "SPTDataLoader.h"
 
 @interface SPTDataLoaderExponentialTimerTest : XCTestCase
 

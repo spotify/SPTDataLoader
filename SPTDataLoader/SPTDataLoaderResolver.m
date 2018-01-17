@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Spotify AB.
+ * Copyright (c) 2015-2018 Spotify AB.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -86,13 +86,11 @@
 
 - (instancetype)init
 {
-    if (!(self = [super init])) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _resolverHost = [NSMutableDictionary new];
+        _addresses = [NSHashTable weakObjectsHashTable];
     }
-    
-    _resolverHost = [NSMutableDictionary new];
-    _addresses = [NSHashTable weakObjectsHashTable];
-    
     return self;
 }
 

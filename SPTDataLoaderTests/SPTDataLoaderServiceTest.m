@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Spotify AB.
+ * Copyright (c) 2015-2018 Spotify AB.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,13 +20,7 @@
  */
 #import <XCTest/XCTest.h>
 
-#import <SPTDataLoader/SPTDataLoaderService.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
-#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
+#import "SPTDataLoader.h"
 
 #import "SPTDataLoaderRequestTaskHandler.h"
 #import "SPTDataLoaderCancellationTokenImplementation.h"

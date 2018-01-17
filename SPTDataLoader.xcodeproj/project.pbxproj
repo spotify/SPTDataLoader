@@ -47,7 +47,6 @@
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
-		F7346A291CC2C67700B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
 		F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
@@ -65,18 +64,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		050E06881A10C62100A10A0E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0504CB8C1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenFactoryImplementationTest.m; sourceTree = "<group>"; };
 		0504CB8E1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenImplementationTest.m; sourceTree = "<group>"; };
@@ -91,7 +78,7 @@
 		050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderFactory.m; sourceTree = "<group>"; };
 		050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequest.m; sourceTree = "<group>"; };
 		050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResponse.m; sourceTree = "<group>"; };
-		050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoader+Private.h"; sourceTree = "<group>"; };
+		050E06B31A10CDE900A10A0E /* SPTDataLoaderImplementation+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderImplementation+Private.h"; sourceTree = "<group>"; };
 		050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenFactoryImplementation.m; sourceTree = "<group>"; };
 		050E06BB1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCancellationTokenImplementation.m; sourceTree = "<group>"; };
 		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
@@ -118,7 +105,7 @@
 		0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserMock.h; sourceTree = "<group>"; };
 		0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserMock.m; sourceTree = "<group>"; };
 		056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderCancellationToken.h; path = include/SPTDataLoader/SPTDataLoaderCancellationToken.h; sourceTree = "<group>"; };
-		056A04B31A13D10900FA72AD /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = include/SPTDataLoader/SPTDataLoader.h; sourceTree = "<group>"; };
+		056A04B31A13D10900FA72AD /* SPTDataLoaderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderImplementation.h; path = include/SPTDataLoader/SPTDataLoaderImplementation.h; sourceTree = "<group>"; };
 		056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderAuthoriser.h; path = include/SPTDataLoader/SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
 		056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderFactory.h; path = include/SPTDataLoader/SPTDataLoaderFactory.h; sourceTree = "<group>"; };
 		056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderRequest.h; path = include/SPTDataLoader/SPTDataLoaderRequest.h; sourceTree = "<group>"; };
@@ -156,7 +143,7 @@
 		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
 		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
-		C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConvenience.h; path = include/SPTDataLoader/SPTDataLoaderConvenience.h; sourceTree = "<group>"; };
+		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = include/SPTDataLoader/SPTDataLoader.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
@@ -172,14 +159,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		050E06871A10C62100A10A0E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F7346A291CC2C67700B8AB41 /* Security.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		050E06921A10C62100A10A0E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,7 +199,6 @@
 				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
 				05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */,
 				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
-				050E06B31A10CDE900A10A0E /* SPTDataLoader+Private.h */,
 				0533D05F1C62F12200D8E09D /* SPTDataLoaderCancellationTokenFactory.h */,
 				8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */,
 				050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */,
@@ -229,6 +207,7 @@
 				056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */,
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
 				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
+				050E06B31A10CDE900A10A0E /* SPTDataLoaderImplementation+Private.h */,
 				052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */,
 				050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */,
 				056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */,
@@ -283,14 +262,14 @@
 		056A04AE1A13D0FA00FA72AD /* Public API */ = {
 			isa = PBXGroup;
 			children = (
-				056A04B31A13D10900FA72AD /* SPTDataLoader.h */,
+				C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
 				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
 				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
-				C6515CF31BA2D4AF00271211 /* SPTDataLoaderConvenience.h */,
 				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
 				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
 				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
+				056A04B31A13D10900FA72AD /* SPTDataLoaderImplementation.h */,
 				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
 				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
 				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
@@ -369,8 +348,6 @@
 			buildConfigurationList = 050E069E1A10C62100A10A0E /* Build configuration list for PBXNativeTarget "SPTDataLoader" */;
 			buildPhases = (
 				050E06861A10C62100A10A0E /* Sources */,
-				050E06871A10C62100A10A0E /* Frameworks */,
-				050E06881A10C62100A10A0E /* CopyFiles */,
 			);
 			buildRules = (
 			);

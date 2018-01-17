@@ -27,6 +27,7 @@ project.xcworkspace
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
+*.coverage.txt
 
 ## Obj-C/Swift specific
 *.hmap
@@ -46,6 +47,7 @@ project.xcworkspace
 # Carthage/Checkouts
 
 Carthage/Build
+*.zip
 
 # Ignore changes to our project.xcconfig that gets overridden by the build system
 project.xcconfig

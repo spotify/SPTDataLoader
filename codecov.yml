@@ -1,12 +1,10 @@
 coverage:
   ignore:
-  - Pods/.*
-  - Applications/Xcode.app/.*
-  - ci/.*
-  - Carthage/.*
-  - build/.*
-  - Tests/.*
-  - .*Tests.m
+  - build
+  - Carthage
+  - demo
+  - other
+  - SPTDataLoaderTests
   status:
     patch:
       default:

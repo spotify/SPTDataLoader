@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Spotify AB.
+ * Copyright (c) 2015-2018 Spotify AB.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,16 +18,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
-#import <SPTDataLoader/SPTDataLoader.h>
-#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
-#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
-#import <SPTDataLoader/SPTDataLoaderDelegate.h>
-#import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
-#import <SPTDataLoader/SPTDataLoaderFactory.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
-#import <SPTDataLoader/SPTDataLoaderService.h>
+
+#import "SPTDataLoaderAuthoriser.h"
+#import "SPTDataLoaderCancellationToken.h"
+#import "SPTDataLoaderConsumptionObserver.h"
+#import "SPTDataLoaderDelegate.h"
+#import "SPTDataLoaderExponentialTimer.h"
+#import "SPTDataLoaderFactory.h"
+#import "SPTDataLoaderImplementation.h"
+#import "SPTDataLoaderRateLimiter.h"
+#import "SPTDataLoaderRequest.h"
+#import "SPTDataLoaderResolver.h"
+#import "SPTDataLoaderResponse.h"
+#import "SPTDataLoaderServerTrustPolicy.h"
+#import "SPTDataLoaderService.h"
+
+//! Project version number for SPTDataLoader.
+FOUNDATION_EXPORT double SPTDataLoaderVersionNumber;
+
+//! Project version string for SPTDataLoader.
+FOUNDATION_EXPORT const unsigned char SPTDataLoaderVersionString[];
