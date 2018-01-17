@@ -212,7 +212,7 @@ def simctl_test(device, platform, bundle)
   puts full_cmd.blue
 
   # capture raw profiles
-  env = { 'SIMCTL_CHILD_LLVM_PROFILE_FILE' => "#{profraw_dir}/%p.profraw" }
+  env = { 'SIMCTL_CHILD_LLVM_PROFILE_FILE' => "#{profraw_dir}/#{platform}/%p.profraw" }
   system(env, "set -o pipefail && #{full_cmd} 2>&1 | xcpretty") || fail!('tests failed')
 end
 
@@ -262,13 +262,20 @@ def get_device_for_demo_build
 end
 
 #
+# Return true if running in travis.
+#
+def is_travis?
+  ENV.has_key?('TRAVIS') && ENV.has_key?('CI') 
+end
+
+#
 # Wrap in a travis block
 #
 def travis_fold(name)
-  puts "travis_fold:start:#{name}"
+  puts is_travis? ? "travis_fold:start:#{name}" : name.magenta
   yield
 ensure
-  puts "travis_fold:end:#{name}"
+  puts is_travis? ? "travis_fold:end:#{name}" : name.magenta
 end
 
 #
