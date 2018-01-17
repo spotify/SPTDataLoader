@@ -134,19 +134,38 @@ namespace :test do
 
   desc 'Capture Coverage'
   task :coverage do
-    raws = Dir["#{TEST_DERIVED_DATA_PATH}/**/*.profraw"]
-    if raws.empty?
-      puts 'No coverage to capture'
+    travis_fold('coverage') do
+      platform_to_raw = {}
+      for raw in Dir["#{profraw_dir}/**/*.profraw"]
+        platform = File.basename(File.dirname(raw))
+        platform_to_raw[platform] ||= []
+        platform_to_raw[platform] << raw
+      end
+
+      if platform_to_raw.empty?
+        puts 'No coverage to capture'
+        next
+      end
+
+      # merge profdata
+      for platform, raws in platform_to_raw
+        profdata = File.join(TEST_DERIVED_DATA_PATH, "Coverage.#{platform}.profdata")
+        system('xcrun', 'llvm-profdata', 'merge', '-o', profdata, *raws) || fail!('Failed to merge profdata')
+      end
+
+      # dry-run unless running in travis
+      extra = is_travis? ? [] : ['-d']
+
+      # post to codecov
+      system('curl -s https://codecov.io/bash > build/codecov.sh')
+      system('chmod +x build/codecov.sh')
+      system(
+        'build/codecov.sh', '-D',
+        TEST_DERIVED_DATA_PATH,
+        '-X', 'xcodellvm', # use xcode llvm coverage processor
+        *extra
+      )
     end
-
-    # merge profdata
-    profdata = File.join(TEST_DERIVED_DATA_PATH, 'Coverage.profdata')
-    system('xcrun', 'llvm-profdata', 'merge', '-o', profdata, *raws) || fail!('Failed to merge profdata')
-
-    # post to codecov
-    system('curl -s https://codecov.io/bash > build/codecov.sh')
-    system('chmod +x build/codecov.sh')
-    system('build/codecov.sh', '-D', TEST_DERIVED_DATA_PATH)
   end
 
   desc 'Run all tests'
