@@ -148,7 +148,7 @@
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    NSError *error = [NSError new];
+    NSError *error = [NSError errorWithDomain:@"test" code:1 userInfo:nil];
     [self.service requestResponseHandler:requestResponseHandlerMock failedToAuthoriseRequest:request error:error];
     XCTAssertEqual(requestResponseHandlerMock.numberOfFailedResponseCalls, 1u, @"The service did not call a failed response on a failed authorisation attempt");
 }

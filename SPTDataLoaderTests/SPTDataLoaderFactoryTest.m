@@ -176,7 +176,7 @@
 {
     SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    NSError *error = [NSError new];
+    NSError *error = [NSError errorWithDomain:@"test" code:1 userInfo:nil];
     [self.factory dataLoaderAuthoriser:authoriser didFailToAuthoriseRequest:request withError:error];
     XCTAssertEqual(request, self.delegate.lastRequestFailed, @"The factory did not relay the request authorisation failure to it's delegate");
 }
