@@ -490,7 +490,7 @@
 		050E06821A10C62100A10A0E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Spotify;
 				TargetAttributes = {
 					05A637E21C46B46300061E37 = {
@@ -669,6 +669,7 @@
 				INFOPLIST_FILE = Framework/Info.plist;
 				INSTALL_PATH = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SPTDataLoader;
 				SKIP_INSTALL = YES;
