@@ -28,6 +28,8 @@
 @property (nonatomic, assign, readwrite) NSUInteger numberOfSuccessfulDataResponseCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfReceivedInitialResponseCalls;
 @property (nonatomic, assign, readwrite) NSUInteger numberOfNewBodyStreamCalls;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfUpdatedCountOfBytesReceived;
+@property (nonatomic, assign, readwrite) NSUInteger numberOfUpdatedCountOfBytesSent;
 @property (nonatomic, strong, readwrite) SPTDataLoaderResponse *lastReceivedResponse;
 
 @end
@@ -81,6 +83,20 @@
                 forRequest:(SPTDataLoaderRequest *)request
 {
     self.numberOfNewBodyStreamCalls++;
+}
+
+- (void)updatedCountOfBytesReceived:(int64_t)countOfBytesReceived
+      countOfBytesExpectedToReceive:(int64_t)countOfBytesExpectedToReceive
+                         forRequest:(SPTDataLoaderRequest *)request
+{
+    self.numberOfUpdatedCountOfBytesReceived++;
+}
+
+- (void)updatedCountOfBytesSent:(int64_t)countOfBytesSent
+     countOfBytesExpectedToSend:(int64_t)countOfBytesExpectedToSend
+                     forRequest:(SPTDataLoaderRequest *)request
+{
+    self.numberOfUpdatedCountOfBytesSent++;
 }
 
 @end

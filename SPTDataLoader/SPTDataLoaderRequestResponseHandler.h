@@ -113,6 +113,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
                 forRequest:(SPTDataLoaderRequest *)request;
 
+/**
+ * Called when the number of bytes that received from the server has changed
+ * @param countOfBytesReceived The number of bytes that received from the server in the response body
+ * @param countOfBytesExpectedToReceive The number of bytes that expects to receive in the response body
+ * @param request The object describing the request
+ */
+- (void)updatedCountOfBytesReceived:(int64_t)countOfBytesReceived
+      countOfBytesExpectedToReceive:(int64_t)countOfBytesExpectedToReceive
+                         forRequest:(SPTDataLoaderRequest *)request;
+/**
+ * Called when the number of bytes that sent to the server has changed
+ * @param countOfBytesSent The number of bytes that sent to the server in the request body
+ * @param countOfBytesExpectedToSend The number of bytes that the task expects to send in the request body
+ * @param request The object describing the request
+ */
+- (void)updatedCountOfBytesSent:(int64_t)countOfBytesSent
+     countOfBytesExpectedToSend:(int64_t)countOfBytesExpectedToSend
+                     forRequest:(SPTDataLoaderRequest *)request;
+
 @optional
 
 /**

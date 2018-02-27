@@ -90,6 +90,29 @@ didReceiveDataChunk:(NSData *)data
 needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
         forRequest:(SPTDataLoaderRequest *)request;
 
+/**
+ * Called when the data loader receives an update of the number of bytes that received from the server for the request
+ * @param dataLoader The data loader that received an update
+ * @param countOfBytesReceived The number of bytes that received from the server in the response body
+ * @param countOfBytesExpectedToReceive The number of bytes that expects to receive in the response body
+ * @param request The object describing the request that was updated
+ */
+- (void)dataLoader:(SPTDataLoader *)dataLoader
+updatedCountOfBytesReceived:(int64_t)countOfBytesReceived
+countOfBytesExpectedToReceive:(int64_t)countOfBytesExpectedToReceive
+        forRequest:(SPTDataLoaderRequest *)request;
+/**
+ * Called when the data loader receives an update of the number of bytes that sent to the server for request
+ * @param dataLoader The data loader that received an update
+ * @param countOfBytesSent The number of bytes that sent to the server in the request body
+ * @param countOfBytesExpectedToSend The number of bytes that the task expects to send in the request body
+ * @param request The object describing the request
+ */
+- (void)dataLoader:(SPTDataLoader *)dataLoader
+updatedCountOfBytesSent:(int64_t)countOfBytesSent
+countOfBytesExpectedToSend:(int64_t)countOfBytesExpectedToSend
+        forRequest:(SPTDataLoaderRequest *)request;
+
 @end
 
 NS_ASSUME_NONNULL_END

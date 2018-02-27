@@ -33,6 +33,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
+static void *SPTDataLoaderRequestTaskHandlerContext = &SPTDataLoaderRequestTaskHandlerContext;
+static NSString *const kCountOfBytesReceived = @"countOfBytesReceived";
+static NSString *const kCountOfBytesSent = @"countOfBytesSent";
+static NSString *const kCountOfBytesExpectedToReceive = @"countOfBytesExpectedToReceive";
+static NSString *const kCountOfBytesExpectedToSend = @"countOfBytesExpectedToSend";
+
 @interface SPTDataLoaderRequestTaskHandler ()
 
 @property (nonatomic, assign, readwrite, getter = isCancelled) BOOL cancelled;
@@ -53,6 +59,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 @property (nonatomic, assign) BOOL calledFailedResponse;
 @property (nonatomic, assign) BOOL calledCancelledRequest;
 @property (nonatomic, assign) BOOL started;
+@property (nonatomic, assign, getter = isObserving) BOOL observing;
 @property (nonatomic, strong, readwrite) dispatch_queue_t retryQueue;
 
 @end
@@ -83,6 +90,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     self = [super init];
     if (self) {
         _task = task;
+        [self addObserverForTask:_task];
         _request = request;
         _requestResponseHandler = requestResponseHandler;
         _rateLimiter = rateLimiter;
@@ -97,6 +105,30 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     }
     
     return self;
+}
+
+@synthesize task = _task;
+
+- (NSURLSessionTask *)task {
+    @synchronized(self) {
+        return _task;
+    }
+}
+
+- (void)setTask:(NSURLSessionTask * _Nonnull)task {
+    @synchronized(self) {
+        if (_task != task) {
+            if (_task) {
+                [self removeObserverForTask:_task];
+            }
+            
+            _task = task;
+            
+            if (_task) {
+                [self addObserverForTask:_task];
+            }
+        }
+    }
 }
 
 - (void)receiveData:(NSData *)data
@@ -239,11 +271,86 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     }
 }
 
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath
+                      ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSString *, id> *)change
+                       context:(nullable  void *)context
+{
+    if (context == SPTDataLoaderRequestTaskHandlerContext) {
+        NSURLSessionTask *task = (NSURLSessionTask *)object;
+        if ([task isKindOfClass:[NSURLSessionTask class]]) {
+            id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = self.requestResponseHandler;
+            if ([keyPath isEqualToString:kCountOfBytesReceived] || [keyPath isEqualToString:kCountOfBytesExpectedToReceive]) {
+                [requestResponseHandler updatedCountOfBytesReceived:self.task.countOfBytesReceived
+                                      countOfBytesExpectedToReceive:self.task.countOfBytesExpectedToReceive
+                                                         forRequest:self.request];
+            } else if ([keyPath isEqualToString:kCountOfBytesSent] || [keyPath isEqualToString:kCountOfBytesExpectedToSend]) {
+                [requestResponseHandler updatedCountOfBytesSent:self.task.countOfBytesSent
+                                     countOfBytesExpectedToSend:self.task.countOfBytesExpectedToSend
+                                                     forRequest:self.request];
+            }
+        }
+    }
+}
+
+- (void)addObserverForTask:(NSURLSessionTask *)task
+{
+    NSAssert(!self.isObserving, @"Observer is already registered for task");
+    if (self.isObserving) {
+        return;
+    }
+    
+    self.observing = YES;
+    
+    [task addObserver:self
+            forKeyPath:kCountOfBytesReceived
+               options:NSKeyValueObservingOptionNew
+               context:SPTDataLoaderRequestTaskHandlerContext];
+    [task addObserver:self
+            forKeyPath:kCountOfBytesSent
+               options:NSKeyValueObservingOptionNew
+               context:SPTDataLoaderRequestTaskHandlerContext];
+    [task addObserver:self
+            forKeyPath:kCountOfBytesExpectedToReceive
+               options:NSKeyValueObservingOptionNew
+               context:SPTDataLoaderRequestTaskHandlerContext];
+    [task addObserver:self
+            forKeyPath:kCountOfBytesExpectedToSend
+               options:NSKeyValueObservingOptionNew
+               context:SPTDataLoaderRequestTaskHandlerContext];
+}
+
+- (void)removeObserverForTask:(NSURLSessionTask *)task
+{
+    NSAssert(self.isObserving, @"Observer is not registered");
+    if (!self.isObserving) {
+        return;
+    }
+    
+    self.observing = NO;
+    
+    [task removeObserver:self
+               forKeyPath:kCountOfBytesReceived
+                  context:SPTDataLoaderRequestTaskHandlerContext];
+    [task removeObserver:self
+               forKeyPath:kCountOfBytesSent
+                  context:SPTDataLoaderRequestTaskHandlerContext];
+    [task removeObserver:self
+               forKeyPath:kCountOfBytesExpectedToReceive
+                  context:SPTDataLoaderRequestTaskHandlerContext];
+    [task removeObserver:self
+               forKeyPath:kCountOfBytesExpectedToSend
+                  context:SPTDataLoaderRequestTaskHandlerContext];
+}
+
 #pragma mark NSObject
 
 - (void)dealloc
 {
     [self completeIfInFlight];
+    [self removeObserverForTask:_task];
 }
 
 @end

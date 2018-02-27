@@ -172,6 +172,32 @@ NS_ASSUME_NONNULL_BEGIN
     [requestResponseHandler needsNewBodyStream:completionHandler forRequest:request];
 }
 
+- (void)updatedCountOfBytesReceived:(int64_t)countOfBytesReceived
+      countOfBytesExpectedToReceive:(int64_t)countOfBytesExpectedToReceive
+                         forRequest:(SPTDataLoaderRequest *)request
+{
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
+    @synchronized(self.requestToRequestResponseHandler) {
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+    }
+    [requestResponseHandler updatedCountOfBytesReceived:countOfBytesReceived
+                          countOfBytesExpectedToReceive:countOfBytesExpectedToReceive
+                                             forRequest:request];
+}
+
+- (void)updatedCountOfBytesSent:(int64_t)countOfBytesSent
+     countOfBytesExpectedToSend:(int64_t)countOfBytesExpectedToSend
+                     forRequest:(SPTDataLoaderRequest *)request
+{
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
+    @synchronized(self.requestToRequestResponseHandler) {
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+    }
+    [requestResponseHandler updatedCountOfBytesSent:countOfBytesSent
+                         countOfBytesExpectedToSend:countOfBytesExpectedToSend
+                                         forRequest:request];
+}
+
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler

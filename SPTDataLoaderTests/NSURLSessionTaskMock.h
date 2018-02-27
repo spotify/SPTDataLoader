@@ -29,8 +29,10 @@
 
 #pragma mark NSURLSessionTask
 
-@property (atomic, readonly) int64_t countOfBytesSent;
-@property (atomic, readonly) int64_t countOfBytesReceived;
+@property (atomic, assign) int64_t countOfBytesSent;
+@property (atomic, assign) int64_t countOfBytesReceived;
+@property (atomic, assign) int64_t countOfBytesExpectedToSend;
+@property (atomic, assign) int64_t countOfBytesExpectedToReceive;
 @property (atomic, nullable, readonly, copy) NSURLRequest *currentRequest;
 
 @end
