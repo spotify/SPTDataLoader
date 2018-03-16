@@ -20,12 +20,14 @@
  */
 #import <Foundation/Foundation.h>
 
-@class NSURLSessionDataTaskMock;
-@class NSURLSessionDownloadTaskMock;
+NS_ASSUME_NONNULL_BEGIN
 
-@interface NSURLSessionMock : NSURLSession
+@interface NSDataMock : NSObject
 
-@property (nonatomic, strong) NSURLSessionDataTaskMock *lastDataTask;
-@property (nonatomic, strong) NSURLSessionDownloadTaskMock *lastDownloadTask;
++ (nullable NSData *)dataWithContentsOfFile:(NSString *)path
+                                    options:(NSDataReadingOptions)readOptionsMask
+                                      error:(NSError * __autoreleasing * _Nullable)errorPtr;
 
 @end
+
+NS_ASSUME_NONNULL_END

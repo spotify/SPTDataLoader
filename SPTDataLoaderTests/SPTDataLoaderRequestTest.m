@@ -134,6 +134,7 @@
     self.request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
     self.request.skipNSURLCache = YES;
     self.request.method = SPTDataLoaderRequestMethodPost;
+    self.request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyAlways;
     self.request.bodyStream = inputStream;
     SPTDataLoaderRequest *request = [self.request copy];
     XCTAssertEqual(request.maximumRetryCount, self.request.maximumRetryCount, @"The retry count was not copied correctly");
@@ -143,6 +144,7 @@
     XCTAssertEqual(request.cachePolicy, self.request.cachePolicy, @"The cache policy was not copied correctly");
     XCTAssertEqual(request.skipNSURLCache, self.request.skipNSURLCache, @"'skipNSURLCache' was not copied correctly");
     XCTAssertEqual(request.method, self.request.method, @"The method was not copied correctly");
+    XCTAssertEqual(request.backgroundPolicy, self.request.backgroundPolicy, @"The background policy was not copied correctly");
     XCTAssertEqual(request.bodyStream, self.request.bodyStream, @"The body stream was not copied correctly");
 }
 

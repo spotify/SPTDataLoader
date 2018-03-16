@@ -203,6 +203,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     copy.cachePolicy = self.cachePolicy;
     copy.skipNSURLCache = self.skipNSURLCache;
     copy.method = self.method;
+    copy.backgroundPolicy = self.backgroundPolicy;
     copy.userInfo = self.userInfo;
     copy.timeout = self.timeout;
     copy.cancellationToken = self.cancellationToken;

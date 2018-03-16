@@ -18,14 +18,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+#import "NSDataMock.h"
 
-@class NSURLSessionDataTaskMock;
-@class NSURLSessionDownloadTaskMock;
+@implementation NSDataMock
 
-@interface NSURLSessionMock : NSURLSession
-
-@property (nonatomic, strong) NSURLSessionDataTaskMock *lastDataTask;
-@property (nonatomic, strong) NSURLSessionDownloadTaskMock *lastDownloadTask;
++ (nullable NSData *)dataWithContentsOfFile:(NSString *)path
+                                    options:(NSDataReadingOptions)readOptionsMask
+                                      error:(NSError * __autoreleasing * _Nullable)errorPtr
+{
+    errorPtr = nil;
+    return [path dataUsingEncoding:NSUTF8StringEncoding];
+}
 
 @end

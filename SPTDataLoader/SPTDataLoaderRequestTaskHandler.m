@@ -108,7 +108,11 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         if (self.request.chunks) {
             [self.requestResponseHandler receivedDataChunk:dataRange forResponse:self.response];
         } else {
-            [self.receivedData appendData:dataRange];
+            if (!self.receivedData) {
+                self.receivedData = [dataRange mutableCopy];
+            } else {
+                [self.receivedData appendData:dataRange];
+            }
         }
     }];
 }
@@ -162,7 +166,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 {
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response];
     [self.requestResponseHandler receivedInitialResponse:self.response];
-    
+
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.expectedContentLength > 0) {
@@ -173,8 +177,12 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     if (!self.receivedData) {
         self.receivedData = [NSMutableData data];
     }
-    
-    return NSURLSessionResponseAllow;
+
+    if (self.request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyOnDemand) {
+        return NSURLSessionResponseBecomeDownload;
+    } else {
+        return NSURLSessionResponseAllow;
+    }
 }
 
 - (BOOL)mayRedirect

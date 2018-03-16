@@ -18,14 +18,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+#import "NSURLSessionDownloadTaskMock.h"
 
-@class NSURLSessionDataTaskMock;
-@class NSURLSessionDownloadTaskMock;
+@implementation NSURLSessionDownloadTaskMock
 
-@interface NSURLSessionMock : NSURLSession
+@synthesize countOfBytesSent;
+@synthesize countOfBytesReceived;
+@synthesize currentRequest;
+@synthesize response;
 
-@property (nonatomic, strong) NSURLSessionDataTaskMock *lastDataTask;
-@property (nonatomic, strong) NSURLSessionDownloadTaskMock *lastDownloadTask;
+- (void)resume
+{
+    self.numberOfCallsToResume++;
+}
+
+- (void)cancel
+{
+    self.numberOfCallsToCancel++;
+}
 
 @end

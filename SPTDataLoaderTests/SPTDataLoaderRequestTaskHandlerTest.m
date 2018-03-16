@@ -204,4 +204,31 @@
     XCTAssertTrue(self.handler.cancelled);
 }
 
+- (void)testUpgradeToDownloadTaskAfterResponse
+{
+    self.request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyOnDemand;
+    NSURLSessionResponseDisposition disposition = [self.handler receiveResponse:[NSURLResponse new]];
+    XCTAssertEqual(disposition, NSURLSessionResponseBecomeDownload,
+                   @"The handler did not return the correct response disposition (.BecomeDownload) given the background policy");
+}
+
+- (void)testKeepDataTaskAfterResponse
+{
+    self.request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyDefault;
+    NSURLSessionResponseDisposition disposition = [self.handler receiveResponse:[NSURLResponse new]];
+    XCTAssertEqual(disposition, NSURLSessionResponseAllow,
+                   @"The handler did not return the correct response disposition (.Allow) given the background policy");
+}
+
+- (void)testReceiveDataWithNoInitialResponse
+{
+    NSString *dataString = @"TEST";
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    [self.handler receiveData:data];
+    [self.handler receiveData:data];
+    SPTDataLoaderResponse *response = [self.handler completeWithError:nil];
+    NSString *receivedString = [[NSString alloc] initWithData:(NSData * _Nonnull)response.body encoding:NSUTF8StringEncoding];
+    XCTAssertEqualObjects([dataString stringByAppendingString:dataString], receivedString);
+}
+
 @end
