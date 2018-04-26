@@ -20,6 +20,7 @@
  */
 #import "NSURLSessionMock.h"
 #import "NSURLSessionDataTaskMock.h"
+#import "NSURLSessionDownloadTaskMock.h"
 
 @implementation NSURLSessionMock
 
@@ -27,6 +28,12 @@
 {
     self.lastDataTask = [NSURLSessionDataTaskMock new];
     return self.lastDataTask;
+}
+
+- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request
+{
+    self.lastDownloadTask = [NSURLSessionDownloadTaskMock new];
+    return self.lastDownloadTask;
 }
 
 @end

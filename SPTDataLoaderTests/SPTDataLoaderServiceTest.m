@@ -32,17 +32,23 @@
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderConsumptionObserverMock.h"
 #import "NSURLSessionDataTaskMock.h"
+#import "NSURLSessionDownloadTaskMock.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSURLSessionTaskMock.h"
 #import "SPTDataLoaderServerTrustPolicyMock.h"
 #import "NSURLAuthenticationChallengeMock.h"
 #import "SPTDataLoaderCancellationTokenDelegateMock.h"
+#import "NSFileManagerMock.h"
+#import "NSDataMock.h"
 
-@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate>
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray *handlers;
 @property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
+@property (nonatomic, weak) NSFileManager * _Nullable fileManager;
+@property (nonatomic, weak) Class _Nullable dataClass;
 
 - (void)cancelAllLoads;
 
@@ -54,6 +60,7 @@
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
 @property (nonatomic, strong) NSURLSessionMock *session;
+@property (nonatomic, strong) NSFileManagerMock *fileManager;
 
 @end
 
@@ -72,6 +79,9 @@
                                                customURLProtocolClasses:nil];
     self.session = [NSURLSessionMock new];
     self.service.session = self.session;
+    self.fileManager = [NSFileManagerMock new];
+    self.service.fileManager = self.fileManager;
+    self.service.dataClass = [NSDataMock class];
 }
 
 #pragma mark SPTDataLoaderServiceTest
@@ -86,6 +96,29 @@
     SPTDataLoaderFactory *factory = [self.service createDataLoaderFactoryWithAuthorisers:nil];
     XCTAssertNotNil(factory, @"The factory should not be nil after creation from the service");
 }
+
+- (void)testQualityOfServiceUserAgentConstruction
+{
+    SPTDataLoaderService *service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
+                                                                             rateLimiter:self.rateLimiter
+                                                                                resolver:self.resolver
+                                                                customURLProtocolClasses:nil
+                                                                        qualityOfService:NSQualityOfServiceBackground];
+    XCTAssertEqual(service.sessionQueue.qualityOfService, NSQualityOfServiceBackground,
+                   @"The service session queue should have a .Background quality of service");
+}
+
+- (void)testQualityOfServiceConfigurationConstruction
+{
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"spotify-test-1.0"];
+    SPTDataLoaderService *service = [SPTDataLoaderService dataLoaderServiceWithConfiguration:configuration
+                                                                                 rateLimiter:self.rateLimiter
+                                                                                    resolver:self.resolver
+                                                                            qualityOfService:NSQualityOfServiceBackground];
+    XCTAssertEqual(service.sessionQueue.qualityOfService, NSQualityOfServiceBackground,
+                   @"The service session queue should have a .Background quality of service");
+}
+
 
 - (void)testNoOperationForTask
 {
@@ -168,6 +201,39 @@
     };
     [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:[NSURLResponse new] completionHandler:completionHandler];
     XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler");
+}
+
+- (void)testStartingWithDownloadTask
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
+    request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyAlways;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
+
+    NSURLSessionDownloadTask *downloadTask = self.session.lastDownloadTask;
+    XCTAssertNotNil(downloadTask, @"The service did not create a download task given the background policy");
+}
+
+- (void)testSwitchingToDownloadTaskAfterResponse
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
+    request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyOnDemand;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
+
+    NSURLSessionDataTask *dataTask = self.session.lastDataTask;
+    __block BOOL calledCompletionHandler = NO;
+    void (^completionHandler)(NSURLSessionResponseDisposition) = ^(NSURLSessionResponseDisposition disposition) {
+        calledCompletionHandler = (disposition == NSURLSessionResponseBecomeDownload);
+    };
+    [self.service URLSession:self.session dataTask:dataTask didReceiveResponse:[NSURLResponse new] completionHandler:completionHandler];
+    XCTAssertTrue(calledCompletionHandler, @"The service did not call the URL sessions completion handler with the correct disposition");
 }
 
 - (void)testRedirectionCallbackAbortsTooManyRedirects
@@ -285,6 +351,29 @@
     request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     [self.service URLSession:self.session task:self.session.lastDataTask didCompleteWithError:nil];
+    XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1u, @"The service did not call successfully received response on the request response handler");
+}
+
+- (void)testSessionDownloadTaskDidFinish
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyOnDemand;
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+
+    NSURLSessionDownloadTask *downloadTask = [self.session downloadTaskWithRequest:[NSURLRequest new]];
+    [self.service URLSession:self.session dataTask:self.session.lastDataTask didBecomeDownloadTask:downloadTask];
+
+    NSURL *tmpFileURL = (NSURL * _Nonnull)[NSURL URLWithString:@"file:///tmp/foo/bar.tmp"];
+    [self.service URLSession:self.session downloadTask:self.session.lastDownloadTask didFinishDownloadingToURL:tmpFileURL];
+
+    __block XCTestExpectation *expectation = [self expectationWithDescription:@"Service session queue did not continue after handling download data"];
+    [self.service.sessionQueue addOperationWithBlock:^{
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:1.0 handler:nil];
+
     XCTAssertEqual(requestResponseHandlerMock.numberOfSuccessfulDataResponseCalls, 1u, @"The service did not call successfully received response on the request response handler");
 }
 

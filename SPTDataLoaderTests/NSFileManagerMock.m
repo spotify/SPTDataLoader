@@ -18,14 +18,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#import <Foundation/Foundation.h>
+#import "NSFileManagerMock.h"
 
-@class NSURLSessionDataTaskMock;
-@class NSURLSessionDownloadTaskMock;
+@implementation NSFileManagerMock
 
-@interface NSURLSessionMock : NSURLSession
+- (BOOL)moveItemAtPath:(NSString *)srcPath
+                toPath:(NSString *)dstPath
+                 error:(NSError * _Nullable __autoreleasing *)error
+{
+    return YES;
+}
 
-@property (nonatomic, strong) NSURLSessionDataTaskMock *lastDataTask;
-@property (nonatomic, strong) NSURLSessionDownloadTaskMock *lastDownloadTask;
+- (BOOL)removeItemAtPath:(NSString *)path
+                   error:(NSError * _Nullable __autoreleasing *)error
+{
+    return YES;
+}
 
 @end

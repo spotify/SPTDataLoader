@@ -20,12 +20,6 @@
  */
 #import <Foundation/Foundation.h>
 
-@class NSURLSessionDataTaskMock;
-@class NSURLSessionDownloadTaskMock;
-
-@interface NSURLSessionMock : NSURLSession
-
-@property (nonatomic, strong) NSURLSessionDataTaskMock *lastDataTask;
-@property (nonatomic, strong) NSURLSessionDownloadTaskMock *lastDownloadTask;
+@interface NSFileManagerMock : NSFileManager
 
 @end

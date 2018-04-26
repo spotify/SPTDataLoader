@@ -35,7 +35,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
 
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
 @property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
+@property (nonatomic, weak, nullable) NSFileManager *fileManager;
+@property (nonatomic, weak, nullable) Class dataClass;
 
 @end
 
@@ -66,6 +68,30 @@ NS_ASSUME_NONNULL_BEGIN
                                       resolver:(nullable SPTDataLoaderResolver *)resolver
 {
     return [[self alloc] initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+}
+
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                              qualityOfService:(NSQualityOfService)qualityOfService
+{
+    return [[self alloc] initWithUserAgent:userAgent
+                               rateLimiter:rateLimiter
+                                  resolver:resolver
+                  customURLProtocolClasses:customURLProtocolClasses
+                          qualityOfService:qualityOfService];
+}
+
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver
+                                  qualityOfService:(NSQualityOfService)qualityOfService
+{
+    return [[self alloc] initWithConfiguration:configuration
+                                   rateLimiter:rateLimiter
+                                      resolver:resolver
+                              qualityOfService:qualityOfService];
 }
 
 - (instancetype)initWithUserAgent:(nullable NSString *)userAgent
@@ -94,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
                              resolver:(nullable SPTDataLoaderResolver *)resolver
 {
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
-    
+
     self = [super init];
     if (self) {
         _rateLimiter = rateLimiter;
@@ -106,8 +132,40 @@ NS_ASSUME_NONNULL_BEGIN
         _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
         _handlers = [NSMutableArray new];
         _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
+
+        _fileManager = [NSFileManager defaultManager];
+        _dataClass = [NSData class];
     }
-    
+
+    return self;
+}
+
+- (instancetype)initWithUserAgent:(nullable NSString *)userAgent
+                      rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                         resolver:(nullable SPTDataLoaderResolver *)resolver
+         customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                 qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10)
+{
+    self = [self initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
+
+    if (self) {
+        _sessionQueue.qualityOfService = qualityOfService;
+    }
+
+    return self;
+}
+
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
+                          rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                             resolver:(nullable SPTDataLoaderResolver *)resolver
+                     qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10)
+{
+    self = [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+
+    if (self) {
+        _sessionQueue.qualityOfService = qualityOfService;
+    }
+
     return self;
 }
 
@@ -175,7 +233,12 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     }
     
     NSURLRequest *urlRequest = request.urlRequest;
-    NSURLSessionTask *task = [self.session dataTaskWithRequest:urlRequest];
+    NSURLSessionTask *task;
+    if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
+        task = [self.session downloadTaskWithRequest:urlRequest];
+    } else {
+        task = [self.session dataTaskWithRequest:urlRequest];
+    }
     SPTDataLoaderRequestTaskHandler *handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:task
                                                                                                              request:request
                                                                                               requestResponseHandler:requestResponseHandler
@@ -261,7 +324,8 @@ didReceiveResponse:(NSURLResponse *)response
           dataTask:(NSURLSessionDataTask *)dataTask
 didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
 {
-    // This is highly unusual
+    SPTDataLoaderRequestTaskHandler *originalHandler = [self handlerForTask:dataTask];
+    originalHandler.task = downloadTask;
 }
 
 - (void)URLSession:(NSURLSession *)session
@@ -326,7 +390,11 @@ didCompleteWithError:(nullable NSError *)error
     if (handler == nil) {
         return;
     }
-    handler.task = [self.session dataTaskWithRequest:handler.request.urlRequest];
+    if (handler.request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
+        handler.task = [self.session downloadTaskWithRequest:handler.request.urlRequest];
+    } else {
+        handler.task = [self.session dataTaskWithRequest:handler.request.urlRequest];
+    }
     SPTDataLoaderResponse *response = [handler completeWithError:error];
     if (response == nil && !handler.cancelled) {
         return;
@@ -414,6 +482,51 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
     [handler provideNewBodyStreamWithCompletion:completionHandler];
+}
+
+#pragma mark NSURLSessionDownloadDelegate
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location
+{
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:downloadTask];
+
+    NSFileManager *fileManager = self.fileManager;
+    NSString * _Nullable cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+    cachePath = [cachePath stringByAppendingPathComponent:@"com.spotify.sptdataloader"];
+
+    if (!cachePath || !location.path || !location.lastPathComponent) {
+        [self URLSession:session task:downloadTask didCompleteWithError:nil];
+        return;
+    }
+
+    [fileManager createDirectoryAtPath:(NSString * _Nonnull)cachePath
+           withIntermediateDirectories:true
+                            attributes:nil
+                                 error:nil];
+
+    NSError *fileError;
+    NSString *filePath = [(NSString * _Nonnull)cachePath stringByAppendingPathComponent:(NSString * _Nonnull)location.lastPathComponent];
+
+    // Move tmp file to safe place to read on the session queue
+    if ([fileManager moveItemAtPath:(NSString * _Nonnull) location.path toPath:filePath error:&fileError]) {
+        [self.sessionQueue addOperationWithBlock:^{
+            NSError *readError;
+            NSData *data = [self.dataClass dataWithContentsOfFile:filePath options:NSDataReadingUncached error:&readError];
+
+            // Cleanup moved file
+            [fileManager removeItemAtPath:filePath error:nil];
+
+            if (!readError) {
+                [handler receiveData:data];
+            }
+
+            [self URLSession:session task:downloadTask didCompleteWithError:readError];
+        }];
+    } else {
+        [self URLSession:session task:downloadTask didCompleteWithError:fileError];
+    }
 }
 
 #pragma mark NSObject

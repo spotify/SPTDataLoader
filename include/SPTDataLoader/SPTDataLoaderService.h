@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
                       customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses;
 
 /**
- * Class constructor
+ * Convenience class constructor
  * @param configuration Custom session configuration
  * @param rateLimiter The limiter for limiting requests per second on a per service basis
  * @param resolver The resolver for rerouting requests to different IP addresses
@@ -65,6 +65,33 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
                                        rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                                           resolver:(nullable SPTDataLoaderResolver *)resolver;
+
+/**
+ * Class constructor with QoS
+ * @param userAgent The user agent to report as when making HTTP requests
+ * @param rateLimiter The limiter for limiting requests per second on a per service basis
+ * @param resolver The resolver for rerouting requests to different IP addresses
+ * @param customURLProtocolClasses Array of NSURLProtocol Class objects that you want
+ *                                 to use for this DataLoaderService. May be nil.
+ * @param qualityOfService The quality of service to use for the URL session queue
+ */
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                              qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10);
+
+/**
+ * Convenience class constructor with QoS
+ * @param configuration Custom session configuration
+ * @param rateLimiter The limiter for limiting requests per second on a per service basis
+ * @param resolver The resolver for rerouting requests to different IP addresses
+ * @param qualityOfService The quality of service to use for the URL session queue
+ */
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver
+                                  qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10);
 
 /**
  * Creates a data loader factory

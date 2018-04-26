@@ -35,6 +35,19 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestErrorCode) {
     SPTDataLoaderRequestErrorChunkedRequestWithoutChunkedDelegate
 };
 
+/**
+ How the request should be handled when the application enters the background
+
+ - SPTDataLoaderRequestBackgroundPolicyDefault: Allow the system to fail in-flight requests in the background
+ - SPTDataLoaderRequestBackgroundPolicyOnDemand: Hint to the system to upgrade this request to a background task
+ - SPTDataLoaderRequestBackgroundPolicyAlways: Use a background task but do not return response headers or status code
+ */
+typedef NS_ENUM(NSInteger, SPTDataLoaderRequestBackgroundPolicy) {
+    SPTDataLoaderRequestBackgroundPolicyDefault,
+    SPTDataLoaderRequestBackgroundPolicyOnDemand,
+    SPTDataLoaderRequestBackgroundPolicyAlways
+};
+
 extern NSString * const SPTDataLoaderRequestErrorDomain;
 
 /**
@@ -77,6 +90,10 @@ extern NSString * const SPTDataLoaderRequestErrorDomain;
  * @discussion The default request method is SPTDataLoaderRequestMethodGet
  */
 @property (nonatomic, assign) SPTDataLoaderRequestMethod method;
+/**
+ * Whether or not this request should use a background download task.
+ */
+@property (nonatomic, assign) SPTDataLoaderRequestBackgroundPolicy backgroundPolicy;
 /**
  * Any user information tied to this request
  */
