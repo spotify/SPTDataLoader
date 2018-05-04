@@ -144,38 +144,56 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 + (NSString *)generateLanguageHeaderValue
 {
-    const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
+    // Accept-Language HTTP Header; see https://tools.ietf.org/html/rfc7231#section-5.3.5
     NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
     NSString * const SPTDataLoaderRequestLanguageHeaderValuesJoiner = @", ";
+    NSString * const SPTDataLoaderRequestLanguageTagSeparator = @"-";
+
+    NSString *language = [[NSLocale preferredLanguages] firstObject];
+
+    NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    NSString *regionTag = [NSString stringWithFormat:@"%@%@", SPTDataLoaderRequestLanguageTagSeparator, countryCode];
+
+    /*
+     Note:
+        There is no guarantee that Apple will send the updated region tag
+        [[NSBundle mainBundle] preferredLocalizations] does not even update with the latest language setting sometimes.
+        This looks like a bug from Apple.
+
+        It is thus preferable to use [NSLocale preferredLanguages], it does receive updates when user change device language.
+
+        Language tags are formated as primarytag-subtag-subtag-subtag, it is impossible to know which subtag is region tag
+
+        The most promising way to do is to create own subtag as apple suggested following the language tag rules.
+        Ref https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
+
+        When formating languagetag, rules are specified in https://tools.ietf.org/html/rfc5646
+     */
+
+    NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageTagSeparator].firstObject;
+    if (![language containsString:regionTag]) {
+        // replace the old language with new formated language that contains region
+        language = [languageValue stringByAppendingString:regionTag];
+    }
+
+    NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:1];
+
+    //Always add english as a backup plan
+    BOOL containsEnglish = NO;
+
+    if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
+        containsEnglish = YES;
+    }
+
+    //Default language pritority is 1.0. E.g "en;q=1.0"
+    [languageHeaderValues addObject:language];
 
     NSString *(^constructLanguageHeaderValue)(NSString *, double) = ^NSString *(NSString *language, double languageImportance) {
         NSString * const SPTDataLoaderRequestLanguageFormatString = @"%@;q=%.2f";
         return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
     };
 
-    NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
-    if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
-        languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
-    }
-    double languageImportanceCounter = 1.0;
-    NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
-    BOOL containsEnglish = NO;
-    for (NSString *language in languages) {
-        if (!containsEnglish) {
-            NSString * const SPTDataLoaderRequestLanguageLocaleSeparator = @"-";
-            NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageLocaleSeparator].firstObject;
-            if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
-                containsEnglish = YES;
-            }
-        }
-
-        if (languageImportanceCounter == 1.0) {
-            [languageHeaderValues addObject:language];
-        } else {
-            [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
-        }
-        languageImportanceCounter -= (1.0 / languages.count);
-    }
     if (!containsEnglish) {
         [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
     }
