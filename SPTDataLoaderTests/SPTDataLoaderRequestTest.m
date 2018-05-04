@@ -56,6 +56,23 @@
     XCTAssertNotNil(self.request, @"The request should not be nil after construction");
 }
 
+- (void)testGeneratedLanguageHeaderAlwaysHaveEnglishAsBackup
+{
+    NSString *generated = [SPTDataLoaderRequest generateLanguageHeaderValue];
+    XCTAssertTrue([generated containsString:@"en"]);
+}
+
+- (void)testGeneratedLanguageHeaderAlwaysIncludeRegionTagInFirstLanguage
+{
+    NSString *generated = [SPTDataLoaderRequest generateLanguageHeaderValue];
+    NSString *firstLanguageTag = [generated componentsSeparatedByString:@", "].firstObject;
+
+    NSLocale *currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    NSString *regionTag = [NSString stringWithFormat:@"-%@", countryCode];
+    XCTAssertTrue([firstLanguageTag containsString:regionTag]);
+}
+
 - (void)testHeadersEmptyInitially
 {
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should be empty when initially setting up the request");
