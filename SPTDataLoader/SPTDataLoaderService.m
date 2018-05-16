@@ -411,7 +411,13 @@ didCompleteWithError:(nullable NSError *)error
                     return;
                 }
                 int bytesSent = (int)task.countOfBytesSent;
-                int bytesReceived = (int)task.countOfBytesReceived;
+                int64_t bytesReceivedExpected = task.countOfBytesExpectedToReceive;
+                int bytesReceived;
+                if (bytesReceivedExpected == NSURLSessionTransferSizeUnknown) {
+                    bytesReceived = (int)task.countOfBytesReceived;
+                } else {
+                    bytesReceived = (int)bytesReceivedExpected;
+                }
                 
                 bytesSent += task.currentRequest.allHTTPHeaderFields.byteSizeOfHeaders;
                 if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
