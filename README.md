@@ -61,7 +61,7 @@ $ brew install carthage
 ```
 You will also need to add `SPTDataLoader` to your `Cartfile`:
 ```
-github 'spotify/SPTDataLoader' ~> 1.1
+github "spotify/SPTDataLoader" ~> 1.1
 ```
 After that is all said and done, let Carthage pull in SPTDataLoader like so:
 ```shell
