@@ -22,6 +22,22 @@
 
 @implementation NSURLSessionTaskMock
 
+@synthesize countOfBytesSent;
+@synthesize countOfBytesReceived;
+@synthesize countOfBytesExpectedToSend = _countOfBytesExpectedToSend;
+@synthesize countOfBytesExpectedToReceive = _countOfBytesExpectedToReceive;
+@synthesize currentRequest;
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _countOfBytesExpectedToSend = NSURLSessionTransferSizeUnknown;
+        _countOfBytesExpectedToReceive = NSURLSessionTransferSizeUnknown;
+    }
+    return self;
+}
+
 #pragma mark NSURLSessionTaskMock
 
 - (void)resume
@@ -41,11 +57,5 @@
 {
     return self.mockResponse;
 }
-
-#pragma mark NSURLSessionTask
-
-@synthesize countOfBytesSent;
-@synthesize countOfBytesReceived;
-@synthesize currentRequest;
 
 @end

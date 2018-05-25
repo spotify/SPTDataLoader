@@ -24,8 +24,20 @@
 
 @synthesize countOfBytesSent;
 @synthesize countOfBytesReceived;
+@synthesize countOfBytesExpectedToSend = _countOfBytesExpectedToSend;
+@synthesize countOfBytesExpectedToReceive = _countOfBytesExpectedToReceive;
 @synthesize currentRequest;
 @synthesize response;
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _countOfBytesExpectedToSend = NSURLSessionTransferSizeUnknown;
+        _countOfBytesExpectedToReceive = NSURLSessionTransferSizeUnknown;
+    }
+    return self;
+}
 
 - (void)resume
 {
