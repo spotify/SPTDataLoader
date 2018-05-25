@@ -32,5 +32,7 @@
 
 @property (atomic, readonly) int64_t countOfBytesSent;
 @property (atomic, readonly) int64_t countOfBytesReceived;
+@property (atomic, readonly) int64_t countOfBytesExpectedToSend;
+@property (atomic, readonly) int64_t countOfBytesExpectedToReceive;
 
 @end
