@@ -23,7 +23,6 @@
 @class SPTDataLoaderRequest;
 @class SPTDataLoaderResponse;
 
-@protocol SPTDataLoaderCancellationToken;
 @protocol SPTDataLoaderRequestResponseHandler;
 
 NS_ASSUME_NONNULL_BEGIN
