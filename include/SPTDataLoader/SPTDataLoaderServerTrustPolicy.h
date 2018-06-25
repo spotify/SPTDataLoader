@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * An object used to enforce certificate trust when presented with an
- * `NSURLAuthentificationChallenge` where the authentication method requires
+ * `NSURLAuthenticationChallenge` where the authentication method requires
  * `SecTrustRef` validation.
  */
 @interface SPTDataLoaderServerTrustPolicy : NSObject
