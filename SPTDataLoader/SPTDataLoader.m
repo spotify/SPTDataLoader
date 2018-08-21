@@ -74,6 +74,23 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)removeRequest:(SPTDataLoaderRequest *)request
+{
+    @synchronized(self.requests) {
+        [self.requests removeObject:request];
+    }
+
+    @synchronized(self.cancellationTokens) {
+        for (NSUInteger i = 0; i < self.cancellationTokens.count; /* incremented in body */) {
+            if ([self.cancellationTokens[i].objectToCancel isEqual:request]) {
+                [self.cancellationTokens removeObjectAtIndex:i];
+            } else {
+                ++i;
+            }
+        }
+    }
+}
+
 #pragma mark SPTDataLoader
 
 - (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
@@ -159,9 +176,8 @@ NS_ASSUME_NONNULL_BEGIN
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
-    @synchronized(self.requests) {
-        [self.requests removeObject:response.request];
-    }
+
+    [self removeRequest:response.request];
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -173,9 +189,8 @@ NS_ASSUME_NONNULL_BEGIN
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
     }];
-    @synchronized(self.requests) {
-        [self.requests removeObject:response.request];
-    }
+
+    [self removeRequest:response.request];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -189,9 +204,8 @@ NS_ASSUME_NONNULL_BEGIN
             [self.delegate dataLoader:self didCancelRequest:request];
         }];
     }
-    @synchronized(self.requests) {
-        [self.requests removeObject:request];
-    }
+
+    [self removeRequest:request];
 }
 
 - (void)receivedDataChunk:(NSData *)data forResponse:(SPTDataLoaderResponse *)response

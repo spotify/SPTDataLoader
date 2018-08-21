@@ -245,4 +245,58 @@
     XCTAssertEqual(requests.count, 1u);
 }
 
+- (void)testRemoveSuccessfulResponseRequestToken
+{
+    __weak id<SPTDataLoaderCancellationToken> cancellationToken = nil;
+    @autoreleasepool {
+        SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+        id<SPTDataLoaderCancellationToken> token = [self.dataLoader performRequest:request];
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.requestResponseHandlerDelegate.lastRequestPerformed response:nil];
+        [self.dataLoader successfulResponse:response];
+        cancellationToken = token;
+        XCTAssertNotNil(cancellationToken, @"The data loader did not return the cancellation token");
+    }
+    XCTAssertNil(cancellationToken, @"The data loader did not release the cancellation token");
+}
+
+- (void)testRemoveFailureResponseRequestToken
+{
+    __weak id<SPTDataLoaderCancellationToken> cancellationToken = nil;
+    @autoreleasepool {
+        SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+        id<SPTDataLoaderCancellationToken> token = [self.dataLoader performRequest:request];
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.requestResponseHandlerDelegate.lastRequestPerformed response:nil];
+        [self.dataLoader failedResponse:response];
+        cancellationToken = token;
+        XCTAssertNotNil(cancellationToken, @"The data loader did not return the cancellation token");
+    }
+    XCTAssertNil(cancellationToken, @"The data loader did not release the cancellation token");
+}
+
+- (void)testRemoveCancelledRequestToken
+{
+    __weak id<SPTDataLoaderCancellationToken> cancellationToken = nil;
+    @autoreleasepool {
+        SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+        id<SPTDataLoaderCancellationToken> token = [self.dataLoader performRequest:request];
+        [self.dataLoader cancelledRequest:self.requestResponseHandlerDelegate.lastRequestPerformed];
+        cancellationToken = token;
+        XCTAssertNotNil(cancellationToken, @"The data loader did not return the cancellation token");
+    }
+    XCTAssertNil(cancellationToken, @"The data loader did not release the cancellation token");
+}
+
+- (void)testRemoveCancelledCancellationToken
+{
+    __weak id<SPTDataLoaderCancellationToken> cancellationToken = nil;
+    @autoreleasepool {
+        SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+        id<SPTDataLoaderCancellationToken> token = [self.dataLoader performRequest:request];
+        [token cancel];
+        cancellationToken = token;
+        XCTAssertNotNil(cancellationToken, @"The data loader did not return the cancellation token");
+    }
+    XCTAssertNil(cancellationToken, @"The data loader did not release the cancellation token");
+}
+
 @end
