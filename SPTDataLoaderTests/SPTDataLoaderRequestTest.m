@@ -237,4 +237,10 @@
     XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"HEAD");
 }
 
+- (void)testPatchMethod
+{
+    self.request.method = SPTDataLoaderRequestMethodPatch;
+    XCTAssertEqualObjects(self.request.urlRequest.HTTPMethod, @"PATCH");
+}
+
 @end

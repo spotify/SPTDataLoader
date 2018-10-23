@@ -215,6 +215,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 static NSString * const SPTDataLoaderRequestDeleteMethodString = @"DELETE";
 static NSString * const SPTDataLoaderRequestGetMethodString = @"GET";
+static NSString * const SPTDataLoaderRequestPatchMethodString = @"PATCH";
 static NSString * const SPTDataLoaderRequestPostMethodString = @"POST";
 static NSString * const SPTDataLoaderRequestPutMethodString = @"PUT";
 static NSString * const SPTDataLoaderRequestHeadMethodString = @"HEAD";
@@ -224,6 +225,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     switch (requestMethod) {
         case SPTDataLoaderRequestMethodDelete: return SPTDataLoaderRequestDeleteMethodString;
         case SPTDataLoaderRequestMethodGet: return SPTDataLoaderRequestGetMethodString;
+        case SPTDataLoaderRequestMethodPatch: return SPTDataLoaderRequestPatchMethodString;
         case SPTDataLoaderRequestMethodPost: return SPTDataLoaderRequestPostMethodString;
         case SPTDataLoaderRequestMethodPut: return SPTDataLoaderRequestPutMethodString;
         case SPTDataLoaderRequestMethodHead: return SPTDataLoaderRequestHeadMethodString;
