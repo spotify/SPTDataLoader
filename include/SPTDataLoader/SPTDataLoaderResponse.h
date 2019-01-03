@@ -1,22 +1,22 @@
 /*
- * Copyright (c) 2015-2018 Spotify AB.
- *
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ Copyright (c) 2015-2019 Spotify AB.
+
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
  */
 #import <Foundation/Foundation.h>
 
@@ -78,42 +78,42 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderResponseHTTPStatusCode) {
 extern NSString * const SPTDataLoaderResponseErrorDomain;
 
 /**
- * An object representing the response from the backend
+ An object representing the response from the backend
  */
 @interface SPTDataLoaderResponse : NSObject
 
 /**
- * The request object that generated the response
+ The request object that generated the response
  */
 @property (nonatomic, strong, readonly) SPTDataLoaderRequest *request;
 /**
- * The error that the request generated
- * @warning Will be nil if the request is considered a success
+ The error that the request generated
+ @warning Will be nil if the request is considered a success
  */
 @property (nonatomic, strong, readonly, nullable) NSError *error;
 /**
- * The headers that the server returned with a request
+ The headers that the server returned with a request
  */
 @property (nonatomic, strong, readonly) NSDictionary<NSString *, NSString *> *responseHeaders;
 /**
- * The date at which the request that generated the response can be retried
- * @warning Can be nil if no retry-after is given in the response headers
- * @discussion This should only show up if the response is an error. It can still show up in a successful response, but
- * if this occurs it is probably the result of a misconfigured server
+ The date at which the request that generated the response can be retried
+ @warning Can be nil if no retry-after is given in the response headers
+ @discussion This should only show up if the response is an error. It can still show up in a successful response, but
+ if this occurs it is probably the result of a misconfigured server
  */
 @property (nonatomic, strong, readonly, nullable) NSDate *retryAfter;
 /**
- * The body of data contained in the response
- * @warning Will be nil if not body was contained in the response
+ The body of data contained in the response
+ @warning Will be nil if not body was contained in the response
  */
 @property (nonatomic, strong, readonly, nullable) NSData *body;
 /**
- * The time the request took
+ The time the request took
  */
 @property (nonatomic, assign, readonly) NSTimeInterval requestTime;
 /**
- * The status code of the response
- * @discussion This value does not change depending on the error value
+ The status code of the response
+ @discussion This value does not change depending on the error value
  */
 @property (nonatomic, assign, readonly) SPTDataLoaderResponseHTTPStatusCode statusCode;
 
