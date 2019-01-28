@@ -81,13 +81,13 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     @synchronized(self.cancellationTokens) {
-        for (NSUInteger i = 0; i < self.cancellationTokens.count; /* incremented in body */) {
+        NSMutableIndexSet *indicesToRemove = [NSMutableIndexSet new];
+        for (NSUInteger i = 0; i < self.cancellationTokens.count; i++) {
             if ([self.cancellationTokens[i].objectToCancel isEqual:request]) {
-                [self.cancellationTokens removeObjectAtIndex:i];
-            } else {
-                ++i;
+                [indicesToRemove addIndex:i];
             }
         }
+        [self.cancellationTokens removeObjectsAtIndexes:indicesToRemove];
     }
 }
 
