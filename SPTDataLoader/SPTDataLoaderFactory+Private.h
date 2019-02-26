@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderFactory.h"
+#import <SPTDataLoader/SPTDataLoaderFactory.h>
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 

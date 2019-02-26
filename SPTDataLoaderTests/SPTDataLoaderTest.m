@@ -20,7 +20,7 @@
  */
 #import <XCTest/XCTest.h>
 
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 #import "SPTDataLoaderImplementation+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"

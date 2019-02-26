@@ -18,9 +18,9 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderRateLimiter.h"
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

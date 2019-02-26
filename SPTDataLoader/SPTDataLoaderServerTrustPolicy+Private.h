@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderServerTrustPolicy.h"
+#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

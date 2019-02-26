@@ -203,7 +203,7 @@ def xcodebuild(*args)
   opts[:workspace] ||= 'SPTDataLoader.xcworkspace'
   opts[:configuration] ||= 'Debug'
 
-  args = ['xcrun', 'xcodebuild', 'NSUnbufferedIO=YES'] + args
+  args = ['xcrun', 'xcodebuild', 'NSUnbufferedIO=YES', '-UseNewBuildSystem=NO'] + args
   for k, v in opts
     args.push("-#{k}", v.to_s)
   end

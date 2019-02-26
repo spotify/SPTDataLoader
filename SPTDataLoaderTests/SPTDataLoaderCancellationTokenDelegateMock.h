@@ -20,7 +20,7 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "SPTDataLoaderCancellationToken.h"
+#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 
 @interface SPTDataLoaderCancellationTokenDelegateMock : NSObject <SPTDataLoaderCancellationTokenDelegate>
 
