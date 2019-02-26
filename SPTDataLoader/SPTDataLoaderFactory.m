@@ -18,10 +18,10 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderFactory.h"
+#import <SPTDataLoader/SPTDataLoaderFactory.h>
 
-#import "SPTDataLoaderAuthoriser.h"
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
 #import "SPTDataLoaderFactory+Private.h"

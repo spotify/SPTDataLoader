@@ -20,7 +20,7 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "SPTDataLoaderDelegate.h"
+#import <SPTDataLoader/SPTDataLoaderDelegate.h>
 
 @interface SPTDataLoaderDelegateMock : NSObject <SPTDataLoaderDelegate>
 

@@ -20,14 +20,15 @@
  */
 #import "SPTDataLoaderImplementation+Private.h"
 
-#import "SPTDataLoaderRequest.h"
-#import "SPTDataLoaderResponse.h"
-#import "SPTDataLoaderRequestResponseHandler.h"
-#import "SPTDataLoaderDelegate.h"
-#import "SPTDataLoaderResponse+Private.h"
-#import "SPTDataLoaderCancellationToken.h"
+#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
+#import <SPTDataLoader/SPTDataLoaderDelegate.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
+
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 #import "SPTDataLoaderRequest+Private.h"
+#import "SPTDataLoaderRequestResponseHandler.h"
+#import "SPTDataLoaderResponse+Private.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

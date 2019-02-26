@@ -23,9 +23,9 @@
 #import "SPTDataLoaderRequestTaskHandler.h"
 
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
-#import "SPTDataLoaderRateLimiter.h"
-#import "SPTDataLoaderResponse.h"
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 #import "NSURLSessionTaskMock.h"
 
 @interface SPTDataLoaderRequestTaskHandler ()

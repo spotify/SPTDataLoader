@@ -18,13 +18,13 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderService.h"
+#import <SPTDataLoader/SPTDataLoaderService.h>
 
-#import "SPTDataLoaderCancellationToken.h"
-#import "SPTDataLoaderRateLimiter.h"
-#import "SPTDataLoaderResolver.h"
-#import "SPTDataLoaderConsumptionObserver.h"
-#import "SPTDataLoaderServerTrustPolicy.h"
+#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderResolver.h>
+#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
+#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequest+Private.h"

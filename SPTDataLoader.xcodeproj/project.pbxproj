@@ -149,6 +149,7 @@
 		48E7EEC220591A2E00BB7CCC /* NSFileManagerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFileManagerMock.h; sourceTree = "<group>"; };
 		48E7EEC42059288E00BB7CCC /* NSDataMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataMock.h; sourceTree = "<group>"; };
 		48E7EEC52059288F00BB7CCC /* NSDataMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataMock.m; sourceTree = "<group>"; };
+		693521E32224CEF00098F8E3 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
 		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
 		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		056A04AE1A13D0FA00FA72AD /* Public API */ = {
 			isa = PBXGroup;
 			children = (
+				693521E32224CEF00098F8E3 /* module.modulemap */,
 				C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
 				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,

@@ -20,14 +20,14 @@
  */
 #import "SPTDataLoaderRequestTaskHandler.h"
 
-#import "SPTDataLoaderResponse.h"
-#import "SPTDataLoaderRequest.h"
-#import "SPTDataLoaderRateLimiter.h"
+#import <SPTDataLoader/SPTDataLoaderResponse.h>
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 
-#import "SPTDataLoaderExponentialTimer.h"
+#import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

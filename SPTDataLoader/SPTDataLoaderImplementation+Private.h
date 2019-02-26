@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderImplementation.h"
+#import <SPTDataLoader/SPTDataLoaderImplementation.h>
 #import "SPTDataLoaderRequestResponseHandler.h"
 
 @protocol SPTDataLoaderCancellationTokenFactory;

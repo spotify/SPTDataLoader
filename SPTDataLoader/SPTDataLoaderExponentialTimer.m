@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderExponentialTimer.h"
+#import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
 
 #import <math.h>
 #import <stdlib.h>

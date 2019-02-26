@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderRequest.h"
+#import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 #import "SPTDataLoaderRequest+Private.h"
 

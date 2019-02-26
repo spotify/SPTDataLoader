@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderServerTrustPolicy.h"
+#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 #import <Foundation/Foundation.h>
 
 @interface SPTDataLoaderServerTrustPolicyMock : SPTDataLoaderServerTrustPolicy
