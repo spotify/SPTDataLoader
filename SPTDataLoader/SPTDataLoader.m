@@ -154,7 +154,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<SPTDataLoaderRequest *> *)currentRequests
 {
-    return [self.requests copy];
+    @synchronized (self.requests) {
+        return [self.requests copy];
+    }
 }
 
 #pragma mark NSObject
