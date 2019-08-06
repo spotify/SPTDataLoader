@@ -412,7 +412,7 @@
 			};
 			buildConfigurationList = 050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoader" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
