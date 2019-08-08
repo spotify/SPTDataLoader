@@ -220,7 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				056A04AE1A13D0FA00FA72AD /* Public API */,
-				050E068C1A10C62100A10A0E /* SPTDataLoader */,
+				050E068C1A10C62100A10A0E /* Sources */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
 				F7346A3E1CC2CFBC00B8AB41 /* Frameworks */,
 				050E068B1A10C62100A10A0E /* Products */,
@@ -239,7 +239,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		050E068C1A10C62100A10A0E /* SPTDataLoader */ = {
+		050E068C1A10C62100A10A0E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
@@ -269,7 +269,7 @@
 				6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
 			);
-			path = SPTDataLoader;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		056A04AE1A13D0FA00FA72AD /* Public API */ = {
@@ -490,7 +490,7 @@
 		050E06821A10C62100A10A0E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Spotify;
 				TargetAttributes = {
 					05A637E21C46B46300061E37 = {
@@ -509,7 +509,7 @@
 			};
 			buildConfigurationList = 050E06851A10C62100A10A0E /* Build configuration list for PBXProject "SPTDataLoaderFramework" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
