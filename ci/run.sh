@@ -26,8 +26,12 @@ xcb() {
 
 if [ -n "$TRAVIS_BUILD_ID" ]; then
   heading "Installing Tools"
-  gem install xcpretty
+  gem install xcpretty cocoapods
 fi
+
+heading "Linting Podspec"
+pod spec lint SPTDataLoader.podspec --quick || \
+  fail "Podspec lint failed"
 
 heading "Validating License Conformance"
 git ls-files | egrep "\\.(h|m|mm)$" | \
@@ -81,14 +85,27 @@ xcb "Build Demo App for Simulator" \
 # RUN TESTS
 #
 
-xcb "Run tests for macOS" test -scheme "SPTDataLoader" -sdk macosx
+xcb "Run tests for macOS" test \
+  -scheme "SPTDataLoader" \
+  -enableCodeCoverage YES \
+  -sdk macosx
 
 LATEST_IOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk iphonesimulator)/SDKSettings.plist")"
 xcb "Run tests for iOS" test \
   -scheme "SPTDataLoader" \
-  -destination "platform=iOS Simulator,name=iPhone 8,OS=$LATEST_IOS_SDK" \
+  -enableCodeCoverage YES \
+  -destination "platform=iOS Simulator,name=iPhone 8,OS=$LATEST_IOS_SDK"
 
 LATEST_TVOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk iphonesimulator)/SDKSettings.plist")"
 xcb "Run tests for tvOS" test \
   -scheme "SPTDataLoader" \
+  -enableCodeCoverage YES \
   -destination "platform=tvOS Simulator,name=Apple TV,OS=$LATEST_TVOS_SDK"
+
+#
+# CODECOV
+#
+curl -sfL https://codecov.io/bash > build/codecov.sh
+chmod +x build/codecov.sh
+[[ -z "$TRAVIS_BUILD_ID" ]] && CODECOV_EXTRA="-d"
+build/codecov.sh -D build/DerivedData -X xcodellvm $CODECOV_EXTRA
