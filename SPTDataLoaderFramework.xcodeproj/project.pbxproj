@@ -269,7 +269,7 @@
 				6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
 			);
-			path = SPTDataLoader;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		056A04AE1A13D0FA00FA72AD /* Public API */ = {

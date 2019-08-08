@@ -87,7 +87,7 @@
 		050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderFactory+Private.h"; sourceTree = "<group>"; };
 		050F53851A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderConsumptionObserverMock.h; sourceTree = "<group>"; };
 		050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderConsumptionObserverMock.m; sourceTree = "<group>"; };
-		051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderConsumptionObserver.h; path = include/SPTDataLoader/SPTDataLoaderConsumptionObserver.h; sourceTree = "<group>"; };
+		051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderConsumptionObserver.h; sourceTree = "<group>"; };
 		052FB10B1A120E1F00AFE80E /* SPTDataLoaderResponse+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderResponse+Private.h"; sourceTree = "<group>"; };
 		052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRateLimiter.m; sourceTree = "<group>"; };
 		052FB1641A12793F00AFE80E /* SPTDataLoaderResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolver.m; sourceTree = "<group>"; };
@@ -103,18 +103,18 @@
 		055AEE531A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRateLimiterTest.m; sourceTree = "<group>"; };
 		055AEE551A162C5E00A490BF /* SPTDataLoaderResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolverTest.m; sourceTree = "<group>"; };
 		055AEE571A162F0200A490BF /* SPTDataLoaderResolverAddressTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderResolverAddressTest.m; sourceTree = "<group>"; };
-		0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderRateLimiter.h; path = include/SPTDataLoader/SPTDataLoaderRateLimiter.h; sourceTree = "<group>"; };
-		0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderResolver.h; path = include/SPTDataLoader/SPTDataLoaderResolver.h; sourceTree = "<group>"; };
+		0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRateLimiter.h; sourceTree = "<group>"; };
+		0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderResolver.h; sourceTree = "<group>"; };
 		0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriserMock.h; sourceTree = "<group>"; };
 		0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderAuthoriserMock.m; sourceTree = "<group>"; };
-		056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderCancellationToken.h; path = include/SPTDataLoader/SPTDataLoaderCancellationToken.h; sourceTree = "<group>"; };
-		056A04B31A13D10900FA72AD /* SPTDataLoaderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderImplementation.h; path = include/SPTDataLoader/SPTDataLoaderImplementation.h; sourceTree = "<group>"; };
-		056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderAuthoriser.h; path = include/SPTDataLoader/SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
-		056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderFactory.h; path = include/SPTDataLoader/SPTDataLoaderFactory.h; sourceTree = "<group>"; };
-		056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderRequest.h; path = include/SPTDataLoader/SPTDataLoaderRequest.h; sourceTree = "<group>"; };
-		056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderResponse.h; path = include/SPTDataLoader/SPTDataLoaderResponse.h; sourceTree = "<group>"; };
-		056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderService.h; path = include/SPTDataLoader/SPTDataLoaderService.h; sourceTree = "<group>"; };
-		056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderExponentialTimer.h; path = include/SPTDataLoader/SPTDataLoaderExponentialTimer.h; sourceTree = "<group>"; };
+		056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationToken.h; sourceTree = "<group>"; };
+		056A04B31A13D10900FA72AD /* SPTDataLoaderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderImplementation.h; sourceTree = "<group>"; };
+		056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderAuthoriser.h; sourceTree = "<group>"; };
+		056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderFactory.h; sourceTree = "<group>"; };
+		056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequest.h; sourceTree = "<group>"; };
+		056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderResponse.h; sourceTree = "<group>"; };
+		056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderService.h; sourceTree = "<group>"; };
+		056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderExponentialTimer.h; sourceTree = "<group>"; };
 		056A04BB1A13D2BD00FA72AD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceTest.m; sourceTree = "<group>"; };
 		056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionMock.h; sourceTree = "<group>"; };
@@ -149,12 +149,12 @@
 		48E7EEC220591A2E00BB7CCC /* NSFileManagerMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFileManagerMock.h; sourceTree = "<group>"; };
 		48E7EEC42059288E00BB7CCC /* NSDataMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataMock.h; sourceTree = "<group>"; };
 		48E7EEC52059288F00BB7CCC /* NSDataMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataMock.m; sourceTree = "<group>"; };
-		693521E32224CEF00098F8E3 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = include/SPTDataLoader/module.modulemap; sourceTree = "<group>"; };
+		693521E32224CEF00098F8E3 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
 		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
-		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = include/SPTDataLoader/SPTDataLoader.h; sourceTree = "<group>"; };
-		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
+		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoader.h; sourceTree = "<group>"; };
+		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
 		F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
@@ -164,7 +164,7 @@
 		F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServerTrustPolicyMock.h; sourceTree = "<group>"; };
 		F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyMock.m; sourceTree = "<group>"; };
 		F7346A6D1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicyTest.m; sourceTree = "<group>"; };
-		F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderServerTrustPolicy.h; path = include/SPTDataLoader/SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
+		F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
 		F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,9 +184,9 @@
 		050E06811A10C62100A10A0E = {
 			isa = PBXGroup;
 			children = (
-				056A04AE1A13D0FA00FA72AD /* Public API */,
-				050E068C1A10C62100A10A0E /* SPTDataLoader */,
-				050E06991A10C62100A10A0E /* SPTDataLoaderTests */,
+				69D8603F22FBC9C9005981B2 /* Public API */,
+				050E068C1A10C62100A10A0E /* Sources */,
+				050E06991A10C62100A10A0E /* Tests */,
 				056A04BA1A13D29C00FA72AD /* Supporting Files */,
 				F7346A2A1CC2C68300B8AB41 /* Frameworks */,
 				050E068B1A10C62100A10A0E /* Products */,
@@ -203,7 +203,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		050E068C1A10C62100A10A0E /* SPTDataLoader */ = {
+		050E068C1A10C62100A10A0E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
@@ -233,10 +233,10 @@
 				F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
 			);
-			path = SPTDataLoader;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		050E06991A10C62100A10A0E /* SPTDataLoaderTests */ = {
+		050E06991A10C62100A10A0E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				050E069A1A10C62100A10A0E /* Supporting Files */,
@@ -256,7 +256,7 @@
 				05357B3F1C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
-			path = SPTDataLoaderTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		050E069A1A10C62100A10A0E /* Supporting Files */ = {
@@ -267,28 +267,6 @@
 				050E069B1A10C62100A10A0E /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		056A04AE1A13D0FA00FA72AD /* Public API */ = {
-			isa = PBXGroup;
-			children = (
-				693521E32224CEF00098F8E3 /* module.modulemap */,
-				C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */,
-				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
-				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
-				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
-				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
-				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
-				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
-				056A04B31A13D10900FA72AD /* SPTDataLoaderImplementation.h */,
-				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
-				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
-				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
-				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
-				F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */,
-				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
-			);
-			name = "Public API";
 			sourceTree = "<group>";
 		};
 		056A04BA1A13D29C00FA72AD /* Supporting Files */ = {
@@ -338,6 +316,29 @@
 				05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		69D8603F22FBC9C9005981B2 /* Public API */ = {
+			isa = PBXGroup;
+			children = (
+				693521E32224CEF00098F8E3 /* module.modulemap */,
+				C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */,
+				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
+				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
+				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
+				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
+				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
+				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
+				056A04B31A13D10900FA72AD /* SPTDataLoaderImplementation.h */,
+				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
+				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
+				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
+				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
+				F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */,
+				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
+			);
+			name = "Public API";
+			path = include/SPTDataLoader;
 			sourceTree = "<group>";
 		};
 		993EF2321A30B1E2001E48D2 /* Build System */ = {
@@ -550,7 +551,7 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = (
@@ -567,7 +568,7 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = SPTDataLoaderTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = (
