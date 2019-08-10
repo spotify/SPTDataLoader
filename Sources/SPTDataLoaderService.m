@@ -35,13 +35,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate, NSURLSessionDelegate>
 
 
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong, nullable) SPTDataLoaderResolver *resolver;
 
 @property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, assign) BOOL isValidSession;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
@@ -129,6 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
         _sessionQueue = [NSOperationQueue new];
         _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
         _sessionQueue.name = NSStringFromClass(self.class);
+        _isValidSession = YES;
         _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
         _handlers = [NSMutableArray new];
         _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
@@ -214,6 +216,10 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     }
     
     if (request.URL.host == nil) {
+        return;
+    }
+
+    if (!self.isValidSession) {
         return;
     }
     
@@ -403,7 +409,7 @@ didCompleteWithError:(nullable NSError *)error
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }
-    
+
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
             dispatch_block_t observerBlock = ^ {
@@ -532,6 +538,16 @@ didFinishDownloadingToURL:(NSURL *)location
         }];
     } else {
         [self URLSession:session task:downloadTask didCompleteWithError:fileError];
+    }
+}
+
+#pragma mark NSURLSessionDelegate
+
+- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error
+{
+    if ([session isEqual:self.session]) {
+        self.isValidSession = NO;
+        [self cancelAllLoads];
     }
 }
 

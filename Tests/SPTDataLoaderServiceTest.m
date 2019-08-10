@@ -41,7 +41,7 @@
 #import "NSFileManagerMock.h"
 #import "NSDataMock.h"
 
-@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
+@interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate, NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
@@ -483,6 +483,21 @@
     // Sanity check to make sure we don't receive crashes on dealloc
     [service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     [service cancelAllLoads];
+}
+
+- (void)testCreateTasksOnInvalidatedSessionDoesNotCrash
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"http://www.spotify.com"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    SPTDataLoaderService *service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
+                                                                             rateLimiter:self.rateLimiter
+                                                                                resolver:self.resolver
+                                                                customURLProtocolClasses:nil];
+    [service.session invalidateAndCancel];
+    // URLSession delegates and enqueuing of new tasks is racy
+    [NSThread sleepForTimeInterval:.1];
+    [service requestResponseHandler:requestResponseHandlerMock performRequest:request];
 }
 
 - (void)testDidReceiveChallengeWhenNotAllowingAllCertificatesForwardsResponsiblity
