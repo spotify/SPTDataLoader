@@ -88,6 +88,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)provideNewBodyStreamWithCompletion:(void (^)(NSInputStream * _Nonnull))completionHandler;
 
+- (void)noteWaitingForConnectivity;
+
 @end
 
 NS_ASSUME_NONNULL_END

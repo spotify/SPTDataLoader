@@ -61,6 +61,13 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestBackgroundPolicy) {
  */
 @property (nonatomic, strong) NSURL *URL;
 /**
+ A Boolean value that indicates whether the session should wait for connectivity to become
+ available, or fail immediately.
+ @discussion See documentation for NSURLSession.waitsForConnectivity for detailed semantics.
+ This flag is ignored in iOS 10, macOS 10.12, tvOS 10, watchOS 4 or earlier.
+ */
+@property (nonatomic, assign) BOOL waitsForConnectivity;
+/**
  The number of times to retry this request in the event of a failure
  @discussion The default is 0
  */

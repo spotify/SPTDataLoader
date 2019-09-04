@@ -194,6 +194,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     __typeof(self) copy = [[self.class alloc] initWithURL:self.URL
                                          sourceIdentifier:self.sourceIdentifier
                                          uniqueIdentifier:self.uniqueIdentifier];
+    copy.waitsForConnectivity = self.waitsForConnectivity;
     copy.maximumRetryCount = self.maximumRetryCount;
     copy.body = [self.body copy];
     @synchronized(self.mutableHeaders) {

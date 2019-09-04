@@ -206,6 +206,11 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     [self.requestResponseHandler needsNewBodyStream:completionHandler forRequest:self.request];
 }
 
+- (void)noteWaitingForConnectivity
+{
+    [self.requestResponseHandler requestIsWaitingForConnectivity:self.request];
+}
+
 - (void)checkRateLimiterAndExecute
 {
     NSTimeInterval waitTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:self.request];

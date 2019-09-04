@@ -103,6 +103,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response;
 
+- (void)requestIsWaitingForConnectivity:(SPTDataLoaderRequest *)request;
+
 /**
  Called when a request using the @c bodyStream property encounters some sort of redirection that invalidates
  the initially provided input stream.

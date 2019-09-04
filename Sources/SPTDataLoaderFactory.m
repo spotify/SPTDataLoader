@@ -31,7 +31,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
+@interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate, SPTDataLoaderRequestResponseHandler>
 
 @property (nonatomic, strong) NSMapTable<SPTDataLoaderRequest *, id<SPTDataLoaderRequestResponseHandler>> *requestToRequestResponseHandler;
 @property (nonatomic, strong, readwrite) dispatch_queue_t requestTimeoutQueue;
@@ -140,6 +140,15 @@ NS_ASSUME_NONNULL_BEGIN
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
     }
     [requestResponseHandler receivedInitialResponse:response];
+}
+
+- (void)requestIsWaitingForConnectivity:(nonnull SPTDataLoaderRequest *)request
+{
+    id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
+    @synchronized(self.requestToRequestResponseHandler) {
+        requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:request];
+    }
+    [requestResponseHandler requestIsWaitingForConnectivity:request];
 }
 
 - (BOOL)shouldAuthoriseRequest:(SPTDataLoaderRequest *)request
