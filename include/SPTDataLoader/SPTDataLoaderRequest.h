@@ -31,7 +31,9 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestMethod) {
     SPTDataLoaderRequestMethodHead
 };
 
-typedef NS_ENUM(NSInteger, SPTDataLoaderRequestErrorCode) {
+extern NSString * const SPTDataLoaderRequestErrorDomain;
+
+typedef NS_ERROR_ENUM(SPTDataLoaderRequestErrorDomain, SPTDataLoaderRequestErrorCode) {
     SPTDataLoaderRequestErrorCodeTimeout,
     SPTDataLoaderRequestErrorChunkedRequestWithoutChunkedDelegate
 };
@@ -48,8 +50,6 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestBackgroundPolicy) {
     SPTDataLoaderRequestBackgroundPolicyOnDemand,
     SPTDataLoaderRequestBackgroundPolicyAlways
 };
-
-extern NSString * const SPTDataLoaderRequestErrorDomain;
 
 /**
  A representing of the request to make to the backend
