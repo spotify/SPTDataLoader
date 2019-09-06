@@ -90,7 +90,11 @@ didReceiveDataChunk:(NSData *)data
 needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
         forRequest:(SPTDataLoaderRequest *)request;
 
-
+/**
+ Called when a data loader request with the @c waitsForConnectivity property set begins waiting for connectivity.
+ @param dataLoader The data loader managing the request.
+ @param request The request that began waiting.
+ */
 - (void)dataLoader:(SPTDataLoader *)dataLoader
 requestIsWaitingForConnectivity:(SPTDataLoaderRequest *)request;
 

@@ -102,7 +102,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param response The response containing the initial information (such as headers)
  */
 - (void)receivedInitialResponse:(SPTDataLoaderResponse *)response;
-
+/**
+ Called when a request with waitsForConnectivity enters the waiting state
+ @param request The request that is waiting
+ */
 - (void)requestIsWaitingForConnectivity:(SPTDataLoaderRequest *)request;
 
 /**
