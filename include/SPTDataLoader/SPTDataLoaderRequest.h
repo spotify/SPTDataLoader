@@ -118,6 +118,10 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestBackgroundPolicy) {
  @discussion This is used for logging purposes to locate where data is downloaded from.
  */
 @property (nonatomic, copy, nullable) NSString *sourceIdentifier;
+/**
+ A flag indicating whether the request was cached or not.
+ */
+@property (nonatomic, assign) bool isCached;
 
 /**
  Class constructor

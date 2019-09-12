@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The service used for creating data loader factories and providing application wide rate limiting to services
  */
-@interface SPTDataLoaderService : NSObject
+@interface SPTDataLoaderService : NSObject <NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
 /**
  Whether all certificates are allowed (e.g. broken certificates don't cause closed connections)
@@ -118,6 +118,11 @@ NS_ASSUME_NONNULL_BEGIN
  @param serverTrustPolicy The SPTDataLoaderServerTrustPolicy object
  */
 - (void)setServerTrustPolicy:(nullable SPTDataLoaderServerTrustPolicy *)serverTrustPolicy;
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler;
 
 @end
 

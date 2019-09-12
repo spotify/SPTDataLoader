@@ -26,6 +26,9 @@
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderService.h>
+
+#import "NSURLSessionMock.h"
 #import "NSURLSessionTaskMock.h"
 
 @interface SPTDataLoaderRequestTaskHandler ()
@@ -41,6 +44,8 @@
 
 @property (nonatomic, strong) SPTDataLoaderRequestTaskHandler *handler;
 
+@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) SPTDataLoaderService *service;
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
@@ -55,12 +60,19 @@
 - (void)setUp
 {
     [super setUp];
+    self.session = [NSURLSessionMock new];
     self.requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
                                        sourceIdentifier:nil];
     self.task = [NSURLSessionTaskMock new];
+    self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
+                                                            rateLimiter:self.rateLimiter
+                                                               resolver:[SPTDataLoaderResolver new]
+                                               customURLProtocolClasses:nil];
     self.handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:self.task
+                                                                                 session:self.session
+                                                                                 service:self.service
                                                                                  request:self.request
                                                                   requestResponseHandler:self.requestResponseHandler
                                                                              rateLimiter:self.rateLimiter];

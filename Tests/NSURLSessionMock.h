@@ -22,10 +22,12 @@
 
 @class NSURLSessionDataTaskMock;
 @class NSURLSessionDownloadTaskMock;
+@class NSURLSessionConfigurationMock;
 
 @interface NSURLSessionMock : NSURLSession
 
 @property (nonatomic, strong) NSURLSessionDataTaskMock *lastDataTask;
 @property (nonatomic, strong) NSURLSessionDownloadTaskMock *lastDownloadTask;
+@property (nonatomic, strong) NSURLSessionConfigurationMock *mockConfiguration;
 
 @end

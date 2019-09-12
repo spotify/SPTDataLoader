@@ -47,7 +47,7 @@
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeOK
                                                   HTTPVersion:@"1.1"
                                                  headerFields:@{ @"Header" : @"Value" }];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse cached:NO];
 }
 
 #pragma mark SPTDataLoaderResponseTest
@@ -71,7 +71,7 @@
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
                                                   HTTPVersion:@"1.1"
                                                  headerFields:nil];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse cached:NO];
     BOOL shouldRetry = [self.response shouldRetry];
     XCTAssertTrue(shouldRetry, @"The response should retry when given the HTTP status code of Not Found");
 }
@@ -100,7 +100,7 @@
 {
     self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
                                        sourceIdentifier:nil];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil cached:NO];
     BOOL shouldRetry = [self.response shouldRetry];
     XCTAssertFalse(shouldRetry, @"The response should not retry without having a reason to");
 }
@@ -118,7 +118,7 @@
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
                                                   HTTPVersion:@"1.1"
                                                  headerFields:nil];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse cached:NO];
     XCTAssertNotNil(self.response.error, @"An implicit error should have been generated due to the HTTP status code");
     XCTAssertEqualObjects(self.response.error.domain, SPTDataLoaderResponseErrorDomain, @"The implicit error should have the data loader response error domain");
     XCTAssertEqual(self.response.error.code, SPTDataLoaderResponseHTTPStatusCodeNotFound, @"The implicit error should have the same code as the HTTP status code");
@@ -136,7 +136,7 @@
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
                                                   HTTPVersion:@"1.1"
                                                  headerFields:@{ @"Retry-After" : @"60" }];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse cached:NO];
     NSDate *testDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
     XCTAssertEqualWithAccuracy(testDate.timeIntervalSince1970, self.response.retryAfter.timeIntervalSince1970, 1.0, @"The relative retry-after was not as expected");
 }
@@ -149,7 +149,7 @@
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeNotFound
                                                   HTTPVersion:@"1.1"
                                                  headerFields:@{ @"Retry-After" : @"Fri, 31 Dec 1999 23:59:59 GMT" }];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse cached:NO];
     NSDate *testDate = [NSDate dateWithTimeIntervalSince1970:946684799.0];
     XCTAssertEqualWithAccuracy(testDate.timeIntervalSince1970, self.response.retryAfter.timeIntervalSince1970, 1.0, @"The absolute retry-after was not as expected");
 }
@@ -162,7 +162,7 @@
                                                    statusCode:SPTDataLoaderResponseHTTPStatusCodeInvalid
                                                   HTTPVersion:@"1.1"
                                                  headerFields:nil];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse cached:NO];
     BOOL shouldRetry = [self.response shouldRetry];
     XCTAssertFalse(shouldRetry, @"The response should not retry when given the HTTP status code of Invalid");
 }

@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
         NSError *error = [NSError errorWithDomain:SPTDataLoaderRequestErrorDomain
                                              code:SPTDataLoaderRequestErrorChunkedRequestWithoutChunkedDelegate
                                          userInfo:nil];
-        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
         response.error = error;
         [delegate dataLoader:self didReceiveErrorResponse:response];
         return nil;

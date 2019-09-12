@@ -75,7 +75,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.factory successfulResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1u, @"The factory did not relay a successful response to the correct handler");
 }
@@ -85,7 +85,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.factory failedResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory did not relay a failed response to the correct handler");
 }
@@ -104,7 +104,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.factory receivedDataChunk:[NSData new] forResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfReceivedDataRequestCalls, 1u, @"The factory did not relay a received data chunk response to the correct handler");
 }
@@ -114,7 +114,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.factory receivedInitialResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfReceivedInitialResponseCalls, 1u, @"The factory did not relay a received data chunk response to the correct handler");
 }
@@ -186,7 +186,7 @@
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     response.error = [NSError errorWithDomain:@"" code:SPTDataLoaderResponseHTTPStatusCodeUnauthorised userInfo:nil];
     [self.factory failedResponse:response];
     [self.factory failedResponse:response];

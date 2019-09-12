@@ -116,6 +116,10 @@ typedef NS_ERROR_ENUM(SPTDataLoaderResponseErrorDomain, SPTDataLoaderResponseHTT
  @discussion This value does not change depending on the error value
  */
 @property (nonatomic, assign, readonly) SPTDataLoaderResponseHTTPStatusCode statusCode;
+/**
+ The response was delivered from cache or not
+ */
+@property (nonatomic, assign) BOOL isCached;
 
 @end
 

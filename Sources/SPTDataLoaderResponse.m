@@ -42,17 +42,18 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 #pragma mark Private
 
-+ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response
++ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response cached:(BOOL)cached
 {
-    return [[self alloc] initWithRequest:request response:response];
+    return [[self alloc] initWithRequest:request response:response cached:cached];
 }
 
-- (instancetype)initWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response
+- (instancetype)initWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response cached:(BOOL)cached
 {
     self = [super init];
     if (self) {
         _request = request;
         _response = response;
+        _isCached = cached;
 
         if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;

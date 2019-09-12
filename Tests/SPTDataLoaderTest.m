@@ -89,7 +89,7 @@
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.dataLoader performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader successfulResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1u, @"The data loader did not relay a successful response to the delegate");
 }
@@ -98,7 +98,7 @@
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.dataLoader performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader failedResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 1u, @"The data loader did not relay a error response to the delegate");
 }
@@ -117,7 +117,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
     [self.dataLoader performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader receivedDataChunk:[NSData new] forResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 1u, @"The data loader did not relay a received data chunk response to the delegate");
 }
@@ -128,7 +128,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = YES;
     [self.dataLoader performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader receivedInitialResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 1u, @"The data loader did not relay a received initial response to the delegate");
 }
@@ -164,7 +164,7 @@
     };
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.dataLoader performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader successfulResponse:response];
     [self waitForExpectationsWithTimeout:1.0 handler:nil];
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 1u, @"The data loader did not relay a successful response to the delegate");
@@ -183,7 +183,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.chunks = NO;
     [self.dataLoader performRequest:request];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader receivedInitialResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 0u);
 }
@@ -191,7 +191,7 @@
 - (void)testSuccessfulResponseDoesNotEchoToDelegateWithUntrackedRequest
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader successfulResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToSuccessfulResponse, 0u);
 }
@@ -199,7 +199,7 @@
 - (void)testSuccessfulResponseDoesNotEchoToDelegateWithFailedRequest
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader failedResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToErrorResponse, 0u);
 }
@@ -207,7 +207,7 @@
 - (void)testSuccessfulResponseDoesNotEchoToDelegateWithCancelledRequest
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader failedResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToCancelledRequest, 0u);
 }
@@ -215,7 +215,7 @@
 - (void)testSuccessfulResponseDoesNotEchoToDelegateWithReceivedDataChunkRequest
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     NSData *data = [NSData data];
     [self.dataLoader receivedDataChunk:data forResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceiveDataChunk, 0u);
@@ -224,7 +224,7 @@
 - (void)testSuccessfulResponseDoesNotEchoToDelegateWithReceivedInitialResponseRequest
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     [self.dataLoader receivedInitialResponse:response];
     XCTAssertEqual(self.delegate.numberOfCallsToReceivedInitialResponse, 0u);
 }
@@ -251,7 +251,7 @@
     @autoreleasepool {
         SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
         id<SPTDataLoaderCancellationToken> token = [self.dataLoader performRequest:request];
-        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.requestResponseHandlerDelegate.lastRequestPerformed response:nil];
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.requestResponseHandlerDelegate.lastRequestPerformed response:nil cached:NO];
         [self.dataLoader successfulResponse:response];
         cancellationToken = token;
         XCTAssertNotNil(cancellationToken, @"The data loader did not return the cancellation token");
@@ -265,7 +265,7 @@
     @autoreleasepool {
         SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
         id<SPTDataLoaderCancellationToken> token = [self.dataLoader performRequest:request];
-        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.requestResponseHandlerDelegate.lastRequestPerformed response:nil];
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.requestResponseHandlerDelegate.lastRequestPerformed response:nil cached:NO];
         [self.dataLoader failedResponse:response];
         cancellationToken = token;
         XCTAssertNotNil(cancellationToken, @"The data loader did not return the cancellation token");

@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param request The request object making up the response
  @param response The URL response received from the session
  */
-+ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response;
++ (instancetype)dataLoaderResponseWithRequest:(SPTDataLoaderRequest *)request response:(nullable NSURLResponse *)response cached:(BOOL)cached;
 
 /**
  Whether we should retry the current request based on the current response data

@@ -23,6 +23,7 @@
 @class SPTDataLoaderRequest;
 @class SPTDataLoaderRateLimiter;
 @class SPTDataLoaderResponse;
+@class SPTDataLoaderService;
 @protocol SPTDataLoaderRequestResponseHandler;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -53,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param rateLimiter The object controlling the rate limits on a per service basis
  */
 + (instancetype)dataLoaderRequestTaskHandlerWithTask:(NSURLSessionTask *)task
+                                             session:(NSURLSession *)session
+                                             service:(SPTDataLoaderService *)service
                                              request:(SPTDataLoaderRequest *)request
                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                          rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter;

@@ -18,37 +18,12 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "NSURLSessionMock.h"
-#import "NSURLSessionConfigurationMock.h"
-#import "NSURLSessionDataTaskMock.h"
-#import "NSURLSessionDownloadTaskMock.h"
+#import <Foundation/Foundation.h>
 
-@implementation NSURLSessionMock
+@class NSURLCacheMock;
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.mockConfiguration = [NSURLSessionConfigurationMock new];
-    }
-    return self;
-}
+@interface NSURLSessionConfigurationMock : NSURLSessionConfiguration
 
-- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request
-{
-    self.lastDataTask = [NSURLSessionDataTaskMock new];
-    return self.lastDataTask;
-}
-
-- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request
-{
-    self.lastDownloadTask = [NSURLSessionDownloadTaskMock new];
-    return self.lastDownloadTask;
-}
-
-- (NSURLSessionConfiguration *)configuration
-{
-    return self.mockConfiguration;
-}
+@property (nonatomic, strong) NSURLCacheMock *mockURLCache;
 
 @end

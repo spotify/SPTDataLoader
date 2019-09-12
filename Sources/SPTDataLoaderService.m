@@ -35,7 +35,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate>
 
 
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
@@ -240,6 +240,8 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
         task = [self.session dataTaskWithRequest:urlRequest];
     }
     SPTDataLoaderRequestTaskHandler *handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:task
+                                                                                                             session:self.session
+                                                                                                             service:self
                                                                                                              request:request
                                                                                               requestResponseHandler:requestResponseHandler
                                                                                                          rateLimiter:self.rateLimiter];
@@ -302,7 +304,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
       failedToAuthoriseRequest:(SPTDataLoaderRequest *)request
                          error:(NSError *)error
 {
-    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil cached:NO];
     response.error = error;
     [requestResponseHandler failedResponse:response];
 }

@@ -23,6 +23,7 @@
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
+#import <SPTDataLoader/SPTDataLoaderService.h>
 
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
@@ -37,6 +38,8 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 @property (nonatomic, assign, readwrite, getter = isCancelled) BOOL cancelled;
 
+@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) SPTDataLoaderService *service;
 @property (nonatomic, weak) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
 
@@ -62,17 +65,23 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 #pragma mark SPTDataLoaderRequestTaskHandler
 
 + (instancetype)dataLoaderRequestTaskHandlerWithTask:(NSURLSessionTask *)task
+                                             session:(NSURLSession *)session
+                                             service:(SPTDataLoaderService *)service
                                              request:(SPTDataLoaderRequest *)request
                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                          rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
 {
     return [[self alloc] initWithTask:task
+                              session:session
+                              service:service
                               request:request
                requestResponseHandler:requestResponseHandler
                           rateLimiter:rateLimiter];
 }
 
 - (instancetype)initWithTask:(NSURLSessionTask *)task
+                     session:(NSURLSession *)session
+                     service:(SPTDataLoaderService *)service
                      request:(SPTDataLoaderRequest *)request
       requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                  rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
@@ -83,6 +92,8 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     self = [super init];
     if (self) {
         _task = task;
+        _session = session;
+        _service = service;
         _request = request;
         _requestResponseHandler = requestResponseHandler;
         _rateLimiter = rateLimiter;
@@ -121,7 +132,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = self.requestResponseHandler;
     if (!self.response) {
-        self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
+        self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil cached:NO];
     }
     
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
@@ -164,7 +175,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 - (NSURLSessionResponseDisposition)receiveResponse:(NSURLResponse *)response
 {
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response];
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:response cached:NO];
     [self.requestResponseHandler receivedInitialResponse:self.response];
 
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
@@ -198,7 +209,23 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 - (void)start
 {
     self.started = YES;
-    self.executionBlock();
+    [self.session.configuration.URLCache getCachedResponseForDataTask:(NSURLSessionDataTask*)self.task
+                                                    completionHandler:^(NSCachedURLResponse *cachedResponse) {
+        NSLog(@"getCachedResponseForDataTask completionHandler got response %p", (__bridge void*)cachedResponse);
+        if (cachedResponse) {
+            [self.task cancel];
+            self.cancelled = YES;
+            if ([self.service respondsToSelector:@selector(URLSession:dataTask:didReceiveResponse:completionHandler:)]) {
+                NSURLSessionDataTask *task = (NSURLSessionDataTask *)self.task;
+                [self.service URLSession:self.session
+                                dataTask:task
+                      didReceiveResponse:(NSURLResponse *)cachedResponse
+                       completionHandler:^(NSURLSessionResponseDisposition disposition) {}];
+            }
+        } else {
+            self.executionBlock();
+        }
+    }];
 }
 
 - (void)provideNewBodyStreamWithCompletion:(void (^)(NSInputStream * _Nonnull))completionHandler

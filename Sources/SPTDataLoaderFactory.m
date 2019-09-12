@@ -195,7 +195,8 @@ NS_ASSUME_NONNULL_BEGIN
                            __strong __typeof(self) strongSelf = weakSelf;
                            __strong __typeof(request) strongRequest = weakRequest;
                            SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:strongRequest
-                                                                                                         response:nil];
+                                                                                                         response:nil
+                                                                                                           cached:NO];
                            NSError *error = [NSError errorWithDomain:SPTDataLoaderRequestErrorDomain
                                                                 code:SPTDataLoaderRequestErrorCodeTimeout
                                                             userInfo:nil];
