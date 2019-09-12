@@ -49,6 +49,8 @@
 		48E7EEC62059288F00BB7CCC /* NSDataMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E7EEC52059288F00BB7CCC /* NSDataMock.m */; };
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
+		8EE81452232FF1B30036B7C6 /* NSURLCacheMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE81451232FF1B30036B7C6 /* NSURLCacheMock.m */; };
+		8EE81454232FF3380036B7C6 /* NSURLSessionConfigurationMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE81453232FF3380036B7C6 /* NSURLSessionConfigurationMock.m */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
@@ -153,6 +155,10 @@
 		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
 		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
+		8EE8144F232FE9F50036B7C6 /* NSURLSessionConfigurationMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSURLSessionConfigurationMock.h; sourceTree = "<group>"; };
+		8EE81450232FF0B70036B7C6 /* NSURLCacheMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSURLCacheMock.h; sourceTree = "<group>"; };
+		8EE81451232FF1B30036B7C6 /* NSURLCacheMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSURLCacheMock.m; sourceTree = "<group>"; };
+		8EE81453232FF3380036B7C6 /* NSURLSessionConfigurationMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionConfigurationMock.m; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoader.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
@@ -314,6 +320,10 @@
 				05EEB73E1C5C090B00A82266 /* NSBundleMock.m */,
 				05A3BCB41D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.h */,
 				05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */,
+				8EE8144F232FE9F50036B7C6 /* NSURLSessionConfigurationMock.h */,
+				8EE81453232FF3380036B7C6 /* NSURLSessionConfigurationMock.m */,
+				8EE81450232FF0B70036B7C6 /* NSURLCacheMock.h */,
+				8EE81451232FF1B30036B7C6 /* NSURLCacheMock.m */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -485,8 +495,10 @@
 				0504CB8F1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m in Sources */,
 				0504CB8D1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m in Sources */,
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
+				8EE81452232FF1B30036B7C6 /* NSURLCacheMock.m in Sources */,
 				059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */,
 				48E7EEC320591A3000BB7CCC /* NSFileManagerMock.m in Sources */,
+				8EE81454232FF3380036B7C6 /* NSURLSessionConfigurationMock.m in Sources */,
 				F7346A6E1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m in Sources */,
 				059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */,
 				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,

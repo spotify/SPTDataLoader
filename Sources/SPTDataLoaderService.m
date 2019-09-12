@@ -237,6 +237,8 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
         task = [self.session downloadTaskWithRequest:urlRequest];
     } else {
+        NSCachedURLResponse *cachedResponse = [self.session.configuration.URLCache cachedResponseForRequest:urlRequest];
+        request.isCached = cachedResponse != nil;
         task = [self.session dataTaskWithRequest:urlRequest];
     }
     SPTDataLoaderRequestTaskHandler *handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:task
