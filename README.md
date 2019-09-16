@@ -1,6 +1,5 @@
 <img alt="SPTDataLoader" src="banner@2x.png" width="100%" max-width="888">
 
-[![Build Status](https://api.travis-ci.org/spotify/SPTDataLoader.svg)](https://travis-ci.org/spotify/SPTDataLoader)
 [![Coverage Status](https://codecov.io/github/spotify/SPTDataLoader/coverage.svg?branch=master)](https://codecov.io/github/spotify/SPTDataLoader?branch=master)
 [![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/SPTDataLoader.svg)](http://cocoadocs.org/docsets/SPTDataLoader/)
 [![License](https://img.shields.io/github/license/spotify/SPTDataLoader.svg)](LICENSE)
