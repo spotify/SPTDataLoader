@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderService.h>
+#import "SPTDataLoaderService+Private.h"
 
 #import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
@@ -31,6 +31,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequestTaskHandler.h"
+#import "SPTDataLoaderServiceSessionSelector.h"
 #import "NSDictionary+HeaderSize.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -41,9 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong, nullable) SPTDataLoaderResolver *resolver;
 
-@property (nonatomic, strong) NSURLSessionConfiguration *configuration;
-@property (nonatomic, strong) NSURLSession *waitingSession;
-@property (nonatomic, strong) NSURLSession *nonWaitingSession;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
@@ -54,10 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation SPTDataLoaderService
-{
-    NSURLSession *_nonWaitingSession;
-    NSURLSession *_waitingSession;
-}
 
 #pragma mark SPTDataLoaderService
 
@@ -135,7 +129,9 @@ NS_ASSUME_NONNULL_BEGIN
         _sessionQueue = [NSOperationQueue new];
         _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
         _sessionQueue.name = NSStringFromClass(self.class);
-        _configuration = [configuration copy];
+        _sessionSelector = [[SPTDataLoaderServiceDefaultSessionSelector alloc] initWithConfiguration:configuration
+                                                                                            delegate:self
+                                                                                       delegateQueue:_sessionQueue];
         _handlers = [NSMutableArray new];
         _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
 
@@ -238,7 +234,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
         request.URL = URL;
     }
 
-    NSURLSession *session = [self sessionForRequest:request];
+    NSURLSession *session = [self.sessionSelector URLSessionForRequest:request];
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task;
     if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
@@ -264,46 +260,6 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     }
     for (SPTDataLoaderRequestTaskHandler *handler in handlers) {
         [handler.task cancel];
-    }
-}
-
-- (NSURLSession *)waitingSession
-{
-    if (_waitingSession == nil) {
-        _waitingSession = [self createWaitingSession];
-    }
-    return _waitingSession;
-}
-
-- (NSURLSession *)nonWaitingSession
-{
-    if (_nonWaitingSession == nil) {
-        _nonWaitingSession = [NSURLSession sessionWithConfiguration:self.configuration
-                                                           delegate:self
-                                                      delegateQueue:self.sessionQueue];
-    }
-    return _nonWaitingSession;
-}
-
-- (NSURLSession *)createWaitingSession
-{
-    if (@available(iOS 11.0, macOS 10.13, tvOS 11.0, watchOS 4.0, *)) {
-        NSURLSessionConfiguration *configuration = [self.configuration copy];
-        configuration.waitsForConnectivity = YES;
-        return [NSURLSession sessionWithConfiguration:configuration
-                                             delegate:self
-                                        delegateQueue:self.sessionQueue];
-    } else {
-        return self.nonWaitingSession;
-    }
-}
-
-- (NSURLSession *)sessionForRequest:(SPTDataLoaderRequest *)request
-{
-    if (request.waitsForConnectivity) {
-        return self.waitingSession;
-    } else {
-        return self.nonWaitingSession;
     }
 }
 

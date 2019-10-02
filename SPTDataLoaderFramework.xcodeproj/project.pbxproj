@@ -103,6 +103,14 @@
 		05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2DE3DABC2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */; };
+		2DE3DABD2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */; };
+		2DE3DABE2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */; };
+		2DE3DABF2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */; };
+		2DE3DAC02344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
+		2DE3DAC12344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
+		2DE3DAC22344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
+		2DE3DAC32344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		6992FD211F71DBD4003E1E4F /* SPTDataLoaderImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD221F71DC07003E1E4F /* SPTDataLoaderImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD231F71DC14003E1E4F /* SPTDataLoaderImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -164,6 +172,9 @@
 		05A6380A1C46B53800061E37 /* SPTDataLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CB0C431A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandler.h; sourceTree = "<group>"; };
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
+		2DE3DAB92344E0F70022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
+		2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
+		2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
 		6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
 		6992FD1B1F71DB8C003E1E4F /* SPTDataLoaderImplementation+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderImplementation+Private.h"; sourceTree = "<group>"; };
 		6992FD1C1F71DB8C003E1E4F /* SPTDataLoaderCancellationTokenFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactory.h; sourceTree = "<group>"; };
@@ -268,6 +279,9 @@
 				F7346A371CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m */,
 				6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
+				2DE3DAB92344E0F70022642E /* SPTDataLoaderService+Private.h */,
+				2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */,
+				2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -332,6 +346,7 @@
 				6992FD2D1F71DEE9003E1E4F /* SPTDataLoader.h in Headers */,
 				05A638181C46B55000061E37 /* SPTDataLoaderCancellationToken.h in Headers */,
 				05A6381A1C46B55000061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				2DE3DABC2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */,
 				05A6381B1C46B55000061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
 				05A6381D1C46B55000061E37 /* SPTDataLoaderDelegate.h in Headers */,
 				05A6381E1C46B55000061E37 /* SPTDataLoaderFactory.h in Headers */,
@@ -353,6 +368,7 @@
 				6992FD2E1F71DEEE003E1E4F /* SPTDataLoader.h in Headers */,
 				05A638561C46B85300061E37 /* SPTDataLoaderCancellationToken.h in Headers */,
 				05A638581C46B85300061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				2DE3DABD2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */,
 				05A638591C46B85300061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
 				05A6385B1C46B85300061E37 /* SPTDataLoaderDelegate.h in Headers */,
 				05A6385C1C46B85300061E37 /* SPTDataLoaderFactory.h in Headers */,
@@ -374,6 +390,7 @@
 				6992FD2F1F71DEF8003E1E4F /* SPTDataLoader.h in Headers */,
 				05A638701C46B87700061E37 /* SPTDataLoaderCancellationToken.h in Headers */,
 				05A638721C46B87800061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				2DE3DABE2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */,
 				05A638731C46B87800061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
 				05A638751C46B87800061E37 /* SPTDataLoaderDelegate.h in Headers */,
 				05A638761C46B87800061E37 /* SPTDataLoaderFactory.h in Headers */,
@@ -395,6 +412,7 @@
 				6992FD301F71DEFE003E1E4F /* SPTDataLoader.h in Headers */,
 				05A6388A1C46B8A400061E37 /* SPTDataLoaderCancellationToken.h in Headers */,
 				05A6388C1C46B8A400061E37 /* SPTDataLoaderAuthoriser.h in Headers */,
+				2DE3DABF2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h in Headers */,
 				05A6388D1C46B8A400061E37 /* SPTDataLoaderConsumptionObserver.h in Headers */,
 				05A6388F1C46B8A400061E37 /* SPTDataLoaderDelegate.h in Headers */,
 				05A638901C46B8A400061E37 /* SPTDataLoaderFactory.h in Headers */,
@@ -567,6 +585,7 @@
 				058CD0001C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A6383C1C46B82700061E37 /* NSDictionary+HeaderSize.m in Sources */,
 				05A6383D1C46B82700061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
+				2DE3DAC02344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6383F1C46B82700061E37 /* SPTDataLoader.m in Sources */,
 				05A638401C46B82700061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A638411C46B82700061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
@@ -588,6 +607,7 @@
 				058CD0011C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A638491C46B84B00061E37 /* NSDictionary+HeaderSize.m in Sources */,
 				05A6384A1C46B84B00061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
+				2DE3DAC12344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6384C1C46B84B00061E37 /* SPTDataLoader.m in Sources */,
 				05A6384D1C46B84B00061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A6384E1C46B84B00061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
@@ -609,6 +629,7 @@
 				058CD0021C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A638631C46B87100061E37 /* NSDictionary+HeaderSize.m in Sources */,
 				05A638641C46B87100061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
+				2DE3DAC22344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A638661C46B87100061E37 /* SPTDataLoader.m in Sources */,
 				05A638671C46B87100061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A638681C46B87100061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
@@ -630,6 +651,7 @@
 				058CD0031C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A638261C46B7F800061E37 /* NSDictionary+HeaderSize.m in Sources */,
 				05A638281C46B7F800061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
+				2DE3DAC32344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6382B1C46B7F800061E37 /* SPTDataLoader.m in Sources */,
 				05A6382D1C46B7F800061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A6382F1C46B7F800061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
