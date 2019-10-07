@@ -114,6 +114,14 @@
 		6992FD2E1F71DEEE003E1E4F /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD2F1F71DEF8003E1E4F /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD301F71DEFE003E1E4F /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8E039EA623472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E039EA423472D1C004B6FE5 /* SPTDataLoaderURLCache.m */; };
+		8E039EA723472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E039EA423472D1C004B6FE5 /* SPTDataLoaderURLCache.m */; };
+		8E039EA823472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E039EA423472D1C004B6FE5 /* SPTDataLoaderURLCache.m */; };
+		8E039EA923472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E039EA423472D1C004B6FE5 /* SPTDataLoaderURLCache.m */; };
+		8E039EAA23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E039EA523472D1C004B6FE5 /* SPTDataLoaderURLCache.h */; };
+		8E039EAB23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E039EA523472D1C004B6FE5 /* SPTDataLoaderURLCache.h */; };
+		8E039EAC23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E039EA523472D1C004B6FE5 /* SPTDataLoaderURLCache.h */; };
+		8E039EAD23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E039EA523472D1C004B6FE5 /* SPTDataLoaderURLCache.h */; };
 		F7346A331CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = F7346A321CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7346A341CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = F7346A321CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7346A351CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = F7346A321CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -174,6 +182,8 @@
 		6992FD2A1F71DE5C003E1E4F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = Framework/SPTDataLoader.h; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
+		8E039EA423472D1C004B6FE5 /* SPTDataLoaderURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderURLCache.m; sourceTree = "<group>"; };
+		8E039EA523472D1C004B6FE5 /* SPTDataLoaderURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderURLCache.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		F7346A321CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderServerTrustPolicy.h; path = include/SPTDataLoader/SPTDataLoaderServerTrustPolicy.h; sourceTree = "<group>"; };
 		F7346A371CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServerTrustPolicy.m; sourceTree = "<group>"; };
@@ -242,6 +252,8 @@
 		050E068C1A10C62100A10A0E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8E039EA523472D1C004B6FE5 /* SPTDataLoaderURLCache.h */,
+				8E039EA423472D1C004B6FE5 /* SPTDataLoaderURLCache.m */,
 				05356F111A447294003A7351 /* NSDictionary+HeaderSize.h */,
 				05356F121A447295003A7351 /* NSDictionary+HeaderSize.m */,
 				050E068F1A10C62100A10A0E /* SPTDataLoader.m */,
@@ -340,6 +352,7 @@
 				05A6381F1C46B55000061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
 				05A638201C46B55000061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A638211C46B55000061E37 /* SPTDataLoaderResolver.h in Headers */,
+				8E039EAA23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */,
 				05A638221C46B55000061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638231C46B55000061E37 /* SPTDataLoaderService.h in Headers */,
 				05A638241C46B55000061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
@@ -361,6 +374,7 @@
 				05A6385D1C46B85300061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
 				05A6385E1C46B85300061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A6385F1C46B85300061E37 /* SPTDataLoaderResolver.h in Headers */,
+				8E039EAB23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */,
 				05A638601C46B85300061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638611C46B85300061E37 /* SPTDataLoaderService.h in Headers */,
 				05A638621C46B85300061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
@@ -382,6 +396,7 @@
 				05A638771C46B87800061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
 				05A638781C46B87800061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A638791C46B87800061E37 /* SPTDataLoaderResolver.h in Headers */,
+				8E039EAC23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */,
 				05A6387A1C46B87800061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A6387B1C46B87800061E37 /* SPTDataLoaderService.h in Headers */,
 				05A6387C1C46B87800061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
@@ -403,6 +418,7 @@
 				05A638911C46B8A400061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
 				05A638921C46B8A400061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A638931C46B8A400061E37 /* SPTDataLoaderResolver.h in Headers */,
+				8E039EAD23472D1C004B6FE5 /* SPTDataLoaderURLCache.h in Headers */,
 				05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */,
 				05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
@@ -575,6 +591,7 @@
 				F7346A381CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A638441C46B82700061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				8E039EA623472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */,
 				05A638461C46B82700061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A638471C46B82700061E37 /* SPTDataLoaderService.m in Sources */,
 				05A638481C46B82700061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
@@ -596,6 +613,7 @@
 				F7346A391CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A638511C46B84B00061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				8E039EA723472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */,
 				05A638531C46B84B00061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A638541C46B84B00061E37 /* SPTDataLoaderService.m in Sources */,
 				05A638551C46B84B00061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
@@ -617,6 +635,7 @@
 				F7346A3A1CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A6386B1C46B87100061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				8E039EA823472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */,
 				05A6386D1C46B87100061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A6386E1C46B87100061E37 /* SPTDataLoaderService.m in Sources */,
 				05A6386F1C46B87100061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
@@ -638,6 +657,7 @@
 				F7346A3B1CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A638351C46B7F800061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				8E039EA923472D1C004B6FE5 /* SPTDataLoaderURLCache.m in Sources */,
 				05A638381C46B7F800061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A6383A1C46B7F800061E37 /* SPTDataLoaderService.m in Sources */,
 				05A6383B1C46B7F800061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
