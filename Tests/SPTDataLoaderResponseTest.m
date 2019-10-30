@@ -24,7 +24,6 @@
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTDataLoaderURLCache.h"
 
 @interface SPTDataLoaderResponseTest : XCTestCase
 
@@ -194,19 +193,6 @@
     NSString *headersString = [NSString stringWithFormat:@"headers = %@", self.response.responseHeaders];
     XCTAssertTrue([self.response.description containsString:headersString],
                   @"The description should contain the headers code of the response");
-}
-
--(void)testCachedResponseRecognized
-{
-    self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"]
-                                       sourceIdentifier:nil];
-    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
-                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeOK
-                                                  HTTPVersion:@"2.0"
-                                                 headerFields:@{ SPTDataLoaderURLCacheSpecialHeader : @"YES" }];
-    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
-    BOOL isCached = [self.response isCached];
-    XCTAssertTrue(isCached, @"The response should indicate that it was cached");
 }
 
 
