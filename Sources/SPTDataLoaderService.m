@@ -31,7 +31,6 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequestTaskHandler.h"
-#import "SPTDataLoaderURLCache.h"
 #import "NSDictionary+HeaderSize.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -127,7 +126,6 @@ NS_ASSUME_NONNULL_BEGIN
         _rateLimiter = rateLimiter;
         _resolver = resolver;
 
-        configuration.URLCache = [SPTDataLoaderURLCache new];
         _sessionQueue = [NSOperationQueue new];
         _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
         _sessionQueue.name = NSStringFromClass(self.class);

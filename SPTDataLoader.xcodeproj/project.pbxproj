@@ -49,8 +49,6 @@
 		48E7EEC62059288F00BB7CCC /* NSDataMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E7EEC52059288F00BB7CCC /* NSDataMock.m */; };
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
-		8E3446422344833A00982415 /* SPTDataLoaderURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3446412344833A00982415 /* SPTDataLoaderURLCache.m */; };
-		8E90F8BD23476B3C000ACA33 /* SPTDataLoaderURLCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E90F8BC23476B3C000ACA33 /* SPTDataLoaderURLCacheTest.m */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
@@ -155,9 +153,6 @@
 		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
 		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
-		8E3446402344804800982415 /* SPTDataLoaderURLCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderURLCache.h; sourceTree = "<group>"; };
-		8E3446412344833A00982415 /* SPTDataLoaderURLCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderURLCache.m; sourceTree = "<group>"; };
-		8E90F8BC23476B3C000ACA33 /* SPTDataLoaderURLCacheTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderURLCacheTest.m; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoader.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
@@ -237,8 +232,6 @@
 				F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */,
 				F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
-				8E3446402344804800982415 /* SPTDataLoaderURLCache.h */,
-				8E3446412344833A00982415 /* SPTDataLoaderURLCache.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -261,7 +254,6 @@
 				055AEE571A162F0200A490BF /* SPTDataLoaderResolverAddressTest.m */,
 				05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */,
 				05357B3F1C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m */,
-				8E90F8BC23476B3C000ACA33 /* SPTDataLoaderURLCacheTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 			);
 			path = Tests;
@@ -466,7 +458,6 @@
 				F7794B011CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				050E06AC1A10CC1300A10A0E /* SPTDataLoaderRequest.m in Sources */,
 				050E06901A10C62100A10A0E /* SPTDataLoader.m in Sources */,
-				8E3446422344833A00982415 /* SPTDataLoaderURLCache.m in Sources */,
 				052FB1681A127BF900AFE80E /* SPTDataLoaderResolverAddress.m in Sources */,
 				052FB1651A12793F00AFE80E /* SPTDataLoaderResolver.m in Sources */,
 				050E06BC1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
@@ -485,7 +476,6 @@
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
 				05357B401C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m in Sources */,
 				487FE3C720588E6E007141F9 /* NSURLSessionDownloadTaskMock.m in Sources */,
-				8E90F8BD23476B3C000ACA33 /* SPTDataLoaderURLCacheTest.m in Sources */,
 				EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */,
 				F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */,
 				055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */,

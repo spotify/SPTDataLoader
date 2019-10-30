@@ -21,7 +21,6 @@
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 
 #import "SPTDataLoaderResponse+Private.h"
-#import "SPTDataLoaderURLCache.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -54,7 +53,6 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     if (self) {
         _request = request;
         _response = response;
-        _isCached = NO;
 
         if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -65,13 +63,6 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
                                          userInfo:nil];
             }
             _responseHeaders = httpResponse.allHeaderFields;
-            NSString* value = [_responseHeaders valueForKey:SPTDataLoaderURLCacheSpecialHeader];
-            if ([value isEqualToString:@"YES"]) {
-                NSMutableDictionary *headers = [httpResponse.allHeaderFields mutableCopy];
-                [headers removeObjectForKey:SPTDataLoaderURLCacheSpecialHeader];
-                _responseHeaders = [headers copy];
-                _isCached = YES;
-            }
             _statusCode = httpResponse.statusCode;
         }
 

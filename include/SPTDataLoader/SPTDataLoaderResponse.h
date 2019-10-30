@@ -116,10 +116,6 @@ extern NSString * const SPTDataLoaderResponseErrorDomain;
  @discussion This value does not change depending on the error value
  */
 @property (nonatomic, assign, readonly) SPTDataLoaderResponseHTTPStatusCode statusCode;
-/**
- The response was delivered from cache or not
- */
-@property (nonatomic, assign, readonly) BOOL isCached;
 
 @end
 
