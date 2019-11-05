@@ -22,10 +22,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const SPTDataLoaderResponseErrorDomain;
-
 /// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-typedef NS_ERROR_ENUM(SPTDataLoaderResponseErrorDomain, SPTDataLoaderResponseHTTPStatusCode) {
+typedef NS_ENUM(NSInteger, SPTDataLoaderResponseHTTPStatusCode) {
     SPTDataLoaderResponseHTTPStatusCodeInvalid = 0,
     // Informational
     SPTDataLoaderResponseHTTPStatusCodeContinue = 100,
@@ -76,6 +74,8 @@ typedef NS_ERROR_ENUM(SPTDataLoaderResponseErrorDomain, SPTDataLoaderResponseHTT
 };
 
 @class SPTDataLoaderRequest;
+
+extern NSString * const SPTDataLoaderResponseErrorDomain;
 
 /**
  An object representing the response from the backend
