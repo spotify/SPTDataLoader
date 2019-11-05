@@ -63,15 +63,19 @@ build_library appletvsimulator
 #
 
 build_framework() {
-  xcb "Build Framework [$1]" \
+  xcb "Build Framework [$1] [$2]" \
     build -scheme "$1" \
+    -sdk "$2" \
     -configuration Release
 }
 
-build_framework SPTDataLoader-iOS
-build_framework SPTDataLoader-OSX
-build_framework SPTDataLoader-TV
-build_framework SPTDataLoader-Watch
+build_framework SPTDataLoader-iOS iphoneos
+build_framework SPTDataLoader-iOS iphonesimulator
+build_framework SPTDataLoader-OSX macosx
+build_framework SPTDataLoader-Watch watchos
+build_framework SPTDataLoader-Watch watchsimulator
+build_framework SPTDataLoader-TV appletvos
+build_framework SPTDataLoader-TV appletvsimulator
 
 #
 # BUILD DEMO APP
@@ -97,7 +101,7 @@ xcb "Run tests for iOS" test \
   -enableCodeCoverage YES \
   -destination "platform=iOS Simulator,name=iPhone 8,OS=$LATEST_IOS_SDK"
 
-LATEST_TVOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk iphonesimulator)/SDKSettings.plist")"
+LATEST_TVOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk appletvsimulator)/SDKSettings.plist")"
 xcb "Run tests for tvOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
