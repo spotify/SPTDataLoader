@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import <SPTDataLoader/SPTDataLoaderService.h>
+#import "SPTDataLoaderService+Private.h"
 
 #import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
@@ -31,6 +31,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequestTaskHandler.h"
+#import "SPTDataLoaderServiceSessionSelector.h"
 #import "NSDictionary+HeaderSize.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -41,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong, nullable) SPTDataLoaderResolver *resolver;
 
-@property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
@@ -129,7 +129,9 @@ NS_ASSUME_NONNULL_BEGIN
         _sessionQueue = [NSOperationQueue new];
         _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
         _sessionQueue.name = NSStringFromClass(self.class);
-        _session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:_sessionQueue];
+        _sessionSelector = [[SPTDataLoaderServiceDefaultSessionSelector alloc] initWithConfiguration:configuration
+                                                                                            delegate:self
+                                                                                       delegateQueue:_sessionQueue];
         _handlers = [NSMutableArray new];
         _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
 
@@ -231,13 +233,14 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
         
         request.URL = URL;
     }
-    
+
+    NSURLSession *session = [self.sessionSelector URLSessionForRequest:request];
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task;
     if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
-        task = [self.session downloadTaskWithRequest:urlRequest];
+        task = [session downloadTaskWithRequest:urlRequest];
     } else {
-        task = [self.session dataTaskWithRequest:urlRequest];
+        task = [session dataTaskWithRequest:urlRequest];
     }
     SPTDataLoaderRequestTaskHandler *handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:task
                                                                                                              request:request
@@ -391,9 +394,9 @@ didCompleteWithError:(nullable NSError *)error
         return;
     }
     if (handler.request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
-        handler.task = [self.session downloadTaskWithRequest:handler.request.urlRequest];
+        handler.task = [session downloadTaskWithRequest:handler.request.urlRequest];
     } else {
-        handler.task = [self.session dataTaskWithRequest:handler.request.urlRequest];
+        handler.task = [session dataTaskWithRequest:handler.request.urlRequest];
     }
     SPTDataLoaderResponse *response = [handler completeWithError:error];
     if (response == nil && !handler.cancelled) {
@@ -488,6 +491,12 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
 {
     SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
     [handler provideNewBodyStreamWithCompletion:completionHandler];
+}
+
+- (void)URLSession:(NSURLSession *)session taskIsWaitingForConnectivity:(NSURLSessionTask *)task
+{
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    [handler noteWaitingForConnectivity];
 }
 
 #pragma mark NSURLSessionDownloadDelegate

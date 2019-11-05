@@ -246,6 +246,15 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)requestIsWaitingForConnectivity:(SPTDataLoaderRequest *)request
+{
+    if ([self.delegate respondsToSelector:@selector(dataLoader:requestIsWaitingForConnectivity:)]) {
+        [self executeDelegateBlock:^{
+            [self.delegate dataLoader:self requestIsWaitingForConnectivity:request];
+        }];
+    }
+}
+
 - (void)needsNewBodyStream:(void (^)(NSInputStream *))completionHandler
                 forRequest:(SPTDataLoaderRequest *)request
 {

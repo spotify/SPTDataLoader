@@ -74,6 +74,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error;
 /**
+ Called when a request with waitsForConnectivity enters the waiting state
+*/
+- (void)noteWaitingForConnectivity;
+/**
  Gets called whenever the original request was redirected.
  Returns YES to allow redirect, NO to block it.
  */

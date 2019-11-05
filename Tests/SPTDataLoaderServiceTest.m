@@ -21,6 +21,7 @@
 #import <XCTest/XCTest.h>
 
 #import <SPTDataLoader/SPTDataLoader.h>
+#import "SPTDataLoaderService+Private.h"
 
 #import "SPTDataLoaderRequestTaskHandler.h"
 #import "SPTDataLoaderCancellationTokenImplementation.h"
@@ -40,10 +41,10 @@
 #import "SPTDataLoaderCancellationTokenDelegateMock.h"
 #import "NSFileManagerMock.h"
 #import "NSDataMock.h"
+#import "SPTDataLoaderServiceSessionSelectorMock.h"
 
 @interface SPTDataLoaderService () <NSURLSessionDataDelegate, SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderCancellationTokenDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
-@property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray *handlers;
 @property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
@@ -77,8 +78,14 @@
                                                             rateLimiter:self.rateLimiter
                                                                resolver:self.resolver
                                                customURLProtocolClasses:nil];
-    self.session = [NSURLSessionMock new];
-    self.service.session = self.session;
+
+    NSURLSessionMock *session = [NSURLSessionMock new];
+    self.session = session;
+    self.service.sessionSelector =
+    [[SPTDataLoaderServiceSessionSelectorMock alloc] initWithResolver:^NSURLSession *(SPTDataLoaderRequest *request) {
+        return session;
+    }];
+
     self.fileManager = [NSFileManagerMock new];
     self.service.fileManager = self.fileManager;
     self.service.dataClass = [NSDataMock class];
@@ -329,7 +336,7 @@
 - (void)testSwitchingToDownloadTask
 {
     // Test no crash
-    [self.service URLSession:self.service.session dataTask:[NSURLSessionDataTask new] didBecomeDownloadTask:[NSURLSessionDownloadTask new]];
+    [self.service URLSession:self.session dataTask:[NSURLSessionDataTask new] didBecomeDownloadTask:[NSURLSessionDownloadTask new]];
 }
 
 - (void)testSessionDidReceiveData
@@ -340,7 +347,7 @@
     request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     NSData *data = [@"thing" dataUsingEncoding:NSUTF8StringEncoding];
-    [self.service URLSession:self.service.session dataTask:self.session.lastDataTask didReceiveData:data];
+    [self.service URLSession:self.session dataTask:self.session.lastDataTask didReceiveData:data];
     XCTAssertEqual(requestResponseHandlerMock.numberOfReceivedDataRequestCalls, 1u, @"The service did not call received data on the request response handler");
 }
 
@@ -722,7 +729,7 @@
     NSURL *URL = [NSURL URLWithString:@"https://localhost"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
-    [self.service URLSession:self.service.session task:self.session.lastDataTask needNewBodyStream:^(NSInputStream * _Nullable _) {}];
+    [self.service URLSession:self.session task:self.session.lastDataTask needNewBodyStream:^(NSInputStream * _Nullable _) {}];
     XCTAssertEqual(requestResponseHandlerMock.numberOfNewBodyStreamCalls, 1u, @"The service did not forward the prompt for a new body stream to the request response handler");
 }
 

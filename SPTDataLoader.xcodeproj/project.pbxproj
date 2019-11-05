@@ -44,6 +44,8 @@
 		05A3BCB61D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
 		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
+		2DE3DAC72344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */; };
+		2DE3DACA2344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */; };
 		487FE3C720588E6E007141F9 /* NSURLSessionDownloadTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 487FE3C620588E6D007141F9 /* NSURLSessionDownloadTaskMock.m */; };
 		48E7EEC320591A3000BB7CCC /* NSFileManagerMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E7EEC120591A2E00BB7CCC /* NSFileManagerMock.m */; };
 		48E7EEC62059288F00BB7CCC /* NSDataMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E7EEC52059288F00BB7CCC /* NSDataMock.m */; };
@@ -143,6 +145,11 @@
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
+		2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
+		2DE3DAC52344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
+		2DE3DAC62344E3DA0022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
+		2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelectorMock.h; sourceTree = "<group>"; };
+		2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelectorMock.m; sourceTree = "<group>"; };
 		487FE3C520588E6C007141F9 /* NSURLSessionDownloadTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDownloadTaskMock.h; sourceTree = "<group>"; };
 		487FE3C620588E6D007141F9 /* NSURLSessionDownloadTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDownloadTaskMock.m; sourceTree = "<group>"; };
 		48E7EEC120591A2E00BB7CCC /* NSFileManagerMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFileManagerMock.m; sourceTree = "<group>"; };
@@ -232,6 +239,9 @@
 				F7794B001CB5904E0092AEC6 /* SPTDataLoaderServerTrustPolicy.m */,
 				F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */,
 				050E06A51A10C68100A10A0E /* SPTDataLoaderService.m */,
+				2DE3DAC62344E3DA0022642E /* SPTDataLoaderService+Private.h */,
+				2DE3DAC52344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.h */,
+				2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -314,6 +324,8 @@
 				05EEB73E1C5C090B00A82266 /* NSBundleMock.m */,
 				05A3BCB41D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.h */,
 				05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */,
+				2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */,
+				2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -450,6 +462,7 @@
 				050E06BD1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				056E523F1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m in Sources */,
 				05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */,
+				2DE3DAC72344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05356F131A447295003A7351 /* NSDictionary+HeaderSize.m in Sources */,
 				050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */,
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
@@ -475,6 +488,7 @@
 				05356F151A44B588003A7351 /* NSDictionaryHeaderSizeTest.m in Sources */,
 				0568B18E1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m in Sources */,
 				05357B401C57D35D003A8AD0 /* SPTDataLoaderExponentialTimerTest.m in Sources */,
+				2DE3DACA2344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m in Sources */,
 				487FE3C720588E6E007141F9 /* NSURLSessionDownloadTaskMock.m in Sources */,
 				EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */,
 				F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */,
