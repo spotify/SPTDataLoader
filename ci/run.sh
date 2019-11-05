@@ -101,7 +101,7 @@ xcb "Run tests for iOS" test \
   -enableCodeCoverage YES \
   -destination "platform=iOS Simulator,name=iPhone 8,OS=$LATEST_IOS_SDK"
 
-LATEST_TVOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk iphonesimulator)/SDKSettings.plist")"
+LATEST_TVOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk appletvsimulator)/SDKSettings.plist")"
 xcb "Run tests for tvOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
