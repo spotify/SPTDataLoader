@@ -263,6 +263,11 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     }
 }
 
+- (void)invalidateAndCancel
+{
+    [self.sessionSelector invalidateAndCancel];
+}
+
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler

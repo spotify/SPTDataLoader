@@ -94,6 +94,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)invalidateAndCancel
+{
+    [self.waitingSession invalidateAndCancel];
+    [self.nonWaitingSession invalidateAndCancel];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

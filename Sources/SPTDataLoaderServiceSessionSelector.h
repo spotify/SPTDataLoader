@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SPTDataLoaderServiceSessionSelector <NSObject>
 
 - (NSURLSession *)URLSessionForRequest:(SPTDataLoaderRequest *)request;
-
+- (void)invalidateAndCancel;
 @end
 
 /**

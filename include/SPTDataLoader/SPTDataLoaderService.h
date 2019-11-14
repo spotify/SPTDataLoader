@@ -118,6 +118,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param serverTrustPolicy The SPTDataLoaderServerTrustPolicy object
  */
 - (void)setServerTrustPolicy:(nullable SPTDataLoaderServerTrustPolicy *)serverTrustPolicy;
+/**
+ Cancels all outstanding tasks and then invalidates the session(s).
+ */
+- (void)invalidateAndCancel;
 
 @end
 
