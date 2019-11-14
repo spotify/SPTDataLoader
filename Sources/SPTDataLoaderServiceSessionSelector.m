@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     if (self != nil) {
         _configuration = [configuration copy];
+        _delegate = delegate;
+        _delegateQueue = delegateQueue;
     }
 
     return self;
