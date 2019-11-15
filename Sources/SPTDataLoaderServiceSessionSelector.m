@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     if (self != nil) {
         _configuration = [configuration copy];
+        _delegate = delegate;
+        _delegateQueue = delegateQueue;
     }
 
     return self;
@@ -90,6 +92,12 @@ NS_ASSUME_NONNULL_BEGIN
     } else {
         return self.nonWaitingSession;
     }
+}
+
+- (void)invalidateAndCancel
+{
+    [self.waitingSession invalidateAndCancel];
+    [self.nonWaitingSession invalidateAndCancel];
 }
 
 @end
