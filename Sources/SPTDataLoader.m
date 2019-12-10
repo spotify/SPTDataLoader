@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) NSMutableArray<id<SPTDataLoaderCancellationToken>> *cancellationTokens;
 @property (nonatomic, strong, readonly) NSMutableArray<SPTDataLoaderRequest *> *requests;
 @property (nonatomic, strong, readonly) id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory;
+@property (nonatomic, strong) NSMapTable *requestHandlers;
 
 @end
 
@@ -62,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
         _cancellationTokens = [NSMutableArray new];
         _delegateQueue = dispatch_get_main_queue();
         _requests = [NSMutableArray new];
+        _requestHandlers = [NSMapTable strongToStrongObjectsMapTable];
     }
     return self;
 }
@@ -130,6 +132,26 @@ NS_ASSUME_NONNULL_BEGIN
     return cancellationToken;
 }
 
+- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+                                               withCompletion:(void (^)(SPTDataLoaderResponse *response))completion
+{
+    SPTDataLoaderRequest *copiedRequest = [request copy];
+    id<SPTDataLoaderCancellationToken> cancellationToken = [self.cancellationTokenFactory createCancellationTokenWithDelegate:self
+                                                                                                                 cancelObject:copiedRequest];
+    copiedRequest.cancellationToken = cancellationToken;
+    @synchronized(self.cancellationTokens) {
+        [self.cancellationTokens addObject:cancellationToken];
+    }
+    @synchronized(self.requests) {
+        [self.requests addObject:copiedRequest];
+    }
+    @synchronized(self.requestHandlers) {
+        [self.requestHandlers setObject:completion forKey:request];
+    }
+    [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:copiedRequest];
+    return cancellationToken;
+}
+
 - (void)cancelAllLoads
 {
     NSArray *cancellationTokens = nil;
@@ -175,11 +197,16 @@ NS_ASSUME_NONNULL_BEGIN
     if (![self isRequestExpected:response.request]) {
         return;
     }
-    
-    [self executeDelegateBlock: ^{
+    [self executeDelegateBlock:^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
+        void (^handler)(SPTDataLoaderResponse *) = [self.requestHandlers objectForKey:response.request];
+        if (handler) {
+            handler(response);
+            @synchronized(self.requestHandlers) {
+                [self.requestHandlers removeObjectForKey:response.request];
+            }
+        }
     }];
-
     [self removeRequest:response.request];
 }
 
@@ -188,11 +215,16 @@ NS_ASSUME_NONNULL_BEGIN
     if (![self isRequestExpected:response.request]) {
         return;
     }
-
-    [self executeDelegateBlock: ^{
+    [self executeDelegateBlock:^{
         [self.delegate dataLoader:self didReceiveErrorResponse:response];
+        void (^handler)(SPTDataLoaderResponse *) = [self.requestHandlers objectForKey:response.request];
+        if (handler) {
+            handler(response);
+            @synchronized(self.requestHandlers) {
+                [self.requestHandlers removeObjectForKey:response.request];
+            }
+        }
     }];
-
     [self removeRequest:response.request];
 }
 
@@ -201,13 +233,20 @@ NS_ASSUME_NONNULL_BEGIN
     if (![self isRequestExpected:request]) {
         return;
     }
-
     if ([self.delegate respondsToSelector:@selector(dataLoader:didCancelRequest:)]) {
-        [self executeDelegateBlock: ^{
+        [self executeDelegateBlock:^{
             [self.delegate dataLoader:self didCancelRequest:request];
         }];
     }
-
+    [self executeDelegateBlock:^{
+        void (^handler)(SPTDataLoaderResponse *) = [self.requestHandlers objectForKey:request];
+        if (handler) {
+            handler(nil);
+            @synchronized(self.requestHandlers) {
+                [self.requestHandlers removeObjectForKey:request];
+            }
+        }
+    }];
     [self removeRequest:request];
 }
 
@@ -222,7 +261,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     if (didReceiveDataChunkSelectorExists) {
-        [self executeDelegateBlock: ^{
+        [self executeDelegateBlock:^{
             [self.delegate dataLoader:self didReceiveDataChunk:data forResponse:response];
         }];
     }
@@ -240,7 +279,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveInitialResponse:)]) {
-        [self executeDelegateBlock: ^{
+        [self executeDelegateBlock:^{
             [self.delegate dataLoader:self didReceiveInitialResponse:response];
         }];
     }

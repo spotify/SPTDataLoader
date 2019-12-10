@@ -23,6 +23,7 @@
 @protocol SPTDataLoaderCancellationToken;
 @protocol SPTDataLoaderDelegate;
 @class SPTDataLoaderRequest;
+@class SPTDataLoaderResponse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -58,6 +59,18 @@ NS_ASSUME_NONNULL_BEGIN
  @return A cancellation token associated with the request, or `nil` if the request coulnd’t be performed.
  */
 - (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request;
+
+/**
+ An alternative performRequest method that takes in a response handler and invokes the handler when the request is complete.
+ This enables a single data loader object to be reused by multiple objects that don't need to implement the delegat protocol
+ and can all submit requests.
+ @discussion The completion handler will be invoked only for terminal states, i.e. when a request succeeded or failed,
+ or when it was canceled.  If the request was cancelled, the reponse parameter of the completion handler will be nil.
+ On success or failure the reponse will be not nil and the completion handler must examine the response in order to
+ determine whether the request succeeded or failed.
+ */
+- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
+                                               withCompletion:(void (^)(SPTDataLoaderResponse *response))completion;
 
 #pragma mark Cancelling Loads
 

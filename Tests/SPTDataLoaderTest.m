@@ -299,4 +299,55 @@
     XCTAssertNil(cancellationToken, @"The data loader did not release the cancellation token");
 }
 
+- (void)testPerformRequestWithCompletion
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.dataLoader performRequest:request withCompletion:^(SPTDataLoaderResponse *response){}];
+    XCTAssertNotNil(self.requestResponseHandlerDelegate.lastRequestPerformed, @"There should be a valid last request performed");
+}
+
+- (void)testSuccessfulResponseCompletion
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderDelegateMock *delegate = self.dataLoader.delegate;
+    self.dataLoader.delegate = nil;
+    __block SPTDataLoaderResponse *received;
+    [self.dataLoader performRequest:request withCompletion:^(SPTDataLoaderResponse *response){
+        received = response;
+    }];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader successfulResponse:response];
+    self.dataLoader.delegate = delegate;
+    XCTAssertNotNil(received, @"Response should not be nil");
+}
+
+- (void)testFailureResponseCompletion
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderDelegateMock *delegate = self.dataLoader.delegate;
+    self.dataLoader.delegate = nil;
+    __block SPTDataLoaderResponse *received;
+    [self.dataLoader performRequest:request withCompletion:^(SPTDataLoaderResponse *response){
+        received = response;
+    }];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.dataLoader failedResponse:response];
+    self.dataLoader.delegate = delegate;
+    XCTAssertNotNil(received, @"Response should not be nil");
+}
+
+- (void)testCancelledRequestCompletion
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    SPTDataLoaderDelegateMock *delegate = self.dataLoader.delegate;
+    self.dataLoader.delegate = nil;
+    __block SPTDataLoaderResponse *received;
+    [self.dataLoader performRequest:request withCompletion:^(SPTDataLoaderResponse *response){
+        received = response;
+    }];
+    [self.dataLoader cancelledRequest:request];
+    self.dataLoader.delegate = delegate;
+    XCTAssertNil(received, @"Response should be nil");
+}
+
 @end
