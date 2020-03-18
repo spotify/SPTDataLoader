@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  pull_request:
+    branches:
+      - 'master'
   push:
     branches:
       - 'master'
@@ -9,9 +12,12 @@ jobs:
   build:
     runs-on: macOS-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v1
+      with:
+        path: build/DerivedData
+        key: ${{ runner.os }}-dataloader-dd
     - name: Build and Test
       run: ci/run.sh
       env:
-        DEVELOPER_DIR: /Applications/Xcode_11.1.app/Contents/Developer
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
