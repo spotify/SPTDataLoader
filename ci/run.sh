@@ -24,7 +24,7 @@ xcb() {
     "$@" | xcpretty || fail "$LOG failed"
 }
 
-if [[ -n "$TRAVIS_BUILD_ID" || -n "$GITHUB_WORKFLOW" ]]; then
+if [[ -n "$GITHUB_WORKFLOW" ]]; then
   heading "Installing Tools"
   gem install xcpretty cocoapods
   export IS_CI=1
