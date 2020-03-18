@@ -95,17 +95,30 @@ xcb "Run tests for macOS" test \
   -enableCodeCoverage YES \
   -sdk macosx
 
-LATEST_IOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk iphonesimulator)/SDKSettings.plist")"
+create_sim() {
+  if sh -c "xcrun simctl list devices | grep -q $1" ; then
+    echo "Delete existing simulator: $1"
+    xcrun simctl delete "$1"
+  fi
+
+  echo "Create simulator: $1"
+  local runtime=`xcrun simctl list runtimes | grep "$2" | awk '{print $NF}' | tail -n 1`
+  xcrun simctl create "$1" "$3" "$runtime" || fail "Failed to create $2 simulator for testing"
+}
+
+create_sim dataloader-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-8
+
 xcb "Run tests for iOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
-  -destination "platform=iOS Simulator,name=iPhone 8,OS=$LATEST_IOS_SDK"
+  -destination "platform=iOS Simulator,name=dataloader-tester-ios"
 
-LATEST_TVOS_SDK="$(/usr/libexec/PlistBuddy -c "Print :Version" "$(xcrun --show-sdk-path --sdk appletvsimulator)/SDKSettings.plist")"
+create_sim dataloader-tester-tvos tvOS com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p
+
 xcb "Run tests for tvOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
-  -destination "platform=tvOS Simulator,name=Apple TV,OS=$LATEST_TVOS_SDK"
+  -destination "platform=tvOS Simulator,name=dataloader-tester-tvos"
 
 #
 # CODECOV
