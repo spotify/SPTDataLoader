@@ -30,7 +30,6 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 @interface SPTDataLoaderResponse ()
 
-@property (nonatomic, strong, readonly, nullable) NSURLResponse *response;
 @property (nonatomic, strong, readwrite) NSDictionary<NSString *, NSString *> *responseHeaders;
 @property (nonatomic, strong, readwrite) NSError *error;
 @property (nonatomic, strong, readwrite) NSData *body;
@@ -52,7 +51,6 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
     self = [super init];
     if (self) {
         _request = request;
-        _response = response;
 
         if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -62,6 +60,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
                                              code:httpResponse.statusCode
                                          userInfo:nil];
             }
+            _resolvedURL = httpResponse.URL;
             _responseHeaders = httpResponse.allHeaderFields;
             _statusCode = httpResponse.statusCode;
         }
@@ -184,7 +183,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p URL = \"%@\"; status-code = %ld; headers = %@>", self.class, (void *)self, self.response.URL, (long)self.statusCode, self.responseHeaders];
+    return [NSString stringWithFormat:@"<%@: %p URL = \"%@\"; status-code = %ld; headers = %@>", self.class, (void *)self, self.resolvedURL, (long)self.statusCode, self.responseHeaders];
 }
 
 
