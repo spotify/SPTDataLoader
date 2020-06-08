@@ -195,5 +195,22 @@
                   @"The description should contain the headers code of the response");
 }
 
+- (void)testResolvedURLComesFromResponse
+{
+    NSURL *requestURL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
+    NSURL *responseURL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/redirected"];
+
+    self.request = [SPTDataLoaderRequest requestWithURL:requestURL
+                                       sourceIdentifier:nil];
+    self.urlResponse = [[NSHTTPURLResponse alloc] initWithURL:responseURL
+                                                   statusCode:SPTDataLoaderResponseHTTPStatusCodeInvalid
+                                                  HTTPVersion:@"1.1"
+                                                 headerFields:nil];
+
+    self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
+
+    XCTAssertEqual(self.response.resolvedURL, responseURL);
+    XCTAssertNotEqual(self.response.resolvedURL, self.request.URL);
+}
 
 @end
