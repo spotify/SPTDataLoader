@@ -21,7 +21,7 @@
 #import <XCTest/XCTest.h>
 #import "SPTDataLoaderTimeProviderImplementation.h"
 
-@interface SPTDataLoaderTimeProviderImplementationTest : XCTestCase
+@interface SPTDataLoaderTimeProviderImplementationTest: XCTestCase
 
 @end
 
