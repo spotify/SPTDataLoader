@@ -111,6 +111,10 @@
 		2DE3DAC12344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DAC22344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DAC32344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
+		430D3C8C249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
+		430D3C8D249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
+		430D3C8E249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
+		430D3C8F249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		6992FD211F71DBD4003E1E4F /* SPTDataLoaderImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD221F71DC07003E1E4F /* SPTDataLoaderImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD231F71DC14003E1E4F /* SPTDataLoaderImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -175,6 +179,8 @@
 		2DE3DAB92344E0F70022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
 		2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
 		2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
+		430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTimeProviderImplementation.m; sourceTree = "<group>"; };
+		430D3C90249D19AB00791FD3 /* SPTDataLoaderTimeProviderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProviderImplementation.h; sourceTree = "<group>"; };
 		6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
 		6992FD1B1F71DB8C003E1E4F /* SPTDataLoaderImplementation+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderImplementation+Private.h"; sourceTree = "<group>"; };
 		6992FD1C1F71DB8C003E1E4F /* SPTDataLoaderCancellationTokenFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactory.h; sourceTree = "<group>"; };
@@ -282,6 +288,8 @@
 				2DE3DAB92344E0F70022642E /* SPTDataLoaderService+Private.h */,
 				2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */,
 				2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */,
+				430D3C90249D19AB00791FD3 /* SPTDataLoaderTimeProviderImplementation.h */,
+				430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -594,6 +602,7 @@
 				F7346A381CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A638441C46B82700061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				430D3C8C249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
 				05A638461C46B82700061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A638471C46B82700061E37 /* SPTDataLoaderService.m in Sources */,
 				05A638481C46B82700061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
@@ -616,6 +625,7 @@
 				F7346A391CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A638511C46B84B00061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				430D3C8D249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
 				05A638531C46B84B00061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A638541C46B84B00061E37 /* SPTDataLoaderService.m in Sources */,
 				05A638551C46B84B00061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
@@ -638,6 +648,7 @@
 				F7346A3A1CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A6386B1C46B87100061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				430D3C8E249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
 				05A6386D1C46B87100061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A6386E1C46B87100061E37 /* SPTDataLoaderService.m in Sources */,
 				05A6386F1C46B87100061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,
@@ -660,6 +671,7 @@
 				F7346A3B1CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
 				05A638351C46B7F800061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
+				430D3C8F249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
 				05A638381C46B7F800061E37 /* SPTDataLoaderResponse.m in Sources */,
 				05A6383A1C46B7F800061E37 /* SPTDataLoaderService.m in Sources */,
 				05A6383B1C46B7F800061E37 /* SPTDataLoaderExponentialTimer.m in Sources */,

@@ -22,11 +22,14 @@
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 
+#import "SPTDataLoaderTimeProviderImplementation.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SPTDataLoaderRateLimiter ()
 
 @property (nonatomic, assign) double requestsPerSecond;
+@property (nonatomic, strong, readonly) id<SPTDataLoaderTimeProvider> timeProvider;
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *serviceEndpointRequestsPerSecond;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *serviceEndpointLastExecution;
@@ -40,14 +43,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)rateLimiterWithDefaultRequestsPerSecond:(double)requestsPerSecond
 {
-    return [[self alloc] initWithDefaultRequestsPerSecond:requestsPerSecond];
+    id<SPTDataLoaderTimeProvider> timeProvider = [SPTDataLoaderTimeProviderImplementation new];
+    return [[self alloc] initWithDefaultRequestsPerSecond:requestsPerSecond
+                                             timeProvider:timeProvider];
 }
 
 - (instancetype)initWithDefaultRequestsPerSecond:(double)requestsPerSecond
+                                    timeProvider:(id<SPTDataLoaderTimeProvider>)timeProvider
 {
     self = [super init];
     if (self) {
         _requestsPerSecond = requestsPerSecond;
+        _timeProvider = timeProvider;
         _serviceEndpointRequestsPerSecond = [NSMutableDictionary new];
         _serviceEndpointLastExecution = [NSMutableDictionary new];
         _serviceEndpointRetryAt = [NSMutableDictionary new];
@@ -61,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *serviceKey = [self serviceKeyFromURL:request.URL];
     
     // First check if we are not accepting requests until a certain time (i.e. Retry-after header)
-    CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
+    CFAbsoluteTime currentTime = self.timeProvider.currentTime;
     CFAbsoluteTime retryAtTime = 0.0;
     @synchronized(self.serviceEndpointRetryAt) {
         retryAtTime = [self.serviceEndpointRetryAt[serviceKey] doubleValue];
@@ -77,6 +84,11 @@ NS_ASSUME_NONNULL_BEGIN
         lastExecution = [self.serviceEndpointLastExecution[serviceKey] doubleValue];
     }
     CFAbsoluteTime deltaTime = currentTime - lastExecution;
+    if (deltaTime < 0) {
+        // If currentTime < lastExecution the system clock must have been moved backwards
+        // We should execute the request immediately to allow the RateLimiter to resume working as expected
+        return 0;
+    }
     CFAbsoluteTime cutoffTime = 1.0 / requestsPerSecond;
     CFAbsoluteTime timeInterval = cutoffTime - deltaTime;
     if (timeInterval < 0.0) {
@@ -94,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     
     @synchronized(self.serviceEndpointLastExecution) {
-        self.serviceEndpointLastExecution[serviceKey] = @(CFAbsoluteTimeGetCurrent());
+        self.serviceEndpointLastExecution[serviceKey] = @(self.timeProvider.currentTime);
     }
     @synchronized(self.serviceEndpointRetryAt) {
         [self.serviceEndpointRetryAt removeObjectForKey:serviceKey];
