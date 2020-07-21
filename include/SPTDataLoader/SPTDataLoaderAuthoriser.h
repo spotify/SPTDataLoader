@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 
 @class SPTDataLoaderRequest;
+@class SPTDataLoaderResponse;
 
 @protocol SPTDataLoaderAuthoriser;
 
@@ -77,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
  Mark that a request failed authorisation
  @param request The request to authorise
  */
-- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request;
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request response:(SPTDataLoaderResponse *) response;
 /**
  Refreshes any kind authorisation
  @discussion This is never called by the factory, it is expected that the authoriser will be able to handle refreshes

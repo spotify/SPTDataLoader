@@ -51,7 +51,7 @@
     [self.delegate dataLoaderAuthoriser:self authorisedRequest:request];
 }
 
-- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request response:(SPTDataLoaderResponse *)response
 {
 }
 

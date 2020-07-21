@@ -115,7 +115,7 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
     }
 }
 
-- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request response:(nonnull SPTDataLoaderResponse *)response
 {
     self.accessToken = nil;
     self.expiresIn = 0.0;
