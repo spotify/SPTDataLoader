@@ -241,10 +241,11 @@ The SPTDataLoader architecture is designed to centralise authentication around t
     [self.delegate dataLoaderAuthoriser:self authorisedRequest:request];
 }
 
-- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request
+- (void)requestFailedAuthorisation:(SPTDataLoaderRequest *)request response:(SPTDataLoaderResponse *)response
 {
     // This tells us that the server returned a 400 error code indicating that the authorisation did not work
     // Commonly this means you should attempt to get another authorisation token
+    // Or the response object should be inspected for additional information from the backend
 }
 
 - (void)refresh

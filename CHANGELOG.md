@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file. SPTDataLoad
 
 --
 
+## [2.0.0](https://github.com/spotify/SPTDataLoader/releases/tag/2.0.0)
+_Released on 2020-07-23._
+
+### Changed
+* SPTDataLoaderAuthorizer: requestFailedAuthorisation also accepts SPTDataLoaderResponse (breaking change)
+* Fixed multiple issues
+
 ## [1.1.1](https://github.com/spotify/SPTDataLoader/releases/tag/1.1.1)
 _Released on 2016-02-20._
 

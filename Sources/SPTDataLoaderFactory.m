@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (response.error.code == SPTDataLoaderResponseHTTPStatusCodeUnauthorised && !response.request.retriedAuthorisation) {
         for (id<SPTDataLoaderAuthoriser> authoriser in self.authorisers) {
             if ([authoriser requestRequiresAuthorisation:response.request]) {
-                [authoriser requestFailedAuthorisation:response.request];
+                [authoriser requestFailedAuthorisation:response.request response:response];
             }
         }
         response.request.retriedAuthorisation = YES;

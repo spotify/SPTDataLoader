@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "SPTDataLoader"
-    s.version      = "1.1.1"
+    s.version      = "2.0.0"
     s.summary      = "SPTDataLoader is Spotify’s HTTP library for Objective-C"
 
     s.description  = <<-DESC
