@@ -32,3 +32,4 @@
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 #import <SPTDataLoader/SPTDataLoaderService.h>
+#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>

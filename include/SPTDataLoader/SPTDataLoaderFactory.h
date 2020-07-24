@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 
 @class SPTDataLoader;
+@class SPTDataLoaderBlockWrapper;
 @protocol SPTDataLoaderAuthoriser;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -45,6 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
  Creates a data loader
  */
 - (SPTDataLoader *)createDataLoader;
+
+/**
+ Creates a data loader with a block API
+ */
+- (SPTDataLoaderBlockWrapper *)createDataLoaderBlockWrapper;
 
 @end
 

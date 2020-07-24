@@ -46,6 +46,7 @@
 		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
 		2DE3DAC72344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DACA2344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */; };
+		3426C1ED24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */; };
 		430D3C82249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C81249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		430D3C87249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C86249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m */; };
 		430D3C89249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C88249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m */; };
@@ -153,6 +154,8 @@
 		2DE3DAC62344E3DA0022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
 		2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelectorMock.h; sourceTree = "<group>"; };
 		2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelectorMock.m; sourceTree = "<group>"; };
+		3426C1EB24CB1C5D00B919B4 /* SPTDataLoaderBlockWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderBlockWrapper.h; sourceTree = "<group>"; };
+		3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderBlockWrapper.m; sourceTree = "<group>"; };
 		430D3C80249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProviderImplementation.h; sourceTree = "<group>"; };
 		430D3C81249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTimeProviderImplementation.m; sourceTree = "<group>"; };
 		430D3C83249CD7C300791FD3 /* SPTDataLoaderTimeProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProvider.h; sourceTree = "<group>"; };
@@ -256,6 +259,7 @@
 				430D3C83249CD7C300791FD3 /* SPTDataLoaderTimeProvider.h */,
 				430D3C80249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.h */,
 				430D3C81249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */,
+				3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -365,6 +369,7 @@
 				056A04B71A13D10900FA72AD /* SPTDataLoaderResponse.h */,
 				F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */,
 				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
+				3426C1EB24CB1C5D00B919B4 /* SPTDataLoaderBlockWrapper.h */,
 			);
 			name = "Public API";
 			path = include/SPTDataLoader;
@@ -481,6 +486,7 @@
 				05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				2DE3DAC72344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05356F131A447295003A7351 /* NSDictionary+HeaderSize.m in Sources */,
+				3426C1ED24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */,
 				050E06AF1A10CC6B00A10A0E /* SPTDataLoaderResponse.m in Sources */,
 				050E06A61A10C68100A10A0E /* SPTDataLoaderService.m in Sources */,
 				050E06A91A10C7BE00A10A0E /* SPTDataLoaderFactory.m in Sources */,

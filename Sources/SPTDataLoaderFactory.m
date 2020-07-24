@@ -28,6 +28,7 @@
 #import "SPTDataLoaderImplementation+Private.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
+#import "SPTDataLoaderBlockWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -74,6 +75,12 @@ NS_ASSUME_NONNULL_BEGIN
     id<SPTDataLoaderCancellationTokenFactory> cancellationTokenFactory = [SPTDataLoaderCancellationTokenFactoryImplementation new];
     return [SPTDataLoader dataLoaderWithRequestResponseHandlerDelegate:self
                                               cancellationTokenFactory:cancellationTokenFactory];
+}
+
+- (SPTDataLoaderBlockWrapper *)createDataLoaderBlockWrapper
+{
+    SPTDataLoader *dataLoader = [self createDataLoader];
+    return [[SPTDataLoaderBlockWrapper alloc] initWithDataLoader:dataLoader];
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandler
