@@ -45,10 +45,7 @@ static NSString * const BlockRequestIdentifierKey = @"BlockRequestIdentifierKey"
 
 - (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request completion:(SPTDataLoaderBlockCompletion)completion
 {
-    NSMutableDictionary *mutableUserInfo = [request.userInfo mutableCopy];
-    if (mutableUserInfo == nil) {
-        mutableUserInfo = [NSMutableDictionary new];
-    }
+    NSMutableDictionary *mutableUserInfo = [request.userInfo mutableCopy] ?: [NSMutableDictionary new];
     mutableUserInfo[BlockRequestIdentifierKey] = [completion copy];
     request.userInfo = mutableUserInfo;
 
