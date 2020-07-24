@@ -111,6 +111,10 @@
 		2DE3DAC12344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DAC22344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DAC32344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */; };
+		3426C1EF24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
+		3426C1F024CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
+		3426C1F124CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
+		3426C1F224CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
 		430D3C8C249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		430D3C8D249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		430D3C8E249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
@@ -179,6 +183,7 @@
 		2DE3DAB92344E0F70022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
 		2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
 		2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
+		3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderBlockWrapper.m; sourceTree = "<group>"; };
 		430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTimeProviderImplementation.m; sourceTree = "<group>"; };
 		430D3C90249D19AB00791FD3 /* SPTDataLoaderTimeProviderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProviderImplementation.h; sourceTree = "<group>"; };
 		6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
@@ -268,6 +273,7 @@
 				058CCFFA1C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.h */,
 				058CCFFB1C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m */,
 				056E523E1A113A2B00E8716C /* SPTDataLoaderExponentialTimer.m */,
+				3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */,
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
 				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
 				6992FD1B1F71DB8C003E1E4F /* SPTDataLoaderImplementation+Private.h */,
@@ -595,6 +601,7 @@
 				05A6383D1C46B82700061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC02344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6383F1C46B82700061E37 /* SPTDataLoader.m in Sources */,
+				3426C1EF24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */,
 				05A638401C46B82700061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A638411C46B82700061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
 				05A638421C46B82700061E37 /* SPTDataLoaderRequest.m in Sources */,
@@ -618,6 +625,7 @@
 				05A6384A1C46B84B00061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC12344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6384C1C46B84B00061E37 /* SPTDataLoader.m in Sources */,
+				3426C1F024CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */,
 				05A6384D1C46B84B00061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A6384E1C46B84B00061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
 				05A6384F1C46B84B00061E37 /* SPTDataLoaderRequest.m in Sources */,
@@ -641,6 +649,7 @@
 				05A638641C46B87100061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC22344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A638661C46B87100061E37 /* SPTDataLoader.m in Sources */,
+				3426C1F124CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */,
 				05A638671C46B87100061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A638681C46B87100061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
 				05A638691C46B87100061E37 /* SPTDataLoaderRequest.m in Sources */,
@@ -664,6 +673,7 @@
 				05A638281C46B7F800061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC32344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6382B1C46B7F800061E37 /* SPTDataLoader.m in Sources */,
+				3426C1F224CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */,
 				05A6382D1C46B7F800061E37 /* SPTDataLoaderFactory.m in Sources */,
 				05A6382F1C46B7F800061E37 /* SPTDataLoaderRateLimiter.m in Sources */,
 				05A638301C46B7F800061E37 /* SPTDataLoaderRequest.m in Sources */,

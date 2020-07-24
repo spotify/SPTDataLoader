@@ -70,6 +70,12 @@
     XCTAssertNotNil(dataLoader, @"The data loader created by the factory is nil");
 }
 
+- (void)testCreateDataLoaderBlockWrapper
+{
+    SPTDataLoaderBlockWrapper *dataLoaderBlockWrapper = [self.factory createDataLoaderBlockWrapper];
+    XCTAssertNotNil(dataLoaderBlockWrapper, @"The data loader created by the factory is nil");
+}
+
 - (void)testSuccessfulResponse
 {
     SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
