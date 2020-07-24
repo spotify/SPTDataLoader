@@ -18,7 +18,7 @@
  specific language governing permissions and limitations
  under the License.
  */
-#import "SPTDataLoaderBlockWrapper.h"
+#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
 #import "SPTDataLoader.h"
 
 NS_ASSUME_NONNULL_BEGIN
