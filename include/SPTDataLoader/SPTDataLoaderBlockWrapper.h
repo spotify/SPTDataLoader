@@ -25,7 +25,7 @@
 @class SPTDataLoaderResponse;
 @protocol SPTDataLoaderCancellationToken;
 
-typedef void (^DataLoaderBlockCompletion)(SPTDataLoaderResponse * _Nonnull response, NSError *_Nullable error);
+typedef void (^SPTDataLoaderBlockCompletion)(SPTDataLoaderResponse * _Nonnull response, NSError *_Nullable error);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param completion A completion block with the response and an error object
 /// @return A cancellation token associated with the request, or `nil` if the request coulnd’t be performed.
 - (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request
-                                                   completion:(DataLoaderBlockCompletion)completion;
+                                                   completion:(SPTDataLoaderBlockCompletion)completion;
 
 @end
 

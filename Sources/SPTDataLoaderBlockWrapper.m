@@ -23,10 +23,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * const BlockRequestIdentifierKey = @"BlockRequestIdentifierKey";
+
 @interface SPTDataLoaderBlockWrapper () <SPTDataLoaderDelegate>
 
 @property (nonatomic, strong) SPTDataLoader *dataLoader;
-@property (nonatomic, strong) NSMapTable *completionHandlers;
 
 @end
 
@@ -38,47 +39,35 @@ NS_ASSUME_NONNULL_BEGIN
     if (self) {
         _dataLoader = dataLoader;
         dataLoader.delegate = self;
-        _completionHandlers = [NSMapTable strongToWeakObjectsMapTable];
     }
     return self;
 }
 
-- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request completion:(DataLoaderBlockCompletion)completion
+- (nullable id<SPTDataLoaderCancellationToken>)performRequest:(SPTDataLoaderRequest *)request completion:(SPTDataLoaderBlockCompletion)completion
 {
-    NSString *sourceIdentifier = request.sourceIdentifier;
-    if (sourceIdentifier == nil) {
-        // If we don't have a source identifer, we create one to uniquely identify the observer.
-        sourceIdentifier = [[NSUUID UUID] UUIDString];
-        request.sourceIdentifier = sourceIdentifier;
+    NSMutableDictionary *mutableUserInfo = [request.userInfo mutableCopy];
+    if (mutableUserInfo == nil) {
+        mutableUserInfo = [NSMutableDictionary new];
     }
+    mutableUserInfo[BlockRequestIdentifierKey] = [completion copy];
+    request.userInfo = mutableUserInfo;
 
-    [self.completionHandlers setObject:completion forKey:sourceIdentifier];
     return [self.dataLoader performRequest:request];
 }
 
 - (void)dataLoader:(nonnull SPTDataLoader *)dataLoader didReceiveErrorResponse:(nonnull SPTDataLoaderResponse *)response
 {
-    NSString *sourceIdentifier = response.request.sourceIdentifier;
-    if (!sourceIdentifier){
-        return;
-    }
-    DataLoaderBlockCompletion completion = [self.completionHandlers objectForKey:sourceIdentifier];
+    SPTDataLoaderBlockCompletion completion = response.request.userInfo[BlockRequestIdentifierKey];
     if (completion != nil) {
         completion(response, nil);
-        [self.completionHandlers removeObjectForKey:sourceIdentifier];
     }
 }
 
 - (void)dataLoader:(nonnull SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(nonnull SPTDataLoaderResponse *)response
 {
-    NSString *sourceIdentifier = response.request.sourceIdentifier;
-    if (!sourceIdentifier) {
-        return;
-    }
-    DataLoaderBlockCompletion completion = [self.completionHandlers objectForKey:sourceIdentifier];
+    SPTDataLoaderBlockCompletion completion = response.request.userInfo[BlockRequestIdentifierKey];
     if (completion != nil) {
         completion(response, response.error);
-        [self.completionHandlers removeObjectForKey:sourceIdentifier];
     }
 }
 
