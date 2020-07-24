@@ -47,6 +47,7 @@
 		2DE3DAC72344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DACA2344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */; };
 		3426C1ED24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */; };
+		3426C1F424CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1F324CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m */; };
 		430D3C82249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C81249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		430D3C87249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C86249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m */; };
 		430D3C89249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C88249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m */; };
@@ -156,6 +157,7 @@
 		2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelectorMock.m; sourceTree = "<group>"; };
 		3426C1EB24CB1C5D00B919B4 /* SPTDataLoaderBlockWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderBlockWrapper.h; sourceTree = "<group>"; };
 		3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderBlockWrapper.m; sourceTree = "<group>"; };
+		3426C1F324CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderBlockWrapperTest.m; sourceTree = "<group>"; };
 		430D3C80249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProviderImplementation.h; sourceTree = "<group>"; };
 		430D3C81249CD77500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTimeProviderImplementation.m; sourceTree = "<group>"; };
 		430D3C83249CD7C300791FD3 /* SPTDataLoaderTimeProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProvider.h; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */,
 				0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */,
 				430D3C88249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m */,
+				3426C1F324CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m */,
 				059940951A14E7DA006D6BE9 /* Mocks */,
 				050E069A1A10C62100A10A0E /* Supporting Files */,
 			);
@@ -519,6 +522,7 @@
 				F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */,
 				055AEE541A16262A00A490BF /* SPTDataLoaderRateLimiterTest.m in Sources */,
 				050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */,
+				3426C1F424CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m in Sources */,
 				059940A51A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m in Sources */,
 				059940A21A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m in Sources */,
 				0504CB8F1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m in Sources */,
