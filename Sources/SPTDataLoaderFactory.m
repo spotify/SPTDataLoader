@@ -22,13 +22,13 @@
 
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderImplementation+Private.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
-#import "SPTDataLoaderBlockWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
