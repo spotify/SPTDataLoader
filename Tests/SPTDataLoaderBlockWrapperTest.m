@@ -21,6 +21,7 @@
 #import <XCTest/XCTest.h>
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
 
 #import "SPTDataLoaderImplementation+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
