@@ -55,7 +55,7 @@ static NSString * const BlockRequestIdentifierKey = @"BlockRequestIdentifierKey"
 {
     SPTDataLoaderBlockCompletion completion = response.request.userInfo[BlockRequestIdentifierKey];
     if (completion != nil) {
-        completion(response, nil);
+        completion(response, response.error);
     }
 }
 
@@ -63,7 +63,7 @@ static NSString * const BlockRequestIdentifierKey = @"BlockRequestIdentifierKey"
 {
     SPTDataLoaderBlockCompletion completion = response.request.userInfo[BlockRequestIdentifierKey];
     if (completion != nil) {
-        completion(response, response.error);
+        completion(response, nil);
     }
 }
 
