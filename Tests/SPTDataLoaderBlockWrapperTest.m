@@ -75,9 +75,8 @@
     SPTDataLoaderResponse *mockResponse = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Expected response"];
     [self.dataLoaderBlockWrapper performRequest:request completion:^(SPTDataLoaderResponse * _Nonnull response, NSError * _Nullable error) {
-        if (response == mockResponse) {
-            [expectation fulfill];
-        }
+        XCTAssertTrue(response == mockResponse && error == nil);
+        [expectation fulfill];
     }];
     [self.dataLoader successfulResponse:mockResponse];
     [self waitForExpectationsWithTimeout:1.0 handler:nil];
@@ -86,12 +85,13 @@
 - (void)testRelayFailureResponseToDelegate
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    NSError *expectedError = [NSError errorWithDomain:@"random.domain" code:33 userInfo:nil];
     SPTDataLoaderResponse *mockResponse = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    mockResponse.error = expectedError;
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Expected response"];
     [self.dataLoaderBlockWrapper performRequest:request completion:^(SPTDataLoaderResponse * _Nonnull response, NSError * _Nullable error) {
-        if (response == mockResponse) {
-            [expectation fulfill];
-        }
+        XCTAssertTrue(response == mockResponse && error == expectedError);
+        [expectation fulfill];
     }];
     [self.dataLoader failedResponse:mockResponse];
     [self waitForExpectationsWithTimeout:1.0 handler:nil];
