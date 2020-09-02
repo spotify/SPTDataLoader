@@ -153,9 +153,11 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
         return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
     };
 
-    NSArray *languages = [NSBundle mainBundle].preferredLocalizations;
+    NSArray<NSString *> *localizations = [NSBundle mainBundle].preferredLocalizations;
+    NSMutableOrderedSet<NSString *> *languages = [NSMutableOrderedSet orderedSetWithArray:localizations];
     if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
-        languages = [languages subarrayWithRange:NSMakeRange(0, SPTDataLoaderRequestMaximumLanguages)];
+        const NSUInteger excess = languages.count - SPTDataLoaderRequestMaximumLanguages;
+        [languages removeObjectsInRange:NSMakeRange(SPTDataLoaderRequestMaximumLanguages, excess)];
     }
     double languageImportanceCounter = 1.0;
     NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];

@@ -198,6 +198,26 @@
     XCTAssertEqualObjects(@"fr-CA, en;q=0.50", languageValues);
 }
 
+- (void)testAcceptLanguageRemovesDuplicateLocalizations
+{
+    NSBundleMock *bundleMock = [NSBundleMock new];
+    bundleMock.mockPreferredLocalizations = @[ @"es-419", @"es-419", @"pt-PT" ];
+
+    Method originalMethod = class_getClassMethod(NSBundle.class, @selector(mainBundle));
+    IMP originalMethodImplementation = method_getImplementation(originalMethod);
+
+    IMP fakeMethodImplementation = imp_implementationWithBlock(^ {
+        return bundleMock;
+    });
+    method_setImplementation(originalMethod, fakeMethodImplementation);
+
+    NSString *languageValues = [SPTDataLoaderRequest generateLanguageHeaderValue];
+
+    method_setImplementation(originalMethod, originalMethodImplementation);
+
+    XCTAssertEqualObjects(@"es-419, pt-PT;q=0.50, en;q=0.01", languageValues);
+}
+
 - (void)testDeleteMethod
 {
     self.request.method = SPTDataLoaderRequestMethodDelete;
