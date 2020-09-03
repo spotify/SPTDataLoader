@@ -44,27 +44,35 @@ git ls-files | egrep "\\.(h|m|mm)$" | \
 #
 
 build_library() {
-  xcb "Build Library [$1]" \
-    build -scheme SPTDataLoader \
-    -sdk "$1" \
+  xcb "Build Library [$1] [$2]" build \
+    -scheme "$1" \
+    -sdk "$2" \
     -configuration Release
 }
 
-build_library iphoneos
-build_library iphonesimulator
-build_library macosx
-build_library watchos
-build_library watchsimulator
-build_library appletvos
-build_library appletvsimulator
+build_library SPTDataLoader iphoneos
+build_library SPTDataLoader iphonesimulator
+build_library SPTDataLoader macosx
+build_library SPTDataLoader watchos
+build_library SPTDataLoader watchsimulator
+build_library SPTDataLoader appletvos
+build_library SPTDataLoader appletvsimulator
+
+build_library SPTDataLoaderSwift iphoneos
+build_library SPTDataLoaderSwift iphonesimulator
+build_library SPTDataLoaderSwift macosx
+build_library SPTDataLoaderSwift watchos
+build_library SPTDataLoaderSwift watchsimulator
+build_library SPTDataLoaderSwift appletvos
+build_library SPTDataLoaderSwift appletvsimulator
 
 #
 # BUILD FRAMEWORKS
 #
 
 build_framework() {
-  xcb "Build Framework [$1] [$2]" \
-    build -scheme "$1" \
+  xcb "Build Framework [$1] [$2]" build \
+    -scheme "$1" \
     -sdk "$2" \
     -configuration Release
 }
@@ -77,12 +85,20 @@ build_framework SPTDataLoader-Watch watchsimulator
 build_framework SPTDataLoader-TV appletvos
 build_framework SPTDataLoader-TV appletvsimulator
 
+build_framework SPTDataLoaderSwift-iOS iphoneos
+build_framework SPTDataLoaderSwift-iOS iphonesimulator
+build_framework SPTDataLoaderSwift-OSX macosx
+build_framework SPTDataLoaderSwift-Watch watchos
+build_framework SPTDataLoaderSwift-Watch watchsimulator
+build_framework SPTDataLoaderSwift-TV appletvos
+build_framework SPTDataLoaderSwift-TV appletvsimulator
+
 #
 # BUILD DEMO APP
 #
 
-xcb "Build Demo App for Simulator" \
-  build -scheme "SPTDataLoaderDemo" \
+xcb "Build Demo App for Simulator" build \
+  -scheme "SPTDataLoaderDemo" \
   -sdk iphonesimulator \
   -configuration Release
 
@@ -92,6 +108,11 @@ xcb "Build Demo App for Simulator" \
 
 xcb "Run tests for macOS" test \
   -scheme "SPTDataLoader" \
+  -enableCodeCoverage YES \
+  -sdk macosx
+
+xcb "Run tests for macOS Swift" test \
+  -scheme "SPTDataLoaderSwift" \
   -enableCodeCoverage YES \
   -sdk macosx
 
@@ -107,18 +128,30 @@ create_sim() {
 }
 
 create_sim dataloader-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-8
+create_sim dataloaderswift-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-8
 
 xcb "Run tests for iOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
   -destination "platform=iOS Simulator,name=dataloader-tester-ios"
 
+xcb "Run tests for iOS Swift" test \
+  -scheme "SPTDataLoaderSwift" \
+  -enableCodeCoverage YES \
+  -destination "platform=iOS Simulator,name=dataloaderswift-tester-ios"
+
 create_sim dataloader-tester-tvos tvOS com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p
+create_sim dataloaderswift-tester-tvos tvOS com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p
 
 xcb "Run tests for tvOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
   -destination "platform=tvOS Simulator,name=dataloader-tester-tvos"
+
+xcb "Run tests for tvOS Swift" test \
+  -scheme "SPTDataLoaderSwift" \
+  -enableCodeCoverage YES \
+  -destination "platform=tvOS Simulator,name=dataloaderswift-tester-tvos"
 
 #
 # CODECOV
