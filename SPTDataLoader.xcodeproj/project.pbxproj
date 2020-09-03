@@ -57,6 +57,7 @@
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
+		F5B640AD250064E4004B9B83 /* libSPTDataLoaderSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
 		F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
@@ -71,6 +72,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 050E06891A10C62100A10A0E;
 			remoteInfo = SPTDataLoader;
+		};
+		F5B640A92500639A004B9B83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 050E06891A10C62100A10A0E;
+			remoteInfo = SPTDataLoader;
+		};
+		F5B640AB250064CE004B9B83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5B64095250060D1004B9B83;
+			remoteInfo = SPTDataLoaderSwift;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -179,6 +194,8 @@
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
+		F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSPTDataLoaderSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5B640A12500633C004B9B83 /* SPTDataLoaderSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPTDataLoaderSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
 		F7346A281CC2C67700B8AB41 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLAuthenticationChallengeMock.h; sourceTree = "<group>"; };
@@ -197,6 +214,14 @@
 			files = (
 				050E06961A10C62100A10A0E /* libSPTDataLoader.a in Frameworks */,
 				F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5B6409E2500633C004B9B83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B640AD250064E4004B9B83 /* libSPTDataLoaderSwift.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +246,8 @@
 			children = (
 				050E068A1A10C62100A10A0E /* libSPTDataLoader.a */,
 				050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */,
+				F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */,
+				F5B640A12500633C004B9B83 /* SPTDataLoaderSwiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -463,6 +490,39 @@
 			productReference = 050E06951A10C62100A10A0E /* SPTDataLoaderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F5B64095250060D1004B9B83 /* SPTDataLoaderSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5B6409C250060D1004B9B83 /* Build configuration list for PBXNativeTarget "SPTDataLoaderSwift" */;
+			buildPhases = (
+				F5B64092250060D1004B9B83 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5B640AA2500639A004B9B83 /* PBXTargetDependency */,
+			);
+			name = SPTDataLoaderSwift;
+			productName = SPTDataLoaderSwift;
+			productReference = F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		F5B640A02500633C004B9B83 /* SPTDataLoaderSwiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5B640A62500633C004B9B83 /* Build configuration list for PBXNativeTarget "SPTDataLoaderSwiftTests" */;
+			buildPhases = (
+				F5B6409D2500633C004B9B83 /* Sources */,
+				F5B6409E2500633C004B9B83 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5B640AC250064CE004B9B83 /* PBXTargetDependency */,
+			);
+			name = SPTDataLoaderSwiftTests;
+			productName = SPTDataLoaderSwiftTests;
+			productReference = F5B640A12500633C004B9B83 /* SPTDataLoaderSwiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -477,6 +537,14 @@
 					};
 					050E06941A10C62100A10A0E = {
 						CreatedOnToolsVersion = 6.1;
+					};
+					F5B64095250060D1004B9B83 = {
+						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
+					};
+					F5B640A02500633C004B9B83 = {
+						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
 					};
 				};
 			};
@@ -495,6 +563,8 @@
 			targets = (
 				050E06891A10C62100A10A0E /* SPTDataLoader */,
 				050E06941A10C62100A10A0E /* SPTDataLoaderTests */,
+				F5B64095250060D1004B9B83 /* SPTDataLoaderSwift */,
+				F5B640A02500633C004B9B83 /* SPTDataLoaderSwiftTests */,
 			);
 		};
 /* End PBXProject section */
@@ -577,6 +647,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F5B64092250060D1004B9B83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5B6409D2500633C004B9B83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -584,6 +668,16 @@
 			isa = PBXTargetDependency;
 			target = 050E06891A10C62100A10A0E /* SPTDataLoader */;
 			targetProxy = 050E06971A10C62100A10A0E /* PBXContainerItemProxy */;
+		};
+		F5B640AA2500639A004B9B83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 050E06891A10C62100A10A0E /* SPTDataLoader */;
+			targetProxy = F5B640A92500639A004B9B83 /* PBXContainerItemProxy */;
+		};
+		F5B640AC250064CE004B9B83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5B64095250060D1004B9B83 /* SPTDataLoaderSwift */;
+			targetProxy = F5B640AB250064CE004B9B83 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -627,7 +721,7 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoader/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = (
@@ -644,13 +738,47 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoader/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = (
 					"$(inherited)",
 					"-Wno-partial-availability",
 				);
+			};
+			name = Release;
+		};
+		F5B6409A250060D1004B9B83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F5B6409B250060D1004B9B83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F5B640A72500633C004B9B83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoaderSwift/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F5B640A82500633C004B9B83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoaderSwift/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -680,6 +808,24 @@
 			buildConfigurations = (
 				050E06A21A10C62100A10A0E /* Debug */,
 				050E06A31A10C62100A10A0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5B6409C250060D1004B9B83 /* Build configuration list for PBXNativeTarget "SPTDataLoaderSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5B6409A250060D1004B9B83 /* Debug */,
+				F5B6409B250060D1004B9B83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5B640A62500633C004B9B83 /* Build configuration list for PBXNativeTarget "SPTDataLoaderSwiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5B640A72500633C004B9B83 /* Debug */,
+				F5B640A82500633C004B9B83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
