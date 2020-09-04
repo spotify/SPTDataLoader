@@ -12,8 +12,8 @@ fail() {
 }
 
 xcb() {
-  LOG="$1"
-  heading "$LOG"
+  local log="$1"
+  heading "$log"
   shift
   export NSUnbufferedIO=YES
   set -o pipefail && xcodebuild \
@@ -21,7 +21,7 @@ xcb() {
     -UseSanitizedBuildSystemEnvironment=YES \
     -derivedDataPath build/DerivedData \
     CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= \
-    "$@" | xcpretty || fail "$LOG failed"
+    "$@" | xcpretty || fail "$log failed"
 }
 
 if [[ -n "$GITHUB_WORKFLOW" ]]; then
@@ -35,7 +35,7 @@ pod spec lint SPTDataLoader.podspec --quick || \
   fail "Podspec lint failed"
 
 heading "Validating License Conformance"
-git ls-files | egrep "\\.(h|m|mm)$" | \
+git ls-files | egrep "\\.(h|m|mm|swift)$" | \
   xargs ci/validate_license_conformance.sh ci/expected_license_header.txt || \
   fail "License Validation Failed"
 
