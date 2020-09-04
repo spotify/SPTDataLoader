@@ -23,8 +23,8 @@ xcb() {
     "$@" | xcpretty || fail "$log failed"
 }
 
-DERIVED_DATA_COMMON="build/DD/common"
-DERIVED_DATA_TEST="build/DD/test"
+DERIVED_DATA_COMMON="build/DerivedData/common"
+DERIVED_DATA_TEST="build/DerivedData/test"
 
 if [[ -n "$GITHUB_WORKFLOW" ]]; then
   heading "Installing Tools"
