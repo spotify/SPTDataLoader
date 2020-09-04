@@ -170,8 +170,11 @@ chmod +x build/codecov.sh
 
 coverage_report() {
   # clean up previous coverage files so they don't leak into one another
-  rm -f *.coverage.txt
-  build/codecov.sh -n "$1" -D "$DERIVED_DATA_TEST/$1" -X xcodellvm $CODECOV_EXTRA
+  build/codecov.sh -F "$1" -D "$DERIVED_DATA_TEST/$1" -X xcodellvm $CODECOV_EXTRA
+  if compgen -G "*.coverage.txt" > /dev/null; then
+    mkdir -p "build/coverage/$1"
+    mv *.coverage.txt "build/coverage/$1"
+  fi
 }
 
 coverage_report macos
