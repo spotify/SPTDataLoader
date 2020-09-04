@@ -169,9 +169,12 @@ chmod +x build/codecov.sh
 [[ "$IS_CI" == "1" ]] || CODECOV_EXTRA="-d"
 
 coverage_report() {
-  # clean up previous coverage files so they don't leak into one another
   build/codecov.sh -F "$1" -D "$DERIVED_DATA_TEST/$1" -X xcodellvm $CODECOV_EXTRA
-  if compgen -G "*.coverage.txt" > /dev/null; then
+  if [[ "$IS_CI" == "1" ]]; then
+    # clean up coverage files so they don't leak into the next processing run
+    rm -f *.coverage.txt
+  elif compgen -G "*.coverage.txt" > /dev/null; then
+    # move when running locally so they don't get overwritten
     mkdir -p "build/coverage/$1"
     mv *.coverage.txt "build/coverage/$1"
   fi
