@@ -36,6 +36,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString *const SPTDataLoaderBackgroundSessionConfigurationIdentifier = @"SPTDataLoaderBackgroundSessionConfigurationIdentifier";
+
 @interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
 
@@ -70,11 +72,9 @@ NS_ASSUME_NONNULL_BEGIN
     return [[self alloc] initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
 }
 
-+ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
-                           backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration
++ (instancetype)backgroundCapableDataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
 {
-    return [[self alloc] initWithConfiguration:configuration
-                       backgroundConfiguration:backgroundConfiguration];
+    return [[self alloc] initForBackgroundWithConfiguration:configuration];
 }
 
 + (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
@@ -149,14 +149,15 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
-              backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration
+- (instancetype)initForBackgroundWithConfiguration:(NSURLSessionConfiguration *)configuration
 {
     self = [self initWithConfiguration:configuration rateLimiter:nil resolver:nil];
 
     if (self) {
+        NSURLSessionConfiguration *backgroundSessionConfiguration =
+            [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:SPTDataLoaderBackgroundSessionConfigurationIdentifier];
         _sessionSelector = [[SPTDataLoaderServiceDefaultSessionSelector alloc] initWithConfiguration:configuration
-                                                                             backgroundConfiguration:backgroundConfiguration
+                                                                             backgroundConfiguration:backgroundSessionConfiguration
                                                                                             delegate:self
                                                                                        delegateQueue:_sessionQueue];
     }
