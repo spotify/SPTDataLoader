@@ -67,6 +67,18 @@ NS_ASSUME_NONNULL_BEGIN
                                           resolver:(nullable SPTDataLoaderResolver *)resolver;
 
 /**
+ Convenience constructro with background networking settings.
+ @param configuration Custom session configuration.
+ @param backgroundConfiguration Configuration for a background session.
+
+ @discussion Use this method to create a service object which can perform network requests in background. The background
+ configuration object will be used to create a background URL session which will handle all requests with background po-
+ licy set to @c SPTDataLoaderRequestBackgroundPolicyAlways.
+ */
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                           backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration;
+
+/**
  Class constructor with QoS
  @param userAgent The user agent to report as when making HTTP requests
  @param rateLimiter The limiter for limiting requests per second on a per service basis

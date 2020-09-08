@@ -70,6 +70,13 @@ NS_ASSUME_NONNULL_BEGIN
     return [[self alloc] initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
 }
 
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                           backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration
+{
+    return [[self alloc] initWithConfiguration:configuration
+                       backgroundConfiguration:backgroundConfiguration];
+}
+
 + (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
                                    rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(nullable SPTDataLoaderResolver *)resolver
@@ -137,6 +144,21 @@ NS_ASSUME_NONNULL_BEGIN
 
         _fileManager = [NSFileManager defaultManager];
         _dataClass = [NSData class];
+    }
+
+    return self;
+}
+
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
+              backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration
+{
+    self = [self initWithConfiguration:configuration rateLimiter:nil resolver:nil];
+
+    if (self) {
+        _sessionSelector = [[SPTDataLoaderServiceDefaultSessionSelector alloc] initWithConfiguration:configuration
+                                                                             backgroundConfiguration:backgroundConfiguration
+                                                                                            delegate:self
+                                                                                       delegateQueue:_sessionQueue];
     }
 
     return self;
