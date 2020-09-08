@@ -45,6 +45,22 @@ NS_ASSUME_NONNULL_BEGIN
                              delegate:(id<NSURLSessionDelegate>)delegate
                         delegateQueue:(NSOperationQueue *)delegateQueue;
 
+/**
+ Initialize a new selector object and enable background networking.
+
+ @param configuration A configuration used to create URL session for foreground work.
+ @param backgroundConfiguration A configuration for a background URL session used for background tasks.
+ @param delegate The delegate to receive URL session updates.
+ @param delegateQueue The queue to receive delegate updates in.
+
+ @discussion This method will create a background URL session which will be returned for all requests with background
+ policy value set to @c SPTDataLoaderRequestBackgroundPolicyAlways.
+ */
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
+              backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration
+                             delegate:(id<NSURLSessionDelegate>)delegate
+                        delegateQueue:(NSOperationQueue *)delegateQueue;
+
 @end
 
 NS_ASSUME_NONNULL_END

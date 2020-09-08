@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SPTDataLoaderServiceDefaultSessionSelector ()
 
 @property (nonatomic, strong, readonly) NSURLSessionConfiguration *configuration;
+@property (nonatomic, strong, readonly, nullable) NSURLSessionConfiguration *backgroundConfiguration;
+@property (nonatomic, strong, readwrite, nullable) NSURLSession *backgroundSession;
 @property (nonatomic, weak, readonly) id<NSURLSessionDelegate> delegate;
 @property (nonatomic, strong, readonly) NSOperationQueue *delegateQueue;
 
@@ -37,6 +39,19 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSURLSession *_nonWaitingSession;
     NSURLSession *_waitingSession;
+}
+
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
+              backgroundConfiguration:(NSURLSessionConfiguration *)backgroundConfiguration
+                             delegate:(id<NSURLSessionDelegate>)delegate
+                        delegateQueue:(NSOperationQueue *)delegateQueue
+{
+    self = [self initWithConfiguration:configuration delegate:delegate delegateQueue:delegateQueue];
+    if (self) {
+        _backgroundConfiguration = [backgroundConfiguration copy];
+    }
+
+    return self;
 }
 
 - (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
@@ -56,6 +71,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSURLSession *)URLSessionForRequest:(SPTDataLoaderRequest *)request
 {
+    if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
+        NSURLSession *backgroundSession = self.backgroundSession;
+        if (backgroundSession) {
+            return backgroundSession;
+        }
+    }
+
     if (request.waitsForConnectivity) {
         return self.waitingSession;
     } else {
@@ -69,6 +91,17 @@ NS_ASSUME_NONNULL_BEGIN
         _waitingSession = [self createWaitingSession];
     }
     return _waitingSession;
+}
+
+- (nullable NSURLSession *)backgroundSession
+{
+    NSURLSessionConfiguration *backgroundSessionConfiguration = self.backgroundConfiguration;
+    if (!_backgroundSession && backgroundSessionConfiguration) {
+        _backgroundSession = [NSURLSession sessionWithConfiguration:backgroundSessionConfiguration
+                                                           delegate:self.delegate
+                                                      delegateQueue:self.delegateQueue];
+    }
+    return _backgroundSession;
 }
 
 - (NSURLSession *)nonWaitingSession
@@ -98,6 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     [self.waitingSession invalidateAndCancel];
     [self.nonWaitingSession invalidateAndCancel];
+    [self.backgroundSession invalidateAndCancel];
 }
 
 @end
