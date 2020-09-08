@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) NSURLSessionConfiguration *configuration;
 @property (nonatomic, strong, readonly, nullable) NSURLSessionConfiguration *backgroundConfiguration;
-@property (nonatomic, strong, readwrite, nullable) NSURLSession *backgroundSession;
+@property (nonatomic, strong, readonly, nullable) NSURLSession *backgroundSession;
 @property (nonatomic, weak, readonly) id<NSURLSessionDelegate> delegate;
 @property (nonatomic, strong, readonly) NSOperationQueue *delegateQueue;
 
@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSURLSession *_nonWaitingSession;
     NSURLSession *_waitingSession;
+    NSURLSession *_backgroundSession;
 }
 
 - (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
