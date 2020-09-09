@@ -24,9 +24,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString *const SPTDataLoaderBackgroundSessionConfigurationIdentifier =
+    @"SPTDataLoaderBackgroundSessionConfigurationIdentifier";
+
 @interface SPTDataLoaderServiceDefaultSessionSelector ()
 
 @property (nonatomic, strong, readonly) NSURLSessionConfiguration *configuration;
+@property (nonatomic, strong, readonly) NSURLSession *backgroundSession;
 @property (nonatomic, weak, readonly) id<NSURLSessionDelegate> delegate;
 @property (nonatomic, strong, readonly) NSOperationQueue *delegateQueue;
 
@@ -37,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSURLSession *_nonWaitingSession;
     NSURLSession *_waitingSession;
+    NSURLSession *_backgroundSession;
 }
 
 - (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
@@ -56,6 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSURLSession *)URLSessionForRequest:(SPTDataLoaderRequest *)request
 {
+    if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
+        return self.backgroundSession;
+    }
+
     if (request.waitsForConnectivity) {
         return self.waitingSession;
     } else {
@@ -69,6 +78,14 @@ NS_ASSUME_NONNULL_BEGIN
         _waitingSession = [self createWaitingSession];
     }
     return _waitingSession;
+}
+
+- (NSURLSession *)backgroundSession
+{
+    if (_backgroundSession == nil) {
+        _backgroundSession = [self createBackgroundSession];
+    }
+    return _backgroundSession;
 }
 
 - (NSURLSession *)nonWaitingSession
@@ -94,10 +111,20 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (NSURLSession *)createBackgroundSession
+{
+    NSURLSessionConfiguration *backgroundSessionConfiguration = [NSURLSessionConfiguration
+        backgroundSessionConfigurationWithIdentifier:SPTDataLoaderBackgroundSessionConfigurationIdentifier];
+    return [NSURLSession sessionWithConfiguration:backgroundSessionConfiguration
+                                         delegate:self.delegate
+                                    delegateQueue:self.delegateQueue];
+}
+
 - (void)invalidateAndCancel
 {
     [_waitingSession invalidateAndCancel];
     [_nonWaitingSession invalidateAndCancel];
+    [_backgroundSession invalidateAndCancel];
 }
 
 @end
