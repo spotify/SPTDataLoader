@@ -29,6 +29,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol SPTDataLoaderConsumptionObserver;
+@protocol SPTDataLoaderServiceEventObserver;
 
 /**
  The service used for creating data loader factories and providing application wide rate limiting to services
@@ -110,6 +111,22 @@ NS_ASSUME_NONNULL_BEGIN
  @param consumptionObserver The consumption observer to remove from the service
  */
 - (void)removeConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver;
+
+/**
+ Adds an event observer.
+ @param eventObserver The observer to add.
+ @param queue The queue to dispatch the events to.
+
+ @note The service keeps weak references to event observer objects.
+ */
+- (void)addEventObserver:(id<SPTDataLoaderServiceEventObserver>)eventObserver on:(dispatch_queue_t)queue;
+
+/**
+ Removes an event observer.
+ @param eventObserver The observer to remove.
+ */
+- (void)removeEventObserver:(id<SPTDataLoaderServiceEventObserver>)eventObserver;
+
 /**
  Sets an server trust policy object. Used when evaluating a servers SSL certificate for the purposes of SSL pinning.
  @discussion When `allCertificatesAllowed` is true, the server trust policy will be bypassed

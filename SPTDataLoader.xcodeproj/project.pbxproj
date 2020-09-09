@@ -150,6 +150,7 @@
 		05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandler.m; sourceTree = "<group>"; };
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
+		2C9560E525091BA200EE3DBE /* SPTDataLoaderServiceEventObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceEventObserver.h; sourceTree = "<group>"; };
 		2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
 		2DE3DAC52344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
 		2DE3DAC62344E3DA0022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
@@ -373,6 +374,7 @@
 				F7794AFF1CB590430092AEC6 /* SPTDataLoaderServerTrustPolicy.h */,
 				056A04B81A13D10900FA72AD /* SPTDataLoaderService.h */,
 				3426C1EB24CB1C5D00B919B4 /* SPTDataLoaderBlockWrapper.h */,
+				2C9560E525091BA200EE3DBE /* SPTDataLoaderServiceEventObserver.h */,
 			);
 			name = "Public API";
 			path = include/SPTDataLoader;

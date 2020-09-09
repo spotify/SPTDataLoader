@@ -25,6 +25,7 @@
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
 #import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
 #import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
+#import <SPTDataLoader/SPTDataLoaderServiceEventObserver.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequest+Private.h"
@@ -36,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
+@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate, NSURLSessionDelegate>
 
 
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
@@ -45,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
+@property (nonatomic, strong) NSMapTable<id<SPTDataLoaderServiceEventObserver>, dispatch_queue_t> *eventObservers;
 @property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
 @property (nonatomic, weak, nullable) NSFileManager *fileManager;
 @property (nonatomic, weak, nullable) Class dataClass;
@@ -134,6 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                                                        delegateQueue:_sessionQueue];
         _handlers = [NSMutableArray new];
         _consumptionObservers = [NSMapTable weakToStrongObjectsMapTable];
+        _eventObservers = [NSMapTable weakToStrongObjectsMapTable];
 
         _fileManager = [NSFileManager defaultManager];
         _dataClass = [NSData class];
@@ -190,6 +193,24 @@ NS_ASSUME_NONNULL_BEGIN
     if (consumptionObserver) {
         @synchronized(self.consumptionObservers) {
             [self.consumptionObservers removeObjectForKey:consumptionObserver];
+        }
+    }
+}
+
+- (void)addEventObserver:(id<SPTDataLoaderServiceEventObserver>)eventObserver on:(dispatch_queue_t)queue
+{
+    if (eventObserver && queue) {
+        @synchronized (self.eventObservers) {
+            [self.eventObservers setObject:queue forKey:eventObserver];
+        }
+    }
+}
+
+- (void)removeEventObserver:(id<SPTDataLoaderServiceEventObserver>)eventObserver
+{
+    if (eventObserver) {
+        @synchronized (self.eventObservers) {
+            [self.eventObservers removeObjectForKey:eventObserver];
         }
     }
 }
@@ -548,6 +569,30 @@ didFinishDownloadingToURL:(NSURL *)location
         [self URLSession:session task:downloadTask didCompleteWithError:fileError];
     }
 }
+
+#pragma mark NSURLSessionDelegate
+
+#if !TARGET_OS_OSX
+
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session
+{
+    @synchronized(self.eventObservers) {
+        for (id<SPTDataLoaderServiceEventObserver> eventObserver in self.eventObservers) {
+            dispatch_block_t observerBlock = ^ {
+                [eventObserver dataLoaderServiceDidFinishBackgroundEvents:self];
+            };
+
+            dispatch_queue_t queue = [self.eventObservers objectForKey:eventObserver];
+            if ([NSThread isMainThread] && queue == dispatch_get_main_queue()) {
+                observerBlock();
+            } else {
+                dispatch_async(queue, observerBlock);
+            }
+        }
+    }
+}
+
+#endif
 
 #pragma mark NSObject
 

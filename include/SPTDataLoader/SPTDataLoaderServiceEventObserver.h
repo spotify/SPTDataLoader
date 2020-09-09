@@ -19,18 +19,23 @@
  under the License.
  */
 
-#import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
-#import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
-#import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
-#import <SPTDataLoader/SPTDataLoaderDelegate.h>
-#import <SPTDataLoader/SPTDataLoaderServiceEventObserver.h>
-#import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
-#import <SPTDataLoader/SPTDataLoaderFactory.h>
-#import <SPTDataLoader/SPTDataLoaderImplementation.h>
-#import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
-#import <SPTDataLoader/SPTDataLoaderRequest.h>
-#import <SPTDataLoader/SPTDataLoaderResolver.h>
-#import <SPTDataLoader/SPTDataLoaderResponse.h>
-#import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
-#import <SPTDataLoader/SPTDataLoaderService.h>
-#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
+#import <Foundation/Foundation.h>
+
+@class SPTDataLoaderService;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@protocol SPTDataLoaderServiceEventObserver <NSObject>
+
+/**
+ Called when the underlying background URL session notifies about finishing background events.
+ 
+ @discussion This method will only be called if a background session is used to handle some of the requests. To achieve
+ that, set the request background policy to @c SPTDataLoaderRequestBackgroundPolicyAlways and configure the service to
+ work in background.
+ */
+- (void)dataLoaderServiceDidFinishBackgroundEvents:(SPTDataLoaderService *)dataLoaderService __OSX_UNAVAILABLE;
+
+@end
+
+NS_ASSUME_NONNULL_END
