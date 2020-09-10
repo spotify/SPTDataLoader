@@ -30,7 +30,6 @@ static NSString *const SPTDataLoaderBackgroundSessionConfigurationIdentifier =
 @interface SPTDataLoaderServiceDefaultSessionSelector ()
 
 @property (nonatomic, strong, readonly) NSURLSessionConfiguration *configuration;
-@property (nonatomic, strong, readonly) NSURLSession *backgroundSession;
 @property (nonatomic, weak, readonly) id<NSURLSessionDelegate> delegate;
 @property (nonatomic, strong, readonly) NSOperationQueue *delegateQueue;
 
