@@ -129,7 +129,6 @@ create_sim() {
 }
 
 create_sim dataloader-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-8
-create_sim dataloaderswift-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-8
 
 xcb "Run tests for iOS" test \
   -scheme "ALL_TESTS" \
@@ -138,7 +137,6 @@ xcb "Run tests for iOS" test \
   -derivedDataPath "$DERIVED_DATA_TEST/ios"
 
 create_sim dataloader-tester-tvos tvOS com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p
-create_sim dataloaderswift-tester-tvos tvOS com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p
 
 xcb "Run tests for tvOS" test \
   -scheme "ALL_TESTS" \

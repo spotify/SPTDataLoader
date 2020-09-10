@@ -1,7 +1,6 @@
 coverage:
   ignore:
   - build
-  - Carthage
   - demo
   - other
   - Tests
