@@ -1,10 +1,9 @@
 coverage:
   ignore:
   - build
-  - Carthage
   - demo
   - other
-  - SPTDataLoaderTests
+  - Tests
   status:
     patch:
       default:

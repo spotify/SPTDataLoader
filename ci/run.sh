@@ -12,17 +12,19 @@ fail() {
 }
 
 xcb() {
-  LOG="$1"
-  heading "$LOG"
+  local log="$1"
+  heading "$log"
   shift
   export NSUnbufferedIO=YES
   set -o pipefail && xcodebuild \
     -workspace SPTDataLoader.xcworkspace \
     -UseSanitizedBuildSystemEnvironment=YES \
-    -derivedDataPath build/DerivedData \
     CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= \
-    "$@" | xcpretty || fail "$LOG failed"
+    "$@" | xcpretty || fail "$log failed"
 }
+
+DERIVED_DATA_COMMON="build/DerivedData/common"
+DERIVED_DATA_TEST="build/DerivedData/test"
 
 if [[ -n "$GITHUB_WORKFLOW" ]]; then
   heading "Installing Tools"
@@ -47,7 +49,8 @@ build_library() {
   xcb "Build Library [$1]" \
     build -scheme SPTDataLoader \
     -sdk "$1" \
-    -configuration Release
+    -configuration Release \
+    -derivedDataPath "$DERIVED_DATA_COMMON"
 }
 
 build_library iphoneos
@@ -66,7 +69,8 @@ build_framework() {
   xcb "Build Framework [$1] [$2]" \
     build -scheme "$1" \
     -sdk "$2" \
-    -configuration Release
+    -configuration Release \
+    -derivedDataPath "$DERIVED_DATA_COMMON"
 }
 
 build_framework SPTDataLoader-iOS iphoneos
@@ -84,7 +88,8 @@ build_framework SPTDataLoader-TV appletvsimulator
 xcb "Build Demo App for Simulator" \
   build -scheme "SPTDataLoaderDemo" \
   -sdk iphonesimulator \
-  -configuration Release
+  -configuration Release \
+  -derivedDataPath "$DERIVED_DATA_COMMON"
 
 #
 # RUN TESTS
@@ -93,7 +98,8 @@ xcb "Build Demo App for Simulator" \
 xcb "Run tests for macOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
-  -sdk macosx
+  -sdk macosx \
+  -derivedDataPath "$DERIVED_DATA_TEST/macos"
 
 create_sim() {
   if sh -c "xcrun simctl list devices | grep -q $1" ; then
@@ -111,14 +117,16 @@ create_sim dataloader-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhon
 xcb "Run tests for iOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
-  -destination "platform=iOS Simulator,name=dataloader-tester-ios"
+  -destination "platform=iOS Simulator,name=dataloader-tester-ios" \
+  -derivedDataPath "$DERIVED_DATA_TEST/ios"
 
 create_sim dataloader-tester-tvos tvOS com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p
 
 xcb "Run tests for tvOS" test \
   -scheme "SPTDataLoader" \
   -enableCodeCoverage YES \
-  -destination "platform=tvOS Simulator,name=dataloader-tester-tvos"
+  -destination "platform=tvOS Simulator,name=dataloader-tester-tvos" \
+  -derivedDataPath "$DERIVED_DATA_TEST/tvos"
 
 #
 # CODECOV
@@ -141,4 +149,19 @@ fi
 curl -sfL https://codecov.io/bash > build/codecov.sh
 chmod +x build/codecov.sh
 [[ "$IS_CI" == "1" ]] || CODECOV_EXTRA="-d"
-build/codecov.sh -D build/DerivedData -X xcodellvm $CODECOV_EXTRA
+
+coverage_report() {
+  build/codecov.sh -F "$1" -D "$DERIVED_DATA_TEST/$1" -X xcodellvm $CODECOV_EXTRA
+  if [[ "$IS_CI" == "1" ]]; then
+    # clean up coverage files so they don't leak into the next processing run
+    rm -f *.coverage.txt
+  elif compgen -G "*.coverage.txt" > /dev/null; then
+    # move when running locally so they don't get overwritten
+    mkdir -p "build/coverage/$1"
+    mv *.coverage.txt "build/coverage/$1"
+  fi
+}
+
+coverage_report macos
+coverage_report tvos
+coverage_report ios
