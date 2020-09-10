@@ -36,6 +36,7 @@
 #import "NSURLSessionDownloadTaskMock.h"
 #import "SPTDataLoaderRequest+Private.h"
 #import "NSURLSessionTaskMock.h"
+#import "SPTDataLoaderServiceEventObserverMock.h"
 #import "SPTDataLoaderServerTrustPolicyMock.h"
 #import "NSURLAuthenticationChallengeMock.h"
 #import "SPTDataLoaderCancellationTokenDelegateMock.h"
@@ -442,6 +443,20 @@
     [self.service URLSession:self.session task:[NSURLSessionDataTaskMock new] didCompleteWithError:nil];
     XCTAssertEqual(consumptionObserver.numberOfCallsToEndedRequest, 1, @"There should be 1 call to the consumption observer when the observer has been removed");
 }
+
+#if !TARGET_OS_OSX
+
+- (void)testEventObserverCalled
+{
+    SPTDataLoaderServiceEventObserverMock *eventObserverMock = [SPTDataLoaderServiceEventObserverMock new];
+    [self.service addEventObserver:eventObserverMock on:dispatch_get_main_queue()];
+
+    [(id<NSURLSessionDelegate>)self.service URLSessionDidFinishEventsForBackgroundURLSession:self.session];
+
+    XCTAssertEqual(eventObserverMock.timesCalled, 1);
+}
+
+#endif
 
 - (void)testAllowingAllCertificates
 {

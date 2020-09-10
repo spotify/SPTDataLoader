@@ -44,6 +44,7 @@
 		05A3BCB61D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */; };
 		05CB0C451A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CB0C441A1A1E8A00CA4CEF /* SPTDataLoaderRequestTaskHandler.m */; };
 		05EEB73F1C5C090B00A82266 /* NSBundleMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EEB73E1C5C090B00A82266 /* NSBundleMock.m */; };
+		2CF13C0C250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF13C0B250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.m */; };
 		2DE3DAC72344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */; };
 		2DE3DACA2344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */; };
 		3426C1ED24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */; };
@@ -151,6 +152,8 @@
 		05EEB73D1C5C090B00A82266 /* NSBundleMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleMock.h; sourceTree = "<group>"; };
 		05EEB73E1C5C090B00A82266 /* NSBundleMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleMock.m; sourceTree = "<group>"; };
 		2C9560E525091BA200EE3DBE /* SPTDataLoaderServiceEventObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceEventObserver.h; sourceTree = "<group>"; };
+		2CF13C0A250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceEventObserverMock.h; sourceTree = "<group>"; };
+		2CF13C0B250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceEventObserverMock.m; sourceTree = "<group>"; };
 		2DE3DAC42344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
 		2DE3DAC52344E3DA0022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
 		2DE3DAC62344E3DA0022642E /* SPTDataLoaderService+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderService+Private.h"; sourceTree = "<group>"; };
@@ -347,6 +350,8 @@
 				05EEB73E1C5C090B00A82266 /* NSBundleMock.m */,
 				05A3BCB41D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.h */,
 				05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */,
+				2CF13C0A250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.h */,
+				2CF13C0B250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.m */,
 				2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */,
 				2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */,
 				430D3C85249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.h */,
@@ -538,6 +543,7 @@
 				055AEE521A16117E00A490BF /* NSURLSessionTaskMock.m in Sources */,
 				055AEE561A162C5E00A490BF /* SPTDataLoaderResolverTest.m in Sources */,
 				430D3C89249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m in Sources */,
+				2CF13C0C250AA4190021F836 /* SPTDataLoaderServiceEventObserverMock.m in Sources */,
 				05A3BCB61D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m in Sources */,
 				059940971A14E7F1006D6BE9 /* SPTDataLoaderFactoryTest.m in Sources */,
 				055AEE581A162F0200A490BF /* SPTDataLoaderResolverAddressTest.m in Sources */,
