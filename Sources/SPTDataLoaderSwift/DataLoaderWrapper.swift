@@ -21,16 +21,18 @@
 
 import Foundation
 
-/// A wrapper around `SPTDataLoader` that provides a closure-based
-/// callback API without having to modify the request's userInfo.
 final class DataLoaderWrapper: NSObject {
-    private let sptDataLoader: SPTDataLoader
-    private var responseHandlers: [Int64: (SPTDataLoaderResponse) -> Void] = [:]
+    private typealias ResponseHandler = (SPTDataLoaderResponse) -> Void
 
-    /// Initializes the data loader with the given `SPTDataLoader`.
-    /// - Parameter sptDataLoader: The wrapped data loader object.
-    init(sptDataLoader: SPTDataLoader) {
-        self.sptDataLoader = sptDataLoader
+    private let dataLoader: SPTDataLoader
+
+    private var requests: [Int64: Request] = [:]
+    private var responseHandlers: [Int64: ResponseHandler] = [:]
+
+    private let accessLock = DispatchQueue(label: "SPTDataLoader.DataLoaderWrapper")
+
+    init(dataLoader: SPTDataLoader) {
+        self.dataLoader = dataLoader
     }
 
     /// Performs a request and provides the response to the given handler.
@@ -41,15 +43,30 @@ final class DataLoaderWrapper: NSObject {
         _ request: SPTDataLoaderRequest,
         responseHandler: @escaping (SPTDataLoaderResponse) -> Void
     ) -> SPTDataLoaderCancellationToken? {
-        responseHandlers[request.uniqueIdentifier] = responseHandler
+        accessLock.sync {
+            responseHandlers[request.uniqueIdentifier] = responseHandler
+        }
 
-        return sptDataLoader.perform(request)
+        return dataLoader.perform(request)
     }
 }
 
 // MARK: - DataLoader
 
 extension DataLoaderWrapper: DataLoader {
+    func request(_ url: URL, sourceIdentifier: String?) -> Request {
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: sourceIdentifier)
+        let request = Request(request: sptRequest) { [dataLoader] in
+            return dataLoader.perform(sptRequest)
+        }
+
+        accessLock.sync {
+            requests[sptRequest.uniqueIdentifier] = request
+        }
+
+        return request
+    }
+
     @discardableResult
     func request(
         _ request: SPTDataLoaderRequest,
@@ -64,9 +81,9 @@ extension DataLoaderWrapper: DataLoader {
         completionHandler: @escaping (Response<Data?, Error>) -> Void
     ) -> SPTDataLoaderCancellationToken? {
         return perform(request) { response in
-            let serializer = DataResponseSerializer()
+            let serializer = OptionalDataResponseSerializer()
             let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
+            let completionResponse = Response(request: request, response: response, result: serializerResult)
             completionHandler(completionResponse)
         }
     }
@@ -80,7 +97,7 @@ extension DataLoaderWrapper: DataLoader {
         return perform(request) { response in
             let serializer = DecodableResponseSerializer<Value>(decoder: decoder)
             let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
+            let completionResponse = Response(request: request, response: response, result: serializerResult)
             completionHandler(completionResponse)
         }
     }
@@ -94,7 +111,7 @@ extension DataLoaderWrapper: DataLoader {
         return perform(request) { response in
             let serializer = JSONResponseSerializer(options: options)
             let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
+            let completionResponse = Response(request: request, response: response, result: serializerResult)
             completionHandler(completionResponse)
         }
     }
@@ -107,7 +124,7 @@ extension DataLoaderWrapper: DataLoader {
     ) -> SPTDataLoaderCancellationToken? {
         return perform(request) { response in
             let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
+            let completionResponse = Response(request: request, response: response, result: serializerResult)
             completionHandler(completionResponse)
         }
     }
@@ -117,18 +134,30 @@ extension DataLoaderWrapper: DataLoader {
 
 extension DataLoaderWrapper: SPTDataLoaderDelegate {
     func dataLoader(_ dataLoader: SPTDataLoader, didReceiveSuccessfulResponse response: SPTDataLoaderResponse) {
-        if let handler = responseHandlers.removeValue(forKey: response.request.uniqueIdentifier) {
-            handler(response)
+        handleResponse(response)
+    }
+
+    func dataLoader(_ dataLoader: SPTDataLoader, didReceiveErrorResponse response: SPTDataLoaderResponse) {
+        handleResponse(response)
+    }
+
+    func dataLoader(_ dataLoader: SPTDataLoader, didCancel request: SPTDataLoaderRequest) {
+        accessLock.sync {
+            requests[request.uniqueIdentifier] = nil
+            responseHandlers[request.uniqueIdentifier] = nil
         }
     }
 
-    public func dataLoader(_ dataLoader: SPTDataLoader, didReceiveErrorResponse response: SPTDataLoaderResponse) {
-        if let handler = responseHandlers.removeValue(forKey: response.request.uniqueIdentifier) {
-            handler(response)
-        }
-    }
+    private func handleResponse(_ response: SPTDataLoaderResponse) {
+        var request: Request?
+        var responseHandler: ResponseHandler?
 
-    public func dataLoader(_ dataLoader: SPTDataLoader, didCancel request: SPTDataLoaderRequest) {
-        responseHandlers.removeValue(forKey: request.uniqueIdentifier)
+        accessLock.sync {
+            request = requests.removeValue(forKey: response.request.uniqueIdentifier)
+            responseHandler = responseHandlers.removeValue(forKey: response.request.uniqueIdentifier)
+        }
+
+        request.map { request in request.processResponse(response) }
+        responseHandler.map { responseHandler in responseHandler(response) }
     }
 }

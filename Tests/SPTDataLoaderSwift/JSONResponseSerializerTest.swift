@@ -25,7 +25,7 @@ import Foundation
 import XCTest
 
 class JSONResponseSerializerTest: XCTestCase {
-    func test_responseSerialization_shouldBeUnsuccessful_whenErrorIsPresent() {
+    func test_responseSerialization_shouldFail_whenErrorIsPresent() {
         // Given
         let request = SPTDataLoaderRequest()
         let responseFake = FakeDataLoaderResponse(request: request, error: TestError.foo)
@@ -54,8 +54,7 @@ class JSONResponseSerializerTest: XCTestCase {
         guard case .failure(let error) = result else {
             return XCTFail("Expected failure result")
         }
-        XCTAssertEqual(error.domain, NSCocoaErrorDomain)
-        XCTAssertEqual(error.code, 3840)
+        XCTAssertEqual(error as? ResponseSerializationError, .dataNotFound)
     }
 
     func test_responseSerialization_shouldBeUnsuccessful_whenBodyIsInvalid() {
@@ -93,7 +92,7 @@ class JSONResponseSerializerTest: XCTestCase {
         XCTAssertEqual(value as? NSDictionary, ["foo": "bar", "baz": [123], "bar": ["baz": true]])
     }
 
-    func test_responseSerialization_shouldBeSuccessful_whenOptionsAllowFragments() {
+    func test_responseSerialization_shouldSucceed_whenOptionsAllowFragments() {
         // Given
         let request = SPTDataLoaderRequest()
         let responseBody = "123".data(using: .utf8)

@@ -19,27 +19,20 @@
  under the License.
  */
 
-import Foundation
+extension Result {
+    var success: Success? {
+        guard case .success(let value) = self else {
+            return nil
+        }
 
-/// Values associated with the response to a `Request`.
-public struct Response<Success, Failure: Error> {
-    /// The originating request instance.
-    public let request: SPTDataLoaderRequest
+        return value
+    }
 
-    /// The underlying response instance.
-    public let response: SPTDataLoaderResponse?
+    var failure: Failure? {
+        guard case .failure(let error) = self else {
+            return nil
+        }
 
-    /// The serialized result value.
-    public let result: Result<Success, Failure>
-}
-
-public extension Response {
-    /// The response's content.
-    var data: Data? { response?.body }
-
-    /// The serialized success value, otherwise `nil`.
-    var value: Success? { result.success }
-
-    /// The serialized error value, otherwise `nil`.
-    var error: Failure? { result.failure }
+        return error
+    }
 }

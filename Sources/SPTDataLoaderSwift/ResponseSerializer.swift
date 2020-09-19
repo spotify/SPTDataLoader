@@ -33,13 +33,27 @@ public protocol ResponseSerializer {
     func serialize(response: SPTDataLoaderResponse) throws -> Output
 }
 
-struct DataResponseSerializer: ResponseSerializer {
+struct OptionalDataResponseSerializer: ResponseSerializer {
     func serialize(response: SPTDataLoaderResponse) throws -> Data? {
-        if let error = response.error {
-            throw error
+        guard response.error == nil else {
+            throw response.error.unsafelyUnwrapped
         }
 
         return response.body
+    }
+}
+
+struct DataResponseSerializer: ResponseSerializer {
+    func serialize(response: SPTDataLoaderResponse) throws -> Data {
+        guard response.error == nil else {
+            throw response.error.unsafelyUnwrapped
+        }
+
+        guard let data = response.body else {
+            throw ResponseSerializationError.dataNotFound
+        }
+
+        return data
     }
 }
 
@@ -47,11 +61,15 @@ struct DecodableResponseSerializer<Value: Decodable>: ResponseSerializer {
     let decoder: ResponseDecoder
 
     func serialize(response: SPTDataLoaderResponse) throws -> Value {
-        if let error = response.error {
-            throw error
+        guard response.error == nil else {
+            throw response.error.unsafelyUnwrapped
         }
 
-        return try decoder.decode(Value.self, from: response.body ?? Data())
+        guard let data = response.body else {
+            throw ResponseSerializationError.dataNotFound
+        }
+
+        return try decoder.decode(Value.self, from: data)
     }
 }
 
@@ -59,10 +77,14 @@ struct JSONResponseSerializer: ResponseSerializer {
     let options: JSONSerialization.ReadingOptions
 
     func serialize(response: SPTDataLoaderResponse) throws -> Any {
-        if let error = response.error {
-            throw error
+        guard response.error == nil else {
+            throw response.error.unsafelyUnwrapped
         }
 
-        return try JSONSerialization.jsonObject(with: response.body ?? Data(), options: options)
+        guard let data = response.body else {
+            throw ResponseSerializationError.dataNotFound
+        }
+
+        return try JSONSerialization.jsonObject(with: data, options: options)
     }
 }

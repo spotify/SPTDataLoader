@@ -27,7 +27,7 @@ import XCTest
 class DataLoaderWrapperTest: XCTestCase {
     private lazy var stubbedNetwork = StubbedNetwork()
     private lazy var sptDataLoader = stubbedNetwork.dataLoaderFactory.createDataLoader()
-    private lazy var dataLoaderWrapper = DataLoaderWrapper(sptDataLoader: sptDataLoader)
+    private lazy var dataLoaderWrapper = DataLoaderWrapper(dataLoader: sptDataLoader)
 
     // MARK: Setup
 
@@ -35,7 +35,60 @@ class DataLoaderWrapperTest: XCTestCase {
         super.setUp()
 
         sptDataLoader.delegate = dataLoaderWrapper
+        sptDataLoader.delegateQueue = .main
+
         stubbedNetwork.removeAllStubs()
+    }
+
+    // MARK: Request Tests
+
+    func test_request_shouldReceiveCallback_whenSuccessReceived() {
+        // Given
+        let url = URL(static: "https://foo.bar/baz.json")
+        let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
+
+        stubbedNetwork.addStub(where: { $0.url == url })
+
+        // When
+        let responseExpectation = expectation(description: "Response expected")
+        request.response { _ in responseExpectation.fulfill() }
+
+        // Then
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func test_request_shouldReceiveCallback_whenErrorReceived() {
+        // Given
+        let url = URL(static: "https://foo.bar/baz.json")
+        let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
+
+        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
+
+        // When
+        let responseExpectation = expectation(description: "Response expected")
+        request.response { _ in responseExpectation.fulfill() }
+
+        // Then
+        waitForExpectations(timeout: 0.5)
+    }
+
+    func test_request_shouldNotReceiveCallback_whenCancelled() {
+        // Given
+        let url = URL(static: "https://foo.bar/baz.json")
+        let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
+
+        stubbedNetwork.addStub(where: { $0.url == url })
+
+        // When
+        let responseExpectation = expectation(description: "Response expected")
+        responseExpectation.isInverted = true
+
+        request
+            .response { _ in responseExpectation.fulfill() }
+            .cancel()
+
+        // Then
+        waitForExpectations(timeout: 0.5)
     }
 
     // MARK: Cancellation Tests
@@ -262,16 +315,4 @@ private enum TestError: Error {
 
 private struct TestDecodable: Decodable, Equatable {
     let foo: String
-}
-
-// MARK: -
-
-extension URL {
-    init(static string: StaticString) {
-        guard let url = URL(string: string.description) else {
-            fatalError("Invalid URL: \(string)")
-        }
-
-        self = url
-    }
 }

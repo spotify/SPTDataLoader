@@ -27,7 +27,7 @@ public extension SPTDataLoaderFactory {
     /// - Returns: A new `DataLoader` instance.
     func makeDataLoader(responseQueue: DispatchQueue = .global()) -> DataLoader {
         let sptDataLoader = createDataLoader()
-        let dataLoaderWrapper = DataLoaderWrapper(sptDataLoader: sptDataLoader)
+        let dataLoaderWrapper = DataLoaderWrapper(dataLoader: sptDataLoader)
 
         sptDataLoader.delegate = dataLoaderWrapper
         sptDataLoader.delegateQueue = responseQueue

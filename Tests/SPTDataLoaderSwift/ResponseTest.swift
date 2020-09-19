@@ -25,28 +25,28 @@ import Foundation
 import XCTest
 
 class ResponseTest: XCTestCase {
-    func test_response_shouldProvideUnderlyingResponse_whenRequested() {
-        // Given
-        let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
-
-        // When
-        let response = Response(response: responseFake, result: Result { true })
-
-        // Given
-        XCTAssertEqual(response.response, responseFake)
-    }
-
     func test_response_shouldProvideRequest_whenRequested() {
         // Given
         let request = SPTDataLoaderRequest()
         let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseFake, result: Result { true })
+        let response = Response(request: request, response: responseFake, result: Result { true })
 
         // Given
         XCTAssertEqual(response.request, request)
+    }
+
+    func test_response_shouldProvideUnderlyingResponse_whenRequested() {
+        // Given
+        let request = SPTDataLoaderRequest()
+        let responseFake = FakeDataLoaderResponse(request: request)
+
+        // When
+        let response = Response(request: request, response: responseFake, result: Result { true })
+
+        // Given
+        XCTAssertEqual(response.response, responseFake)
     }
 
     func test_response_shouldProvideData_whenPresent() {
@@ -56,10 +56,10 @@ class ResponseTest: XCTestCase {
         let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
 
         // When
-        let response = Response(response: responseFake, result: Result { true })
+        let response = Response(request: request, response: responseFake, result: Result { true })
 
         // Given
-        XCTAssertEqual(response.data, responseFake.body)
+        XCTAssertEqual(response.data, responseBody)
     }
 
     func test_response_shouldProvideValue_whenResultIsSuccess() {
@@ -68,7 +68,7 @@ class ResponseTest: XCTestCase {
         let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseFake, result: Result { true })
+        let response = Response(request: request, response: responseFake, result: Result { true })
 
         // Given
         XCTAssertNil(response.error)
@@ -81,7 +81,7 @@ class ResponseTest: XCTestCase {
         let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseFake, result: Result { throw TestError.foo })
+        let response = Response(request: request, response: responseFake, result: Result { throw TestError.foo })
 
         // Given
         XCTAssertNil(response.value)
