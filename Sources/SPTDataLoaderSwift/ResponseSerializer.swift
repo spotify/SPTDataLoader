@@ -33,16 +33,6 @@ public protocol ResponseSerializer {
     func serialize(response: SPTDataLoaderResponse) throws -> Output
 }
 
-struct OptionalDataResponseSerializer: ResponseSerializer {
-    func serialize(response: SPTDataLoaderResponse) throws -> Data? {
-        guard response.error == nil else {
-            throw response.error.unsafelyUnwrapped
-        }
-
-        return response.body
-    }
-}
-
 struct DataResponseSerializer: ResponseSerializer {
     func serialize(response: SPTDataLoaderResponse) throws -> Data {
         guard response.error == nil else {

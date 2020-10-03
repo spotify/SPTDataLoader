@@ -149,28 +149,24 @@
 		F5A7317A2500777E00405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A7317B2500777E00405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A7317C2500777E00405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A7317D2500777E00405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A7319125007D3800405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A7319225007D3800405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
 		F5A7319325007D3800405927 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731742500777300405927 /* Response.swift */; };
 		F5A7319425007D3800405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A7319525007D3800405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A7319625007D3800405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A7319725007D3800405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A731A325007D4000405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A731A425007D4000405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
 		F5A731A525007D4000405927 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731742500777300405927 /* Response.swift */; };
 		F5A731A625007D4000405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A731A725007D4000405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A731A825007D4000405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A731A925007D4000405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A731B525007D4600405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A731B625007D4600405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
 		F5A731B725007D4600405927 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731742500777300405927 /* Response.swift */; };
 		F5A731B825007D4600405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A731B925007D4600405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A731BA25007D4600405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A731BB25007D4600405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A731C425007E8100405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A637E31C46B46300061E37 /* SPTDataLoader.framework */; };
 		F5A731C925007E9D00405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A637F01C46B48600061E37 /* SPTDataLoader.framework */; };
 		F5A731CE25007EAD00405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */; };
@@ -277,7 +273,6 @@
 		F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoaderError.swift; sourceTree = "<group>"; };
 		F5A73163250075CF00405927 /* SPTDataLoaderSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoaderSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5A731702500777300405927 /* ResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
-		F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPTDataLoaderFactory+Convenience.swift"; sourceTree = "<group>"; };
 		F5A731722500777300405927 /* ResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
 		F5A731732500777300405927 /* DataLoaderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderWrapper.swift; sourceTree = "<group>"; };
 		F5A731742500777300405927 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -492,7 +487,6 @@
 				F5A731722500777300405927 /* ResponseDecoder.swift */,
 				F5A731702500777300405927 /* ResponseSerializer.swift */,
 				F5A731762500777300405927 /* SPTDataLoader.swift */,
-				F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */,
 				F543C09C25165BD200BBECC5 /* Utilities */,
 			);
 			path = SPTDataLoaderSwift;
@@ -935,7 +929,6 @@
 				F5A7317B2500777E00405927 /* ResponseSerializer.swift in Sources */,
 				F5A7317C2500777E00405927 /* SPTDataLoader.swift in Sources */,
 				F565EB2B2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
-				F5A7317D2500777E00405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -952,7 +945,6 @@
 				F5A7319525007D3800405927 /* ResponseSerializer.swift in Sources */,
 				F5A7319625007D3800405927 /* SPTDataLoader.swift in Sources */,
 				F565EB2C2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
-				F5A7319725007D3800405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -969,7 +961,6 @@
 				F5A731A725007D4000405927 /* ResponseSerializer.swift in Sources */,
 				F5A731A825007D4000405927 /* SPTDataLoader.swift in Sources */,
 				F565EB2D2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
-				F5A731A925007D4000405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -986,7 +977,6 @@
 				F5A731B925007D4600405927 /* ResponseSerializer.swift in Sources */,
 				F5A731BA25007D4600405927 /* SPTDataLoader.swift in Sources */,
 				F565EB2E2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
-				F5A731BB25007D4600405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

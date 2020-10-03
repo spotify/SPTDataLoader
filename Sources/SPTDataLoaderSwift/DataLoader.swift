@@ -27,60 +27,19 @@ public protocol DataLoader {
     /// - Parameter url: The `URL` for the request.
     /// - Parameter sourceIdentifier: The identifier for the request source. May be `nil`.
     func request(_ url: URL, sourceIdentifier: String?) -> Request
+}
 
-    /// Performs a request and provides a `SPTDataLoaderResponse`.
-    /// - Parameter request: The `SPTDataLoaderRequest` to perform.
-    /// - Parameter completionHandler: The callback closure invoked upon response.
-    /// - Returns: A token capable of cancelling the request, or `nil` if the request is invalid.
-    @discardableResult
-    func request(
-        _ request: SPTDataLoaderRequest,
-        completionHandler: @escaping (SPTDataLoaderResponse) -> Void
-    ) -> SPTDataLoaderCancellationToken?
+public extension SPTDataLoaderFactory {
+    /// Convenience method for creating a Swift `DataLoader`.
+    /// - Parameter responseQueue: The `DispatchQueue` on which to perform response handling.
+    /// - Returns: A new `DataLoader` instance.
+    func makeDataLoader(responseQueue: DispatchQueue = .global()) -> DataLoader {
+        let sptDataLoader = createDataLoader()
+        let dataLoaderWrapper = DataLoaderWrapper(dataLoader: sptDataLoader)
 
-    /// Performs a request and provides a `Response` containing the optional response data.
-    /// - Parameter request: The `SPTDataLoaderRequest` to perform.
-    /// - Parameter completionHandler: The callback closure invoked upon response.
-    /// - Returns: A token capable of cancelling the request, or `nil` if the request is invalid.
-    @discardableResult
-    func request(
-        _ request: SPTDataLoaderRequest,
-        completionHandler: @escaping (Response<Data?, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken?
+        sptDataLoader.delegate = dataLoaderWrapper
+        sptDataLoader.delegateQueue = responseQueue
 
-    /// Performs a request and provides a `Response` containing a decoded value.
-    /// - Parameter request: The `SPTDataLoaderRequest` to perform.
-    /// - Parameter decoder: The `ResponseDecoder` used to decode the value from response data.
-    /// - Parameter completionHandler: The callback closure invoked upon response.
-    /// - Returns: A token capable of cancelling the request, or `nil` if the request is invalid.
-    @discardableResult
-    func request<Value: Decodable>(
-        _ request: SPTDataLoaderRequest,
-        decoder: ResponseDecoder,
-        completionHandler: @escaping (Response<Value, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken?
-
-    /// Performs a request and provides a `Response` containing a JSON value.
-    /// - Parameter request: The `SPTDataLoaderRequest` to perform.
-    /// - Parameter options: The `JSONSerialization.ReadingOptions` to use for reading the JSON response data.
-    /// - Parameter completionHandler: The callback closure invoked upon response.
-    /// - Returns: A token capable of cancelling the request, or `nil` if the request is invalid.
-    @discardableResult
-    func request(
-        _ request: SPTDataLoaderRequest,
-        options: JSONSerialization.ReadingOptions,
-        completionHandler: @escaping (Response<Any, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken?
-
-    /// Performs a request and provides a `Response` containing a serialized value.
-    /// - Parameter request: The `SPTDataLoaderRequest` to perform.
-    /// - Parameter serializer: The `ResponseSerializer` to use for serializing the response value.
-    /// - Parameter completionHandler: The callback closure invoked upon response.
-    /// - Returns: A token capable of cancelling the request, or `nil` if the request is invalid.
-    @discardableResult
-    func request<Serializer: ResponseSerializer>(
-        _ request: SPTDataLoaderRequest,
-        serializer: Serializer,
-        completionHandler: @escaping (Response<Serializer.Output, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken?
+        return dataLoaderWrapper
+    }
 }

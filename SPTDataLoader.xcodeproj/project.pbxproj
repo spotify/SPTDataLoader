@@ -66,7 +66,6 @@
 		F5B640C025006DE0004B9B83 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640B925006DE0004B9B83 /* ResponseSerializer.swift */; };
 		F5B640C125006DE0004B9B83 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BA25006DE0004B9B83 /* ResponseDecoder.swift */; };
 		F5B640C225006DE0004B9B83 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BB25006DE0004B9B83 /* Response.swift */; };
-		F5B640C325006DE0004B9B83 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BC25006DE0004B9B83 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5B640C425006DE0004B9B83 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BD25006DE0004B9B83 /* DataLoaderWrapper.swift */; };
 		F5B640C525006DE0004B9B83 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BE25006DE0004B9B83 /* DataLoader.swift */; };
 		F5B640C625006DE0004B9B83 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BF25006DE0004B9B83 /* SPTDataLoader.swift */; };
@@ -231,7 +230,6 @@
 		F5B640B925006DE0004B9B83 /* ResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
 		F5B640BA25006DE0004B9B83 /* ResponseDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
 		F5B640BB25006DE0004B9B83 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		F5B640BC25006DE0004B9B83 /* SPTDataLoaderFactory+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPTDataLoaderFactory+Convenience.swift"; sourceTree = "<group>"; };
 		F5B640BD25006DE0004B9B83 /* DataLoaderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoaderWrapper.swift; sourceTree = "<group>"; };
 		F5B640BE25006DE0004B9B83 /* DataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		F5B640BF25006DE0004B9B83 /* SPTDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPTDataLoader.swift; sourceTree = "<group>"; };
@@ -423,7 +421,6 @@
 		F5B63FD925005D82004B9B83 /* SPTDataLoader */ = {
 			isa = PBXGroup;
 			children = (
-				F5F63D9D2531320F000A07D1 /* Utilities */,
 				05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */,
 				3426C1F324CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m */,
 				0504CB8C1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m */,
@@ -440,6 +437,7 @@
 				056A04BD1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m */,
 				0599409E1A14F60F006D6BE9 /* SPTDataLoaderTest.m */,
 				430D3C88249CE75100791FD3 /* SPTDataLoaderTimeProviderImplementationTest.m */,
+				F5F63D9D2531320F000A07D1 /* Utilities */,
 			);
 			path = SPTDataLoader;
 			sourceTree = "<group>";
@@ -455,7 +453,6 @@
 				F5B640BA25006DE0004B9B83 /* ResponseDecoder.swift */,
 				F5B640B925006DE0004B9B83 /* ResponseSerializer.swift */,
 				F5B640BF25006DE0004B9B83 /* SPTDataLoader.swift */,
-				F5B640BC25006DE0004B9B83 /* SPTDataLoaderFactory+Convenience.swift */,
 				F5171AA32515494600750E35 /* Utilities */,
 			);
 			path = SPTDataLoaderSwift;
@@ -742,7 +739,6 @@
 				F5B640C025006DE0004B9B83 /* ResponseSerializer.swift in Sources */,
 				F5171A8E251544B500750E35 /* Result+Convenience.swift in Sources */,
 				F5B640C625006DE0004B9B83 /* SPTDataLoader.swift in Sources */,
-				F5B640C325006DE0004B9B83 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
 				F565EB2125168D7800A8FD3A /* DataLoaderError.swift in Sources */,
 				F527CDCC2506EE8800E906BE /* Request.swift in Sources */,
 			);
