@@ -25,12 +25,8 @@ import Foundation
 import XCTest
 
 class DataLoaderWrapperTest: XCTestCase {
-    private lazy var requestResponseHandlerDelegateMock = SPTDataLoaderRequestResponseHandlerDelegateMock()
-    private lazy var cancellationTokenFactoryMock = SPTDataLoaderCancellationTokenFactoryMock()
-    private lazy var sptDataLoader = SPTDataLoader(
-        requestResponseHandlerDelegate: requestResponseHandlerDelegateMock,
-        cancellationTokenFactory: cancellationTokenFactoryMock
-    )
+    private lazy var stubbedNetwork = StubbedNetwork()
+    private lazy var sptDataLoader = stubbedNetwork.dataLoaderFactory.createDataLoader()
     private lazy var dataLoaderWrapper = DataLoaderWrapper(sptDataLoader: sptDataLoader)
 
     // MARK: Setup
@@ -39,6 +35,7 @@ class DataLoaderWrapperTest: XCTestCase {
         super.setUp()
 
         sptDataLoader.delegate = dataLoaderWrapper
+        stubbedNetwork.removeAllStubs()
     }
 
     // MARK: Cancellation Tests
@@ -47,21 +44,20 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.error = TestError.foo
+        stubbedNetwork.addStub(where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Result unexpected")
         responseExpectation.isInverted = true
-        dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
+
+        let token = dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
             responseExpectation.fulfill()
         }
-        sptDataLoader.cancelledRequest(request)
-        sptDataLoader.failedResponse(responseMock)
+        token?.cancel()
 
         // Then
-        waitForExpectations(timeout: 1.0)
+        waitForExpectations(timeout: 0.5)
     }
 
     // MARK: Response Tests
@@ -70,16 +66,14 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.error = TestError.foo
+        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Result expected")
         dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
             responseExpectation.fulfill()
         }
-        sptDataLoader.failedResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -89,14 +83,14 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+
+        stubbedNetwork.addStub(where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Result expected")
         dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
             responseExpectation.fulfill()
         }
-        sptDataLoader.successfulResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -108,9 +102,8 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.error = TestError.foo
+        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Result expected")
@@ -119,7 +112,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.failedResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -129,7 +121,8 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+
+        stubbedNetwork.addStub(where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Result expected")
@@ -138,7 +131,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.successfulResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -150,9 +142,8 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.error = TestError.foo
+        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Result expected")
@@ -161,7 +152,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.failedResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -171,9 +161,11 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.body = "{\"foo\": \"bar\"}".data(using: .utf8)
+        stubbedNetwork.addStub(
+            body: "{\"foo\": \"bar\"}".data(using: .utf8),
+            where: { $0.url == url }
+        )
 
         // When
         let responseExpectation = expectation(description: "Result expected")
@@ -182,7 +174,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.successfulResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -194,9 +185,8 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.error = TestError.foo
+        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
 
         // When
         let responseExpectation = expectation(description: "Error response expected")
@@ -205,7 +195,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.failedResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -215,9 +204,11 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
 
-        responseMock.body = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
+        stubbedNetwork.addStub(
+            body: "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8),
+            where: { $0.url == url }
+        )
 
         // When
         let responseExpectation = expectation(description: "Result expected")
@@ -226,7 +217,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.successfulResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)
@@ -244,10 +234,12 @@ class DataLoaderWrapperTest: XCTestCase {
         // Given
         let url = URL(static: "https://foo.bar/baz.json")
         let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
         let responseSerializer = Serializer()
 
-        responseMock.body = "foo".data(using: .utf8)
+        stubbedNetwork.addStub(
+            body: "foo".data(using: .utf8),
+            where: { $0.url == url }
+        )
 
         // When
         let responseExpectation = expectation(description: "Result expected")
@@ -256,7 +248,6 @@ class DataLoaderWrapperTest: XCTestCase {
                 responseExpectation.fulfill()
             }
         }
-        sptDataLoader.successfulResponse(responseMock)
 
         // Then
         waitForExpectations(timeout: 1.0)

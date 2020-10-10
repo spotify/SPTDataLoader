@@ -28,14 +28,12 @@ class DataResponseSerializerTest: XCTestCase {
     func test_responseSerialization_shouldBeUnsuccessful_whenErrorIsPresent() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
         let responseError = NSError(domain: "foo", code: 123, userInfo: nil)
-
-        responseMock.error = responseError
+        let responseFake = FakeDataLoaderResponse(request: request, error: responseError)
 
         // When
         let serializer = DataResponseSerializer()
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .failure(let error) = result else {
@@ -44,14 +42,14 @@ class DataResponseSerializerTest: XCTestCase {
         XCTAssertEqual(error as NSError, responseError)
     }
 
-    func test_responseSerialization_shouldBeSuccessful_whenDataIsMissing() {
+    func test_responseSerialization_shouldBeSuccessful_whenBodyIsMissing() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+        let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
         let serializer = DataResponseSerializer()
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .success(let data) = result else {
@@ -60,22 +58,20 @@ class DataResponseSerializerTest: XCTestCase {
         XCTAssertEqual(data, nil)
     }
 
-    func test_responseSerialization_shouldBeSuccessful_whenDataIsPresent() {
+    func test_responseSerialization_shouldBeSuccessful_whenBodyIsPresent() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
-        let responseData = "foo".data(using: .utf8)
-
-        responseMock.body = responseData
+        let responseBody = "foo".data(using: .utf8)
+        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
 
         // When
         let serializer = DataResponseSerializer()
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .success(let data) = result else {
             return XCTFail("Expected success result")
         }
-        XCTAssertEqual(data, responseData)
+        XCTAssertEqual(data, responseBody)
     }
 }
