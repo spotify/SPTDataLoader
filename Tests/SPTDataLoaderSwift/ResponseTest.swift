@@ -28,22 +28,22 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideUnderlyingResponse_whenRequested() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+        let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseMock, result: Result { true })
+        let response = Response(response: responseFake, result: Result { true })
 
         // Given
-        XCTAssertEqual(response.response, responseMock)
+        XCTAssertEqual(response.response, responseFake)
     }
 
     func test_response_shouldProvideRequest_whenRequested() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+        let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseMock, result: Result { true })
+        let response = Response(response: responseFake, result: Result { true })
 
         // Given
         XCTAssertEqual(response.request, request)
@@ -52,24 +52,23 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideData_whenPresent() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
-
-        responseMock.body = "foo".data(using: .utf8)
+        let responseBody = "foo".data(using: .utf8)
+        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
 
         // When
-        let response = Response(response: responseMock, result: Result { true })
+        let response = Response(response: responseFake, result: Result { true })
 
         // Given
-        XCTAssertEqual(response.data, responseMock.body)
+        XCTAssertEqual(response.data, responseFake.body)
     }
 
     func test_response_shouldProvideValue_whenResultIsSuccess() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+        let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseMock, result: Result { true })
+        let response = Response(response: responseFake, result: Result { true })
 
         // Given
         XCTAssertNil(response.error)
@@ -79,10 +78,10 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideError_whenResultIsFailure() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+        let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
-        let response = Response(response: responseMock, result: Result { throw TestError.foo })
+        let response = Response(response: responseFake, result: Result { throw TestError.foo })
 
         // Given
         XCTAssertNil(response.value)

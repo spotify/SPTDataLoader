@@ -28,14 +28,12 @@ class DecodableResponseSerializerTest: XCTestCase {
     func test_responseSerialization_shouldBeUnsuccessful_whenErrorIsPresent() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
-
-        responseMock.error = TestError.foo
+        let responseFake = FakeDataLoaderResponse(request: request, error: TestError.foo)
 
         // When
         let decoder = JSONDecoder()
         let serializer = DecodableResponseSerializer<TestDecodable>(decoder: decoder)
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .failure(let error) = result else {
@@ -44,15 +42,15 @@ class DecodableResponseSerializerTest: XCTestCase {
         XCTAssertTrue(error is TestError)
     }
 
-    func test_responseSerialization_shouldBeUnsuccessful_whenDataIsMissing() {
+    func test_responseSerialization_shouldBeUnsuccessful_whenBodyIsMissing() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
+        let responseFake = FakeDataLoaderResponse(request: request)
 
         // When
         let decoder = JSONDecoder()
         let serializer = DecodableResponseSerializer<TestDecodable>(decoder: decoder)
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .failure(let error) = result else {
@@ -61,17 +59,16 @@ class DecodableResponseSerializerTest: XCTestCase {
         XCTAssertTrue(error is DecodingError)
     }
 
-    func test_responseSerialization_shouldBeUnsuccessful_whenDataIsInvalid() {
+    func test_responseSerialization_shouldBeUnsuccessful_whenBodyIsInvalid() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
-
-        responseMock.body = "{\"foo\": 123}".data(using: .utf8)
+        let responseBody = "{\"foo\": 123}".data(using: .utf8)
+        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
 
         // When
         let decoder = JSONDecoder()
         let serializer = DecodableResponseSerializer<TestDecodable>(decoder: decoder)
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .failure(let error) = result else {
@@ -80,17 +77,16 @@ class DecodableResponseSerializerTest: XCTestCase {
         XCTAssertTrue(error is DecodingError)
     }
 
-    func test_responseSerialization_shouldBeSuccessful_whenDataIsValid() {
+    func test_responseSerialization_shouldBeSuccessful_whenBodyIsValid() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseMock = SPTDataLoaderResponse(request: request, response: nil)
-
-        responseMock.body = "{\"foo\": \"bar\"}".data(using: .utf8)
+        let responseBody = "{\"foo\": \"bar\"}".data(using: .utf8)
+        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
 
         // When
         let decoder = JSONDecoder()
         let serializer = DecodableResponseSerializer<TestDecodable>(decoder: decoder)
-        let result = Result { try serializer.serialize(response: responseMock) }
+        let result = Result { try serializer.serialize(response: responseFake) }
 
         // Then
         guard case .success(let decodable) = result else {

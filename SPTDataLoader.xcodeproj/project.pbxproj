@@ -57,15 +57,6 @@
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
-		F5A731552500706E00405927 /* SPTDataLoaderCancellationTokenFactoryMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */; };
-		F5A731562500708100405927 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */; };
-		F5A73157250070D200405927 /* SPTDataLoaderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AE1A10CC6B00A10A0E /* SPTDataLoaderResponse.m */; };
-		F5A73158250070F500405927 /* SPTDataLoaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */; };
-		F5A731592500713200405927 /* SPTDataLoaderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */; };
-		F5A7315A2500718900405927 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EC24CB1C7B00B919B4 /* SPTDataLoaderBlockWrapper.m */; };
-		F5A7315B250071A300405927 /* SPTDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E068F1A10C62100A10A0E /* SPTDataLoader.m */; };
-		F5A7315C250071C300405927 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06B91A10CFD700A10A0E /* SPTDataLoaderCancellationTokenFactoryImplementation.m */; };
-		F5A7315D250071D500405927 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 050E06BB1A10CFD700A10A0E /* SPTDataLoaderCancellationTokenImplementation.m */; };
 		F5B640AD250064E4004B9B83 /* libSPTDataLoaderSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */; };
 		F5B640C025006DE0004B9B83 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640B925006DE0004B9B83 /* ResponseSerializer.swift */; };
 		F5B640C125006DE0004B9B83 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640BA25006DE0004B9B83 /* ResponseDecoder.swift */; };
@@ -80,6 +71,9 @@
 		F5B640D025006EC3004B9B83 /* DataResponseSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */; };
 		F5B640D125006EC3004B9B83 /* DataLoaderWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */; };
 		F5B640D225006EC3004B9B83 /* JSONResponseSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */; };
+		F5F63DA8253133CB000A07D1 /* StubbedNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */; };
+		F5F63DC22531435F000A07D1 /* FakeDataLoaderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DC12531435F000A07D1 /* FakeDataLoaderResponse.swift */; };
+		F5F63DD925314F57000A07D1 /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
 		F7346A311CC2CD3F00B8AB41 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7346A281CC2C67700B8AB41 /* Security.framework */; };
@@ -108,6 +102,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F5B64095250060D1004B9B83;
 			remoteInfo = SPTDataLoaderSwift;
+		};
+		F5F63DD725314F54000A07D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 050E06821A10C62100A10A0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 050E06891A10C62100A10A0E;
+			remoteInfo = SPTDataLoader;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -230,6 +231,8 @@
 		F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponseSerializerTest.swift; sourceTree = "<group>"; };
 		F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoaderWrapperTest.swift; sourceTree = "<group>"; };
 		F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializerTest.swift; sourceTree = "<group>"; };
+		F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedNetwork.swift; sourceTree = "<group>"; };
+		F5F63DC12531435F000A07D1 /* FakeDataLoaderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDataLoaderResponse.swift; sourceTree = "<group>"; };
 		F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
 		F7346A281CC2C67700B8AB41 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLAuthenticationChallengeMock.h; sourceTree = "<group>"; };
@@ -255,6 +258,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5F63DD925314F57000A07D1 /* libSPTDataLoader.a in Frameworks */,
 				F5B640AD250064E4004B9B83 /* libSPTDataLoaderSwift.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,7 +304,6 @@
 			children = (
 				F5B63FD925005D82004B9B83 /* SPTDataLoader */,
 				F5B63FDB25005DA4004B9B83 /* SPTDataLoaderSwift */,
-				059940951A14E7DA006D6BE9 /* Mocks */,
 				050E069A1A10C62100A10A0E /* Supporting Files */,
 			);
 			path = Tests;
@@ -323,49 +326,6 @@
 				057AFD5D1C7222CE00350C9F /* SPTDataLoader.podspec */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		059940951A14E7DA006D6BE9 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */,
-				F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */,
-				F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */,
-				F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */,
-				056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */,
-				056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */,
-				48E7EEC220591A2E00BB7CCC /* NSFileManagerMock.h */,
-				48E7EEC120591A2E00BB7CCC /* NSFileManagerMock.m */,
-				48E7EEC42059288E00BB7CCC /* NSDataMock.h */,
-				48E7EEC52059288F00BB7CCC /* NSDataMock.m */,
-				0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */,
-				0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */,
-				059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */,
-				059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */,
-				0599409B1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.h */,
-				0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */,
-				059940A01A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.h */,
-				059940A11A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m */,
-				059940A31A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.h */,
-				059940A41A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m */,
-				055AEE501A16117D00A490BF /* NSURLSessionTaskMock.h */,
-				055AEE511A16117E00A490BF /* NSURLSessionTaskMock.m */,
-				050F53851A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.h */,
-				050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */,
-				EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */,
-				EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */,
-				487FE3C520588E6C007141F9 /* NSURLSessionDownloadTaskMock.h */,
-				487FE3C620588E6D007141F9 /* NSURLSessionDownloadTaskMock.m */,
-				05EEB73D1C5C090B00A82266 /* NSBundleMock.h */,
-				05EEB73E1C5C090B00A82266 /* NSBundleMock.m */,
-				05A3BCB41D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.h */,
-				05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */,
-				2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */,
-				2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */,
-				430D3C85249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.h */,
-				430D3C86249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m */,
-			);
-			name = Mocks;
 			sourceTree = "<group>";
 		};
 		69D8603F22FBC9C9005981B2 /* Public API */ = {
@@ -445,6 +405,7 @@
 		F5B63FD925005D82004B9B83 /* SPTDataLoader */ = {
 			isa = PBXGroup;
 			children = (
+				F5F63D9D2531320F000A07D1 /* Utilities */,
 				05356F141A44B588003A7351 /* NSDictionaryHeaderSizeTest.m */,
 				3426C1F324CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m */,
 				0504CB8C1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m */,
@@ -482,6 +443,7 @@
 		F5B63FDB25005DA4004B9B83 /* SPTDataLoaderSwift */ = {
 			isa = PBXGroup;
 			children = (
+				F5F63D9E25313242000A07D1 /* Utilities */,
 				F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */,
 				F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */,
 				F5B640C825006EC3004B9B83 /* DecodableResponseSerializerTest.swift */,
@@ -490,6 +452,58 @@
 				F5B640C925006EC3004B9B83 /* SPTDataLoaderFactoryConvenienceTest.swift */,
 			);
 			path = SPTDataLoaderSwift;
+			sourceTree = "<group>";
+		};
+		F5F63D9D2531320F000A07D1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				05EEB73D1C5C090B00A82266 /* NSBundleMock.h */,
+				05EEB73E1C5C090B00A82266 /* NSBundleMock.m */,
+				48E7EEC42059288E00BB7CCC /* NSDataMock.h */,
+				48E7EEC52059288F00BB7CCC /* NSDataMock.m */,
+				48E7EEC220591A2E00BB7CCC /* NSFileManagerMock.h */,
+				48E7EEC120591A2E00BB7CCC /* NSFileManagerMock.m */,
+				F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */,
+				F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */,
+				EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */,
+				EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */,
+				487FE3C520588E6C007141F9 /* NSURLSessionDownloadTaskMock.h */,
+				487FE3C620588E6D007141F9 /* NSURLSessionDownloadTaskMock.m */,
+				056A04C21A13DF4C00FA72AD /* NSURLSessionMock.h */,
+				056A04C31A13DF4C00FA72AD /* NSURLSessionMock.m */,
+				055AEE501A16117D00A490BF /* NSURLSessionTaskMock.h */,
+				055AEE511A16117E00A490BF /* NSURLSessionTaskMock.m */,
+				0568B18C1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.h */,
+				0568B18D1A14A5FE00FEEBF8 /* SPTDataLoaderAuthoriserMock.m */,
+				059940A31A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.h */,
+				059940A41A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m */,
+				05A3BCB41D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.h */,
+				05A3BCB51D649CC000735F87 /* SPTDataLoaderCancellationTokenFactoryMock.m */,
+				050F53851A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.h */,
+				050F53861A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m */,
+				059940A01A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.h */,
+				059940A11A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m */,
+				0599409B1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.h */,
+				0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */,
+				059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */,
+				059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */,
+				F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */,
+				F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */,
+				2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */,
+				2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */,
+				430D3C85249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.h */,
+				430D3C86249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F5F63D9E25313242000A07D1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F5F63DC12531435F000A07D1 /* FakeDataLoaderResponse.swift */,
+				F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		F7346A2A1CC2C68300B8AB41 /* Frameworks */ = {
@@ -562,6 +576,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F5F63DD825314F54000A07D1 /* PBXTargetDependency */,
 				F5B640AC250064CE004B9B83 /* PBXTargetDependency */,
 			);
 			name = SPTDataLoaderSwiftTests;
@@ -712,20 +727,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5B640D125006EC3004B9B83 /* DataLoaderWrapperTest.swift in Sources */,
+				F5F63DA8253133CB000A07D1 /* StubbedNetwork.swift in Sources */,
 				F5B640D025006EC3004B9B83 /* DataResponseSerializerTest.swift in Sources */,
 				F5B640CE25006EC3004B9B83 /* DecodableResponseSerializerTest.swift in Sources */,
 				F5B640D225006EC3004B9B83 /* JSONResponseSerializerTest.swift in Sources */,
 				F5B640CD25006EC3004B9B83 /* ResponseTest.swift in Sources */,
+				F5F63DC22531435F000A07D1 /* FakeDataLoaderResponse.swift in Sources */,
 				F5B640CF25006EC3004B9B83 /* SPTDataLoaderFactoryConvenienceTest.swift in Sources */,
-				F5A7315B250071A300405927 /* SPTDataLoader.m in Sources */,
-				F5A7315A2500718900405927 /* SPTDataLoaderBlockWrapper.m in Sources */,
-				F5A7315C250071C300405927 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
-				F5A731552500706E00405927 /* SPTDataLoaderCancellationTokenFactoryMock.m in Sources */,
-				F5A7315D250071D500405927 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
-				F5A73158250070F500405927 /* SPTDataLoaderFactory.m in Sources */,
-				F5A731592500713200405927 /* SPTDataLoaderRequest.m in Sources */,
-				F5A731562500708100405927 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,
-				F5A73157250070D200405927 /* SPTDataLoaderResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +754,11 @@
 			isa = PBXTargetDependency;
 			target = F5B64095250060D1004B9B83 /* SPTDataLoaderSwift */;
 			targetProxy = F5B640AB250064CE004B9B83 /* PBXContainerItemProxy */;
+		};
+		F5F63DD825314F54000A07D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 050E06891A10C62100A10A0E /* SPTDataLoader */;
+			targetProxy = F5F63DD725314F54000A07D1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -838,7 +851,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoaderSwift/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Tests/SPTDataLoaderSwiftTests-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -848,7 +860,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoaderSwift/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Tests/SPTDataLoaderSwiftTests-Bridging-Header.h";
 			};
 			name = Release;
 		};
