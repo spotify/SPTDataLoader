@@ -49,7 +49,7 @@ public final class Request {
         case cancelled
     }
 
-    private let accessLock = DispatchQueue(label: "SPTDataLoader.Request")
+    private let accessLock = AccessLock()
     private var state: State = .initialized
     private var responseHandlers: [ResponseHandler] = []
     private var responseValidators: [ResponseValidator] = []

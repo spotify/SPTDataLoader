@@ -61,6 +61,7 @@
 		F5171A5E2515282B00750E35 /* URL+StaticString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5171A5D2515282B00750E35 /* URL+StaticString.swift */; };
 		F5171A8E251544B500750E35 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5171A8D251544B500750E35 /* Result+Convenience.swift */; };
 		F527CDCC2506EE8800E906BE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F527CDCB2506EE8800E906BE /* Request.swift */; };
+		F5415229256C466400B26044 /* AccessLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5415228256C466400B26044 /* AccessLock.swift */; };
 		F565EB2125168D7800A8FD3A /* DataLoaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565EB2025168D7800A8FD3A /* DataLoaderError.swift */; };
 		F5B640AD250064E4004B9B83 /* libSPTDataLoaderSwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */; };
 		F5B640C025006DE0004B9B83 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640B925006DE0004B9B83 /* ResponseSerializer.swift */; };
@@ -224,6 +225,7 @@
 		F5171A5D2515282B00750E35 /* URL+StaticString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StaticString.swift"; sourceTree = "<group>"; };
 		F5171A8D251544B500750E35 /* Result+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
 		F527CDCB2506EE8800E906BE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		F5415228256C466400B26044 /* AccessLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessLock.swift; sourceTree = "<group>"; };
 		F565EB2025168D7800A8FD3A /* DataLoaderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderError.swift; sourceTree = "<group>"; };
 		F5B64096250060D1004B9B83 /* libSPTDataLoaderSwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSPTDataLoaderSwift.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B640A12500633C004B9B83 /* SPTDataLoaderSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPTDataLoaderSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -372,6 +374,7 @@
 		F5171AA32515494600750E35 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F5415228256C466400B26044 /* AccessLock.swift */,
 				F5171A8D251544B500750E35 /* Result+Convenience.swift */,
 			);
 			path = Utilities;
@@ -736,6 +739,7 @@
 				F5B640C425006DE0004B9B83 /* DataLoaderWrapper.swift in Sources */,
 				F5B640C225006DE0004B9B83 /* Response.swift in Sources */,
 				F5B640C125006DE0004B9B83 /* ResponseDecoder.swift in Sources */,
+				F5415229256C466400B26044 /* AccessLock.swift in Sources */,
 				F5B640C025006DE0004B9B83 /* ResponseSerializer.swift in Sources */,
 				F5171A8E251544B500750E35 /* Result+Convenience.swift in Sources */,
 				F5B640C625006DE0004B9B83 /* SPTDataLoader.swift in Sources */,
@@ -857,7 +861,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -865,7 +873,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
@@ -873,8 +885,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoaderSwift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -882,8 +898,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/SPTDataLoaderSwift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};

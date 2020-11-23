@@ -24,7 +24,7 @@ import Foundation
 final class DataLoaderWrapper: NSObject {
     private let dataLoader: SPTDataLoader
 
-    private let accessLock = DispatchQueue(label: "SPTDataLoader.DataLoaderWrapper")
+    private let accessLock = AccessLock()
     private var requests: [Int64: Request] = [:]
 
     init(dataLoader: SPTDataLoader) {
