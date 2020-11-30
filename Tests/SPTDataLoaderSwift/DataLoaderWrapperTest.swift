@@ -42,9 +42,9 @@ class DataLoaderWrapperTest: XCTestCase {
 
     // MARK: Request Tests
 
-    func test_request_shouldReceiveCallback_whenSuccessReceived() {
+    func test_request_shouldReceiveCallback_whenSuccessReceived() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
 
         stubbedNetwork.addStub(where: { $0.url == url })
@@ -57,9 +57,9 @@ class DataLoaderWrapperTest: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    func test_request_shouldReceiveCallback_whenErrorReceived() {
+    func test_request_shouldReceiveCallback_whenErrorReceived() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
 
         stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
@@ -72,9 +72,9 @@ class DataLoaderWrapperTest: XCTestCase {
         waitForExpectations(timeout: 0.5)
     }
 
-    func test_request_shouldNotReceiveCallback_whenCancelled() {
+    func test_request_shouldNotReceiveCallback_whenCancelled() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
 
         stubbedNetwork.addStub(where: { $0.url == url })

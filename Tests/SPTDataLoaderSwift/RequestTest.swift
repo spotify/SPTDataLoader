@@ -27,9 +27,9 @@ import XCTest
 class RequestTest: XCTestCase {
     // MARK: Modification
 
-    func test_request_shouldBeModified_whenInitialized() {
+    func test_request_shouldBeModified_whenInitialized() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
 
         let request = Request(request: sptRequest) {
@@ -43,9 +43,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(sptRequest.method, .delete)
     }
 
-    func test_request_shouldNotBeModified_whenExecuted() {
+    func test_request_shouldNotBeModified_whenExecuted() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
 
         let request = Request(request: sptRequest) {
@@ -62,9 +62,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Cancellation
 
-    func test_request_shouldBeCancelled_whenRequested() {
+    func test_request_shouldBeCancelled_whenRequested() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let cancellationTokenMock = CancellationTokenFake()
 
@@ -83,9 +83,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Response Validators
 
-    func test_responseValidator_shouldNotExecute_whenResponseContainsError() {
+    func test_responseValidator_shouldNotExecute_whenResponseContainsError() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
@@ -105,9 +105,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(validatorCount, 0)
     }
 
-    func test_responseValidator_shouldExecute_whenErrorIsAbsent() {
+    func test_responseValidator_shouldExecute_whenErrorIsAbsent() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -128,9 +128,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(validatorCount, 2)
     }
 
-    func test_responseValidator_shouldStopValidation_whenErrorOccurs() {
+    func test_responseValidator_shouldStopValidation_whenErrorOccurs() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -160,9 +160,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Response Processing
 
-    func test_responseHandler_shouldReceiveError_whenRequestExecutionFails() {
+    func test_responseHandler_shouldReceiveError_whenRequestExecutionFails() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -184,9 +184,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_responseHandler_shouldNotExecute_whenRequestIsCancelled() {
+    func test_responseHandler_shouldNotExecute_whenRequestIsCancelled() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -204,9 +204,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(responseCount, 0)
     }
 
-    func test_responseHandler_shouldNotExecute_whenAlreadyProcessed() {
+    func test_responseHandler_shouldNotExecute_whenAlreadyProcessed() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -224,9 +224,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(responseCount, 1)
     }
 
-    func test_responseHandler_shouldExecute_whenAddedBeforeCompletion() {
+    func test_responseHandler_shouldExecute_whenAddedBeforeCompletion() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
@@ -249,9 +249,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(requestCount, 1)
     }
 
-    func test_responseHandler_shouldExecute_whenAddedAfterFailure() {
+    func test_responseHandler_shouldExecute_whenAddedAfterFailure() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
@@ -274,9 +274,9 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(requestCount, 1)
     }
 
-    func test_responseHandler_shouldExecute_whenAddedAfterCompletion() {
+    func test_responseHandler_shouldExecute_whenAddedAfterCompletion() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -301,9 +301,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Response Handler
 
-    func test_responseHandler_shouldReceiveFailure_whenErrorIsPresent() {
+    func test_responseHandler_shouldReceiveFailure_whenErrorIsPresent() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
@@ -326,9 +326,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_responseHandler_shouldReceiveSuccess_whenResponseIsPresent() {
+    func test_responseHandler_shouldReceiveSuccess_whenResponseIsPresent() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
@@ -353,9 +353,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Data Response Handler
 
-    func test_dataResponseHandler_shouldReceiveError_whenResponseContainsError() {
+    func test_dataResponseHandler_shouldReceiveError_whenResponseContainsError() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
@@ -376,9 +376,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_dataResponseHandler_shouldReceiveError_whenSerializationProducesFailure() {
+    func test_dataResponseHandler_shouldReceiveError_whenSerializationProducesFailure() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -399,9 +399,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_dataResponseHandler_shouldReceiveValue_whenSerializationProducesSuccess() {
+    func test_dataResponseHandler_shouldReceiveValue_whenSerializationProducesSuccess() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "foo".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
@@ -425,9 +425,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Decodable Response Handler
 
-    func test_decodableResponseHandler_shouldReceiveFailure_whenErrorPresent() {
+    func test_decodableResponseHandler_shouldReceiveFailure_whenErrorPresent() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -450,9 +450,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_decodableResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() {
+    func test_decodableResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{}".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
@@ -474,9 +474,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_decodableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess() {
+    func test_decodableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\"}".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
@@ -500,9 +500,9 @@ class RequestTest: XCTestCase {
 
     // MARK: JSON Response Handler
 
-    func test_jsonResponseHandler_shouldReceiveFailure_whenErrorIsPresent() {
+    func test_jsonResponseHandler_shouldReceiveFailure_whenErrorIsPresent() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -525,9 +525,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_jsonResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() {
+    func test_jsonResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "bad".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
@@ -549,9 +549,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_jsonResponseHandler_shouldReceiveValue_whenSerializationProducesSuccess() {
+    func test_jsonResponseHandler_shouldReceiveValue_whenSerializationProducesSuccess() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
@@ -575,9 +575,9 @@ class RequestTest: XCTestCase {
 
     // MARK: Serializable Response Handler
 
-    func test_serializableResponseHandler_shouldReceiveFailure_whenErrorIsPresent() {
+    func test_serializableResponseHandler_shouldReceiveFailure_whenErrorIsPresent() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
@@ -600,9 +600,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_serializableResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() {
+    func test_serializableResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
@@ -623,9 +623,9 @@ class RequestTest: XCTestCase {
         }
     }
 
-    func test_serializableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess() {
+    func test_serializableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
