@@ -21,17 +21,24 @@
 
 import Foundation
 
-public extension SPTDataLoaderFactory {
-    /// Convenience method for creating a Swift `DataLoader`.
-    /// - Parameter responseQueue: The `DispatchQueue` on which to perform response handling.
-    /// - Returns: A new `DataLoader` instance.
-    func makeDataLoader(responseQueue: DispatchQueue = .global()) -> DataLoader {
-        let sptDataLoader = createDataLoader()
-        let dataLoaderWrapper = DataLoaderWrapper(sptDataLoader: sptDataLoader)
+final class AccessLock {
+    private let lock: os_unfair_lock_t
 
-        sptDataLoader.delegate = dataLoaderWrapper
-        sptDataLoader.delegateQueue = responseQueue
+    init() {
+        lock = .allocate(capacity: 1)
+        lock.initialize(to: os_unfair_lock())
+    }
 
-        return dataLoaderWrapper
+    deinit {
+        lock.deinitialize(count: 1)
+        lock.deallocate()
+    }
+
+    @discardableResult
+    func sync<Result>(closure: () throws -> Result) rethrows -> Result {
+        os_unfair_lock_lock(lock)
+        defer { os_unfair_lock_unlock(lock) }
+
+        return try closure()
     }
 }

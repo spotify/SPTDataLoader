@@ -19,27 +19,14 @@
  under the License.
  */
 
-import Foundation
-
-/// Values associated with the response to a `Request`.
-public struct Response<Success, Failure: Error> {
-    /// The originating request instance.
-    public let request: SPTDataLoaderRequest
-
-    /// The underlying response instance.
-    public let response: SPTDataLoaderResponse?
-
-    /// The serialized result value.
-    public let result: Result<Success, Failure>
+/// An error that occurs during request execution.
+public enum RequestError: Error {
+    /// The request could not be initiated.
+    case executionFailed
 }
 
-public extension Response {
-    /// The response's content.
-    var data: Data? { response?.body }
-
-    /// The serialized success value, otherwise `nil`.
-    var value: Success? { result.success }
-
-    /// The serialized error value, otherwise `nil`.
-    var error: Failure? { result.failure }
+/// An error that occurs during response serialization.
+public enum ResponseSerializationError: Error {
+    /// The data was expected but a null value was provided.
+    case dataNotFound
 }

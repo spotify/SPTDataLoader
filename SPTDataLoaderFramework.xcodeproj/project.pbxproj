@@ -130,6 +130,22 @@
 		6992FD2E1F71DEEE003E1E4F /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD2F1F71DEF8003E1E4F /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6992FD301F71DEFE003E1E4F /* SPTDataLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5415233256C48B200B26044 /* AccessLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5415232256C48B200B26044 /* AccessLock.swift */; };
+		F5415234256C48B200B26044 /* AccessLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5415232256C48B200B26044 /* AccessLock.swift */; };
+		F5415235256C48B200B26044 /* AccessLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5415232256C48B200B26044 /* AccessLock.swift */; };
+		F5415236256C48B200B26044 /* AccessLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5415232256C48B200B26044 /* AccessLock.swift */; };
+		F543C09F25165BD200BBECC5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09B25165BD200BBECC5 /* Request.swift */; };
+		F543C0A025165BD200BBECC5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09B25165BD200BBECC5 /* Request.swift */; };
+		F543C0A125165BD200BBECC5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09B25165BD200BBECC5 /* Request.swift */; };
+		F543C0A225165BD200BBECC5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09B25165BD200BBECC5 /* Request.swift */; };
+		F543C0A725165BD200BBECC5 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09E25165BD200BBECC5 /* Result+Convenience.swift */; };
+		F543C0A825165BD200BBECC5 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09E25165BD200BBECC5 /* Result+Convenience.swift */; };
+		F543C0A925165BD200BBECC5 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09E25165BD200BBECC5 /* Result+Convenience.swift */; };
+		F543C0AA25165BD200BBECC5 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F543C09E25165BD200BBECC5 /* Result+Convenience.swift */; };
+		F565EB2B2517B65700A8FD3A /* DataLoaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */; };
+		F565EB2C2517B65700A8FD3A /* DataLoaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */; };
+		F565EB2D2517B65700A8FD3A /* DataLoaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */; };
+		F565EB2E2517B65700A8FD3A /* DataLoaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */; };
 		F5A7316B2500771200405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A6380A1C46B53800061E37 /* SPTDataLoader.framework */; };
 		F5A731772500777E00405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A731782500777E00405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
@@ -137,28 +153,24 @@
 		F5A7317A2500777E00405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A7317B2500777E00405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A7317C2500777E00405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A7317D2500777E00405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A7319125007D3800405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A7319225007D3800405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
 		F5A7319325007D3800405927 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731742500777300405927 /* Response.swift */; };
 		F5A7319425007D3800405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A7319525007D3800405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A7319625007D3800405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A7319725007D3800405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A731A325007D4000405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A731A425007D4000405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
 		F5A731A525007D4000405927 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731742500777300405927 /* Response.swift */; };
 		F5A731A625007D4000405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A731A725007D4000405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A731A825007D4000405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A731A925007D4000405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A731B525007D4600405927 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731752500777300405927 /* DataLoader.swift */; };
 		F5A731B625007D4600405927 /* DataLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731732500777300405927 /* DataLoaderWrapper.swift */; };
 		F5A731B725007D4600405927 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731742500777300405927 /* Response.swift */; };
 		F5A731B825007D4600405927 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731722500777300405927 /* ResponseDecoder.swift */; };
 		F5A731B925007D4600405927 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731702500777300405927 /* ResponseSerializer.swift */; };
 		F5A731BA25007D4600405927 /* SPTDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731762500777300405927 /* SPTDataLoader.swift */; };
-		F5A731BB25007D4600405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */; };
 		F5A731C425007E8100405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A637E31C46B46300061E37 /* SPTDataLoader.framework */; };
 		F5A731C925007E9D00405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A637F01C46B48600061E37 /* SPTDataLoader.framework */; };
 		F5A731CE25007EAD00405927 /* SPTDataLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A637FD1C46B4A700061E37 /* SPTDataLoader.framework */; };
@@ -260,9 +272,12 @@
 		6992FD2C1F71DEDF003E1E4F /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SPTDataLoader.h; path = Framework/SPTDataLoader.h; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderDelegate.h; path = include/SPTDataLoader/SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
+		F5415232256C48B200B26044 /* AccessLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessLock.swift; sourceTree = "<group>"; };
+		F543C09B25165BD200BBECC5 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		F543C09E25165BD200BBECC5 /* Result+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
+		F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoaderError.swift; sourceTree = "<group>"; };
 		F5A73163250075CF00405927 /* SPTDataLoaderSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPTDataLoaderSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5A731702500777300405927 /* ResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
-		F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPTDataLoaderFactory+Convenience.swift"; sourceTree = "<group>"; };
 		F5A731722500777300405927 /* ResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
 		F5A731732500777300405927 /* DataLoaderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderWrapper.swift; sourceTree = "<group>"; };
 		F5A731742500777300405927 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -419,6 +434,15 @@
 			name = "Build System";
 			sourceTree = "<group>";
 		};
+		F543C09C25165BD200BBECC5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F5415232256C48B200B26044 /* AccessLock.swift */,
+				F543C09E25165BD200BBECC5 /* Result+Convenience.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		F5B6408E25005F86004B9B83 /* SPTDataLoader */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,12 +486,14 @@
 			isa = PBXGroup;
 			children = (
 				F5A731752500777300405927 /* DataLoader.swift */,
+				F565EB2A2517B65700A8FD3A /* DataLoaderError.swift */,
 				F5A731732500777300405927 /* DataLoaderWrapper.swift */,
+				F543C09B25165BD200BBECC5 /* Request.swift */,
 				F5A731742500777300405927 /* Response.swift */,
 				F5A731722500777300405927 /* ResponseDecoder.swift */,
 				F5A731702500777300405927 /* ResponseSerializer.swift */,
 				F5A731762500777300405927 /* SPTDataLoader.swift */,
-				F5A731712500777300405927 /* SPTDataLoaderFactory+Convenience.swift */,
+				F543C09C25165BD200BBECC5 /* Utilities */,
 			);
 			path = SPTDataLoaderSwift;
 			sourceTree = "<group>";
@@ -900,13 +926,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F543C0A725165BD200BBECC5 /* Result+Convenience.swift in Sources */,
 				F5A731772500777E00405927 /* DataLoader.swift in Sources */,
+				F543C09F25165BD200BBECC5 /* Request.swift in Sources */,
 				F5A731782500777E00405927 /* DataLoaderWrapper.swift in Sources */,
+				F5415233256C48B200B26044 /* AccessLock.swift in Sources */,
 				F5A731792500777E00405927 /* Response.swift in Sources */,
 				F5A7317A2500777E00405927 /* ResponseDecoder.swift in Sources */,
 				F5A7317B2500777E00405927 /* ResponseSerializer.swift in Sources */,
 				F5A7317C2500777E00405927 /* SPTDataLoader.swift in Sources */,
-				F5A7317D2500777E00405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
+				F565EB2B2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,13 +943,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F543C0A825165BD200BBECC5 /* Result+Convenience.swift in Sources */,
 				F5A7319125007D3800405927 /* DataLoader.swift in Sources */,
+				F543C0A025165BD200BBECC5 /* Request.swift in Sources */,
 				F5A7319225007D3800405927 /* DataLoaderWrapper.swift in Sources */,
+				F5415234256C48B200B26044 /* AccessLock.swift in Sources */,
 				F5A7319325007D3800405927 /* Response.swift in Sources */,
 				F5A7319425007D3800405927 /* ResponseDecoder.swift in Sources */,
 				F5A7319525007D3800405927 /* ResponseSerializer.swift in Sources */,
 				F5A7319625007D3800405927 /* SPTDataLoader.swift in Sources */,
-				F5A7319725007D3800405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
+				F565EB2C2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -928,13 +960,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F543C0A925165BD200BBECC5 /* Result+Convenience.swift in Sources */,
 				F5A731A325007D4000405927 /* DataLoader.swift in Sources */,
+				F543C0A125165BD200BBECC5 /* Request.swift in Sources */,
 				F5A731A425007D4000405927 /* DataLoaderWrapper.swift in Sources */,
+				F5415235256C48B200B26044 /* AccessLock.swift in Sources */,
 				F5A731A525007D4000405927 /* Response.swift in Sources */,
 				F5A731A625007D4000405927 /* ResponseDecoder.swift in Sources */,
 				F5A731A725007D4000405927 /* ResponseSerializer.swift in Sources */,
 				F5A731A825007D4000405927 /* SPTDataLoader.swift in Sources */,
-				F5A731A925007D4000405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
+				F565EB2D2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -942,13 +977,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F543C0AA25165BD200BBECC5 /* Result+Convenience.swift in Sources */,
 				F5A731B525007D4600405927 /* DataLoader.swift in Sources */,
+				F543C0A225165BD200BBECC5 /* Request.swift in Sources */,
 				F5A731B625007D4600405927 /* DataLoaderWrapper.swift in Sources */,
+				F5415236256C48B200B26044 /* AccessLock.swift in Sources */,
 				F5A731B725007D4600405927 /* Response.swift in Sources */,
 				F5A731B825007D4600405927 /* ResponseDecoder.swift in Sources */,
 				F5A731B925007D4600405927 /* ResponseSerializer.swift in Sources */,
 				F5A731BA25007D4600405927 /* SPTDataLoader.swift in Sources */,
-				F5A731BB25007D4600405927 /* SPTDataLoaderFactory+Convenience.swift in Sources */,
+				F565EB2E2517B65700A8FD3A /* DataLoaderError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1123,7 +1161,8 @@
 		F5A73169250075CF00405927 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-iOS";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = iphoneos;
@@ -1131,13 +1170,16 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
 		F5A7316A250075CF00405927 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-iOS";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = iphoneos;
@@ -1145,36 +1187,48 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
 		F5A7319B25007D3800405927 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-OSX";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
 		F5A7319C25007D3800405927 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-OSX";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
 		F5A731AD25007D4000405927 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-TV";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = appletvos;
@@ -1182,12 +1236,16 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
 		F5A731AE25007D4000405927 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-TV";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = appletvos;
@@ -1195,12 +1253,16 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
 		F5A731BF25007D4600405927 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-Watch";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = watchos;
@@ -1208,12 +1270,16 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
 				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
 		F5A731C025007D4600405927 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spotify.SPTDataLoaderSwift-Watch";
 				PRODUCT_NAME = SPTDataLoaderSwift;
 				SDKROOT = watchos;
@@ -1221,6 +1287,8 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SPTDataLoader-Swift.h";
 				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};

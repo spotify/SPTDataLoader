@@ -27,7 +27,7 @@ import XCTest
 class DataLoaderWrapperTest: XCTestCase {
     private lazy var stubbedNetwork = StubbedNetwork()
     private lazy var sptDataLoader = stubbedNetwork.dataLoaderFactory.createDataLoader()
-    private lazy var dataLoaderWrapper = DataLoaderWrapper(sptDataLoader: sptDataLoader)
+    private lazy var dataLoaderWrapper = DataLoaderWrapper(dataLoader: sptDataLoader)
 
     // MARK: Setup
 
@@ -35,222 +35,60 @@ class DataLoaderWrapperTest: XCTestCase {
         super.setUp()
 
         sptDataLoader.delegate = dataLoaderWrapper
+        sptDataLoader.delegateQueue = .main
+
         stubbedNetwork.removeAllStubs()
     }
 
-    // MARK: Cancellation Tests
+    // MARK: Request Tests
 
-    func test_dataLoaderRequest_shouldNotReceiveResponse_whenRequestIsCancelled() {
+    func test_request_shouldReceiveCallback_whenSuccessReceived() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
 
         stubbedNetwork.addStub(where: { $0.url == url })
 
         // When
-        let responseExpectation = expectation(description: "Result unexpected")
-        responseExpectation.isInverted = true
-
-        let token = dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
-            responseExpectation.fulfill()
-        }
-        token?.cancel()
+        let responseExpectation = expectation(description: "Response expected")
+        request.response { _ in responseExpectation.fulfill() }
 
         // Then
         waitForExpectations(timeout: 0.5)
     }
 
-    // MARK: Response Tests
-
-    func test_dataLoaderRequest_shouldReceiveResponse_whenResponseIsError() {
+    func test_request_shouldReceiveCallback_whenErrorReceived() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
 
         stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
 
         // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
-            responseExpectation.fulfill()
-        }
+        let responseExpectation = expectation(description: "Response expected")
+        request.response { _ in responseExpectation.fulfill() }
 
         // Then
-        waitForExpectations(timeout: 1.0)
+        waitForExpectations(timeout: 0.5)
     }
 
-    func test_dataLoaderRequest_shouldReceiveResponse_whenResponseIsSuccess() {
+    func test_request_shouldNotReceiveCallback_whenCancelled() throws {
         // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let request = dataLoaderWrapper.request(url, sourceIdentifier: "foo")
 
         stubbedNetwork.addStub(where: { $0.url == url })
 
         // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: SPTDataLoaderResponse) in
-            responseExpectation.fulfill()
-        }
+        let responseExpectation = expectation(description: "Response not expected")
+        responseExpectation.isInverted = true
+
+        request
+            .response { _ in responseExpectation.fulfill() }
+            .cancel()
 
         // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    // MARK: Data Response Tests
-
-    func test_dataLoaderRequestData_shouldReceiveResult_whenResponseIsError() {
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-
-        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
-
-        // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: Response<Data?, Error>) in
-            if case .failure = response.result {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    func test_dataLoaderRequestData_shouldReceiveResult_whenResponseIsSuccess() {
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-
-        stubbedNetwork.addStub(where: { $0.url == url })
-
-        // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: Response<Data?, Error>) in
-            if case .success = response.result {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    // MARK: Decodable Response Tests
-
-    func test_dataLoaderRequestDecodable_shouldReceiveResult_whenResponseIsError() {
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-
-        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
-
-        // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: Response<TestDecodable, Error>) in
-            if case .failure = response.result {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    func test_dataLoaderRequestDecodable_shouldReceiveResult_whenResponseIsSuccess() {
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-
-        stubbedNetwork.addStub(
-            body: "{\"foo\": \"bar\"}".data(using: .utf8),
-            where: { $0.url == url }
-        )
-
-        // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: Response<TestDecodable, Error>) in
-            if case .success = response.result {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    // MARK: JSON Response Tests
-
-    func test_dataLoaderRequestJSON_shouldReceiveResult_whenResponseIsError() {
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-
-        stubbedNetwork.addErrorStub(code: 123, where: { $0.url == url })
-
-        // When
-        let responseExpectation = expectation(description: "Error response expected")
-        dataLoaderWrapper.request(request) { (response: Response<Any, Error>) in
-            if case .failure = response.result {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    func test_dataLoaderRequestJSON_shouldReceiveResult_whenResponseIsSuccess() {
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-
-        stubbedNetwork.addStub(
-            body: "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8),
-            where: { $0.url == url }
-        )
-
-        // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request) { (response: Response<Any, Error>) in
-            if case .success = response.result {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
-    }
-
-    // MARK: Custom Serializer Response Tests
-
-    func test_dataLoaderRequestSerializer_shouldReceiveResult_whenProvided() {
-        struct Serializer: ResponseSerializer {
-            func serialize(response: SPTDataLoaderResponse) -> String? {
-                return response.body.flatMap { String(data: $0, encoding: .utf8) }
-            }
-        }
-
-        // Given
-        let url = URL(static: "https://foo.bar/baz.json")
-        let request = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseSerializer = Serializer()
-
-        stubbedNetwork.addStub(
-            body: "foo".data(using: .utf8),
-            where: { $0.url == url }
-        )
-
-        // When
-        let responseExpectation = expectation(description: "Result expected")
-        dataLoaderWrapper.request(request, serializer: responseSerializer) { (response: Response<String?, Error>) in
-            if response.value == "foo" {
-                responseExpectation.fulfill()
-            }
-        }
-
-        // Then
-        waitForExpectations(timeout: 1.0)
+        waitForExpectations(timeout: 0.5)
     }
 }
 
@@ -258,20 +96,4 @@ class DataLoaderWrapperTest: XCTestCase {
 
 private enum TestError: Error {
     case foo
-}
-
-private struct TestDecodable: Decodable, Equatable {
-    let foo: String
-}
-
-// MARK: -
-
-extension URL {
-    init(static string: StaticString) {
-        guard let url = URL(string: string.description) else {
-            fatalError("Invalid URL: \(string)")
-        }
-
-        self = url
-    }
 }

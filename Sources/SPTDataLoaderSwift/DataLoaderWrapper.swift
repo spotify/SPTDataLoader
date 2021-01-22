@@ -21,95 +21,31 @@
 
 import Foundation
 
-/// A wrapper around `SPTDataLoader` that provides a closure-based
-/// callback API without having to modify the request's userInfo.
 final class DataLoaderWrapper: NSObject {
-    private let sptDataLoader: SPTDataLoader
-    private var responseHandlers: [Int64: (SPTDataLoaderResponse) -> Void] = [:]
+    private let dataLoader: SPTDataLoader
 
-    /// Initializes the data loader with the given `SPTDataLoader`.
-    /// - Parameter sptDataLoader: The wrapped data loader object.
-    init(sptDataLoader: SPTDataLoader) {
-        self.sptDataLoader = sptDataLoader
-    }
+    private let accessLock = AccessLock()
+    private var requests: [Int64: Request] = [:]
 
-    /// Performs a request and provides the response to the given handler.
-    /// - Parameter request: The `SPTDataLoaderRequest` to perform.
-    /// - Parameter responseHandler: The callback closure invoked upon response.
-    @discardableResult
-    func perform(
-        _ request: SPTDataLoaderRequest,
-        responseHandler: @escaping (SPTDataLoaderResponse) -> Void
-    ) -> SPTDataLoaderCancellationToken? {
-        responseHandlers[request.uniqueIdentifier] = responseHandler
-
-        return sptDataLoader.perform(request)
+    init(dataLoader: SPTDataLoader) {
+        self.dataLoader = dataLoader
     }
 }
 
 // MARK: - DataLoader
 
 extension DataLoaderWrapper: DataLoader {
-    @discardableResult
-    func request(
-        _ request: SPTDataLoaderRequest,
-        completionHandler: @escaping (SPTDataLoaderResponse) -> Void
-    ) -> SPTDataLoaderCancellationToken? {
-        return perform(request, responseHandler: completionHandler)
-    }
-
-    @discardableResult
-    func request(
-        _ request: SPTDataLoaderRequest,
-        completionHandler: @escaping (Response<Data?, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken? {
-        return perform(request) { response in
-            let serializer = DataResponseSerializer()
-            let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
-            completionHandler(completionResponse)
+    func request(_ url: URL, sourceIdentifier: String?) -> Request {
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: sourceIdentifier)
+        let request = Request(request: sptRequest) { [dataLoader] in
+            return dataLoader.perform(sptRequest)
         }
-    }
 
-    @discardableResult
-    func request<Value: Decodable>(
-        _ request: SPTDataLoaderRequest,
-        decoder: ResponseDecoder = JSONDecoder(),
-        completionHandler: @escaping (Response<Value, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken? {
-        return perform(request) { response in
-            let serializer = DecodableResponseSerializer<Value>(decoder: decoder)
-            let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
-            completionHandler(completionResponse)
+        accessLock.sync {
+            requests[sptRequest.uniqueIdentifier] = request
         }
-    }
 
-    @discardableResult
-    func request(
-        _ request: SPTDataLoaderRequest,
-        options: JSONSerialization.ReadingOptions = [],
-        completionHandler: @escaping (Response<Any, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken? {
-        return perform(request) { response in
-            let serializer = JSONResponseSerializer(options: options)
-            let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
-            completionHandler(completionResponse)
-        }
-    }
-
-    @discardableResult
-    func request<Serializer: ResponseSerializer>(
-        _ request: SPTDataLoaderRequest,
-        serializer: Serializer,
-        completionHandler: @escaping (Response<Serializer.Output, Error>) -> Void
-    ) -> SPTDataLoaderCancellationToken? {
-        return perform(request) { response in
-            let serializerResult = Result { try serializer.serialize(response: response) }
-            let completionResponse = Response(response: response, result: serializerResult)
-            completionHandler(completionResponse)
-        }
+        return request
     }
 }
 
@@ -117,18 +53,26 @@ extension DataLoaderWrapper: DataLoader {
 
 extension DataLoaderWrapper: SPTDataLoaderDelegate {
     func dataLoader(_ dataLoader: SPTDataLoader, didReceiveSuccessfulResponse response: SPTDataLoaderResponse) {
-        if let handler = responseHandlers.removeValue(forKey: response.request.uniqueIdentifier) {
-            handler(response)
+        handleResponse(response)
+    }
+
+    func dataLoader(_ dataLoader: SPTDataLoader, didReceiveErrorResponse response: SPTDataLoaderResponse) {
+        handleResponse(response)
+    }
+
+    func dataLoader(_ dataLoader: SPTDataLoader, didCancel request: SPTDataLoaderRequest) {
+        accessLock.sync {
+            requests[request.uniqueIdentifier] = nil
         }
     }
 
-    public func dataLoader(_ dataLoader: SPTDataLoader, didReceiveErrorResponse response: SPTDataLoaderResponse) {
-        if let handler = responseHandlers.removeValue(forKey: response.request.uniqueIdentifier) {
-            handler(response)
-        }
-    }
+    private func handleResponse(_ response: SPTDataLoaderResponse) {
+        var request: Request?
 
-    public func dataLoader(_ dataLoader: SPTDataLoader, didCancel request: SPTDataLoaderRequest) {
-        responseHandlers.removeValue(forKey: request.uniqueIdentifier)
+        accessLock.sync {
+            request = requests.removeValue(forKey: response.request.uniqueIdentifier)
+        }
+
+        request.map { request in request.processResponse(response) }
     }
 }
