@@ -34,9 +34,9 @@ public typealias ResponseValidator = (SPTDataLoaderResponse) throws -> Void
 /// existing value.
 public final class Request {
     private let request: SPTDataLoaderRequest
-    private let executionHandler: () -> SPTDataLoaderCancellationToken?
+    private let executionHandler: (Request) -> SPTDataLoaderCancellationToken?
 
-    init(request: SPTDataLoaderRequest, executionHandler: @escaping () -> SPTDataLoaderCancellationToken?) {
+    init(request: SPTDataLoaderRequest, executionHandler: @escaping (Request) -> SPTDataLoaderCancellationToken?) {
         self.request = request
         self.executionHandler = executionHandler
     }
@@ -71,7 +71,7 @@ public final class Request {
         accessLock.sync {
             switch state {
             case .initialized:
-                if let token = executionHandler() {
+                if let token = executionHandler(self) {
                     responseHandlers.append(responseHandler)
                     state = .executed(token: token)
                 } else {

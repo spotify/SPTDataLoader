@@ -37,12 +37,16 @@ final class DataLoaderWrapper: NSObject {
 extension DataLoaderWrapper: DataLoader {
     func request(_ url: URL, sourceIdentifier: String?) -> Request {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: sourceIdentifier)
-        let request = Request(request: sptRequest) { [dataLoader] in
-            return dataLoader.perform(sptRequest)
-        }
+        let request = Request(request: sptRequest) { [weak self] request in
+            guard let self = self else {
+                return nil
+            }
 
-        accessLock.sync {
-            requests[sptRequest.uniqueIdentifier] = request
+            self.accessLock.sync {
+                self.requests[sptRequest.uniqueIdentifier] = request
+            }
+
+            return self.dataLoader.perform(sptRequest)
         }
 
         return request

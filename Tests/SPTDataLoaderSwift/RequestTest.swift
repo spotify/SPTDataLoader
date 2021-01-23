@@ -32,7 +32,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -48,7 +48,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -68,7 +68,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let cancellationTokenMock = CancellationTokenFake()
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return cancellationTokenMock
         }
 
@@ -81,6 +81,25 @@ class RequestTest: XCTestCase {
         XCTAssertTrue(cancellationTokenMock.isCancelled)
     }
 
+    // MARK: Execution
+
+    func test_executionHandler_shouldReceiveRequestInstance_whenCalled() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+
+        // When
+        var executedRequest: Request?
+        let request = Request(request: sptRequest) { request in
+            executedRequest = request
+            return CancellationTokenFake()
+        }
+        request.addResponseHandler { _ in }
+
+        // Then
+        XCTAssertTrue(request === executedRequest)
+    }
+
     // MARK: Response Validators
 
     func test_responseValidator_shouldNotExecute_whenResponseContainsError() throws {
@@ -89,7 +108,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -111,7 +130,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -134,7 +153,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -166,7 +185,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return nil
         }
 
@@ -190,7 +209,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -210,7 +229,7 @@ class RequestTest: XCTestCase {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }
 
@@ -231,7 +250,7 @@ class RequestTest: XCTestCase {
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
         var requestCount = 0
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             requestCount += 1
             return CancellationTokenFake()
         }
@@ -256,7 +275,7 @@ class RequestTest: XCTestCase {
         let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
 
         var requestCount = 0
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             requestCount += 1
             return CancellationTokenFake()
         }
@@ -281,7 +300,7 @@ class RequestTest: XCTestCase {
         let responseFake = FakeDataLoaderResponse(request: sptRequest)
 
         var requestCount = 0
-        let request = Request(request: sptRequest) {
+        let request = Request(request: sptRequest) { _ in
             requestCount += 1
             return CancellationTokenFake()
         }
@@ -309,7 +328,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Void, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.validate { _ in
             throw TestError.foo
@@ -335,7 +354,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Void, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.response {
             response = $0
@@ -361,7 +380,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Data, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseData {
             response = $0
@@ -384,7 +403,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Data, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseData {
             response = $0
@@ -408,7 +427,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Data, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseData {
             response = $0
@@ -433,7 +452,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<TestDecodable, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.validate { _ in
             throw TestError.foo
@@ -459,7 +478,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<TestDecodable, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseDecodable {
             response = $0
@@ -483,7 +502,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<TestDecodable, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseDecodable {
             response = $0
@@ -508,7 +527,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Any, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.validate { _ in
             throw TestError.foo
@@ -534,7 +553,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Any, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseJSON {
             response = $0
@@ -558,7 +577,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<Any, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseJSON {
             response = $0
@@ -583,7 +602,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<String, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.validate { _ in
             throw TestError.foo
@@ -608,7 +627,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<String, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseSerializable(serializer: TestSerializer()) {
             response = $0
@@ -632,7 +651,7 @@ class RequestTest: XCTestCase {
 
         // When
         var response: Response<String, Error>?
-        Request(request: sptRequest) {
+        Request(request: sptRequest) { _ in
             return CancellationTokenFake()
         }.responseSerializable(serializer: TestSerializer()) {
             response = $0
