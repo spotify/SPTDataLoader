@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file. SPTDataLoad
 
 --
 
+## [2.1.0](https://github.com/spotify/SPTDataLoader/releases/tag/2.1.0)
+_Released on 2021-02-16._
+
+### Added
+* Added SPTDataLoaderBlockWrapper callback API
+* Added SPTDataLoaderSwift overlay
+* Added Xcode 12 support
+
+### Changed
+* Changed Accept-Language header to remove duplicates
+* Changed modules to be disabled by default for static library and test targets
+
 ## [2.0.0](https://github.com/spotify/SPTDataLoader/releases/tag/2.0.0)
 _Released on 2020-07-23._
 
