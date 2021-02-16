@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "SPTDataLoader"
-    s.version      = "2.0.0"
+    s.version      = "2.1.0"
     s.summary      = "SPTDataLoader is Spotify’s HTTP library for Objective-C"
 
     s.description  = <<-DESC
@@ -23,12 +23,29 @@ Pod::Spec.new do |s|
         "Will Sackfield" => "sackfield@spotify.com"
     }
 
-    s.source                = { :git => "https://github.com/spotify/SPTDataLoader.git", :tag => s.version }
-    s.source_files          = "include/SPTDataLoader/*.h", "SPTDataLoader/*.{h,m}"
-    s.public_header_files   = "include/SPTDataLoader/*.h"
-    s.framework             = "Security"
-    s.xcconfig              = {
-        "OTHER_LDFLAGS" => "-lObjC"
-    }
+    s.source           = { :git => "https://github.com/spotify/SPTDataLoader.git", :tag => s.version }
+    s.swift_version    = "5.1"
+
+    s.default_subspec  = "Core"
+
+    s.subspec "Core" do |sp|
+        sp.source_files         = "include/SPTDataLoader/*.h", "Sources/SPTDataLoader/*.{h,m}"
+        sp.public_header_files  = "include/SPTDataLoader/*.h"
+        sp.framework            = "Security"
+        sp.xcconfig             = {
+            "OTHER_LDFLAGS" => "-lObjC"
+        }
+    end
+
+    s.subspec "Swift" do |sp|
+        sp.dependency "SPTDataLoader/Core"
+
+        sp.source_files  = "Sources/SPTDataLoaderSwift/**/*.swift"
+
+        sp.ios.deployment_target      = "10.0"
+        sp.osx.deployment_target      = "10.12"
+        sp.tvos.deployment_target     = "10.0"
+        sp.watchos.deployment_target  = "3.0"
+    end
 
 end
