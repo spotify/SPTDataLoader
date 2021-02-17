@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
                         making HTTP requests.
                      DESC
 
-    s.ios.deployment_target     = "8.0"
-    s.osx.deployment_target     = "10.9"
-    s.tvos.deployment_target    = "9.0"
-    s.watchos.deployment_target = "2.0"
+    s.ios.deployment_target     = "10.0"
+    s.osx.deployment_target     = "10.12"
+    s.tvos.deployment_target    = "10.0"
+    s.watchos.deployment_target = "3.0"
 
     s.homepage          = "https://github.com/spotify/SPTDataLoader"
     s.social_media_url  = "https://twitter.com/spotifyeng"

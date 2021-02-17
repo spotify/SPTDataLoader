@@ -10,10 +10,10 @@
 
 Authentication and back-off logic is a pain, let's do it once and forget about it! This is a library that allows you to centralise this logic and forget about the ugly parts of making HTTP requests.
 
-- [x] 📱 iOS 8.0+
-- [x] 💻 OS X 10.9+
-- [x] ⌚️ watchOS 2.0+
-- [x] 📺 tvOS 9.0+
+- [x] 📱 iOS 10.0+
+- [x] 💻 OS X 10.12+
+- [x] ⌚️ watchOS 3.0+
+- [x] 📺 tvOS 10.0+
 
 Yet another networking library? Well apart from some unique benefits such as built-in rate limiting and powerful request authentication, a significant benefit for you is that any tagged version has been tested in production. We only tag a new release once it’s been used for two weeks by the Spotify app (which has millions of active users a day). As such you can be sure tagged versions are as stable as possible.
 
