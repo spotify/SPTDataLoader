@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "SPTDataLoader"
-    s.version      = "2.1.0"
+    s.version      = "2.1.1"
     s.summary      = "SPTDataLoader is Spotify’s HTTP library for Objective-C"
 
     s.description  = <<-DESC
@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
                         making HTTP requests.
                      DESC
 
-    s.ios.deployment_target     = "8.0"
-    s.osx.deployment_target     = "10.9"
-    s.tvos.deployment_target    = "9.0"
-    s.watchos.deployment_target = "2.0"
+    s.ios.deployment_target     = "10.0"
+    s.osx.deployment_target     = "10.12"
+    s.tvos.deployment_target    = "10.0"
+    s.watchos.deployment_target = "3.0"
 
     s.homepage          = "https://github.com/spotify/SPTDataLoader"
     s.social_media_url  = "https://twitter.com/spotifyeng"
@@ -39,13 +39,7 @@ Pod::Spec.new do |s|
 
     s.subspec "Swift" do |sp|
         sp.dependency "SPTDataLoader/Core"
-
         sp.source_files  = "Sources/SPTDataLoaderSwift/**/*.swift"
-
-        sp.ios.deployment_target      = "10.0"
-        sp.osx.deployment_target      = "10.12"
-        sp.tvos.deployment_target     = "10.0"
-        sp.watchos.deployment_target  = "3.0"
     end
 
 end

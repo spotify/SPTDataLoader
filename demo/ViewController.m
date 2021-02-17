@@ -41,7 +41,7 @@
     accountsComponents.queryItems = @[ responseTypeQueryItem, clientIDQueryItem, scopeQueryItem, redirectURIQueryItem, stateQueryItem ];
 
     NSURL *URL = accountsComponents.URL;
-    [[UIApplication sharedApplication] openURL:URL];
+    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:nil];
 }
 
 @end

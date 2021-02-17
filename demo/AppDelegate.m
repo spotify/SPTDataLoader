@@ -56,7 +56,7 @@ static NSString *AppDelegateSourceIdentifier = @"app";
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     if ([components.scheme isEqualToString:@"sptdataloaderdemo"] && [components.host isEqualToString:@"login"]) {
