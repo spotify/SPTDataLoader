@@ -3,7 +3,7 @@
 [![Coverage Status](https://codecov.io/github/spotify/SPTDataLoader/coverage.svg?branch=master)](https://codecov.io/github/spotify/SPTDataLoader?branch=master)
 [![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/SPTDataLoader.svg)](http://cocoadocs.org/docsets/SPTDataLoader/)
 [![License](https://img.shields.io/github/license/spotify/SPTDataLoader.svg)](LICENSE)
-[![CocoaPods](https://img.shields.io/cocoapods/v/SPTDataLoader.svg)](https://cocoapods.org/?q=SPTDataLoader)
+[![CocoaPods](https://img.shields.io/cocoapods/v/SPTDataLoader.svg)](https://cocoapods.org/pods/SPTDataLoader)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Spotify FOSS Slack](https://slackin.spotify.com/badge.svg)](https://slackin.spotify.com)
 [![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/spotify/sptdataloader)](http://clayallsopp.github.io/readme-score?url=https://github.com/spotify/sptdataloader)
@@ -26,47 +26,32 @@ As for Spotify, we wanted a light networking library that we had full control ov
 - **The User level**, which controls the authentication of the HTTP requests.
 - **The View level**, which allows automatic cancellation of requests the view has made upon deallocation.
 
-### Authentication :key:
+### Authentication
 The authentication in this case is abstract, allowing the creator of the SPTDataLoaderFactory to define their own semantics for token acquisition and injection. It allows for asynchronous token acquisition if the token is invalid that seamlessly integrates with the HTTP request-response pattern.
 
-### Back-off policy :cop:
+### Back-off policy
 The data loader service allows rate limiting of URLs to be set explicitly or to be determined by the server using the “Retry-After” semantic. It allows back-off retrying by using a jittered exponential backoff to prevent the thundering hordes creating a request storm after a predictable exponential period has expired.
 
-## Installation
-SPTDataLoader can be installed in a variety of ways including traditional static libraries and dynamic frameworks. As well as using either of the dependency managers CocoaPods and Carthage.
+## Installation :building_construction:
+SPTDataLoader can be installed in a variety of ways, either as a dynamic framework, a static library, or through a dependency manager such as CocoaPods or Carthage.
 
-### Static Library
-Simply include `SPTDataLoader.xcodeproj` in your App’s Xcode project, and link your app with the library in the “Build Phases” section.
+### Manually
+#### Dynamic Framework
+Drag the [framework](https://github.com/spotify/SPTDataLoader/releases) into the “Frameworks, Libraries, and Embedded Content” area in the “General” section of the target.
+#### Static Library
+Drag `SPTDataLoader.xcodeproj` into your App’s Xcode project and link your app with the library in the “Build Phases” section of the target.
 
 ### CocoaPods
-We are indexed on [CocoaPods](http://cocoapods.org), which can be installed using [Ruby gems](https://rubygems.org/):
-```shell
-$ gem install cocoapods
-```
-Then simply add `SPTDataLoader` to your `Podfile`.
-```
-pod 'SPTDataLoader', '~> 1.1'
-```
-Lastly let CocoaPods do it thing by running:
-```shell
-$ pod update
+To integrate SPTDataLoader into your project using [CocoaPods](http://cocoapods.org), add it to your `Podfile`:
+```ruby
+pod 'SPTDataLoader', '~> 2.1'
 ```
 
 ### Carthage
-We support [Carthage](https://github.com/Carthage/Carthage) and provide pre-built binary frameworks for all new releases. Start by making sure you have the latest version of Carthage installed, e.g. using [Homebrew](http://brew.sh/):
-```shell
-$ brew update
-$ brew install carthage
+To integrate SPTDataLoader into your project using [Carthage](https://github.com/Carthage/Carthage), add it to your `Cartfile`:
+```ogdl
+github "spotify/SPTDataLoader" ~> 2.1
 ```
-You will also need to add `SPTDataLoader` to your `Cartfile`:
-```
-github "spotify/SPTDataLoader" ~> 1.1
-```
-After that is all said and done, let Carthage pull in SPTDataLoader like so:
-```shell
-$ carthage update
-```
-Next up, you need to add the framework to the Xcode project of your App. Lastly link the framework with your App and copy it to the App’s Frameworks directory under the “Build Phases”.
 
 ## Usage example :eyes:
 For an example of this framework's usage, see the demo application `SPTDataLoaderDemo` in `SPTDataLoader.xcodeproj`. Just follow the instructions in [`ClientKeys.h`](demo/ClientKeys.h).
@@ -255,36 +240,63 @@ The SPTDataLoader architecture is designed to centralise authentication around t
 ```
 As you can see all we are doing here is playing with the headers. It should be noted that if you receive an authoriseRequest: call the rest of the request will not execute until you have either sent the delegate a signal telling it the request has been authorised or failed to be authorised.
 
+### Swift overlay
+Additional APIs that enhance usage within Swift applications are available through the `SPTDataLoaderSwift` library.
+```swift
+// Creating a DataLoader instance
+let dataLoader = dataLoaderFactory.makeDataLoader(/* optional */responseQueue: myCustomQueue)
+
+// Creating a Request instance -- all functions can be chained
+let request = dataLoader.request(modelURL, sourceIdentifier: "model-page")
+
+// Modifying the request properties
+request.modify { request in
+    request.body = modelData
+    request.method = .patch
+    request.addValue("application/json", forHeader: "Accept")
+}
+
+// Adding a response validator
+request.validate { response in
+    guard response.statusCode.rawValue == 200 else {
+        throw ValidationError.badStatus(code: response.statusCode.rawValue)
+    }
+}
+
+// Adding a response serializer (and executing the request)
+request.responseDecodable { response in
+    modelResultHandler(response.result)
+}
+
+// Cancelling the request
+request.cancel()
+```
+You can also define serializers to handle custom data types:
+```swift
+struct ProtobufResponseSerializer<Message: SwiftProtobuf.Message>: ResponseSerializer {
+    func serialize(response: SPTDataLoaderResponse) throws -> Message {
+        guard response.error == nil else {
+            throw response.error.unsafelyUnwrapped
+        }
+
+        guard let data = response.body else {
+            throw ResponseSerializationError.dataNotFound
+        }
+
+        return try Message(serializedData: data)
+    }
+}
+
+let modelSerializer = ProtobufResponseSerializer<MyCustomModel>()
+request.responseSerializable(serializer: modelSerializer) { response in
+    modelResultHandler(response.result)
+}
+```
+
 ## Background story :book:
 At Spotify we have begun moving to a decentralised HTTP architecture, and in doing so have had some growing pains. Initially we had a data loader that would attempt to refresh the access token whenever it became invalid, but we immediately learned this was very hard to keep track of. We needed some way of injecting this authorisation data automatically into a HTTP request that didn't require our features to do any more heavy lifting than they were currently doing.
 
 Thus we came up with a way to elegantly inject tokens in a Just-in-time manner for requests that require them. We also wanted to learn from our mistakes with our proprietary protocol, and bake in back-off policies early to avoid us DDOSing our own backends with huge amounts of eronious requests.
-
-### Why no block interface?
-We had some block interfaces on our proprietary protocol library, and what we noticed was that it was easy to miss the weakification of the variables used in the blocks, which caused view models to be held around in memory far longer than they should have been.
-Another problem was whether we should use one block or multiple blocks for failures/successes, and what we learned from our old API was that developers could tend to miss failure states from a single block interface (e.g. handle an NSError passed in). Good examples of are animation blocks on UIView that do not take into account the failed BOOL passed in. This makes it necessary to use multiple blocks, however we wanted a contract where the developer was guaranteed to get a callback from the data loader on any of its ending states (even if they put in a nil to the request blocks). The way we achieved this was the use of the delegate pattern.
-Unfortunately the block pattern is useful in a number of different scenarios, however it is far from our main use case at Spotify. To support this we would like to point out that someone can give the userInfo of a request a block and then call that block on the delegate callback if they were so inclined (we have one or two examples of this on our codebase).
-```objc
-- (void)load
-{
-    UILabel *label = [self findLabel];
-    NSURL *URL = [NSURL URLWithString:@"https://www.spotify.com"];
-    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@"spotify"];
-    dispatch_block_t block = ^ {
-        label.text = @"Loaded";
-    };
-    request.userInfo = @{ @"block" : block };
-    [self.dataLoader performRequest:request];
-}
-
-- (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveSuccessfulResponse:(SPTDataLoaderResponse *)response
-{
-    dispatch_block_t block = response.request.userInfo[@"block"];
-    if (block) {
-        block();
-    }
-}
-```
 
 ## Documentation :books:
 See the [`SPTDataLoader` documentation](http://cocoadocs.org/docsets/SPTDataLoader) on [CocoaDocs.org](http://cocoadocs.org) for the full documentation.
