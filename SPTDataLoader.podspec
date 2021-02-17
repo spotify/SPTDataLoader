@@ -39,13 +39,7 @@ Pod::Spec.new do |s|
 
     s.subspec "Swift" do |sp|
         sp.dependency "SPTDataLoader/Core"
-
         sp.source_files  = "Sources/SPTDataLoaderSwift/**/*.swift"
-
-        sp.ios.deployment_target      = "10.0"
-        sp.osx.deployment_target      = "10.12"
-        sp.tvos.deployment_target     = "10.0"
-        sp.watchos.deployment_target  = "3.0"
     end
 
 end

@@ -37,6 +37,20 @@
 			remoteGlobalIDString = 050E06951A10C62100A10A0E;
 			remoteInfo = SPTDataLoaderTests;
 		};
+		69F804AC25DDACFB0082D4D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F5B64096250060D1004B9B83;
+			remoteInfo = SPTDataLoaderSwift;
+		};
+		69F804AE25DDACFB0082D4D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0513AA991C6067E000A25F54 /* SPTDataLoader.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F5B640A12500633C004B9B83;
+			remoteInfo = SPTDataLoaderSwiftTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +132,8 @@
 			children = (
 				0513AAA41C6067E000A25F54 /* libSPTDataLoader.a */,
 				0513AAA61C6067E000A25F54 /* SPTDataLoaderTests.xctest */,
+				69F804AD25DDACFB0082D4D2 /* libSPTDataLoaderSwift.a */,
+				69F804AF25DDACFB0082D4D2 /* SPTDataLoaderSwiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -265,6 +281,20 @@
 			remoteRef = 0513AAA51C6067E000A25F54 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		69F804AD25DDACFB0082D4D2 /* libSPTDataLoaderSwift.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSPTDataLoaderSwift.a;
+			remoteRef = 69F804AC25DDACFB0082D4D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		69F804AF25DDACFB0082D4D2 /* SPTDataLoaderSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SPTDataLoaderSwiftTests.xctest;
+			remoteRef = 69F804AE25DDACFB0082D4D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -326,7 +356,6 @@
 					"$(inherited)",
 					include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -340,7 +369,6 @@
 					"$(inherited)",
 					include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
