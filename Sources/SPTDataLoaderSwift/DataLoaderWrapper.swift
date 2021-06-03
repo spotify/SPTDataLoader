@@ -35,6 +35,8 @@ final class DataLoaderWrapper: NSObject {
 // MARK: - DataLoader
 
 extension DataLoaderWrapper: DataLoader {
+    var activeRequests: [Request] { accessLock.sync { Array(requests.values) } }
+
     func request(_ url: URL, sourceIdentifier: String?) -> Request {
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: sourceIdentifier)
         let request = Request(request: sptRequest) { [weak self] request in
@@ -50,6 +52,17 @@ extension DataLoaderWrapper: DataLoader {
         }
 
         return request
+    }
+
+    func cancelActiveRequests() {
+        var activeRequests: [Request] = []
+
+        accessLock.sync {
+            activeRequests.append(contentsOf: requests.values)
+            requests.removeAll()
+        }
+
+        activeRequests.forEach { request in request.cancel() }
     }
 }
 
