@@ -85,6 +85,7 @@
                 forRequest:(SPTDataLoaderRequest *)request
 {
     self.numberOfNewBodyStreamCalls++;
+    completionHandler([[NSInputStream alloc] init]);
 }
 
 @end

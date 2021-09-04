@@ -69,6 +69,7 @@ didReceiveDataChunk:(NSData *)data
 - (void)dataLoader:(SPTDataLoader *)dataLoader needsNewBodyStream:(void (^)(NSInputStream * _Nonnull))completionHandler forRequest:(SPTDataLoaderRequest *)request
 {
     self.numberOfCallsToNeedNewBodyStream++;
+    completionHandler([[NSInputStream alloc] init]);
 }
 
 @end
