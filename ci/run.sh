@@ -37,7 +37,7 @@ pod spec lint SPTDataLoader.podspec --quick || \
   fail "Podspec lint failed"
 
 heading "Validating License Conformance"
-git ls-files | egrep "\\.(h|m|mm|swift)$" | \
+git ls-files | grep -v "Package.swift" | egrep "\\.(h|m|mm|swift)$" | \
   xargs ci/validate_license_conformance.sh ci/expected_license_header.txt || \
   fail "License Validation Failed"
 
@@ -96,6 +96,13 @@ build_framework SPTDataLoaderSwift-Watch watchos
 build_framework SPTDataLoaderSwift-Watch watchsimulator
 build_framework SPTDataLoaderSwift-TV appletvos
 build_framework SPTDataLoaderSwift-TV appletvsimulator
+
+#
+# BUILD SWIFT PACKAGE
+#
+
+heading "Build Swift Package"
+swift build || fail "SPM Build Failed"
 
 #
 # BUILD DEMO APP

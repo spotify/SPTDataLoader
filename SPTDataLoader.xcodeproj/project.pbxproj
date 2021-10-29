@@ -213,8 +213,8 @@
 		48E7EEC42059288E00BB7CCC /* NSDataMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataMock.h; sourceTree = "<group>"; };
 		48E7EEC52059288F00BB7CCC /* NSDataMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataMock.m; sourceTree = "<group>"; };
 		693521E32224CEF00098F8E3 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-spotify.bundle"; sourceTree = "<group>"; };
-		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "certs-google.bundle"; sourceTree = "<group>"; };
+		6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "certs-spotify.bundle"; path = "SPTDataLoader/Resources/certs-spotify.bundle"; sourceTree = "<group>"; };
+		6994E68B1EE9F49B00128CDE /* certs-google.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "certs-google.bundle"; path = "SPTDataLoader/Resources/certs-google.bundle"; sourceTree = "<group>"; };
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoader.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };

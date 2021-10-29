@@ -65,7 +65,11 @@ static SecTrustRef SPTDataLoaderUnitTestCreateTrustChainForCertPaths(NSArray<NSS
 }
 
 static NSArray<NSString *> *SPTDataLoaderServerTrustUnitTestCertificatePathsInCertBundle(NSString *name) {
+#if SWIFT_PACKAGE
+    NSBundle *testBundle = SWIFTPM_MODULE_BUNDLE;
+#else
     NSBundle *testBundle = [NSBundle bundleForClass:[SPTDataLoaderServerTrustPolicyTest class]];
+#endif
     NSString *bundlePath = [NSString stringWithFormat:@"%@/certs-%@.bundle", [testBundle resourcePath], name];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     return [bundle pathsForResourcesOfType:@"der" inDirectory:@"/"];
