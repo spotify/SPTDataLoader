@@ -20,6 +20,7 @@
  */
 
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
+#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
 #import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
 #import <SPTDataLoader/SPTDataLoaderDelegate.h>
@@ -32,4 +33,3 @@
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 #import <SPTDataLoader/SPTDataLoaderService.h>
-#import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
