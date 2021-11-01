@@ -13,24 +13,33 @@ let package = Package(
         .library(name: "SPTDataLoader", targets: ["SPTDataLoaderSwift"]),
     ],
     targets: [
-        .target(name: "SPTDataLoader", path: "Sources/SPTDataLoader"),
+        .target(
+            name: "SPTDataLoader",
+            path: "SPTDataLoader",
+            exclude: ["Info.plist", "Tests"]
+        ),
         .testTarget(
             name: "SPTDataLoaderTests",
             dependencies: ["SPTDataLoader"],
-            path: "Tests/SPTDataLoader",
+            path: "SPTDataLoader/Tests",
             exclude: ["Info.plist"],
             resources: [.process("Resources")],
             cSettings: [
-                .headerSearchPath("../../Sources/SPTDataLoader"),
-                .headerSearchPath("../../Tests/SPTDataLoader/Utilities"),
+                .headerSearchPath("Utilities"),
+                .headerSearchPath("../Sources"),
             ]
         ),
 
-        .target(name: "SPTDataLoaderSwift", dependencies: ["SPTDataLoader"], path: "Sources/SPTDataLoaderSwift"),
+        .target(
+            name: "SPTDataLoaderSwift",
+            dependencies: ["SPTDataLoader"],
+            path: "SPTDataLoaderSwift",
+            exclude: ["Tests"]
+        ),
         .testTarget(
             name: "SPTDataLoaderSwiftTests",
             dependencies: ["SPTDataLoaderSwift"],
-            path: "Tests/SPTDataLoaderSwift",
+            path: "SPTDataLoaderSwift/Tests",
             exclude: ["Info.plist"]
         ),
     ]

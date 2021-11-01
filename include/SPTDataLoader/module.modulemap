@@ -1,4 +1,0 @@
-module SPTDataLoader {
-    umbrella header "SPTDataLoader.h"
-    export *
-}

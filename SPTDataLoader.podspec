@@ -29,8 +29,8 @@ Pod::Spec.new do |s|
     s.default_subspec  = "Core"
 
     s.subspec "Core" do |sp|
-        sp.source_files         = "include/SPTDataLoader/*.h", "Sources/SPTDataLoader/*.{h,m}"
-        sp.public_header_files  = "include/SPTDataLoader/*.h"
+        sp.source_files         = "SPTDataLoader/include/SPTDataLoader/*.h", "SPTDataLoader/Sources/*.{h,m}"
+        sp.public_header_files  = "SPTDataLoader/include/SPTDataLoader/*.h"
         sp.framework            = "Security"
         sp.xcconfig             = {
             "OTHER_LDFLAGS" => "-lObjC"
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
 
     s.subspec "Swift" do |sp|
         sp.dependency "SPTDataLoader/Core"
-        sp.source_files  = "Sources/SPTDataLoaderSwift/**/*.swift"
+        sp.source_files  = "SPTDataLoaderSwift/Sources/**/*.swift"
     end
 
 end
