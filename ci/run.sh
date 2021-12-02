@@ -20,7 +20,15 @@ xcb() {
     -workspace SPTDataLoader.xcworkspace \
     -UseSanitizedBuildSystemEnvironment=YES \
     CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= \
-    "$@" | xcpretty || fail "$log failed"
+    "$@" | xcbeautify || fail "$log failed"
+}
+
+build_target() {
+  xcb "Build Target [$1] [$2]" build \
+    -scheme "$1" \
+    -destination "$2" \
+    -configuration Release \
+    -derivedDataPath "$DERIVED_DATA_COMMON"
 }
 
 DERIVED_DATA_COMMON="build/DerivedData/common"
@@ -28,7 +36,8 @@ DERIVED_DATA_TEST="build/DerivedData/test"
 
 if [[ -n "$GITHUB_WORKFLOW" ]]; then
   heading "Installing Tools"
-  gem install xcpretty cocoapods
+  gem install cocoapods
+  brew install xcbeautify
   export IS_CI=1
 fi
 
@@ -45,57 +54,41 @@ git ls-files | egrep "\\.(h|m|mm|swift)$" | \
 # BUILD LIBRARIES
 #
 
-build_library() {
-  xcb "Build Library [$1] [$2]" build \
-    -scheme "$1" \
-    -sdk "$2" \
-    -configuration Release \
-    -derivedDataPath "$DERIVED_DATA_COMMON"
-}
+build_target SPTDataLoader "generic/platform=iOS"
+build_target SPTDataLoader "generic/platform=iOS Simulator"
+build_target SPTDataLoader "generic/platform=macOS"
+build_target SPTDataLoader "generic/platform=watchOS"
+build_target SPTDataLoader "generic/platform=watchOS Simulator"
+build_target SPTDataLoader "generic/platform=tvOS"
+build_target SPTDataLoader "generic/platform=tvOS Simulator"
 
-build_library SPTDataLoader iphoneos
-build_library SPTDataLoader iphonesimulator
-build_library SPTDataLoader macosx
-build_library SPTDataLoader watchos
-build_library SPTDataLoader watchsimulator
-build_library SPTDataLoader appletvos
-build_library SPTDataLoader appletvsimulator
-
-build_library SPTDataLoaderSwift iphoneos
-build_library SPTDataLoaderSwift iphonesimulator
-build_library SPTDataLoaderSwift macosx
-build_library SPTDataLoaderSwift watchos
-build_library SPTDataLoaderSwift watchsimulator
-build_library SPTDataLoaderSwift appletvos
-build_library SPTDataLoaderSwift appletvsimulator
+build_target SPTDataLoaderSwift "generic/platform=iOS"
+build_target SPTDataLoaderSwift "generic/platform=iOS Simulator"
+build_target SPTDataLoaderSwift "generic/platform=macOS"
+build_target SPTDataLoaderSwift "generic/platform=watchOS"
+build_target SPTDataLoaderSwift "generic/platform=watchOS Simulator"
+build_target SPTDataLoaderSwift "generic/platform=tvOS"
+build_target SPTDataLoaderSwift "generic/platform=tvOS Simulator"
 
 #
 # BUILD FRAMEWORKS
 #
 
-build_framework() {
-  xcb "Build Framework [$1] [$2]" build \
-    -scheme "$1" \
-    -sdk "$2" \
-    -configuration Release \
-    -derivedDataPath "$DERIVED_DATA_COMMON"
-}
+build_target SPTDataLoader-iOS "generic/platform=iOS"
+build_target SPTDataLoader-iOS "generic/platform=iOS Simulator"
+build_target SPTDataLoader-OSX "generic/platform=macOS"
+build_target SPTDataLoader-Watch "generic/platform=watchOS"
+build_target SPTDataLoader-Watch "generic/platform=watchOS Simulator"
+build_target SPTDataLoader-TV "generic/platform=tvOS"
+build_target SPTDataLoader-TV "generic/platform=tvOS Simulator"
 
-build_framework SPTDataLoader-iOS iphoneos
-build_framework SPTDataLoader-iOS iphonesimulator
-build_framework SPTDataLoader-OSX macosx
-build_framework SPTDataLoader-Watch watchos
-build_framework SPTDataLoader-Watch watchsimulator
-build_framework SPTDataLoader-TV appletvos
-build_framework SPTDataLoader-TV appletvsimulator
-
-build_framework SPTDataLoaderSwift-iOS iphoneos
-build_framework SPTDataLoaderSwift-iOS iphonesimulator
-build_framework SPTDataLoaderSwift-OSX macosx
-build_framework SPTDataLoaderSwift-Watch watchos
-build_framework SPTDataLoaderSwift-Watch watchsimulator
-build_framework SPTDataLoaderSwift-TV appletvos
-build_framework SPTDataLoaderSwift-TV appletvsimulator
+build_target SPTDataLoaderSwift-iOS "generic/platform=iOS"
+build_target SPTDataLoaderSwift-iOS "generic/platform=iOS Simulator"
+build_target SPTDataLoaderSwift-OSX "generic/platform=macOS"
+build_target SPTDataLoaderSwift-Watch "generic/platform=watchOS"
+build_target SPTDataLoaderSwift-Watch "generic/platform=watchOS Simulator"
+build_target SPTDataLoaderSwift-TV "generic/platform=tvOS"
+build_target SPTDataLoaderSwift-TV "generic/platform=tvOS Simulator"
 
 #
 # BUILD DEMO APP
@@ -103,7 +96,7 @@ build_framework SPTDataLoaderSwift-TV appletvsimulator
 
 xcb "Build Demo App for Simulator" build \
   -scheme "SPTDataLoaderDemo" \
-  -sdk iphonesimulator \
+  -destination "generic/platform=iOS Simulator" \
   -configuration Release \
   -derivedDataPath "$DERIVED_DATA_COMMON"
 
@@ -114,7 +107,7 @@ xcb "Build Demo App for Simulator" build \
 xcb "Run tests for macOS" test \
   -scheme "ALL_TESTS" \
   -enableCodeCoverage YES \
-  -sdk macosx \
+  -destination "platform=macOS" \
   -derivedDataPath "$DERIVED_DATA_TEST/macos"
 
 create_sim() {
