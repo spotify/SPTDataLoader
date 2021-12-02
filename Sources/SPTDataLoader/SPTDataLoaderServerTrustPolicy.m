@@ -27,10 +27,16 @@
 static BOOL SPTEvaluteTrust(SecTrustRef trust) {
     BOOL isValid = NO;
     SecTrustResultType result;
-    OSStatus status = SecTrustEvaluate(trust, &result);
-    if (status == errSecSuccess) {
-        isValid = (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
+
+    if (@available(iOS 12, macOS 14, tvOS 12, watchOS 5, *)) {
+        isValid = SecTrustEvaluateWithError(trust,  nil);
+    } else {
+        OSStatus status = SecTrustEvaluate(trust, &result);
+        if (status == errSecSuccess) {
+            isValid = (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed);
+        }
     }
+
     return isValid;
 }
 
