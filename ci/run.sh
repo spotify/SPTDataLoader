@@ -46,9 +46,14 @@ pod spec lint SPTDataLoader.podspec --quick || \
   fail "Podspec lint failed"
 
 heading "Validating License Conformance"
-git ls-files | egrep "\\.(h|m|mm|swift)$" | \
+git ls-files | egrep "\\.(h|m|mm)$" | \
   xargs ci/validate_license_conformance.sh ci/expected_license_header.txt || \
   fail "License Validation Failed"
+
+heading "Validating Swift License Conformance"
+git ls-files | egrep "\\.swift$" | \
+  xargs ci/validate_license_conformance.sh ci/expected_license_header_swift.txt || \
+  fail "Swift License Validation Failed"
 
 #
 # BUILD LIBRARIES

@@ -11,15 +11,3 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-/// An error that occurs during request execution.
-public enum RequestError: Error {
-    /// The request could not be initiated.
-    case executionFailed
-}
-
-/// An error that occurs during response serialization.
-public enum ResponseSerializationError: Error {
-    /// The data was expected but a null value was provided.
-    case dataNotFound
-}
