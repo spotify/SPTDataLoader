@@ -18,22 +18,6 @@ import Foundation
 import XCTest
 
 class DecodableResponseSerializerTest: XCTestCase {
-    func test_responseSerialization_shouldFail_whenErrorIsPresent() {
-        // Given
-        let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request, error: TestError.foo)
-
-        // When
-        let decoder = JSONDecoder()
-        let serializer = DecodableResponseSerializer<TestDecodable>(decoder: decoder)
-        let result = Result { try serializer.serialize(response: responseFake) }
-
-        // Then
-        guard case .failure(let error) = result else {
-            return XCTFail("Expected failure result")
-        }
-        XCTAssertTrue(error is TestError)
-    }
 
     func test_responseSerialization_shouldBeUnsuccessful_whenBodyIsMissing() {
         // Given

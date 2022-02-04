@@ -18,23 +18,6 @@ import Foundation
 import XCTest
 
 class DataResponseSerializerTest: XCTestCase {
-    func test_responseSerialization_shouldFail_whenErrorIsPresent() {
-        // Given
-        let request = SPTDataLoaderRequest()
-        let responseError = NSError(domain: "foo", code: 123, userInfo: nil)
-        let responseFake = FakeDataLoaderResponse(request: request, error: responseError)
-
-        // When
-        let serializer = DataResponseSerializer()
-        let result = Result { try serializer.serialize(response: responseFake) }
-
-        // Then
-        guard case .failure(let error) = result else {
-            return XCTFail("Expected failure result")
-        }
-        XCTAssertEqual(error as NSError, responseError)
-    }
-
     func test_responseSerialization_shouldBeSuccessful_whenBodyIsMissing() {
         // Given
         let request = SPTDataLoaderRequest()
