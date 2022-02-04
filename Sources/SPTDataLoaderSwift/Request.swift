@@ -57,12 +57,6 @@ public final class Request {
         var result: Result<SPTDataLoaderResponse, Error> {
             switch self {
             case .completed(let response):
-                // Respect any error except the one `SPTDataLoaderResponse` sets automatically based on
-                // status code, which should instead be enforced using a validator that can trigger the
-                // `.completedWithError` state.
-                if let error = response.error, (error as NSError).domain != SPTDataLoaderResponseErrorDomain {
-                    return .failure(error)
-                }
                 return .success(response)
             case .completedWithError(_, let error), .failed(let error):
                 return .failure(error)
@@ -124,12 +118,19 @@ public final class Request {
                 return
             }
 
-            do {
-                try responseValidators.forEach { validator in try validator(response) }
-                state = .completed(response: response)
-            } catch let validationError {
-                responseState = .completedWithError(response: response, error: validationError)
-                state = .completedWithError(response: response, error: validationError)
+            // Respect any previous error except the one `SPTDataLoaderResponse` sets
+            // based on status code, which should instead be enforced using a validator.
+            if let error = response.error, (error as NSError).domain != SPTDataLoaderResponseErrorDomain {
+                responseState = .completedWithError(response: response, error: error)
+                state = .completedWithError(response: response, error: error)
+            } else {
+                do {
+                    try responseValidators.forEach { validator in try validator(response) }
+                    state = .completed(response: response)
+                } catch let validationError {
+                    responseState = .completedWithError(response: response, error: validationError)
+                    state = .completedWithError(response: response, error: validationError)
+                }
             }
 
             handlers = responseHandlers
@@ -197,6 +198,35 @@ public extension Request {
         addResponseValidator(responseValidator)
 
         return self
+    }
+
+    /// Adds a validator used to verify a response status code.
+    /// - Parameter acceptedStatusCodes: The accepted status codes.
+    @discardableResult
+    func validateStatusCode<StatusCodes: Sequence>(
+        in acceptedStatusCodes: StatusCodes
+    ) -> Self where StatusCodes.Iterator.Element == Int {
+        addResponseValidator { response in
+            guard acceptedStatusCodes.contains(response.statusCode.rawValue) else {
+                throw ResponseValidationError.badStatusCode(code: response.statusCode.rawValue)
+            }
+        }
+
+        return self
+    }
+
+    /// Adds a validator used to verify a response status code.
+    /// - Parameter acceptedStatusCodes: The accepted status codes.
+    @discardableResult
+    func validateStatusCode(in acceptedStatusCodes: Int...) -> Self {
+        return validateStatusCode(in: acceptedStatusCodes)
+    }
+
+    /// Adds a validator used to verify a response status code is in the successful 2xx range.
+    /// - Parameter acceptedStatusCodes: The accepted status codes.
+    @discardableResult
+    func validateStatusCode() -> Self {
+        return validateStatusCode(in: 200...299)
     }
 }
 
