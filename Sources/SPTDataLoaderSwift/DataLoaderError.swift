@@ -23,3 +23,9 @@ public enum ResponseSerializationError: Error {
     /// The data was expected but a null value was provided.
     case dataNotFound
 }
+
+/// An error that occurs during response validation.
+public enum ResponseValidationError: Error {
+    /// The status code was not within the accepted codes.
+    case badStatusCode(code: Int)
+}
