@@ -235,7 +235,8 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         }
         return;
     }
-    
+
+    self.receivedData = nil;
     self.absoluteStartTime = CFAbsoluteTimeGetCurrent();
     [self.task resume];
 }
