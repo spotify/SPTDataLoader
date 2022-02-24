@@ -121,6 +121,41 @@
     XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 0u, @"The handler did relay a failed response onto its request response handler when it should have silently retried");
 }
 
+- (void)testRetryWithResponseBody
+{
+    NSData *errorData = [@"error payload" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *successData = [@"success payload" dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
+
+    self.handler.retryQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Request was retried once"];
+    __weak __typeof(self) weakSelf = self;
+    self.task.resumeCallback = ^ {
+        __strong __typeof(self) strongSelf = weakSelf;
+        [strongSelf.handler receiveResponse:[NSURLResponse new]];
+
+        if (strongSelf.handler.retryCount == 0) {
+            // Let the first request fail
+            [strongSelf.handler receiveData:errorData];
+            SPTDataLoaderResponse *response = [strongSelf.handler completeWithError:error];
+
+            // When the request gets retried the response should be nil
+            XCTAssertNil(response);
+        } else {
+            // Let the second (retried) request succeed
+            [strongSelf.handler receiveData:successData];
+            SPTDataLoaderResponse *response = [strongSelf.handler completeWithError:nil];
+            XCTAssert([response.body isEqual:successData]);
+
+            [expectation fulfill];
+        }
+    };
+
+    self.request.maximumRetryCount = 1;
+    [self.handler start];
+    [self waitForExpectationsWithTimeout:2.0 handler:nil];
+}
+
 - (void)testDataCreationWithContentLengthFromResponse
 {
     // It's times like these... I wish I had the SPTSingletonSwizzler ;)
