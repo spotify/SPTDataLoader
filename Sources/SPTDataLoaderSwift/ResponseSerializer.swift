@@ -28,10 +28,6 @@ public protocol ResponseSerializer {
 
 struct DataResponseSerializer: ResponseSerializer {
     func serialize(response: SPTDataLoaderResponse) throws -> Data {
-        guard response.error == nil else {
-            throw response.error.unsafelyUnwrapped
-        }
-
         guard let data = response.body else {
             throw ResponseSerializationError.dataNotFound
         }
@@ -44,10 +40,6 @@ struct DecodableResponseSerializer<Value: Decodable>: ResponseSerializer {
     let decoder: ResponseDecoder
 
     func serialize(response: SPTDataLoaderResponse) throws -> Value {
-        guard response.error == nil else {
-            throw response.error.unsafelyUnwrapped
-        }
-
         guard let data = response.body else {
             throw ResponseSerializationError.dataNotFound
         }
@@ -60,10 +52,6 @@ struct JSONResponseSerializer: ResponseSerializer {
     let options: JSONSerialization.ReadingOptions
 
     func serialize(response: SPTDataLoaderResponse) throws -> Any {
-        guard response.error == nil else {
-            throw response.error.unsafelyUnwrapped
-        }
-
         guard let data = response.body else {
             throw ResponseSerializationError.dataNotFound
         }

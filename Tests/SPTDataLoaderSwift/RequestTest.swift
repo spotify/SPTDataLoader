@@ -93,9 +93,9 @@ class RequestTest: XCTestCase {
         XCTAssertTrue(request === executedRequest)
     }
 
-    // MARK: Response Validators
+    // MARK: Response Validator
 
-    func test_responseValidator_shouldNotExecute_whenResponseContainsError() throws {
+    func test_responseValidator_shouldNotExecute_whenResponseErrorIsPresent() throws {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
@@ -107,21 +107,29 @@ class RequestTest: XCTestCase {
 
         // When
         var validatorCount = 0
-        var result: Result<SPTDataLoaderResponse, Error>?
+        var responseState: Request.ResponseState?
         request.addResponseValidator { _ in validatorCount += 1 }
-        request.addResponseHandler { result = $0 }
+        request.addResponseHandler { responseState = $0 }
         request.processResponse(responseFake)
 
         // Then
-        XCTAssertNotNil(result)
+        guard case .completedWithError(let response, let error) = responseState else {
+            return XCTFail("Expected ResponseState.completedWithError, got \(String(describing: responseState))")
+        }
+        guard let testError = error as? TestError else {
+            return XCTFail("Expected TestError, got \(type(of: error))")
+        }
+        XCTAssertEqual(response, responseFake)
+        XCTAssertEqual(testError, .foo)
         XCTAssertEqual(validatorCount, 0)
     }
 
-    func test_responseValidator_shouldExecute_whenErrorIsAbsent() throws {
+    func test_responseValidator_shouldExecute_whenResponseStatusCodeErrorIsPresent() throws {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let statusCodeError = NSError(domain: SPTDataLoaderResponseErrorDomain, code: 403, userInfo: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: statusCodeError)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -129,14 +137,17 @@ class RequestTest: XCTestCase {
 
         // When
         var validatorCount = 0
-        var result: Result<SPTDataLoaderResponse, Error>?
+        var responseState: Request.ResponseState?
         request.addResponseValidator { _ in validatorCount += 1 }
         request.addResponseValidator { _ in validatorCount += 1 }
-        request.addResponseHandler { result = $0 }
+        request.addResponseHandler { responseState = $0 }
         request.processResponse(responseFake)
 
         // Then
-        XCTAssertNotNil(result)
+        guard case .completed(let response) = responseState else {
+            return XCTFail("Expected ResponseState.completed, got \(String(describing: responseState))")
+        }
+        XCTAssertEqual(response, responseFake)
         XCTAssertEqual(validatorCount, 2)
     }
 
@@ -152,22 +163,125 @@ class RequestTest: XCTestCase {
 
         // When
         var validatorCount = 0
-        var result: Result<SPTDataLoaderResponse, Error>?
+        var responseState: Request.ResponseState?
         request.addResponseValidator { _ in validatorCount += 1 }
         request.addResponseValidator { _ in throw TestError.foo }
         request.addResponseValidator { _ in validatorCount += 1 }
-        request.addResponseHandler { result = $0 }
+        request.addResponseHandler { responseState = $0 }
         request.processResponse(responseFake)
 
         // Then
-        guard case .failure(let error) = result else {
-            return XCTFail("Expected error result, got \(String(describing: result))")
+        guard case .completedWithError(let response, let error) = responseState else {
+            return XCTFail("Expected ResponseState.completedWithError, got \(String(describing: responseState))")
         }
         guard let testError = error as? TestError else {
             return XCTFail("Expected TestError, got \(type(of: error))")
         }
+        XCTAssertEqual(response, responseFake)
         XCTAssertEqual(testError, .foo)
         XCTAssertEqual(validatorCount, 1)
+    }
+
+    // MARK: Response Status Code Validator
+
+    func test_responseStatusCodeValidator_shouldSucceed_whenStatusCodeWithinDefaultRange() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 201)
+
+        let request = Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }
+
+        // When
+        var responseState: Request.ResponseState?
+        request.validateStatusCode()
+        request.addResponseHandler { responseState = $0 }
+        request.processResponse(responseFake)
+
+        // Then
+        guard case .completed(let response) = responseState else {
+            return XCTFail("Expected ResponseState.completed, got \(String(describing: responseState))")
+        }
+        XCTAssertEqual(response, responseFake)
+    }
+
+    func test_responseStatusCodeValidator_shouldFail_whenStatusCodeOutsideDefaultRange() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 301)
+
+        let request = Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }
+
+        // When
+        var responseState: Request.ResponseState?
+        request.validateStatusCode()
+        request.addResponseHandler { responseState = $0 }
+        request.processResponse(responseFake)
+
+        // Then
+        guard case .completedWithError(let response, let error) = responseState else {
+            return XCTFail("Expected ResponseState.completedWithError, got \(String(describing: responseState))")
+        }
+        guard case .badStatusCode(let statusCode) = error as? ResponseValidationError else {
+            return XCTFail("Expected ResponseValidationError.badStatusCode, got \(error)")
+        }
+        XCTAssertEqual(response, responseFake)
+        XCTAssertEqual(statusCode, 301)
+    }
+
+    func test_responseStatusCodeValidator_shouldSucceed_whenStatusCodeWithinDefinedRange() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 304)
+
+        let request = Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }
+
+        // When
+        var responseState: Request.ResponseState?
+        request.validateStatusCode(in: 300...399)
+        request.addResponseHandler { responseState = $0 }
+        request.processResponse(responseFake)
+
+        // Then
+        guard case .completed(let response) = responseState else {
+            return XCTFail("Expected ResponseState.completed, got \(String(describing: responseState))")
+        }
+        XCTAssertEqual(response, responseFake)
+    }
+
+    func test_responseStatusCodeValidator_shouldFail_whenStatusCodeOutsideDefinedRange() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 204)
+
+        let request = Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }
+
+        // When
+        var responseState: Request.ResponseState?
+        request.validateStatusCode(in: 200)
+        request.addResponseHandler { responseState = $0 }
+        request.processResponse(responseFake)
+
+        // Then
+        guard case .completedWithError(let response, let error) = responseState else {
+            return XCTFail("Expected ResponseState.completedWithError, got \(String(describing: responseState))")
+        }
+        guard case .badStatusCode(let statusCode) = error as? ResponseValidationError else {
+            return XCTFail("Expected ResponseValidationError.badStatusCode, got \(error)")
+        }
+        XCTAssertEqual(response, responseFake)
+        XCTAssertEqual(statusCode, 204)
     }
 
     // MARK: Response Processing
@@ -183,13 +297,14 @@ class RequestTest: XCTestCase {
         }
 
         // When
-        var result: Result<SPTDataLoaderResponse, Error>?
-        request.addResponseHandler { result = $0 }
+        var responseState: Request.ResponseState?
+        request.addResponseHandler { responseState = $0 }
         request.processResponse(responseFake)
+        request.addResponseHandler { responseState = $0 }
 
         // Then
-        guard case .failure(let error) = result else {
-            return XCTFail("Expected error result, got \(String(describing: result))")
+        guard case .failed(let error) = responseState else {
+            return XCTFail("Expected error result, got \(String(describing: responseState))")
         }
         guard case .executionFailed = error as? RequestError else {
             return XCTFail("Expected RequestError.executionFailed, got \(error)")
@@ -210,6 +325,7 @@ class RequestTest: XCTestCase {
         var responseCount = 0
         request.addResponseHandler { _ in responseCount += 1 }
         request.cancel()
+        request.addResponseHandler { _ in responseCount += 1 }
         request.processResponse(responseFake)
 
         // Then
@@ -249,40 +365,15 @@ class RequestTest: XCTestCase {
         }
 
         // When
-        var result1: Result<SPTDataLoaderResponse, Error>?
-        var result2: Result<SPTDataLoaderResponse, Error>?
-        request.addResponseHandler { result1 = $0 }
-        request.addResponseHandler { result2 = $0 }
+        var responseState1: Request.ResponseState?
+        var responseState2: Request.ResponseState?
+        request.addResponseHandler { responseState1 = $0 }
+        request.addResponseHandler { responseState2 = $0 }
         request.processResponse(responseFake)
 
         // Then
-        XCTAssertNotNil(result1)
-        XCTAssertNotNil(result2)
-        XCTAssertEqual(requestCount, 1)
-    }
-
-    func test_responseHandler_shouldExecute_whenAddedAfterFailure() throws {
-        // Given
-        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
-        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
-
-        var requestCount = 0
-        let request = Request(request: sptRequest) { _ in
-            requestCount += 1
-            return CancellationTokenFake()
-        }
-
-        // When
-        var result1: Result<SPTDataLoaderResponse, Error>?
-        var result2: Result<SPTDataLoaderResponse, Error>?
-        request.addResponseHandler { result1 = $0 }
-        request.processResponse(responseFake)
-        request.addResponseHandler { result2 = $0 }
-
-        // Then
-        XCTAssertNotNil(result1)
-        XCTAssertNotNil(result2)
+        XCTAssertNotNil(responseState1)
+        XCTAssertNotNil(responseState2)
         XCTAssertEqual(requestCount, 1)
     }
 
@@ -299,21 +390,70 @@ class RequestTest: XCTestCase {
         }
 
         // When
-        var result1: Result<SPTDataLoaderResponse, Error>?
-        var result2: Result<SPTDataLoaderResponse, Error>?
-        request.addResponseHandler { result1 = $0 }
+        var responseState1: Request.ResponseState?
+        var responseState2: Request.ResponseState?
+        request.addResponseHandler { responseState1 = $0 }
         request.processResponse(responseFake)
-        request.addResponseHandler { result2 = $0 }
+        request.addResponseHandler { responseState2 = $0 }
 
         // Then
-        XCTAssertNotNil(result1)
-        XCTAssertNotNil(result2)
+        XCTAssertNotNil(responseState1)
+        XCTAssertNotNil(responseState2)
+        XCTAssertEqual(requestCount, 1)
+    }
+
+    func test_responseHandler_shouldExecute_whenAddedAfterCompletionWithError() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+
+        var requestCount = 0
+        let request = Request(request: sptRequest) { _ in
+            requestCount += 1
+            return CancellationTokenFake()
+        }
+
+        // When
+        var responseState1: Request.ResponseState?
+        var responseState2: Request.ResponseState?
+        request.addResponseHandler { responseState1 = $0 }
+        request.processResponse(responseFake)
+        request.addResponseHandler { responseState2 = $0 }
+
+        // Then
+        XCTAssertNotNil(responseState1)
+        XCTAssertNotNil(responseState2)
         XCTAssertEqual(requestCount, 1)
     }
 
     // MARK: Response Handler
 
-    func test_responseHandler_shouldReceiveFailure_whenErrorIsPresent() throws {
+    func test_responseHandler_shouldReceiveFailure_whenExecutionErrorIsPresent() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+
+        // When
+        var response: Response<Void, Error>?
+        Request(request: sptRequest) { _ in
+            return nil
+        }.response {
+            response = $0
+        }.processResponse(responseFake)
+
+        // Then
+        guard let actualResponse = response else {
+            return XCTFail("Expected response")
+        }
+        guard case .failure = actualResponse.result else {
+            return XCTFail("Expected error result, got \(actualResponse.result)")
+        }
+        XCTAssertNil(actualResponse.response)
+    }
+
+    func test_responseHandler_shouldReceiveFailure_whenValidationErrorIsPresent() throws {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
@@ -336,6 +476,56 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
+    }
+
+    func test_responseHandler_shouldReceiveFailure_whenNonStatusCodeErrorIsPresent() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+
+        // When
+        var response: Response<Void, Error>?
+        Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }.response {
+            response = $0
+        }.processResponse(responseFake)
+
+        // Then
+        guard let actualResponse = response else {
+            return XCTFail("Expected response")
+        }
+        guard case .failure = actualResponse.result else {
+            return XCTFail("Expected error result, got \(actualResponse.result)")
+        }
+        XCTAssertEqual(actualResponse.response, responseFake)
+    }
+
+    func test_responseHandler_shouldReceiveSuccess_whenStatusCodeErrorIsPresent() throws {
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let statusCodeError = NSError(domain: SPTDataLoaderResponseErrorDomain, code: 403, userInfo: nil)
+        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: statusCodeError)
+
+        // When
+        var response: Response<Void, Error>?
+        Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }.response {
+            response = $0
+        }.processResponse(responseFake)
+
+        // Then
+        guard let actualResponse = response else {
+            return XCTFail("Expected response")
+        }
+        guard case .success = actualResponse.result else {
+            return XCTFail("Expected success result, got \(actualResponse.result)")
+        }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_responseHandler_shouldReceiveSuccess_whenResponseIsPresent() throws {
@@ -360,8 +550,8 @@ class RequestTest: XCTestCase {
         guard case .success = actualResponse.result else {
             return XCTFail("Expected success result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
-
 
     // MARK: Data Response Handler
 
@@ -386,6 +576,7 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_dataResponseHandler_shouldReceiveError_whenSerializationProducesFailure() throws {
@@ -409,6 +600,7 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_dataResponseHandler_shouldReceiveValue_whenSerializationProducesSuccess() throws {
@@ -433,6 +625,7 @@ class RequestTest: XCTestCase {
         guard case .success = actualResponse.result else {
             return XCTFail("Expected success result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     // MARK: Decodable Response Handler
@@ -460,6 +653,7 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_decodableResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() throws {
@@ -484,6 +678,7 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_decodableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess() throws {
@@ -508,6 +703,7 @@ class RequestTest: XCTestCase {
         guard case .success = actualResponse.result else {
             return XCTFail("Expected success result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     // MARK: JSON Response Handler
@@ -535,6 +731,7 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_jsonResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() throws {
@@ -559,6 +756,7 @@ class RequestTest: XCTestCase {
         guard case .failure = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_jsonResponseHandler_shouldReceiveValue_whenSerializationProducesSuccess() throws {
@@ -583,6 +781,7 @@ class RequestTest: XCTestCase {
         guard case .success = actualResponse.result else {
             return XCTFail("Expected success result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     // MARK: Serializable Response Handler
@@ -607,9 +806,13 @@ class RequestTest: XCTestCase {
         guard let actualResponse = response else {
             return XCTFail("Expected response")
         }
-        guard case .failure = actualResponse.result else {
+        guard case .failure(let error) = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        guard case .foo = error as? TestError else {
+            return XCTFail("Expected TestError.foo, got \(error)")
+        }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_serializableResponseHandler_shouldReceiveFailure_whenSerializationProducesFailure() throws {
@@ -630,9 +833,13 @@ class RequestTest: XCTestCase {
         guard let actualResponse = response else {
             return XCTFail("Expected response")
         }
-        guard case .failure = actualResponse.result else {
+        guard case .failure(let error) = actualResponse.result else {
             return XCTFail("Expected error result, got \(actualResponse.result)")
         }
+        guard case .bar = error as? TestError else {
+            return XCTFail("Expected TestError.bar, got \(error)")
+        }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 
     func test_serializableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess() throws {
@@ -657,6 +864,7 @@ class RequestTest: XCTestCase {
         guard case .success = actualResponse.result else {
             return XCTFail("Expected success result, got \(actualResponse.result)")
         }
+        XCTAssertEqual(actualResponse.response, responseFake)
     }
 }
 
@@ -674,11 +882,11 @@ private struct TestDecodable: Decodable, Equatable {
 private struct TestSerializer: ResponseSerializer {
     func serialize(response: SPTDataLoaderResponse) throws -> String {
         guard let data = response.body else {
-            throw TestError.foo
+            throw TestError.bar
         }
 
         guard let string = String(data: data, encoding: .utf8) else {
-            throw TestError.foo
+            throw TestError.bar
         }
 
         return string

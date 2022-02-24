@@ -14,9 +14,6 @@
 
 import Foundation
 
-typealias ResponseHandler = (Result<SPTDataLoaderResponse, Error>) -> Void
-public typealias ResponseValidator = (SPTDataLoaderResponse) throws -> Void
-
 /// A wrapper for initiating URL requests and handling responses with optional validation.
 ///
 /// The `Request` type provides a set of functions that make it easy to chain a series of
@@ -36,18 +33,43 @@ public final class Request {
 
     private enum State {
         case initialized
+        case failed(error: Error)
         case executed(token: SPTDataLoaderCancellationToken)
         case completed(response: SPTDataLoaderResponse)
-        case failed(error: Error)
+        case completedWithError(response: SPTDataLoaderResponse, error: Error)
         case cancelled
+    }
+
+    enum ResponseState {
+        case failed(error: Error)
+        case completed(response: SPTDataLoaderResponse)
+        case completedWithError(response: SPTDataLoaderResponse, error: Error)
+
+        var response: SPTDataLoaderResponse? {
+            switch self {
+            case .completed(let response), .completedWithError(let response, _):
+                return response
+            case .failed:
+                return nil
+            }
+        }
+
+        var result: Result<SPTDataLoaderResponse, Error> {
+            switch self {
+            case .completed(let response):
+                return .success(response)
+            case .completedWithError(_, let error), .failed(let error):
+                return .failure(error)
+            }
+        }
     }
 
     private let accessLock = AccessLock()
     private var state: State = .initialized
-    private var responseHandlers: [ResponseHandler] = []
-    private var responseValidators: [ResponseValidator] = []
+    private var responseHandlers: [(ResponseState) -> Void] = []
+    private var responseValidators: [(SPTDataLoaderResponse) throws -> Void] = []
 
-    func addResponseValidator(_ responseValidator: @escaping ResponseValidator) {
+    func addResponseValidator(_ responseValidator: @escaping (SPTDataLoaderResponse) throws -> Void) {
         accessLock.sync {
             switch state {
             case .initialized, .executed:
@@ -58,8 +80,8 @@ public final class Request {
         }
     }
 
-    func addResponseHandler(_ responseHandler: @escaping ResponseHandler) {
-        var result: Result<SPTDataLoaderResponse, Error>?
+    func addResponseHandler(_ responseHandler: @escaping (ResponseState) -> Void) {
+        var responseState: ResponseState?
 
         accessLock.sync {
             switch state {
@@ -68,41 +90,46 @@ public final class Request {
                     responseHandlers.append(responseHandler)
                     state = .executed(token: token)
                 } else {
-                    result = .failure(RequestError.executionFailed)
+                    responseState = .failed(error: RequestError.executionFailed)
                     state = .failed(error: RequestError.executionFailed)
                 }
             case .executed:
                 responseHandlers.append(responseHandler)
             case .failed(let error):
-                result = .failure(error)
+                responseState = .failed(error: error)
             case .completed(let response):
-                result = .success(response)
-            default:
+                responseState = .completed(response: response)
+            case .completedWithError(let response, let error):
+                responseState = .completedWithError(response: response, error: error)
+            case .cancelled:
                 break
             }
         }
 
-        result.map { result in responseHandler(result) }
+        responseState.map { responseState in responseHandler(responseState) }
     }
 
     func processResponse(_ response: SPTDataLoaderResponse) {
-        var error = response.error
-        var handlers: [ResponseHandler] = []
+        var handlers: [(ResponseState) -> Void] = []
+        var responseState: ResponseState = .completed(response: response)
 
         accessLock.sync {
             guard case .executed = state else {
                 return
             }
 
-            if let error = error {
-                state = .failed(error: error)
+            // Respect any previous error except the one `SPTDataLoaderResponse` sets
+            // based on status code, which should instead be enforced using a validator.
+            if let error = response.error, (error as NSError).domain != SPTDataLoaderResponseErrorDomain {
+                responseState = .completedWithError(response: response, error: error)
+                state = .completedWithError(response: response, error: error)
             } else {
                 do {
                     try responseValidators.forEach { validator in try validator(response) }
                     state = .completed(response: response)
                 } catch let validationError {
-                    error = validationError
-                    state = .failed(error: validationError)
+                    responseState = .completedWithError(response: response, error: validationError)
+                    state = .completedWithError(response: response, error: validationError)
                 }
             }
 
@@ -112,8 +139,7 @@ public final class Request {
             responseValidators.removeAll()
         }
 
-        let result = Result { try error.map { error in throw error } ?? response }
-        handlers.forEach { handler in handler(result) }
+        handlers.forEach { handler in handler(responseState) }
     }
 }
 
@@ -168,10 +194,39 @@ public extension Request {
     /// Adds a validator used to verify a response.
     /// - Parameter responseValidator: The validation closure invoked upon response.
     @discardableResult
-    func validate(responseValidator: @escaping ResponseValidator) -> Self {
+    func validate(responseValidator: @escaping (SPTDataLoaderResponse) throws -> Void) -> Self {
         addResponseValidator(responseValidator)
 
         return self
+    }
+
+    /// Adds a validator used to verify a response status code.
+    /// - Parameter acceptedStatusCodes: The accepted status codes.
+    @discardableResult
+    func validateStatusCode<StatusCodes: Sequence>(
+        in acceptedStatusCodes: StatusCodes
+    ) -> Self where StatusCodes.Iterator.Element == Int {
+        addResponseValidator { response in
+            guard acceptedStatusCodes.contains(response.statusCode.rawValue) else {
+                throw ResponseValidationError.badStatusCode(code: response.statusCode.rawValue)
+            }
+        }
+
+        return self
+    }
+
+    /// Adds a validator used to verify a response status code.
+    /// - Parameter acceptedStatusCodes: The accepted status codes.
+    @discardableResult
+    func validateStatusCode(in acceptedStatusCodes: Int...) -> Self {
+        return validateStatusCode(in: acceptedStatusCodes)
+    }
+
+    /// Adds a validator used to verify a response status code is in the successful 2xx range.
+    /// - Parameter acceptedStatusCodes: The accepted status codes.
+    @discardableResult
+    func validateStatusCode() -> Self {
+        return validateStatusCode(in: 200...299)
     }
 }
 
@@ -182,11 +237,11 @@ public extension Request {
     /// - Parameter completionHandler: The callback closure invoked upon completion.
     @discardableResult
     func response(completionHandler: @escaping (Response<Void, Error>) -> Void) -> Self {
-        addResponseHandler { [request] result in
+        addResponseHandler { [request] state in
             let response = Response(
                 request: request,
-                response: result.success,
-                result: result.map { _ in () }
+                response: state.response,
+                result: state.result.map { _ in () }
             )
             completionHandler(response)
         }
@@ -198,11 +253,11 @@ public extension Request {
     /// - Parameter completionHandler: The callback closure invoked upon completion.
     @discardableResult
     func responseData(completionHandler: @escaping (Response<Data, Error>) -> Void) -> Self {
-        addResponseHandler { [request] result in
+        addResponseHandler { [request] state in
             let response = Response(
                 request: request,
-                response: result.success,
-                result: result.flatMap { response in
+                response: state.response,
+                result: state.result.flatMap { response in
                     Result { try DataResponseSerializer().serialize(response: response) }
                 }
             )
@@ -220,11 +275,11 @@ public extension Request {
         decoder: ResponseDecoder = JSONDecoder(),
         completionHandler: @escaping (Response<Value, Error>) -> Void
     ) -> Self {
-        addResponseHandler { [request] result in
+        addResponseHandler { [request] state in
             let response = Response(
                 request: request,
-                response: result.success,
-                result: result.flatMap { response in
+                response: state.response,
+                result: state.result.flatMap { response in
                     Result { try DecodableResponseSerializer<Value>(decoder: decoder).serialize(response: response) }
                 }
             )
@@ -242,11 +297,11 @@ public extension Request {
         options: JSONSerialization.ReadingOptions = [],
         completionHandler: @escaping (Response<Any, Error>) -> Void
     ) -> Self {
-        addResponseHandler { [request] result in
+        addResponseHandler { [request] state in
             let response = Response(
                 request: request,
-                response: result.success,
-                result: result.flatMap { response in
+                response: state.response,
+                result: state.result.flatMap { response in
                     Result { try JSONResponseSerializer(options: options).serialize(response: response) }
                 }
             )
@@ -264,11 +319,11 @@ public extension Request {
         serializer: Serializer,
         completionHandler: @escaping (Response<Serializer.Output, Error>) -> Void
     ) -> Self {
-        addResponseHandler { [request] result in
+        addResponseHandler { [request] state in
             let response = Response(
                 request: request,
-                response: result.success,
-                result: result.flatMap { response in
+                response: state.response,
+                result: state.result.flatMap { response in
                     Result { try serializer.serialize(response: response) }
                 }
             )
