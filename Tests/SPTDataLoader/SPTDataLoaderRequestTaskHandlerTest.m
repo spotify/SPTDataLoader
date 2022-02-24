@@ -128,7 +128,7 @@
     NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
 
     self.handler.retryQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Retry limit equals maximum retry count"];
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Request was retried once"];
     __weak __typeof(self) weakSelf = self;
     self.task.resumeCallback = ^ {
         __strong __typeof(self) strongSelf = weakSelf;
