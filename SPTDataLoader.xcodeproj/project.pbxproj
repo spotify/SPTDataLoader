@@ -57,6 +57,7 @@
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
+		F50DEF6927CEA8910024B526 /* Request+CombineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */; };
 		F50DEF6D27CEA96A0024B526 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */; };
 		F512596F250EBC7600F7ADC8 /* RequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512596E250EBC7600F7ADC8 /* RequestTest.swift */; };
 		F5171A8E251544B500750E35 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5171A8D251544B500750E35 /* Result+Convenience.swift */; };
@@ -76,6 +77,7 @@
 		F5B640D025006EC3004B9B83 /* DataResponseSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */; };
 		F5B640D125006EC3004B9B83 /* DataLoaderWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */; };
 		F5B640D225006EC3004B9B83 /* JSONResponseSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */; };
+		F5DFC95E27C7108D00D2411A /* Request+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DFC95D27C7108D00D2411A /* Request+Combine.swift */; };
 		F5DFC96627C738EC00D2411A /* CancellationTokenFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DFC96527C738EC00D2411A /* CancellationTokenFake.swift */; };
 		F5F63DA8253133CB000A07D1 /* StubbedNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */; };
 		F5F63DC22531435F000A07D1 /* DataLoaderResponseFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DC12531435F000A07D1 /* DataLoaderResponseFake.swift */; };
@@ -222,6 +224,7 @@
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
+		F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+CombineTest.swift"; sourceTree = "<group>"; };
 		F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		F512596E250EBC7600F7ADC8 /* RequestTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTest.swift; sourceTree = "<group>"; };
 		F5171A8D251544B500750E35 /* Result+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
@@ -242,6 +245,7 @@
 		F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponseSerializerTest.swift; sourceTree = "<group>"; };
 		F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoaderWrapperTest.swift; sourceTree = "<group>"; };
 		F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializerTest.swift; sourceTree = "<group>"; };
+		F5DFC95D27C7108D00D2411A /* Request+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Combine.swift"; sourceTree = "<group>"; };
 		F5DFC96527C738EC00D2411A /* CancellationTokenFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationTokenFake.swift; sourceTree = "<group>"; };
 		F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedNetwork.swift; sourceTree = "<group>"; };
 		F5F63DC12531435F000A07D1 /* DataLoaderResponseFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderResponseFake.swift; sourceTree = "<group>"; };
@@ -454,6 +458,7 @@
 				F565EB2025168D7800A8FD3A /* DataLoaderError.swift */,
 				F5B640BD25006DE0004B9B83 /* DataLoaderWrapper.swift */,
 				F527CDCB2506EE8800E906BE /* Request.swift */,
+				F5DFC95D27C7108D00D2411A /* Request+Combine.swift */,
 				F5B640BB25006DE0004B9B83 /* Response.swift */,
 				F5B640BA25006DE0004B9B83 /* ResponseDecoder.swift */,
 				F5B640B925006DE0004B9B83 /* ResponseSerializer.swift */,
@@ -471,6 +476,7 @@
 				F5B640C825006EC3004B9B83 /* DecodableResponseSerializerTest.swift */,
 				F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */,
 				F512596E250EBC7600F7ADC8 /* RequestTest.swift */,
+				F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */,
 				F5B640C725006EC3004B9B83 /* ResponseTest.swift */,
 				F5B640C925006EC3004B9B83 /* SPTDataLoaderFactoryConvenienceTest.swift */,
 				F5F63D9E25313242000A07D1 /* Utilities */,
@@ -738,6 +744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5DFC95E27C7108D00D2411A /* Request+Combine.swift in Sources */,
 				F5B640C525006DE0004B9B83 /* DataLoader.swift in Sources */,
 				F5B640C425006DE0004B9B83 /* DataLoaderWrapper.swift in Sources */,
 				F5B640C225006DE0004B9B83 /* Response.swift in Sources */,
@@ -758,6 +765,7 @@
 				F5B640D125006EC3004B9B83 /* DataLoaderWrapperTest.swift in Sources */,
 				F5F63DA8253133CB000A07D1 /* StubbedNetwork.swift in Sources */,
 				F5B640D025006EC3004B9B83 /* DataResponseSerializerTest.swift in Sources */,
+				F50DEF6927CEA8910024B526 /* Request+CombineTest.swift in Sources */,
 				F5B640CE25006EC3004B9B83 /* DecodableResponseSerializerTest.swift in Sources */,
 				F5B640D225006EC3004B9B83 /* JSONResponseSerializerTest.swift in Sources */,
 				F50DEF6D27CEA96A0024B526 /* TestHelpers.swift in Sources */,
