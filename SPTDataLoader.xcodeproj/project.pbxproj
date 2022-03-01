@@ -57,6 +57,7 @@
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
+		F50DEF6D27CEA96A0024B526 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */; };
 		F512596F250EBC7600F7ADC8 /* RequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512596E250EBC7600F7ADC8 /* RequestTest.swift */; };
 		F5171A8E251544B500750E35 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5171A8D251544B500750E35 /* Result+Convenience.swift */; };
 		F527CDCC2506EE8800E906BE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F527CDCB2506EE8800E906BE /* Request.swift */; };
@@ -75,8 +76,9 @@
 		F5B640D025006EC3004B9B83 /* DataResponseSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */; };
 		F5B640D125006EC3004B9B83 /* DataLoaderWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */; };
 		F5B640D225006EC3004B9B83 /* JSONResponseSerializerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */; };
+		F5DFC96627C738EC00D2411A /* CancellationTokenFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DFC96527C738EC00D2411A /* CancellationTokenFake.swift */; };
 		F5F63DA8253133CB000A07D1 /* StubbedNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */; };
-		F5F63DC22531435F000A07D1 /* FakeDataLoaderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DC12531435F000A07D1 /* FakeDataLoaderResponse.swift */; };
+		F5F63DC22531435F000A07D1 /* DataLoaderResponseFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63DC12531435F000A07D1 /* DataLoaderResponseFake.swift */; };
 		F5F63DD925314F57000A07D1 /* libSPTDataLoader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 050E068A1A10C62100A10A0E /* libSPTDataLoader.a */; };
 		F7346A2D1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2C1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.m */; };
 		F7346A301CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */; };
@@ -220,6 +222,7 @@
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
+		F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		F512596E250EBC7600F7ADC8 /* RequestTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTest.swift; sourceTree = "<group>"; };
 		F5171A8D251544B500750E35 /* Result+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
 		F527CDCB2506EE8800E906BE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -239,8 +242,9 @@
 		F5B640CA25006EC3004B9B83 /* DataResponseSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponseSerializerTest.swift; sourceTree = "<group>"; };
 		F5B640CB25006EC3004B9B83 /* DataLoaderWrapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoaderWrapperTest.swift; sourceTree = "<group>"; };
 		F5B640CC25006EC3004B9B83 /* JSONResponseSerializerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializerTest.swift; sourceTree = "<group>"; };
+		F5DFC96527C738EC00D2411A /* CancellationTokenFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationTokenFake.swift; sourceTree = "<group>"; };
 		F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedNetwork.swift; sourceTree = "<group>"; };
-		F5F63DC12531435F000A07D1 /* FakeDataLoaderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDataLoaderResponse.swift; sourceTree = "<group>"; };
+		F5F63DC12531435F000A07D1 /* DataLoaderResponseFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderResponseFake.swift; sourceTree = "<group>"; };
 		F72EEAAC1CBDC4930072E073 /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
 		F7346A281CC2C67700B8AB41 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F7346A2B1CC2C71300B8AB41 /* NSURLAuthenticationChallengeMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLAuthenticationChallengeMock.h; sourceTree = "<group>"; };
@@ -520,8 +524,10 @@
 		F5F63D9E25313242000A07D1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F5F63DC12531435F000A07D1 /* FakeDataLoaderResponse.swift */,
+				F5DFC96527C738EC00D2411A /* CancellationTokenFake.swift */,
+				F5F63DC12531435F000A07D1 /* DataLoaderResponseFake.swift */,
 				F5F63DA7253133CB000A07D1 /* StubbedNetwork.swift */,
+				F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -754,8 +760,10 @@
 				F5B640D025006EC3004B9B83 /* DataResponseSerializerTest.swift in Sources */,
 				F5B640CE25006EC3004B9B83 /* DecodableResponseSerializerTest.swift in Sources */,
 				F5B640D225006EC3004B9B83 /* JSONResponseSerializerTest.swift in Sources */,
+				F50DEF6D27CEA96A0024B526 /* TestHelpers.swift in Sources */,
 				F5B640CD25006EC3004B9B83 /* ResponseTest.swift in Sources */,
-				F5F63DC22531435F000A07D1 /* FakeDataLoaderResponse.swift in Sources */,
+				F5DFC96627C738EC00D2411A /* CancellationTokenFake.swift in Sources */,
+				F5F63DC22531435F000A07D1 /* DataLoaderResponseFake.swift in Sources */,
 				F5B640CF25006EC3004B9B83 /* SPTDataLoaderFactoryConvenienceTest.swift in Sources */,
 				F512596F250EBC7600F7ADC8 /* RequestTest.swift in Sources */,
 			);

@@ -14,7 +14,7 @@
 
 import SPTDataLoader
 
-final class FakeDataLoaderResponse: SPTDataLoaderResponse {
+final class DataLoaderResponseFake: SPTDataLoaderResponse {
     private let _request: SPTDataLoaderRequest
     private let _body: Data?
     private let _error: Error?

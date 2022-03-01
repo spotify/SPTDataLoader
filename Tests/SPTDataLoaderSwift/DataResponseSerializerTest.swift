@@ -21,7 +21,7 @@ class DataResponseSerializerTest: XCTestCase {
     func test_responseSerialization_shouldBeSuccessful_whenBodyIsMissing() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
+        let responseFake = DataLoaderResponseFake(request: request)
 
         // When
         let serializer = DataResponseSerializer()
@@ -38,7 +38,7 @@ class DataResponseSerializerTest: XCTestCase {
         // Given
         let request = SPTDataLoaderRequest()
         let responseBody = "foo".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: request, body: responseBody)
 
         // When
         let serializer = DataResponseSerializer()

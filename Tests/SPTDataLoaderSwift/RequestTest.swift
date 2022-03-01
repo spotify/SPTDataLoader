@@ -99,7 +99,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -129,7 +129,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let statusCodeError = NSError(domain: SPTDataLoaderResponseErrorDomain, code: 403, userInfo: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: statusCodeError)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: statusCodeError)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -155,7 +155,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -188,7 +188,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 201)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, statusCode: 201)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -211,7 +211,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 301)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, statusCode: 301)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -238,7 +238,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 304)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, statusCode: 304)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -261,7 +261,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, statusCode: 204)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, statusCode: 204)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -290,7 +290,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         let request = Request(request: sptRequest) { _ in
             return nil
@@ -315,7 +315,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -336,7 +336,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         let request = Request(request: sptRequest) { _ in
             return CancellationTokenFake()
@@ -356,7 +356,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         var requestCount = 0
         let request = Request(request: sptRequest) { _ in
@@ -381,7 +381,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         var requestCount = 0
         let request = Request(request: sptRequest) { _ in
@@ -406,7 +406,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         var requestCount = 0
         let request = Request(request: sptRequest) { _ in
@@ -433,7 +433,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         // When
         var response: Response<Void, Error>?
@@ -457,7 +457,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         // When
         var response: Response<Void, Error>?
@@ -483,7 +483,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         // When
         var response: Response<Void, Error>?
@@ -508,7 +508,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let statusCodeError = NSError(domain: SPTDataLoaderResponseErrorDomain, code: 403, userInfo: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: statusCodeError)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: statusCodeError)
 
         // When
         var response: Response<Void, Error>?
@@ -533,7 +533,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<Void, Error>?
@@ -559,7 +559,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         // When
         var response: Response<Data, Error>?
@@ -583,7 +583,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         // When
         var response: Response<Data, Error>?
@@ -608,7 +608,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "foo".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<Data, Error>?
@@ -634,7 +634,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         // When
         var response: Response<TestDecodable, Error>?
@@ -661,7 +661,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<TestDecodable, Error>?
@@ -686,7 +686,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\"}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<TestDecodable, Error>?
@@ -712,7 +712,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         // When
         var response: Response<Any, Error>?
@@ -739,7 +739,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "bad".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<Any, Error>?
@@ -764,7 +764,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<Any, Error>?
@@ -790,7 +790,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, error: TestError.foo)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, error: TestError.foo)
 
         // When
         var response: Response<String, Error>?
@@ -819,7 +819,7 @@ class RequestTest: XCTestCase {
         // Given
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest)
+        let responseFake = DataLoaderResponseFake(request: sptRequest)
 
         // When
         var response: Response<String, Error>?
@@ -847,7 +847,7 @@ class RequestTest: XCTestCase {
         let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
         let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
         let responseBody = "{\"foo\": \"bar\", \"baz\": [123], \"bar\": {\"baz\": true}}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: sptRequest, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
 
         // When
         var response: Response<String, Error>?
@@ -865,43 +865,5 @@ class RequestTest: XCTestCase {
             return XCTFail("Expected success result, got \(actualResponse.result)")
         }
         XCTAssertEqual(actualResponse.response, responseFake)
-    }
-}
-
-// MARK: -
-
-private enum TestError: Error {
-    case foo
-    case bar
-}
-
-private struct TestDecodable: Decodable, Equatable {
-    let foo: String
-}
-
-private struct TestSerializer: ResponseSerializer {
-    func serialize(response: SPTDataLoaderResponse) throws -> String {
-        guard let data = response.body else {
-            throw TestError.bar
-        }
-
-        guard let string = String(data: data, encoding: .utf8) else {
-            throw TestError.bar
-        }
-
-        return string
-    }
-}
-
-// MARK: -
-
-private final class CancellationTokenFake: NSObject, SPTDataLoaderCancellationToken {
-    var isCancelled: Bool = false
-    var objectToCancel: Any?
-
-    weak var delegate: SPTDataLoaderCancellationTokenDelegate?
-
-    func cancel() {
-        isCancelled = true
     }
 }

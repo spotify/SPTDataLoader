@@ -134,9 +134,3 @@ class DataLoaderWrapperTest: XCTestCase {
         }
     }
 }
-
-// MARK: -
-
-private enum TestError: Error {
-    case foo
-}

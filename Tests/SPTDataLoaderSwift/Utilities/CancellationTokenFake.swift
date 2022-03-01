@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Foundation
+import SPTDataLoader
 
-/// A protocol that provides response value decoding.
-public protocol ResponseDecoder {
-    /// Decodes an instance of the indicated type.
-    /// - Parameter type: The type of the value to decode.
-    /// - Parameter data: The data to decode from.
-    /// - Returns: A value of the requested type.
-    func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T 
+final class CancellationTokenFake: NSObject, SPTDataLoaderCancellationToken {
+    var isCancelled: Bool = false
+    var objectToCancel: Any?
+
+    weak var delegate: SPTDataLoaderCancellationTokenDelegate?
+
+    func cancel() {
+        isCancelled = true
+    }
 }
-
-extension JSONDecoder: ResponseDecoder {}
-extension PropertyListDecoder: ResponseDecoder {}
