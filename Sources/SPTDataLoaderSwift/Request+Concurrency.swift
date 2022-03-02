@@ -16,7 +16,7 @@
 
 import Foundation
 
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
 public extension Request {
     func task() -> ResponseTask<Void> {
         return ResponseTask(request: self)
@@ -41,7 +41,7 @@ public extension Request {
 
 // MARK: -
 
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
 public struct ResponseTask<Value> {
     private let task: Task<Response<Value, Error>, Never>
 
@@ -74,7 +74,7 @@ public struct ResponseTask<Value> {
     }
 }
 
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
 private extension ResponseTask {
     init(request: Request) where Value == Void {
         self.init(request: request) { continuation in
