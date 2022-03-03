@@ -21,7 +21,7 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideRequest_whenRequested() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
+        let responseFake = DataLoaderResponseFake(request: request)
 
         // When
         let response = Response(request: request, response: responseFake, result: Result { true })
@@ -33,7 +33,7 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideUnderlyingResponse_whenRequested() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
+        let responseFake = DataLoaderResponseFake(request: request)
 
         // When
         let response = Response(request: request, response: responseFake, result: Result { true })
@@ -46,7 +46,7 @@ class ResponseTest: XCTestCase {
         // Given
         let request = SPTDataLoaderRequest()
         let responseBody = "foo".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: request, body: responseBody)
 
         // When
         let response = Response(request: request, response: responseFake, result: Result { true })
@@ -58,7 +58,7 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideValue_whenResultIsSuccess() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
+        let responseFake = DataLoaderResponseFake(request: request)
 
         // When
         let response = Response(request: request, response: responseFake, result: Result { true })
@@ -71,7 +71,7 @@ class ResponseTest: XCTestCase {
     func test_response_shouldProvideError_whenResultIsFailure() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
+        let responseFake = DataLoaderResponseFake(request: request)
 
         // When
         let response = Response(request: request, response: responseFake, result: Result { throw TestError.foo })
@@ -80,10 +80,4 @@ class ResponseTest: XCTestCase {
         XCTAssertNil(response.value)
         XCTAssertTrue(response.error is TestError)
     }
-}
-
-// MARK: -
-
-private enum TestError: Error {
-    case foo
 }

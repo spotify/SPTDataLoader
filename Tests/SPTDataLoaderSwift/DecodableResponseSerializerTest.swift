@@ -22,7 +22,7 @@ class DecodableResponseSerializerTest: XCTestCase {
     func test_responseSerialization_shouldBeUnsuccessful_whenBodyIsMissing() {
         // Given
         let request = SPTDataLoaderRequest()
-        let responseFake = FakeDataLoaderResponse(request: request)
+        let responseFake = DataLoaderResponseFake(request: request)
 
         // When
         let decoder = JSONDecoder()
@@ -40,7 +40,7 @@ class DecodableResponseSerializerTest: XCTestCase {
         // Given
         let request = SPTDataLoaderRequest()
         let responseBody = "{\"foo\": 123}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: request, body: responseBody)
 
         // When
         let decoder = JSONDecoder()
@@ -58,7 +58,7 @@ class DecodableResponseSerializerTest: XCTestCase {
         // Given
         let request = SPTDataLoaderRequest()
         let responseBody = "{\"foo\": \"bar\"}".data(using: .utf8)
-        let responseFake = FakeDataLoaderResponse(request: request, body: responseBody)
+        let responseFake = DataLoaderResponseFake(request: request, body: responseBody)
 
         // When
         let decoder = JSONDecoder()
@@ -71,14 +71,4 @@ class DecodableResponseSerializerTest: XCTestCase {
         }
         XCTAssertEqual(decodable.foo, "bar")
     }
-}
-
-// MARK: -
-
-private enum TestError: Error {
-    case foo
-}
-
-private struct TestDecodable: Decodable {
-    let foo: String
 }
