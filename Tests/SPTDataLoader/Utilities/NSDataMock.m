@@ -22,7 +22,6 @@
                                     options:(NSDataReadingOptions)readOptionsMask
                                       error:(NSError * __autoreleasing * _Nullable)errorPtr
 {
-    errorPtr = nil;
     return [path dataUsingEncoding:NSUTF8StringEncoding];
 }
 
