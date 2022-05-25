@@ -149,13 +149,13 @@ public extension Request {
     /// Modifies properties of the underlying request.
     /// - Parameter requestModifier: The modification closure used to mutate the request.
     @discardableResult
-    func modify(requestModifier: (SPTDataLoaderRequest) -> Void) -> Self {
-        accessLock.sync {
+    func modify(requestModifier: (SPTDataLoaderRequest) throws -> Void) rethrows -> Self {
+        try accessLock.sync {
             guard case .initialized = state else {
                 return
             }
 
-            requestModifier(request)
+            try requestModifier(request)
         }
 
         return self
