@@ -3,6 +3,29 @@ All notable changes to this project will be documented in this file. SPTDataLoad
 
 --
 
+## [2.2.0](https://github.com/spotify/SPTDataLoader/releases/tag/2.2.0)
+_Released on 2022-06-02._
+
+### Added
+* Added SPTDataLoaderSwift convenience methods for accessing active requests
+* Added SPTDataLoaderSwift response code validators
+* Added SPTDataLoaderSwift wrappers for Concurrency and Combine
+* Added Xcode 13 support
+
+### Fixed
+* Fixed invalid response body for retried requests
+
+### Changed
+* Changed SPTDataLoaderSwift to ignore status code related errors by default
+* Changed SPTDataLoaderSwift to allow throwing errors within a request modifier
+* Changed chunked responses to use the unenumerated data
+
+## [2.1.1](https://github.com/spotify/SPTDataLoader/releases/tag/2.1.1)
+_Released on 2021-02-17._
+
+### Changed
+* Standardized deployment targets across project
+
 ## [2.1.0](https://github.com/spotify/SPTDataLoader/releases/tag/2.1.0)
 _Released on 2021-02-16._
 
