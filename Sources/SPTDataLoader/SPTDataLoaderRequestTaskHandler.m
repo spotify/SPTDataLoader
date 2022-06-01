@@ -97,20 +97,15 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 - (void)receiveData:(NSData *)data
 {
-    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
-        
-        NSData *dataRange = [NSData dataWithBytes:bytes length:byteRange.length];
-
-        if (self.request.chunks) {
-            [self.requestResponseHandler receivedDataChunk:dataRange forResponse:self.response];
+    if (self.request.chunks) {
+        [self.requestResponseHandler receivedDataChunk:data forResponse:self.response];
+    } else {
+        if (!self.receivedData) {
+            self.receivedData = [data mutableCopy];
         } else {
-            if (!self.receivedData) {
-                self.receivedData = [dataRange mutableCopy];
-            } else {
-                [self.receivedData appendData:dataRange];
-            }
+            [self.receivedData appendData:data];
         }
-    }];
+    }
 }
 
 - (nullable SPTDataLoaderResponse *)completeWithError:(nullable NSError *)error
