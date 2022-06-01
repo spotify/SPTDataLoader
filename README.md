@@ -113,10 +113,9 @@ void AudioSampleProcessor(void *, UInt32, UInt32, const void *, AudioStreamPacke
 didReceiveDataChunk:(NSData *)data
        forResponse:(SPTDataLoaderResponse *)response
 {
-    void *mp3Data = calloc(data.length, 1);
-    memcpy(mp3Data, data.bytes, data.length);
-    AudioFileStreamParseBytes(_audioFileStream, data.length, mp3Data, 0);
-    free(mp3Data);
+    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+        AudioFileStreamParseBytes(_audioFileStream, byteRange.length, bytes, 0);
+    }];
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response
