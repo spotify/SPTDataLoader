@@ -44,13 +44,13 @@ Drag `SPTDataLoader.xcodeproj` into your App’s Xcode project and link your app
 ### CocoaPods
 To integrate SPTDataLoader into your project using [CocoaPods](http://cocoapods.org), add it to your `Podfile`:
 ```ruby
-pod 'SPTDataLoader', '~> 2.1'
+pod 'SPTDataLoader', '~> 2.2'
 ```
 
 ### Carthage
 To integrate SPTDataLoader into your project using [Carthage](https://github.com/Carthage/Carthage), add it to your `Cartfile`:
 ```ogdl
-github "spotify/SPTDataLoader" ~> 2.1
+github "spotify/SPTDataLoader" ~> 2.2
 ```
 
 ## Usage example :eyes:
@@ -113,10 +113,9 @@ void AudioSampleProcessor(void *, UInt32, UInt32, const void *, AudioStreamPacke
 didReceiveDataChunk:(NSData *)data
        forResponse:(SPTDataLoaderResponse *)response
 {
-    void *mp3Data = calloc(data.length, 1);
-    memcpy(mp3Data, data.bytes, data.length);
-    AudioFileStreamParseBytes(_audioFileStream, data.length, mp3Data, 0);
-    free(mp3Data);
+    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+        AudioFileStreamParseBytes(_audioFileStream, byteRange.length, bytes, 0);
+    }];
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveInitialResponse:(SPTDataLoaderResponse *)response
