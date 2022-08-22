@@ -207,27 +207,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performRequest:(SPTDataLoaderRequest *)request
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
-    if (request.cancellationToken.cancelled) {
+    if (request.URL == nil || request.cancellationToken.cancelled) {
         return;
     }
-    
-    if (request.URL.host == nil) {
-        return;
-    }
-    
-    NSString *host = [self.resolver addressForHost:(NSString * _Nonnull)request.URL.host];
-    NSString *requestHost = request.URL.host;
-    if (![host isEqualToString:requestHost] && host) {
-        NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
-        requestComponents.host = host;
-        
-        NSURL *URL = requestComponents.URL;
-        
-        if (URL == nil) {
-            return;
+
+    if (request.URL.host != nil && self.resolver != nil) {
+        NSString *requestHost = request.URL.host;
+        NSString *hostAddress = [self.resolver addressForHost:requestHost];
+        if (![hostAddress isEqualToString:requestHost]) {
+            NSURLComponents *requestComponents = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
+            requestComponents.host = hostAddress;
+
+            NSURL *URL = requestComponents.URL;
+
+            if (URL == nil) {
+                return;
+            }
+
+            request.URL = URL;
         }
-        
-        request.URL = URL;
     }
 
     NSURLSession *session = [self.sessionSelector URLSessionForRequest:request];

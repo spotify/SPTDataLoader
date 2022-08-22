@@ -729,4 +729,24 @@
     XCTAssertEqual(requestResponseHandlerMock.numberOfNewBodyStreamCalls, 1u, @"The service did not forward the prompt for a new body stream to the request response handler");
 }
 
+- (void)testRequestingFileURL
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL fileURLWithPath:@"/tmp/foo/bar.tmp"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertNotNil(self.session.lastDataTask);
+    XCTAssertEqualObjects(request.URL, URL);
+}
+
+- (void)testRequestingDataURL
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertNotNil(self.session.lastDataTask);
+    XCTAssertEqualObjects(request.URL, URL);
+}
+
 @end
