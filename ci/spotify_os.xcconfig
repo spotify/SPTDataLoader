@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2021 Spotify AB.
+// Copyright (c) 2015-2022 Spotify AB.
 //
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
@@ -20,16 +20,16 @@
 
 // Project settings:
 ARCHS[sdk=macosx*] = arm64 x86_64
-ARCHS[sdk=iphoneos*] = arm64 armv7
+ARCHS[sdk=iphoneos*] = arm64
 ARCHS[sdk=iphonesimulator*] = arm64 x86_64
 ARCHS[sdk=watchos*] = arm64_32 armv7k
 ARCHS[sdk=watchsimulator*] = arm64 x86_64
 ARCHS[sdk=appletvos*] = arm64
 ARCHS[sdk=appletvsimulator*] = arm64 x86_64
 
-IPHONEOS_DEPLOYMENT_TARGET = 10.0
+IPHONEOS_DEPLOYMENT_TARGET = 11.0
 WATCHOS_DEPLOYMENT_TARGET = 3.0
-TVOS_DEPLOYMENT_TARGET = 10.0
+TVOS_DEPLOYMENT_TARGET = 11.0
 MACOSX_DEPLOYMENT_TARGET = 10.12
 
 ENABLE_NS_ASSERTIONS_Debug = YES
@@ -90,6 +90,7 @@ WARNING_CFLAGS_XCODE_1000 = -Wno-objc-messaging-id
 WARNING_CFLAGS_XCODE_1100 = $(WARNING_CFLAGS_XCODE_1000)
 WARNING_CFLAGS_XCODE_1200 = $(WARNING_CFLAGS_XCODE_1100)
 WARNING_CFLAGS_XCODE_1300 = $(WARNING_CFLAGS_XCODE_1200)
+WARNING_CFLAGS_XCODE_1400 = $(WARNING_CFLAGS_XCODE_1300)
 
 // Warnings
 CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES
