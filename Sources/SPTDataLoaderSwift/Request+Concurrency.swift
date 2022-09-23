@@ -51,8 +51,10 @@ public struct ResponseTask<Value> {
     ) {
         self.task = Task {
             await withTaskCancellationHandler(
-                handler: { request.cancel() },
-                operation: { await withCheckedContinuation(continuation) }
+                operation: { await withCheckedContinuation(continuation) },
+                onCancel: {
+                    request.cancel()
+                }
             )
         }
     }
