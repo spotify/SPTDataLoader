@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2021 Spotify AB.
+// Copyright (c) 2015-2022 Spotify AB.
 //
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
@@ -20,7 +20,7 @@
 
 // Project settings:
 ARCHS[sdk=macosx*] = arm64 x86_64
-ARCHS[sdk=iphoneos*] = arm64 armv7
+ARCHS[sdk=iphoneos*] = arm64
 ARCHS[sdk=iphonesimulator*] = arm64 x86_64
 ARCHS[sdk=watchos*] = arm64_32 armv7k
 ARCHS[sdk=watchsimulator*] = arm64 x86_64
