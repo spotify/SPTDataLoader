@@ -27,8 +27,11 @@ public extension Request {
         return ResponsePublisher(request: self)
     }
 
-    func decodablePublisher<Value: Decodable>(decoder: ResponseDecoder = JSONDecoder()) -> ResponsePublisher<Value> {
-        return ResponsePublisher(request: self, decoder: decoder)
+    func decodablePublisher<Value: Decodable>(
+        type: Value.Type = Value.self,
+        decoder: ResponseDecoder = JSONDecoder()
+    ) -> ResponsePublisher<Value> {
+        return ResponsePublisher(request: self, decodableType: type, decoder: decoder)
     }
 
     func jsonPublisher(options: JSONSerialization.ReadingOptions = []) -> ResponsePublisher<Any> {
@@ -87,9 +90,9 @@ private extension ResponsePublisher {
         }
     }
 
-    init(request: Request, decoder: ResponseDecoder) where Value: Decodable {
+    init(request: Request, decodableType: Value.Type, decoder: ResponseDecoder) where Value: Decodable {
         self.init(request: request) { completion in
-            request.responseDecodable(decoder: decoder, completionHandler: completion)
+            request.responseDecodable(type: decodableType, decoder: decoder, completionHandler: completion)
         }
     }
 

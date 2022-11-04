@@ -272,6 +272,7 @@ public extension Request {
     /// - Parameter completionHandler: The callback closure invoked upon completion.
     @discardableResult
     func responseDecodable<Value: Decodable>(
+        type: Value.Type = Value.self,
         decoder: ResponseDecoder = JSONDecoder(),
         completionHandler: @escaping (Response<Value, Error>) -> Void
     ) -> Self {

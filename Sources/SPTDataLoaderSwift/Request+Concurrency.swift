@@ -26,8 +26,11 @@ public extension Request {
         return ResponseTask(request: self)
     }
 
-    func decodableTask<Value: Decodable>(decoder: ResponseDecoder = JSONDecoder()) -> ResponseTask<Value> {
-        return ResponseTask(request: self, decoder: decoder)
+    func decodableTask<Value: Decodable>(
+        type: Value.Type = Value.self,
+        decoder: ResponseDecoder = JSONDecoder()
+    ) -> ResponseTask<Value> {
+        return ResponseTask(request: self, decodableType: type, decoder: decoder)
     }
 
     func jsonTask(options: JSONSerialization.ReadingOptions = []) -> ResponseTask<Any> {
@@ -94,9 +97,9 @@ private extension ResponseTask {
         }
     }
 
-    init(request: Request, decoder: ResponseDecoder) where Value: Decodable {
+    init(request: Request, decodableType: Value.Type, decoder: ResponseDecoder) where Value: Decodable {
         self.init(request: request) { continuation in
-            request.responseDecodable(decoder: decoder) { response in
+            request.responseDecodable(type: decodableType, decoder: decoder) { response in
                 continuation.resume(returning: response)
             }
         }
