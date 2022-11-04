@@ -706,6 +706,36 @@ class RequestTest: XCTestCase {
         XCTAssertEqual(actualResponse.response, responseFake)
     }
 
+    func test_decodableResponseHandler_shouldReceiveSuccess_whenSerializationProducesSuccess_withDeclaredType() throws {
+        struct IntermediateTestDecodable: Decodable {
+            let bar: String
+        }
+
+        // Given
+        let url = try XCTUnwrap(URL(string: "https://foo.bar/baz.json"))
+        let sptRequest = SPTDataLoaderRequest(url: url, sourceIdentifier: nil)
+        let responseBody = "{\"bar\": \"bar\"}".data(using: .utf8)
+        let responseFake = DataLoaderResponseFake(request: sptRequest, body: responseBody)
+
+        // When
+        var response: Response<TestDecodable, Error>?
+        Request(request: sptRequest) { _ in
+            return CancellationTokenFake()
+        }.responseDecodable(type: IntermediateTestDecodable.self) {
+            let remappedResult = $0.result.map { TestDecodable(foo: $0.bar) }
+            response = Response(request: $0.request, response: $0.response, result: remappedResult)
+        }.processResponse(responseFake)
+
+        // Then
+        guard let actualResponse = response else {
+            return XCTFail("Expected response")
+        }
+        guard case .success = actualResponse.result else {
+            return XCTFail("Expected success result, got \(actualResponse.result)")
+        }
+        XCTAssertEqual(actualResponse.response, responseFake)
+    }
+
     // MARK: JSON Response Handler
 
     func test_jsonResponseHandler_shouldReceiveFailure_whenErrorIsPresent() throws {
