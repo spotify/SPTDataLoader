@@ -262,4 +262,20 @@
     XCTAssertEqualObjects([dataString stringByAppendingString:dataString], receivedString);
 }
 
+- (void)testMayRedirectInitially
+{
+    XCTAssertTrue(self.handler.mayRedirect);
+}
+
+- (void)testMayNotRedirect
+{
+    self.request.shouldStopRedirection = YES;
+    self.handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:self.task
+                                                                                 request:self.request
+                                                                  requestResponseHandler:self.requestResponseHandler
+                                                                             rateLimiter:self.rateLimiter];
+    XCTAssertFalse(self.handler.mayRedirect);
+
+}
+
 @end

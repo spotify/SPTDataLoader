@@ -207,6 +207,7 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     copy.timeout = self.timeout;
     copy.cancellationToken = self.cancellationToken;
     copy.bodyStream = self.bodyStream;
+    copy.shouldStopRedirection = self.shouldStopRedirection;
     return copy;
 }
 

@@ -50,6 +50,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 @property (nonatomic, assign) BOOL calledCancelledRequest;
 @property (nonatomic, assign) BOOL started;
 @property (nonatomic, strong, readwrite) dispatch_queue_t retryQueue;
+@property (nonatomic, assign) BOOL shouldStopRedirection;
 
 @end
 
@@ -82,6 +83,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         _request = request;
         _requestResponseHandler = requestResponseHandler;
         _rateLimiter = rateLimiter;
+        _shouldStopRedirection = request.shouldStopRedirection;
 
         __weak __typeof(self) weakSelf = self;
         _executionBlock = ^{
@@ -179,7 +181,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 - (BOOL)mayRedirect
 {
     // Limit the amount of possible redirects
-    if (++self.redirectCount > SPTDataLoaderRequestTaskHandlerMaxRedirects) {
+    if (++self.redirectCount > SPTDataLoaderRequestTaskHandlerMaxRedirects || self.shouldStopRedirection) {
         return NO;
     }
 

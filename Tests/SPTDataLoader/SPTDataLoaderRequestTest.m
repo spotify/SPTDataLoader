@@ -57,6 +57,11 @@
     XCTAssertEqualObjects(self.request.headers, @{}, @"The headers should be empty when initially setting up the request");
 }
 
+- (void)testShouldStopRedirectionNoInitially
+{
+    XCTAssertFalse(self.request.shouldStopRedirection, @"The shouldStopRedirection should be NO when initially setting up the request");
+}
+
 - (void)testAddValueToNilHeader
 {
 #pragma clang diagnostic push
@@ -132,6 +137,7 @@
     self.request.method = SPTDataLoaderRequestMethodPost;
     self.request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyAlways;
     self.request.bodyStream = inputStream;
+    self.request.shouldStopRedirection = YES;
     SPTDataLoaderRequest *request = [self.request copy];
     XCTAssertEqual(request.maximumRetryCount, self.request.maximumRetryCount, @"The retry count was not copied correctly");
     XCTAssertEqualObjects(request.body, self.request.body, @"The body was not copied correctly");
@@ -142,6 +148,7 @@
     XCTAssertEqual(request.method, self.request.method, @"The method was not copied correctly");
     XCTAssertEqual(request.backgroundPolicy, self.request.backgroundPolicy, @"The background policy was not copied correctly");
     XCTAssertEqual(request.bodyStream, self.request.bodyStream, @"The body stream was not copied correctly");
+    XCTAssertEqual(request.shouldStopRedirection, self.request.shouldStopRedirection, @"The stop redirection was not copied correctly");
 }
 
 - (void)testAcceptLanguageWithNoEnglishLanguages

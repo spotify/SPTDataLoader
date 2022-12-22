@@ -121,6 +121,11 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderRequestBackgroundPolicy) {
  @discussion This is used for logging purposes to locate where data is downloaded from.
  */
 @property (nonatomic, copy, nullable) NSString *sourceIdentifier;
+/**
+ A Boolean value that indicates whether the redirection should happen for a request.
+ @discussion default is NO.
+ */
+@property (nonatomic, assign) BOOL shouldStopRedirection;
 
 /**
  Class constructor
