@@ -392,10 +392,19 @@ didCompleteWithError:(nullable NSError *)error
     if (handler == nil) {
         return;
     }
-    if (handler.request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
-        handler.task = [session downloadTaskWithRequest:handler.request.urlRequest];
-    } else {
-        handler.task = [session dataTaskWithRequest:handler.request.urlRequest];
+
+    //
+    // This is to avoid creating a new task on an already invalidated session
+    // when they are invalidated by `invalidateAndCancel` method.
+    // The check does not hurt even if the task is simply cancelled as there is no point
+    // in creating a new task that is not going to be used anyway.
+    //
+    if (!([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled)) {
+        if (handler.request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
+            handler.task = [session downloadTaskWithRequest:handler.request.urlRequest];
+        } else {
+            handler.task = [session dataTaskWithRequest:handler.request.urlRequest];
+        }
     }
     SPTDataLoaderResponse *response = [handler completeWithError:error];
     if (response == nil && !handler.cancelled) {
