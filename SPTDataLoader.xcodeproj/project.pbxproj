@@ -56,6 +56,7 @@
 		48E7EEC62059288F00BB7CCC /* NSDataMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E7EEC52059288F00BB7CCC /* NSDataMock.m */; };
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
+		E081EDD7299F84A60080268B /* SPTDataLoaderCrashReporterMock.m in Sources */ = {isa = PBXBuildFile; fileRef = E081EDD6299F84A60080268B /* SPTDataLoaderCrashReporterMock.m */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
 		F50DEF6927CEA8910024B526 /* Request+CombineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */; };
 		F50DEF6B27CEA8990024B526 /* Request+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6A27CEA8990024B526 /* Request+ConcurrencyTest.swift */; };
@@ -224,6 +225,9 @@
 		8247036C1BEA021C0027DE04 /* SPTDataLoaderCancellationTokenFactoryImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCancellationTokenFactoryImplementation.h; sourceTree = "<group>"; };
 		C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoader.h; sourceTree = "<group>"; };
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
+		E081EDD5299F84A60080268B /* SPTDataLoaderCrashReporterMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCrashReporterMock.h; sourceTree = "<group>"; };
+		E081EDD6299F84A60080268B /* SPTDataLoaderCrashReporterMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderCrashReporterMock.m; sourceTree = "<group>"; };
+		E0946963299F89D700712516 /* SPTDataLoaderCrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderCrashReporter.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
 		F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+CombineTest.swift"; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 				C6515CF31BA2D4AF00271211 /* SPTDataLoader.h */,
 				056A04B41A13D10900FA72AD /* SPTDataLoaderAuthoriser.h */,
 				056A04AF1A13D10900FA72AD /* SPTDataLoaderCancellationToken.h */,
+				E0946963299F89D700712516 /* SPTDataLoaderCrashReporter.h */,
 				051937541A273278006ABB3E /* SPTDataLoaderConsumptionObserver.h */,
 				C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */,
 				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
@@ -529,6 +534,8 @@
 				2DE3DAC92344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.m */,
 				430D3C85249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.h */,
 				430D3C86249CDD8500791FD3 /* SPTDataLoaderTimeProviderMock.m */,
+				E081EDD5299F84A60080268B /* SPTDataLoaderCrashReporterMock.h */,
+				E081EDD6299F84A60080268B /* SPTDataLoaderCrashReporterMock.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -731,6 +738,7 @@
 				056A04BE1A13D48B00FA72AD /* SPTDataLoaderServiceTest.m in Sources */,
 				059940A91A150C90006D6BE9 /* SPTDataLoaderResponseTest.m in Sources */,
 				48E7EEC320591A3000BB7CCC /* NSFileManagerMock.m in Sources */,
+				E081EDD7299F84A60080268B /* SPTDataLoaderCrashReporterMock.m in Sources */,
 				F7346A6E1CC2DEAA00B8AB41 /* SPTDataLoaderServerTrustPolicyTest.m in Sources */,
 				059940A71A150275006D6BE9 /* SPTDataLoaderRequestTest.m in Sources */,
 				0599409D1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m in Sources */,

@@ -16,6 +16,7 @@
 
 #import "SPTDataLoaderService+Private.h"
 
+#import <SPTDataLoader/SPTDataLoaderCrashReporter.h>
 #import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResolver.h>
@@ -41,9 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSOperationQueue *sessionQueue;
 @property (nonatomic, strong) NSMutableArray<SPTDataLoaderRequestTaskHandler *> *handlers;
 @property (nonatomic, strong) NSMapTable<id<SPTDataLoaderConsumptionObserver>, dispatch_queue_t> *consumptionObservers;
+@property (nonatomic, strong, nullable, readonly) id<SPTDataLoaderCrashReporter> crashReporter;
 @property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
 @property (nonatomic, weak, nullable) NSFileManager *fileManager;
 @property (nonatomic, weak, nullable) Class dataClass;
+@property (nonatomic, assign) BOOL isSessionInvalidated;
 
 @end
 
@@ -56,14 +59,49 @@ NS_ASSUME_NONNULL_BEGIN
                                       resolver:(nullable SPTDataLoaderResolver *)resolver
                       customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
-    return [[self alloc] initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
+    return [[self alloc] initWithUserAgent:userAgent
+                               rateLimiter:rateLimiter
+                                  resolver:resolver
+                  customURLProtocolClasses:customURLProtocolClasses
+                             crashReporter:nil
+    ];
+}
+
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                                 crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter
+{
+    return [[self alloc] initWithUserAgent:userAgent
+                               rateLimiter:rateLimiter
+                                  resolver:resolver
+                  customURLProtocolClasses:customURLProtocolClasses
+                             crashReporter:crashReporter
+    ];
 }
 
 + (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
                                    rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                                       resolver:(nullable SPTDataLoaderResolver *)resolver
 {
-    return [[self alloc] initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+    return [[self alloc] initWithConfiguration:configuration
+                                   rateLimiter:rateLimiter
+                                      resolver:resolver
+                                 crashReporter:nil
+    ];
+}
+
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver
+                                     crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter
+{
+    return [[self alloc] initWithConfiguration:configuration
+                                   rateLimiter:rateLimiter
+                                      resolver:resolver
+                                 crashReporter:crashReporter
+    ];
 }
 
 + (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
@@ -76,7 +114,25 @@ NS_ASSUME_NONNULL_BEGIN
                                rateLimiter:rateLimiter
                                   resolver:resolver
                   customURLProtocolClasses:customURLProtocolClasses
-                          qualityOfService:qualityOfService];
+                          qualityOfService:qualityOfService
+                             crashReporter:nil
+    ];
+}
+
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                              qualityOfService:(NSQualityOfService)qualityOfService
+                                 crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter
+{
+    return [[self alloc] initWithUserAgent:userAgent
+                               rateLimiter:rateLimiter
+                                  resolver:resolver
+                  customURLProtocolClasses:customURLProtocolClasses
+                          qualityOfService:qualityOfService
+                             crashReporter:nil
+    ];
 }
 
 + (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
@@ -87,18 +143,35 @@ NS_ASSUME_NONNULL_BEGIN
     return [[self alloc] initWithConfiguration:configuration
                                    rateLimiter:rateLimiter
                                       resolver:resolver
-                              qualityOfService:qualityOfService];
+                              qualityOfService:qualityOfService
+                                 crashReporter:nil
+    ];
+}
+
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver
+                                  qualityOfService:(NSQualityOfService)qualityOfService
+                                     crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter
+{
+    return [[self alloc] initWithConfiguration:configuration
+                                   rateLimiter:rateLimiter
+                                      resolver:resolver
+                              qualityOfService:qualityOfService
+                                 crashReporter:crashReporter
+    ];
 }
 
 - (instancetype)initWithUserAgent:(nullable NSString *)userAgent
                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(nullable SPTDataLoaderResolver *)resolver
          customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                    crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
-    
+
     NSString * const SPTDataLoaderServiceUserAgentHeader = @"User-Agent";
-    
+
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
     configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
@@ -107,13 +180,14 @@ NS_ASSUME_NONNULL_BEGIN
     if (userAgent) {
         configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : (NSString * _Nonnull)userAgent };
     }
-    
-    return [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+
+    return [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver crashReporter:crashReporter];
 }
 
 - (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
                           rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                              resolver:(nullable SPTDataLoaderResolver *)resolver
+                        crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter
 {
     const NSUInteger SPTDataLoaderServiceMaxConcurrentOperations = 32;
 
@@ -121,6 +195,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (self) {
         _rateLimiter = rateLimiter;
         _resolver = resolver;
+        _crashReporter = crashReporter;
 
         _sessionQueue = [NSOperationQueue new];
         _sessionQueue.maxConcurrentOperationCount = SPTDataLoaderServiceMaxConcurrentOperations;
@@ -133,6 +208,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         _fileManager = [NSFileManager defaultManager];
         _dataClass = [NSData class];
+
+        _isSessionInvalidated = false;
     }
 
     return self;
@@ -142,9 +219,15 @@ NS_ASSUME_NONNULL_BEGIN
                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                          resolver:(nullable SPTDataLoaderResolver *)resolver
          customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
-                 qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10)
+                 qualityOfService:(NSQualityOfService)qualityOfService
+                    crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter __OSX_AVAILABLE(10.10)
 {
-    self = [self initWithUserAgent:userAgent rateLimiter:rateLimiter resolver:resolver customURLProtocolClasses:customURLProtocolClasses];
+    self = [self initWithUserAgent:userAgent
+                       rateLimiter:rateLimiter
+                          resolver:resolver
+          customURLProtocolClasses:customURLProtocolClasses
+                     crashReporter:crashReporter
+    ];
 
     if (self) {
         _sessionQueue.qualityOfService = qualityOfService;
@@ -156,9 +239,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)configuration
                           rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                              resolver:(nullable SPTDataLoaderResolver *)resolver
-                     qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10)
+                     qualityOfService:(NSQualityOfService)qualityOfService
+                        crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter __OSX_AVAILABLE(10.10)
 {
-    self = [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
+    self = [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver crashReporter:crashReporter];
 
     if (self) {
         _sessionQueue.qualityOfService = qualityOfService;
@@ -231,6 +315,9 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
     NSURLSession *session = [self.sessionSelector URLSessionForRequest:request];
     NSURLRequest *urlRequest = request.urlRequest;
     NSURLSessionTask *task;
+    if (_isSessionInvalidated) {
+        [_crashReporter leaveBreadcrumb:[NSString stringWithFormat:@"Request on invalidated sesion. Policy: %ld", (long)request.backgroundPolicy]];
+    }
     if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
         task = [session downloadTaskWithRequest:urlRequest];
     } else {
@@ -248,6 +335,8 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)cancelAllLoads
 {
+    [_crashReporter leaveBreadcrumb:[NSString stringWithFormat:@"Cancelling all loads. Total of %lu handlers", (unsigned long)_handlers.count]];
+
     NSArray *handlers = nil;
     @synchronized(self.handlers) {
         handlers = [self.handlers copy];
@@ -259,6 +348,8 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)invalidateAndCancel
 {
+    _isSessionInvalidated = true;
+    [_crashReporter leaveBreadcrumb:@"Invalidating session"];
     [self.sessionSelector invalidateAndCancel];
 }
 
@@ -275,7 +366,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
             }
         }
     }
-    
+
     [self performRequest:request requestResponseHandler:requestResponseHandler];
 }
 
@@ -358,10 +449,10 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     if (!completionHandler) {
         return;
     }
-    
+
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     NSURLCredential *credential = nil;
-    
+
     if (self.areAllCertificatesAllowed) {
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
         disposition = NSURLSessionAuthChallengeUseCredential;
@@ -378,7 +469,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         // No-op
         // Use default handing
     }
-    
+
     completionHandler(disposition, credential);
 }
 
@@ -406,15 +497,16 @@ didCompleteWithError:(nullable NSError *)error
             handler.task = [session dataTaskWithRequest:handler.request.urlRequest];
         }
     }
+
     SPTDataLoaderResponse *response = [handler completeWithError:error];
     if (response == nil && !handler.cancelled) {
         return;
     }
-    
+
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }
-    
+
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
             dispatch_block_t observerBlock = ^ {
@@ -429,18 +521,18 @@ didCompleteWithError:(nullable NSError *)error
                 } else {
                     bytesReceived = (int)bytesReceivedExpected;
                 }
-                
+
                 bytesSent += task.currentRequest.allHTTPHeaderFields.byteSizeOfHeaders;
                 if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                     bytesReceived += httpResponse.allHeaderFields.byteSizeOfHeaders;
                 }
-                
+
                 [consumptionObserver endedRequestWithResponse:response
                                               bytesDownloaded:bytesReceived
                                                 bytesUploaded:bytesSent];
             };
-            
+
             dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
             if ([NSThread isMainThread] && queue == dispatch_get_main_queue()) {
                 observerBlock();
@@ -464,7 +556,7 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
     }
 
     NSURL *newURL = request.URL;
-    
+
     if (newURL.host == nil) {
         completionHandler(nil);
         return;

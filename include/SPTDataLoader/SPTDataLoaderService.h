@@ -21,6 +21,7 @@
 @class SPTDataLoaderResolver;
 @class SPTDataLoaderServerTrustPolicy;
 @protocol SPTDataLoaderAuthoriser;
+@protocol SPTDataLoaderCrashReporter;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -53,6 +54,22 @@ NS_ASSUME_NONNULL_BEGIN
                       customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses;
 
 /**
+ Class constructor
+ @param userAgent The user agent to report as when making HTTP requests
+ @param rateLimiter The limiter for limiting requests per second on a per service basis
+ @param resolver The resolver for rerouting requests to different IP addresses
+ @param customURLProtocolClasses Array of NSURLProtocol Class objects that you want
+                                 to use for this DataLoaderService. May be nil.
+ @param crashReporter The object in which more information (breadcrumbs) will be inflated
+                     so it's easier to debug in case of a crash,
+ */
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                                 crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter;
+
+/**
  Convenience class constructor
  @param configuration Custom session configuration
  @param rateLimiter The limiter for limiting requests per second on a per service basis
@@ -61,6 +78,19 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
                                        rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                                           resolver:(nullable SPTDataLoaderResolver *)resolver;
+
+/**
+ Convenience class constructor
+ @param configuration Custom session configuration
+ @param rateLimiter The limiter for limiting requests per second on a per service basis
+ @param resolver The resolver for rerouting requests to different IP addresses
+ @param crashReporter The object in which more information (breadcrumbs) will be inflated
+                     so it's easier to debug in case of a crash,
+ */
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver
+                                     crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter;
 
 /**
  Class constructor with QoS
@@ -78,6 +108,24 @@ NS_ASSUME_NONNULL_BEGIN
                               qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10);
 
 /**
+ Class constructor with QoS
+ @param userAgent The user agent to report as when making HTTP requests
+ @param rateLimiter The limiter for limiting requests per second on a per service basis
+ @param resolver The resolver for rerouting requests to different IP addresses
+ @param customURLProtocolClasses Array of NSURLProtocol Class objects that you want
+                                 to use for this DataLoaderService. May be nil.
+ @param qualityOfService The quality of service to use for the URL session queue
+ @param crashReporter The object in which more information (breadcrumbs) will be inflated
+                     so it's easier to debug in case of a crash,
+ */
++ (instancetype)dataLoaderServiceWithUserAgent:(nullable NSString *)userAgent
+                                   rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                      resolver:(nullable SPTDataLoaderResolver *)resolver
+                      customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
+                              qualityOfService:(NSQualityOfService)qualityOfService
+                                 crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter __OSX_AVAILABLE(10.10);
+
+/**
  Convenience class constructor with QoS
  @param configuration Custom session configuration
  @param rateLimiter The limiter for limiting requests per second on a per service basis
@@ -88,6 +136,21 @@ NS_ASSUME_NONNULL_BEGIN
                                        rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
                                           resolver:(nullable SPTDataLoaderResolver *)resolver
                                   qualityOfService:(NSQualityOfService)qualityOfService __OSX_AVAILABLE(10.10);
+
+/**
+ Convenience class constructor with QoS
+ @param configuration Custom session configuration
+ @param rateLimiter The limiter for limiting requests per second on a per service basis
+ @param resolver The resolver for rerouting requests to different IP addresses
+ @param qualityOfService The quality of service to use for the URL session queue
+ @param crashReporter The object in which more information (breadcrumbs) will be inflated
+                     so it's easier to debug in case of a crash,
+ */
++ (instancetype)dataLoaderServiceWithConfiguration:(NSURLSessionConfiguration *)configuration
+                                       rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                          resolver:(nullable SPTDataLoaderResolver *)resolver
+                                  qualityOfService:(NSQualityOfService)qualityOfService
+                                     crashReporter:(nullable id<SPTDataLoaderCrashReporter>)crashReporter __OSX_AVAILABLE(10.10);
 
 /**
  Creates a data loader factory

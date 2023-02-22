@@ -17,6 +17,7 @@
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
 #import <SPTDataLoader/SPTDataLoaderCancellationToken.h>
 #import <SPTDataLoader/SPTDataLoaderConsumptionObserver.h>
+#import <SPTDataLoader/SPTDataLoaderCrashReporter.h>
 #import <SPTDataLoader/SPTDataLoaderDelegate.h>
 #import <SPTDataLoader/SPTDataLoaderExponentialTimer.h>
 #import <SPTDataLoader/SPTDataLoaderFactory.h>
