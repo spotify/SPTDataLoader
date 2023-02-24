@@ -20,6 +20,7 @@
 @interface SPTDataLoaderServiceSessionSelectorMock ()
 
 @property (nonatomic, strong, readonly) NSURLSession *(^resolve)(SPTDataLoaderRequest *);
+@property (nonatomic, strong) NSURLSession *lastProvidedSession;
 
 @end
 
@@ -39,11 +40,12 @@
 
 - (NSURLSession *)URLSessionForRequest:(SPTDataLoaderRequest *)request
 {
-    return self.resolve(request);
+    _lastProvidedSession = self.resolve(request);
+    return _lastProvidedSession;
 }
 
 - (void)invalidateAndCancel {
-    [self.resolve invalidateAndCancel];
+    [_lastProvidedSession invalidateAndCancel];
 }
 
 @end

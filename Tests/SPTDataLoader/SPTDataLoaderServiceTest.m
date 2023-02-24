@@ -25,6 +25,7 @@
 #import "SPTDataLoaderRequestResponseHandler.h"
 #import "NSURLSessionMock.h"
 #import "SPTDataLoaderAuthoriserMock.h"
+#import "SPTDataLoaderCrashReporterMock.h"
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderConsumptionObserverMock.h"
@@ -53,6 +54,7 @@
 
 @interface SPTDataLoaderServiceTest : XCTestCase
 
+@property (nonatomic, strong) SPTDataLoaderCrashReporterMock *crashReporterMock;
 @property (nonatomic ,strong) SPTDataLoaderService *service;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderResolver *resolver;
@@ -68,12 +70,14 @@
 - (void)setUp
 {
     [super setUp];
+    self.crashReporterMock = [SPTDataLoaderCrashReporterMock new];
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.resolver = [SPTDataLoaderResolver new];
     self.service = [SPTDataLoaderService dataLoaderServiceWithUserAgent:@"Spotify Test 1.0"
                                                             rateLimiter:self.rateLimiter
                                                                resolver:self.resolver
-                                               customURLProtocolClasses:nil];
+                                               customURLProtocolClasses:nil
+                                                          crashReporter:self.crashReporterMock];
 
     NSURLSessionMock *session = [NSURLSessionMock new];
     self.session = session;
@@ -218,6 +222,20 @@
 
     NSURLSessionDownloadTask *downloadTask = self.session.lastDownloadTask;
     XCTAssertNotNil(downloadTask, @"The service did not create a download task given the background policy");
+}
+
+- (void)testStartingWithInvalidateSessionWillLeaveCrashBreadcrumb
+{
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
+    request.backgroundPolicy = SPTDataLoaderRequestBackgroundPolicyAlways;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    [self.service invalidateAndCancel];
+    [self.service requestResponseHandler:nil performRequest:request];
+#pragma clang diagnostic pop
+
+    XCTAssertEqual(self.crashReporterMock.numberOfCallsToLeaveBreadcrumb, 2, @"The service did not leave crash breadcrumb after starting request on an invalidated session");
 }
 
 - (void)testSwitchingToDownloadTaskAfterResponse
@@ -765,6 +783,18 @@
     [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
     XCTAssertNotNil(self.session.lastDataTask);
     XCTAssertEqualObjects(request.URL, URL);
+}
+
+- (void)testLeavesBreadcrumWhenSessionIsInvalidated
+{
+    [self.service invalidateAndCancel];
+    XCTAssertEqual(self.crashReporterMock.numberOfCallsToLeaveBreadcrumb, 1, @"The service did not leave crash breadcrumb after loads were cancelled");
+}
+
+- (void)testLeavesBreadcrumWhenCancelAllLoads
+{
+    [self.service cancelAllLoads];
+    XCTAssertEqual(self.crashReporterMock.numberOfCallsToLeaveBreadcrumb, 1, @"The service did not leave crash breadcrumb after session got invalidated");
 }
 
 @end
