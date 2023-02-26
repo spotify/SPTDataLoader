@@ -57,6 +57,7 @@
 		6994E68C1EE9F72600128CDE /* certs-google.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68B1EE9F49B00128CDE /* certs-google.bundle */; };
 		6994E68D1EE9F72800128CDE /* certs-spotify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6994E68A1EE9F49B00128CDE /* certs-spotify.bundle */; };
 		EAC45A771C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */; };
+		F504D78C29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F504D78B29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.m */; };
 		F50DEF6927CEA8910024B526 /* Request+CombineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */; };
 		F50DEF6B27CEA8990024B526 /* Request+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6A27CEA8990024B526 /* Request+ConcurrencyTest.swift */; };
 		F50DEF6D27CEA96A0024B526 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */; };
@@ -226,6 +227,8 @@
 		C6515CF41BA2D4C200271211 /* SPTDataLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderDelegate.h; sourceTree = "<group>"; };
 		EAC45A751C0F4633009AA9F9 /* NSURLSessionDataTaskMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskMock.h; sourceTree = "<group>"; };
 		EAC45A761C0F4633009AA9F9 /* NSURLSessionDataTaskMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskMock.m; sourceTree = "<group>"; };
+		F504D78A29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderRequestTaskHandlerDelegateMock.h; sourceTree = "<group>"; };
+		F504D78B29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderRequestTaskHandlerDelegateMock.m; sourceTree = "<group>"; };
 		F50DEF6827CEA8910024B526 /* Request+CombineTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+CombineTest.swift"; sourceTree = "<group>"; };
 		F50DEF6A27CEA8990024B526 /* Request+ConcurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 		F50DEF6C27CEA96A0024B526 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
@@ -523,6 +526,8 @@
 				0599409C1A14F32A006D6BE9 /* SPTDataLoaderRequestResponseHandlerDelegateMock.m */,
 				059940411A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.h */,
 				059940421A14BA28006D6BE9 /* SPTDataLoaderRequestResponseHandlerMock.m */,
+				F504D78A29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.h */,
+				F504D78B29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.m */,
 				F7346A2E1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.h */,
 				F7346A2F1CC2C73600B8AB41 /* SPTDataLoaderServerTrustPolicyMock.m */,
 				2DE3DAC82344E5060022642E /* SPTDataLoaderServiceSessionSelectorMock.h */,
@@ -725,6 +730,7 @@
 				050F53871A2756570094F2BB /* SPTDataLoaderConsumptionObserverMock.m in Sources */,
 				3426C1F424CB2EF900B919B4 /* SPTDataLoaderBlockWrapperTest.m in Sources */,
 				059940A51A14FA65006D6BE9 /* SPTDataLoaderCancellationTokenDelegateMock.m in Sources */,
+				F504D78C29ABCB7500B5CC6B /* SPTDataLoaderRequestTaskHandlerDelegateMock.m in Sources */,
 				059940A21A14F7E1006D6BE9 /* SPTDataLoaderDelegateMock.m in Sources */,
 				0504CB8F1A151B6D00AD54EF /* SPTDataLoaderCancellationTokenImplementationTest.m in Sources */,
 				0504CB8D1A151B0600AD54EF /* SPTDataLoaderCancellationTokenFactoryImplementationTest.m in Sources */,
