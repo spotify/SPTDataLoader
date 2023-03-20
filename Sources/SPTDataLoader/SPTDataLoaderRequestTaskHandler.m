@@ -35,6 +35,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
 
 @property (nonatomic, weak) id<SPTDataLoaderRequestResponseHandler> requestResponseHandler;
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
+@property (nonatomic, weak, readonly) id<SPTDataLoaderRequestTaskHandlerDelegate> delegate;
 
 @property (nonatomic, strong) SPTDataLoaderResponse *response;
 @property (nonatomic, strong, nullable) NSMutableData *receivedData;
@@ -62,17 +63,20 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
                                              request:(SPTDataLoaderRequest *)request
                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                                          rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                            delegate:(id<SPTDataLoaderRequestTaskHandlerDelegate>)delegate
 {
     return [[self alloc] initWithTask:task
                               request:request
                requestResponseHandler:requestResponseHandler
-                          rateLimiter:rateLimiter];
+                          rateLimiter:rateLimiter
+                             delegate:delegate];
 }
 
 - (instancetype)initWithTask:(NSURLSessionTask *)task
                      request:(SPTDataLoaderRequest *)request
       requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
                  rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                    delegate:(id<SPTDataLoaderRequestTaskHandlerDelegate>)delegate
 {
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerMaximumTime = 60.0;
     const NSTimeInterval SPTDataLoaderRequestTaskHandlerInitialTime = 1.0;
@@ -83,6 +87,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         _request = request;
         _requestResponseHandler = requestResponseHandler;
         _rateLimiter = rateLimiter;
+        _delegate = delegate;
         _shouldStopRedirection = request.shouldStopRedirection;
 
         __weak __typeof(self) weakSelf = self;
@@ -141,6 +146,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     if (self.response.error) {
         if ([self.response shouldRetry]) {
             if (self.retryCount++ != self.request.maximumRetryCount) {
+                [self.delegate requestTaskHandlerNeedsNewTask:self];
                 [self start];
                 return nil;
             }

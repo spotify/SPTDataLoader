@@ -18,10 +18,12 @@
 
 #import "SPTDataLoaderRequestTaskHandler.h"
 
-#import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import <SPTDataLoader/SPTDataLoaderRateLimiter.h>
 #import <SPTDataLoader/SPTDataLoaderResponse.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+
+#import "SPTDataLoaderRequestResponseHandlerMock.h"
+#import "SPTDataLoaderRequestTaskHandlerDelegateMock.h"
 #import "NSURLSessionTaskMock.h"
 
 @interface SPTDataLoaderRequestTaskHandler ()
@@ -37,10 +39,11 @@
 
 @property (nonatomic, strong) SPTDataLoaderRequestTaskHandler *handler;
 
+@property (nonatomic, strong) NSURLSessionTaskMock *task;
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler;
 @property (nonatomic, strong) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong) SPTDataLoaderRequest *request;
-@property (nonatomic, strong) NSURLSessionTaskMock *task;
+@property (nonatomic, strong) SPTDataLoaderRequestTaskHandlerDelegateMock *delegate;
 
 @end
 
@@ -51,15 +54,19 @@
 - (void)setUp
 {
     [super setUp];
+
+    self.task = [NSURLSessionTaskMock new];
     self.requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
     self.rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:10.0];
     self.request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
                                        sourceIdentifier:nil];
-    self.task = [NSURLSessionTaskMock new];
+    self.delegate = [SPTDataLoaderRequestTaskHandlerDelegateMock new];
+
     self.handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:self.task
                                                                                  request:self.request
                                                                   requestResponseHandler:self.requestResponseHandler
-                                                                             rateLimiter:self.rateLimiter];
+                                                                             rateLimiter:self.rateLimiter
+                                                                                delegate:self.delegate];
 }
 
 #pragma mark SPTDataLoaderRequestOperationTest
@@ -130,7 +137,7 @@
     self.handler.retryQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Request was retried once"];
     __weak __typeof(self) weakSelf = self;
-    self.task.resumeCallback = ^ {
+    self.task.resumeCallback = ^{
         __strong __typeof(self) strongSelf = weakSelf;
         [strongSelf.handler receiveResponse:[NSURLResponse new]];
 
@@ -141,7 +148,13 @@
 
             // When the request gets retried the response should be nil
             XCTAssertNil(response);
-        } else {
+        }
+    };
+    self.delegate.task.resumeCallback = ^{
+        __strong __typeof(self) strongSelf = weakSelf;
+        [strongSelf.handler receiveResponse:[NSURLResponse new]];
+
+        if (strongSelf.handler.retryCount == 1) {
             // Let the second (retried) request succeed
             [strongSelf.handler receiveData:successData];
             SPTDataLoaderResponse *response = [strongSelf.handler completeWithError:nil];
@@ -202,6 +215,7 @@
 
 - (void)testRetryWithRateLimiter
 {
+    self.delegate.task = self.task;
     self.handler.retryQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Retry limit equals maximum retry count"];
     __weak __typeof(self) weakSelf = self;
@@ -273,7 +287,8 @@
     self.handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:self.task
                                                                                  request:self.request
                                                                   requestResponseHandler:self.requestResponseHandler
-                                                                             rateLimiter:self.rateLimiter];
+                                                                             rateLimiter:self.rateLimiter
+                                                                                delegate:self.delegate];
     XCTAssertFalse(self.handler.mayRedirect);
 
 }

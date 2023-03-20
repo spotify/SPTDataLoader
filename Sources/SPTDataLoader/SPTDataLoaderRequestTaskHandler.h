@@ -16,12 +16,24 @@
 
 #import <Foundation/Foundation.h>
 
+@class SPTDataLoaderRequestTaskHandler;
 @class SPTDataLoaderRequest;
 @class SPTDataLoaderRateLimiter;
 @class SPTDataLoaderResponse;
+
 @protocol SPTDataLoaderRequestResponseHandler;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol SPTDataLoaderRequestTaskHandlerDelegate <NSObject>
+
+/**
+ Called when the existing task has completed and a new one is required in order to retry the request.
+ @param requestTaskHandler The object handling the request task
+ */
+- (void)requestTaskHandlerNeedsNewTask:(SPTDataLoaderRequestTaskHandler *)requestTaskHandler;
+
+@end
 
 /**
  The handler for performing a URL session task and forwarding the requests to relevant request response handler
@@ -43,15 +55,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Class constructor
+ @param task The task to perform 
  @param request The request object to perform lookup with
- @param task The task to perform
  @param requestResponseHandler The object tie to this operation for potential callbacks
  @param rateLimiter The object controlling the rate limits on a per service basis
+ @param delegate The object listening to the task handler
  */
 + (instancetype)dataLoaderRequestTaskHandlerWithTask:(NSURLSessionTask *)task
                                              request:(SPTDataLoaderRequest *)request
                               requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
-                                         rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter;
+                                         rateLimiter:(nullable SPTDataLoaderRateLimiter *)rateLimiter
+                                            delegate:(id<SPTDataLoaderRequestTaskHandlerDelegate>)delegate;
 
 /**
  Call to tell the operation it has received a response

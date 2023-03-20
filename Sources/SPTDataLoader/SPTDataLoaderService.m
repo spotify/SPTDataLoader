@@ -32,8 +32,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SPTDataLoaderService () <SPTDataLoaderRequestResponseHandlerDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
-
+@interface SPTDataLoaderService () <
+    SPTDataLoaderRequestTaskHandlerDelegate,
+    SPTDataLoaderRequestResponseHandlerDelegate,
+    NSURLSessionDataDelegate,
+    NSURLSessionTaskDelegate,
+    NSURLSessionDownloadDelegate
+>
 
 @property (nonatomic, strong, nullable) SPTDataLoaderRateLimiter *rateLimiter;
 @property (nonatomic, strong, nullable) SPTDataLoaderResolver *resolver;
@@ -204,6 +209,18 @@ NS_ASSUME_NONNULL_BEGIN
     return nil;
 }
 
+- (NSURLSessionTask *)createTaskForRequest:(SPTDataLoaderRequest *)request
+{
+    NSURLSession *session = [self.sessionSelector URLSessionForRequest:request];
+    NSURLRequest *urlRequest = request.urlRequest;
+
+    if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
+        return [session downloadTaskWithRequest:urlRequest];
+    }
+
+    return [session dataTaskWithRequest:urlRequest];
+}
+
 - (void)performRequest:(SPTDataLoaderRequest *)request
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
@@ -228,18 +245,12 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
         }
     }
 
-    NSURLSession *session = [self.sessionSelector URLSessionForRequest:request];
-    NSURLRequest *urlRequest = request.urlRequest;
-    NSURLSessionTask *task;
-    if (request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
-        task = [session downloadTaskWithRequest:urlRequest];
-    } else {
-        task = [session dataTaskWithRequest:urlRequest];
-    }
+    NSURLSessionTask *task = [self createTaskForRequest:request];
     SPTDataLoaderRequestTaskHandler *handler = [SPTDataLoaderRequestTaskHandler dataLoaderRequestTaskHandlerWithTask:task
                                                                                                              request:request
                                                                                               requestResponseHandler:requestResponseHandler
-                                                                                                         rateLimiter:self.rateLimiter];
+                                                                                                         rateLimiter:self.rateLimiter
+                                                                                                            delegate:self];
     @synchronized(self.handlers) {
         [self.handlers addObject:handler];
     }
@@ -260,6 +271,13 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 - (void)invalidateAndCancel
 {
     [self.sessionSelector invalidateAndCancel];
+}
+
+#pragma mark SPTDataLoaderRequestTaskHandlerDelegate
+
+- (void)requestTaskHandlerNeedsNewTask:(SPTDataLoaderRequestTaskHandler *)requestTaskHandler
+{
+    requestTaskHandler.task = [self createTaskForRequest:requestTaskHandler.request];
 }
 
 #pragma mark SPTDataLoaderRequestResponseHandlerDelegate
@@ -393,19 +411,6 @@ didCompleteWithError:(nullable NSError *)error
         return;
     }
 
-    //
-    // This is to avoid creating a new task on an already invalidated session
-    // when they are invalidated by `invalidateAndCancel` method.
-    // The check does not hurt even if the task is simply cancelled as there is no point
-    // in creating a new task that is not going to be used anyway.
-    //
-    if (!([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled)) {
-        if (handler.request.backgroundPolicy == SPTDataLoaderRequestBackgroundPolicyAlways) {
-            handler.task = [session downloadTaskWithRequest:handler.request.urlRequest];
-        } else {
-            handler.task = [session dataTaskWithRequest:handler.request.urlRequest];
-        }
-    }
     SPTDataLoaderResponse *response = [handler completeWithError:error];
     if (response == nil && !handler.cancelled) {
         return;
