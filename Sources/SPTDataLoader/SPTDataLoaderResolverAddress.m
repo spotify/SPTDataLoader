@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (deltaTime < 0.0) {
         return YES;
     }
-    
+
     return deltaTime > self.stalePeriod;
 }
 
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
         _address = address;
         _stalePeriod = SPTDataLoaderResolverAddressDefaultStalePeriodOneHour;
     }
-    
+
     return self;
 }
 

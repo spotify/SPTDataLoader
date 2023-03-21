@@ -55,14 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
         _serviceEndpointLastExecution = [NSMutableDictionary new];
         _serviceEndpointRetryAt = [NSMutableDictionary new];
     }
-    
+
     return self;
 }
 
 - (NSTimeInterval)earliestTimeUntilRequestCanBeExecuted:(SPTDataLoaderRequest *)request
 {
     NSString *serviceKey = [self serviceKeyFromURL:request.URL];
-    
+
     // First check if we are not accepting requests until a certain time (i.e. Retry-after header)
     CFAbsoluteTime currentTime = self.timeProvider.currentTime;
     CFAbsoluteTime retryAtTime = 0.0;
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (currentTime < retryAtTime) {
         return retryAtTime - currentTime;
     }
-    
+
     // Next check that our rate limit is being respected
     double requestsPerSecond = [self requestsPerSecondForServiceKey:serviceKey];
     CFAbsoluteTime lastExecution = 0.0;
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (timeInterval < 0.0) {
         timeInterval = 0.0;
     }
-    
+
     return timeInterval;
 }
 
@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (!serviceKey) {
         return;
     }
-    
+
     @synchronized(self.serviceEndpointLastExecution) {
         self.serviceEndpointLastExecution[serviceKey] = @(self.timeProvider.currentTime);
     }
@@ -126,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (!URL) {
         return;
     }
-    
+
     @synchronized(self.serviceEndpointRetryAt) {
         self.serviceEndpointRetryAt[[self serviceKeyFromURL:URL]] = @(absoluteTime);
     }

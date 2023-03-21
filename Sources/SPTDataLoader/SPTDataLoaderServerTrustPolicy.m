@@ -39,12 +39,12 @@ static BOOL SPTEvaluteTrust(SecTrustRef trust) {
 static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     CFIndex count = SecTrustGetCertificateCount(trust);
     NSMutableArray *certificates = [NSMutableArray arrayWithCapacity:(NSUInteger)count];
-    
+
     for (CFIndex i = 0; i < count; i++) {
         SecCertificateRef certificate = SecTrustGetCertificateAtIndex(trust, i);
         [certificates addObject:(__bridge_transfer NSData *)SecCertificateCopyData(certificate)];
     }
-    
+
     return [NSArray arrayWithArray:certificates];
 }
 
@@ -63,7 +63,7 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     if (!hostsAndCertificatePaths) {
         return nil;
     }
-    
+
     return [[self alloc] initWithHostsAndCertificatePaths:hostsAndCertificatePaths];
 }
 
@@ -73,17 +73,17 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     if (![authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
         return NO;
     }
-    
+
     SecTrustRef trust = challenge.protectionSpace.serverTrust;
     if (!trust) {
         return NO;
     }
-    
+
     NSString *host = challenge.protectionSpace.host;
     if (!host) {
         return NO;
     }
-    
+
     return [self validateWithTrust:trust host:host];
 }
 
@@ -94,17 +94,17 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ like SELF", host];
     NSArray<NSString *> *allHosts = [self.trustedHostsAndCertificates allKeys];
     NSArray *hosts = [allHosts filteredArrayUsingPredicate:predicate];
-    
+
     if ([hosts count] == 0) {
         return nil;
     }
-    
+
     NSMutableArray<NSData *> *certificates = [NSMutableArray new];
     for (NSString *key in hosts) {
         NSArray<NSData *> *value = self.trustedHostsAndCertificates[key];
         [certificates addObjectsFromArray:value];
     }
-    
+
     return [certificates copy];
 }
 
@@ -113,42 +113,42 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     if (!host) {
         return NO;
     }
-    
+
     NSMutableArray *policies = [NSMutableArray new];
     id policy = (__bridge_transfer id)SecPolicyCreateSSL(true, (__bridge CFStringRef)host);
     [policies addObject:policy];
-    
+
     SecTrustSetPolicies(trust, (__bridge CFArrayRef)(policies));
-    
+
     if (!SPTEvaluteTrust(trust)) {
         return NO;
     }
-    
+
     NSArray<NSData *> *certificateData = [self certificatesForHost:host];
-    
+
     if (!certificateData || [certificateData count] == 0) {
         return NO;
     }
-    
+
     NSMutableArray *certificates = [NSMutableArray new];
     for (NSData *data  in certificateData) {
         id cert = (__bridge_transfer id)SecCertificateCreateWithData(NULL, (__bridge CFDataRef)data);
         [certificates addObject:cert];
     }
     SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)certificates);
-    
+
     if (!SPTEvaluteTrust(trust)) {
         return NO;
     }
-    
+
     NSArray<NSData *> *trustCertificates = SPTCertificatesForTrust(trust);
-    
+
     for (NSData *trustCertificate in [trustCertificates reverseObjectEnumerator]) {
         if ([certificateData containsObject:trustCertificate]) {
             return YES;
         }
     }
-    
+
     return NO;
 }
 
@@ -159,7 +159,7 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
     self = [super init];
     if (self) {
         NSMutableDictionary<NSString *, NSArray<NSData *> *> *mutableDictionary = [NSMutableDictionary new];
-        
+
         [hostsAndCertificatePaths enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray<NSString *> * _Nonnull paths, BOOL * _Nonnull stop) {
             NSMutableArray<NSData *> *certificates = [NSMutableArray new];
             for (NSString *path in paths) {
@@ -171,7 +171,7 @@ static NSArray * SPTCertificatesForTrust(SecTrustRef trust) {
             }
             mutableDictionary[key] = [certificates copy];
         }];
-        
+
         _trustedHostsAndCertificates = [mutableDictionary copy];
     }
     return self;

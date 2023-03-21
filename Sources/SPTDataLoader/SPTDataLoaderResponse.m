@@ -63,7 +63,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
 
         _retryAfter = [self retryAfterForHeaders:_responseHeaders];
     }
-    
+
     return self;
 }
 
@@ -117,7 +117,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
                 return YES;
         }
     }
-    
+
     if ([self.error.domain isEqualToString:NSURLErrorDomain]) {
         switch (self.error.code) {
             case NSURLErrorCancelled:
@@ -155,7 +155,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
                 return YES;
         }
     }
-    
+
     return NO;
 }
 
@@ -167,7 +167,7 @@ static NSString * const SPTDataLoaderResponseHeaderRetryAfter = @"Retry-After";
         httpDateFormatter = [NSDateFormatter new];
         [httpDateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
     });
-    
+
     NSTimeInterval retryAfterSeconds = [headers[SPTDataLoaderResponseHeaderRetryAfter] doubleValue];
     if (retryAfterSeconds != 0.0) {
         return [NSDate dateWithTimeIntervalSinceNow:retryAfterSeconds];

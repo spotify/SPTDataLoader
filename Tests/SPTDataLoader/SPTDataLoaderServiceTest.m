@@ -140,7 +140,7 @@
 #pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
 #pragma clang diagnostic pop
-    
+
     NSURLSessionDataTask *dataTask = self.session.lastDataTask;
     [self.service URLSession:self.session
                     dataTask:dataTask
@@ -151,7 +151,7 @@
 - (void)testResolverChangingAddress
 {
     [self.resolver setAddresses:@[ @"192.168.0.1" ] forHost:@"spclient.wg.spotify.com"];
-    
+
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:(NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"]
                                                         sourceIdentifier:nil];
 #pragma clang diagnostic push
@@ -196,7 +196,7 @@
 #pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
 #pragma clang diagnostic pop
-    
+
     NSURLSessionDataTask *dataTask = self.session.lastDataTask;
     __block BOOL calledCompletionHandler = NO;
     void (^completionHandler)(NSURLSessionResponseDisposition) = ^(NSURLSessionResponseDisposition disposition) {
@@ -384,13 +384,13 @@
 {
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.skipNSURLCache = NO;
-    
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
 #pragma clang diagnostic pop
     NSCachedURLResponse *dummyResponse = [NSCachedURLResponse new];
-    
+
     __block NSCachedURLResponse *blockResponse = nil;
     void (^completion)(NSCachedURLResponse *) = ^(NSCachedURLResponse *resp) {
         blockResponse = resp;
@@ -404,13 +404,13 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     request.skipNSURLCache = YES;
     request.URL = (NSURL * _Nonnull)[NSURL URLWithString:@"https://spclient.wg.spotify.com/thing"];
-    
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnonnull"
     [self.service requestResponseHandler:nil performRequest:request];
 #pragma clang diagnostic pop
     NSCachedURLResponse *dummyResponse = [NSCachedURLResponse new];
-    
+
     __block NSCachedURLResponse *blockResponse = nil;
     void (^completion)(NSCachedURLResponse *) = ^(NSCachedURLResponse *resp) {
         blockResponse = resp;
@@ -508,20 +508,20 @@
 {
     NSURLSession *session = [NSURLSession new];
     NSURLSessionTask *task = [NSURLSessionTask new];
-    
+
     NSURLAuthenticationChallengeMock *challenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:nil
                                                                                                    authenticationMethod:NSURLAuthenticationMethodServerTrust
                                                                                                             serverTrust:nil];
     SPTDataLoaderServerTrustPolicyMock *serverTrustPolicy = [SPTDataLoaderServerTrustPolicyMock new];
     [self.service setServerTrustPolicy:serverTrustPolicy];
-    
+
     __block NSURLSessionAuthChallengeDisposition savedDisposition = NSURLSessionAuthChallengeUseCredential;
     __block NSURLCredential *savedCredential = nil;
     void(^NSURLSessionCompletionHandler)(NSURLSessionAuthChallengeDisposition, NSURLCredential *) = ^(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential) {
         savedDisposition = disposition;
         savedCredential = credential;
     };
-    
+
     // Auth Challenge is considered trusted
     serverTrustPolicy.shouldBeTrusted = YES;
     [self.service URLSession:session
@@ -530,17 +530,17 @@
            completionHandler:NSURLSessionCompletionHandler];
     XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengeUseCredential, @"Server Trust Policy should provide auth challenge disposition of .Use when challenge is considered trusted");
     XCTAssertNotNil(savedCredential, @"Server Trust Policy should provide url credential when challenge is considered trusted");
-    
+
     // Auth Challenge is considered untrusted
     serverTrustPolicy.shouldBeTrusted = NO;
     [self.service URLSession:session
                         task:task
          didReceiveChallenge:challenge
            completionHandler:NSURLSessionCompletionHandler];
-    
+
     XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengeCancelAuthenticationChallenge, @"Server Trust Policy should provide auth challenge disposition of .Cancel when challenge is considered untrusted");
     XCTAssertNil(savedCredential, @"Server Trust Policy provided url credential, when challenge is considered trusted, should be nil");
-    
+
     // Server Trust Policy ignored when `allCertificatesAllowed`
     self.service.allCertificatesAllowed = YES;
     serverTrustPolicy.shouldBeTrusted = YES;
@@ -550,7 +550,7 @@
            completionHandler:NSURLSessionCompletionHandler];
     XCTAssertEqual(savedDisposition, NSURLSessionAuthChallengeUseCredential, @"Server Trust Policy should be bypassed and auth challenge disposition should be .Use when policy is set and `allCertificatesAllowed` is `YES`");
     XCTAssertNotNil(savedCredential, @"Server Trust Policy should be bypassed and url credential should be non-nil when policy is set and `allCertificatesAllowed` is `YES`");
-    
+
     self.service.allCertificatesAllowed = NO;
     self.service.serverTrustPolicy = nil;
 }

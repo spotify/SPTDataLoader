@@ -98,7 +98,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
                                                                                    maxTime:SPTDataLoaderRequestTaskHandlerMaximumTime];
         _retryQueue = dispatch_get_main_queue();
     }
-    
+
     return self;
 }
 
@@ -121,28 +121,28 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
     if (!self.response) {
         self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:nil];
     }
-    
+
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
         [requestResponseHandler cancelledRequest:self.request];
         self.calledCancelledRequest = YES;
         self.cancelled = YES;
         return nil;
     }
-    
+
     [self.rateLimiter executedRequest:self.request];
-    
+
     if (error) {
         self.response.error = error;
     }
-    
+
     self.response.body = self.receivedData;
     self.response.requestTime = CFAbsoluteTimeGetCurrent() - self.absoluteStartTime;
-    
+
     if (self.response.retryAfter) {
         [self.rateLimiter setRetryAfter:self.response.retryAfter.timeIntervalSinceReferenceDate
                                  forURL:self.response.request.URL];
     }
-    
+
     if (self.response.error) {
         if ([self.response shouldRetry]) {
             if (self.retryCount++ != self.request.maximumRetryCount) {
@@ -155,7 +155,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
         self.calledFailedResponse = YES;
         return self.response;
     }
-    
+
     [requestResponseHandler successfulResponse:self.response];
     self.calledSuccessfulResponse = YES;
     return self.response;
@@ -172,7 +172,7 @@ static NSUInteger const SPTDataLoaderRequestTaskHandlerMaxRedirects = 10;
             self.receivedData = [NSMutableData dataWithCapacity:(NSUInteger)httpResponse.expectedContentLength];
         }
     }
-    
+
     if (!self.receivedData) {
         self.receivedData = [NSMutableData data];
     }

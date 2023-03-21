@@ -92,7 +92,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 - (void)setUp
 {
     [super setUp];
-    
+
     NSDictionary<NSString *, NSArray<NSString *> *> *dictionary = @{ @"*.spotify.com": SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths() };
     self.serverTrustPolicy = [SPTDataLoaderServerTrustPolicy policyWithHostsAndCertificatePaths:dictionary];
 }
@@ -158,7 +158,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 {
     NSDictionary *trustedHostsAndCertificates = self.serverTrustPolicy.trustedHostsAndCertificates;
     NSArray *keys = [trustedHostsAndCertificates allKeys];
-    
+
     for (NSString *key in keys) {
         NSArray *trustedCertificates = trustedHostsAndCertificates[key];
         XCTAssertNotEqual(trustedCertificates.count, 0u, @"The server trust policy's trusted hosts should have a minimum of one certificate");
@@ -184,9 +184,9 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     NSString *hostWithWildCard = @"*.google.com";
     NSArray *paths = SPTDataLoaderServerTrustUnitGoogleTestCertificatePaths();
     NSDictionary<NSString *, NSArray<NSString *> *> *dictionary = @{ hostWithWildCard: paths };
-    
+
     SPTDataLoaderServerTrustPolicy *sut = [SPTDataLoaderServerTrustPolicy policyWithHostsAndCertificatePaths:dictionary];
-    
+
     NSArray<NSString *> *hostVariations = @[ @"www.google.com", @"mail.google.com", @"maps.google.com", @"*.google.com" ];
     for (NSString *host in hostVariations) {
         XCTAssert([sut certificatesForHost:host], @"The certificates for this host should not be nil when matcher host string contains wildcard");
@@ -228,12 +228,12 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 - (void)testMalformedAuthenticationChallengeShouldBypassValidation
 {
     NSMutableArray<NSURLAuthenticationChallengeMock *> *malformedAuthenticationChallenges = [NSMutableArray arrayWithCapacity:3];
-    
+
     NSString *host = @"www.spotify.com";
     SecTrustRef trust = SPTDataLoaderUnitTestCreateSpotifyComServerTrust();
     NSString *validAuthenticationMethod = NSURLAuthenticationMethodServerTrust;
     NSString *invalidAuthenticationMethod = NSURLAuthenticationMethodHTTPBasic;
-    
+
     // Invalid Host
     {
         NSURLAuthenticationChallengeMock *authenticationChallenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:nil
@@ -241,7 +241,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
                                                                                                                               serverTrust:trust];
         [malformedAuthenticationChallenges addObject:authenticationChallenge];
     }
-    
+
     // Invalid Trust
     {
         NSURLAuthenticationChallengeMock *authenticationChallenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:host
@@ -249,7 +249,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
                                                                                                                               serverTrust:nil];
         [malformedAuthenticationChallenges addObject:authenticationChallenge];
     }
-    
+
     // Invalid Authentication Method
     {
         NSURLAuthenticationChallengeMock *authenticationChallenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:host
@@ -257,14 +257,14 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
                                                                                                                               serverTrust:trust];
         [malformedAuthenticationChallenges addObject:authenticationChallenge];
     }
-    
+
     for (NSURLAuthenticationChallengeMock *authenticationChallenge in malformedAuthenticationChallenges) {
         NSDictionary<NSString *, NSArray<NSString *> *> *dictionary = @{ @"*.spotify.com": SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths() };
         SPTDataLoaderServerTrustPolicyValidationSpy *sut = [SPTDataLoaderServerTrustPolicyValidationSpy policyWithHostsAndCertificatePaths:dictionary];
         XCTAssertFalse([sut validateChallenge:authenticationChallenge], @"The server trust policy should return NO when attempting to validate an authentication challenge when it is considered incapable of being validated");
         XCTAssertFalse([sut didAttemptValidation], @"The server trust policy should bypass validation of an authentication challenge when it is considered incapable of being validated");
     }
-    
+
     SPTDataLoaderUnitTestReleaseIfNonNull(trust);
 }
 
@@ -273,7 +273,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
     NSString *host = @"www.google.com";
     SecTrustRef trust = SPTDataLoaderUnitTestCreateGoogleComServerTrust();
     NSString *authenticationMethod = NSURLAuthenticationMethodServerTrust;
-    
+
     NSURLAuthenticationChallengeMock *authenticationChallenge = [NSURLAuthenticationChallengeMock mockAuthenticationChallengeWithHost:host
                                                                                                                  authenticationMethod:authenticationMethod
                                                                                                                           serverTrust:trust];
@@ -291,7 +291,7 @@ static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
 - (BOOL)validateWithTrust:(SecTrustRef)trust host:(NSString *)host
 {
     [self setDidAttemptValidation:YES];
-    
+
     return [super validateWithTrust:trust host:host];
 }
 

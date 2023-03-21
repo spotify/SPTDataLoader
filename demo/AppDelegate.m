@@ -57,7 +57,7 @@ static NSString *AppDelegateSourceIdentifier = @"app";
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     if ([components.scheme isEqualToString:@"sptdataloaderdemo"] && [components.host isEqualToString:@"login"]) {
         NSArray *queryItems = components.queryItems;
-        
+
         NSString *code = nil;
         NSString *state = nil;
         for (NSURLQueryItem *queryItem in queryItems) {
@@ -67,15 +67,15 @@ static NSString *AppDelegateSourceIdentifier = @"app";
                 state = queryItem.value;
             }
         }
-        
+
         if (!code || !state) {
             return NO;
         }
-        
+
         NSURL *tokenURL = [NSURL URLWithString:@"https://accounts.spotify.com/api/token"];
         SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:tokenURL
                                                             sourceIdentifier:AppDelegateSourceIdentifier];
-        
+
         request.method = SPTDataLoaderRequestMethodPost;
         NSDictionary *tokenBodyDictionary = @{ @"grant_type" : @"authorization_code",
                                                @"code" : code,
@@ -88,17 +88,17 @@ static NSString *AppDelegateSourceIdentifier = @"app";
         }
         NSString *tokenBodyString = [tokenBodyParameters componentsJoinedByString:@"&"];
         NSData *tokenBody = [tokenBodyString dataUsingEncoding:NSUTF8StringEncoding];
-        
+
         request.body = tokenBody;
-        
+
         NSString *basicAuthorisation = [@"Basic " stringByAppendingString:[NSString spt_OAuthBlob]];
         [request addValue:basicAuthorisation forHeader:@"Authorization"];
-        
+
         [self.loader performRequest:request];
-        
+
         return YES;
     }
-    
+
     return NO;
 }
 
@@ -121,7 +121,7 @@ static NSString *AppDelegateSourceIdentifier = @"app";
         id<SPTDataLoaderAuthoriser> oauthAuthoriser = [[SPTDataLoaderAuthoriserOAuth alloc] initWithDictionary:oauthTokenDictionary
                                                                                              dataLoaderFactory:self.factory];
         self.oauthFactory = [self.service createDataLoaderFactoryWithAuthorisers:@[ oauthAuthoriser ]];
-        
+
         PlaylistsViewModel *model = [[PlaylistsViewModel alloc] initWithDataLoader:[self.oauthFactory createDataLoader]];
         PlaylistsViewController *playlistsViewController = [[PlaylistsViewController alloc] initWithModel:model];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:playlistsViewController];
@@ -134,11 +134,11 @@ static NSString *AppDelegateSourceIdentifier = @"app";
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", @"")
                                                                 message:[response.error localizedDescription]
                                                          preferredStyle:UIAlertControllerStyleAlert];
-    
+
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"")
                                            style:UIAlertActionStyleCancel
                                          handler:nil]];
-    
+
     [self.window.rootViewController presentViewController:ac animated:YES completion:nil];
     NSLog(@"Error: %@", response.error);
 }

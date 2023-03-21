@@ -88,22 +88,22 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 - (NSTimeInterval)calculateNext
 {
     NSTimeInterval nextTime = self.timeInterval * self.growFactor;
-    
+
     if (nextTime > self.maxTime) {
         nextTime = self.maxTime;
     }
-    
+
     if (self.jitter < 0.0001) {
         self.timeInterval = nextTime;
     } else {
         const double sigma = self.jitter * nextTime;
         self.timeInterval = [self.class normalWithMu:nextTime sigma:sigma];
     }
-    
+
     if (self.timeInterval > self.maxTime) {
         self.timeInterval = self.maxTime;
     }
-    
+
     return self.timeInterval;
 }
 
@@ -140,12 +140,12 @@ NS_INLINE double SPTExptRandom()
         const double b = 1.0 - (SPTExptRandom() / EXPT_MODULO_F64);
         const double c = 1.7155277699214135 * (a - 0.5) / b;
         const double d = c * c / 4.0;
-        
+
         if (d <= -1.0 * log(b)) {
             return mu + c * sigma;
         }
     }
-    
+
     return mu + 2.0 * sigma * (SPTExptRandom() / EXPT_MODULO_F64);
 }
 

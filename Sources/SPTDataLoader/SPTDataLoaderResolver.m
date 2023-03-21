@@ -52,7 +52,7 @@
         }
         [mutableAddress addObject:resolverAddress];
     }
-    
+
     @synchronized(self.resolverHost) {
         self.resolverHost[host] = mutableAddress;
     }

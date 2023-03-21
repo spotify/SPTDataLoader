@@ -27,13 +27,13 @@ NS_ASSUME_NONNULL_BEGIN
         if (![key isKindOfClass:[NSString class]]) {
             continue;
         }
-        
+
         NSString *keyString = (NSString *)key;
         id object = self[keyString];
         if (![object isKindOfClass:[NSString class]]) {
             continue;
         }
-        
+
         NSString *objectString = (NSString *)object;
         headerSize += [keyString dataUsingEncoding:NSUTF8StringEncoding].length;
         headerSize += [@": \n" dataUsingEncoding:NSUTF8StringEncoding].length;

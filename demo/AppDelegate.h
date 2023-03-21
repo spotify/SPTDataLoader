@@ -26,4 +26,3 @@
 @property (nonatomic, strong, readonly) SPTDataLoaderFactory *factory;
 
 @end
-

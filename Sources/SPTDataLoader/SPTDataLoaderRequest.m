@@ -77,13 +77,13 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
     if (!header) {
         return;
     }
-    
+
     @synchronized(self.mutableHeaders) {
         if (!value && header) {
             [self.mutableHeaders removeObjectForKey:header];
             return;
         }
-        
+
         self.mutableHeaders[header] = value;
     }
 }
@@ -101,9 +101,9 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 {
     NSString * const SPTDataLoaderRequestContentLengthHeader = @"Content-Length";
     NSString * const SPTDataLoaderRequestAcceptLanguageHeader = @"Accept-Language";
-    
+
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.URL];
-    
+
     if (!self.headers[SPTDataLoaderRequestAcceptLanguageHeader]) {
         [urlRequest addValue:[self.class languageHeaderValue]
           forHTTPHeaderField:SPTDataLoaderRequestAcceptLanguageHeader];
@@ -115,16 +115,16 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
         [urlRequest addValue:@(self.body.length).stringValue forHTTPHeaderField:SPTDataLoaderRequestContentLengthHeader];
         urlRequest.HTTPBody = self.body;
     }
-    
+
     NSDictionary *headers = self.headers;
     for (NSString *key in headers) {
         NSString *value = headers[key];
         [urlRequest addValue:value forHTTPHeaderField:key];
     }
-    
+
     urlRequest.cachePolicy = self.cachePolicy;
     urlRequest.HTTPMethod = NSStringFromSPTDataLoaderRequestMethod(self.method);
-    
+
     return urlRequest;
 }
 

@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
             authoriser.delegate = self;
         }
     }
-    
+
     return self;
 }
 
@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
             return;
         }
     }
-    
+
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
     @synchronized(self.requestToRequestResponseHandler) {
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
             return YES;
         }
     }
-    
+
     return NO;
 }
 
@@ -192,11 +192,11 @@ NS_ASSUME_NONNULL_BEGIN
     if (self.offline) {
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
     }
-    
+
     @synchronized(self.requestToRequestResponseHandler) {
         [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
     }
-    
+
     // Add an absolute timeout for responses
     if (request.timeout > 0.0) {
         __weak __typeof(self) weakSelf = self;
@@ -215,7 +215,7 @@ NS_ASSUME_NONNULL_BEGIN
                            [strongSelf failedResponse:response];
                        });
     }
-    
+
     [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
 }
 

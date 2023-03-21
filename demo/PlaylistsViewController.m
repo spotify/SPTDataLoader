@@ -33,11 +33,11 @@
     if (!(self = [super init])) {
         return nil;
     }
-    
+
     self.title = NSLocalizedString(@"Playlists", @"");
     _model = model;
     _model.delegate = self;
-    
+
     return self;
 }
 
@@ -53,14 +53,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass(self.class)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self.model load];
 }
 
@@ -79,9 +79,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(self.class)];
-    
+
     cell.textLabel.text = self.model.items[(NSUInteger)indexPath.row][@"name"];
-    
+
     return cell;
 }
 

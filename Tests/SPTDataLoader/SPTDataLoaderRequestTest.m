@@ -175,7 +175,7 @@
 {
     XCTAssertNotNil(self.request.description,
                     @"The description shouldn't be nil.");
-    
+
     NSString *URLString = [NSString stringWithFormat:@"URL = \"%@\"", self.URL.absoluteString];
     XCTAssertTrue([self.request.description containsString:URLString],
                   @"The description should contain the URL of the request.");

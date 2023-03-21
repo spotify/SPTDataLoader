@@ -28,10 +28,10 @@
     // Given
     const CFAbsoluteTime expectedTime = CFAbsoluteTimeGetCurrent();
     SPTDataLoaderTimeProviderImplementation *timeProvider = [SPTDataLoaderTimeProviderImplementation new];
-    
+
     // When
     const CFAbsoluteTime actualTime = timeProvider.currentTime;
-    
+
     // Time
     XCTAssertEqualWithAccuracy(expectedTime, actualTime, 0.1, @"The currentTime is not equal to the system time given by CFAbsoluteTimeGetCurrent()");
 }

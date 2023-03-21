@@ -101,9 +101,9 @@ NS_ASSUME_NONNULL_BEGIN
          customURLProtocolClasses:(nullable NSArray<Class> *)customURLProtocolClasses
 {
     const NSTimeInterval SPTDataLoaderServiceTimeoutInterval = 20.0;
-    
+
     NSString * const SPTDataLoaderServiceUserAgentHeader = @"User-Agent";
-    
+
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.timeoutIntervalForRequest = SPTDataLoaderServiceTimeoutInterval;
     configuration.timeoutIntervalForResource = SPTDataLoaderServiceTimeoutInterval;
@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (userAgent) {
         configuration.HTTPAdditionalHeaders = @{ SPTDataLoaderServiceUserAgentHeader : (NSString * _Nonnull)userAgent };
     }
-    
+
     return [self initWithConfiguration:configuration rateLimiter:rateLimiter resolver:resolver];
 }
 
@@ -293,7 +293,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
             }
         }
     }
-    
+
     [self performRequest:request requestResponseHandler:requestResponseHandler];
 }
 
@@ -376,10 +376,10 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     if (!completionHandler) {
         return;
     }
-    
+
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     NSURLCredential *credential = nil;
-    
+
     if (self.areAllCertificatesAllowed) {
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
         disposition = NSURLSessionAuthChallengeUseCredential;
@@ -396,7 +396,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         // No-op
         // Use default handing
     }
-    
+
     completionHandler(disposition, credential);
 }
 
@@ -415,11 +415,11 @@ didCompleteWithError:(nullable NSError *)error
     if (response == nil && !handler.cancelled) {
         return;
     }
-    
+
     @synchronized(self.handlers) {
         [self.handlers removeObject:handler];
     }
-    
+
     @synchronized(self.consumptionObservers) {
         for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
             dispatch_block_t observerBlock = ^ {
@@ -434,18 +434,18 @@ didCompleteWithError:(nullable NSError *)error
                 } else {
                     bytesReceived = (int)bytesReceivedExpected;
                 }
-                
+
                 bytesSent += task.currentRequest.allHTTPHeaderFields.byteSizeOfHeaders;
                 if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                     bytesReceived += httpResponse.allHeaderFields.byteSizeOfHeaders;
                 }
-                
+
                 [consumptionObserver endedRequestWithResponse:response
                                               bytesDownloaded:bytesReceived
                                                 bytesUploaded:bytesSent];
             };
-            
+
             dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
             if ([NSThread isMainThread] && queue == dispatch_get_main_queue()) {
                 observerBlock();
@@ -469,7 +469,7 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
     }
 
     NSURL *newURL = request.URL;
-    
+
     if (newURL.host == nil) {
         completionHandler(nil);
         return;

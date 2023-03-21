@@ -44,7 +44,7 @@
                                                                               authenticationMethod:authenticationMethod];
     mockProtectionSpace.mockHost = host;
     mockProtectionSpace.mockServerTrust = serverTrust;
-    
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnonnull"
     NSURLAuthenticationChallengeMock *mock = [[NSURLAuthenticationChallengeMock alloc] initWithProtectionSpace:mockProtectionSpace
@@ -96,16 +96,16 @@
     if (trust) {
         CFRetain(trust);
     }
-    
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
-    
+
     if (_mockServerTrust) {
         CFRelease(_mockServerTrust);
     }
-    
+
     _mockServerTrust = trust;
-    
+
 #pragma clang diagnostic pop
 }
 

@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
         _delegate = delegate;
         _objectToCancel = cancelObject;
     }
-    
+
     return self;
 }
 
@@ -57,9 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
     if (self.cancelled) {
         return;
     }
-    
+
     [self.delegate cancellationTokenDidCancel:self];
-    
+
     self.cancelled = YES;
 }
 

@@ -48,14 +48,14 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
     if (!(self = [super init])) {
         return nil;
     }
-    
+
     _dataLoaderFactory = dataLoaderFactory;
     _dataLoader = [dataLoaderFactory createDataLoader];
     _dataLoader.delegate = self;
-    
+
     [self saveTokenDictionary:dictionary];
     _pendingRequests = [NSMutableArray new];
-    
+
     return self;
 }
 
@@ -123,7 +123,7 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
     NSURL *accountsURL = [NSURL URLWithString:@"https://accounts.spotify.com/api/token"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:accountsURL
                                                         sourceIdentifier:SPTDataLoaderAuthoriserOAuthSourceIdentifier];
-    
+
     NSArray *authorisationHeaderValues = @[ @"Basic", [NSString spt_OAuthBlob] ];
     [request addValue:[authorisationHeaderValues componentsJoinedByString:SPTDataLoaderAuthoriserHeaderValuesJoiner] forHeader:SPTDataLoaderAuthoriserHeader];
     [self.dataLoader performRequest:request];
@@ -142,7 +142,7 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
     NSDictionary *tokenDictionary = [NSJSONSerialization JSONObjectWithData:body
                                                                     options:NSJSONReadingAllowFragments
                                                                       error:&error];
-    
+
     @synchronized(self.pendingRequests) {
         if (!tokenDictionary) {
             for (SPTDataLoaderRequest *pendingRequest in self.pendingRequests) {
@@ -150,7 +150,7 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
             }
             return;
         }
-        
+
         [self saveTokenDictionary:tokenDictionary];
         for (SPTDataLoaderRequest *pendingRequest in self.pendingRequests) {
             [self authorisePendingRequest:pendingRequest];
@@ -170,7 +170,7 @@ static NSString *SPTDataLoaderAuthoriserHeader = @"Authorization";
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request
 {
-    
+
 }
 
 #pragma mark NSCopying

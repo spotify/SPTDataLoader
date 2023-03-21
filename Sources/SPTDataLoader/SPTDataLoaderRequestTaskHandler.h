@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Class constructor
- @param task The task to perform 
+ @param task The task to perform
  @param request The request object to perform lookup with
  @param requestResponseHandler The object tie to this operation for potential callbacks
  @param rateLimiter The object controlling the rate limits on a per service basis
