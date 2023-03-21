@@ -67,20 +67,20 @@ static NSArray<NSString *> *SPTDataLoaderServerTrustUnitTestCertificatePathsInCe
     return [bundle pathsForResourcesOfType:@"der" inDirectory:@"/"];
 }
 
-static NSArray<NSString *> *SPTDataLoaderServerTrustUnitGoogleTestCertificatePaths() {
+static NSArray<NSString *> *SPTDataLoaderServerTrustUnitGoogleTestCertificatePaths(void) {
     return SPTDataLoaderServerTrustUnitTestCertificatePathsInCertBundle(@"google");
 }
 
-static NSArray<NSString *> *SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths() {
+static NSArray<NSString *> *SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths(void) {
     return SPTDataLoaderServerTrustUnitTestCertificatePathsInCertBundle(@"spotify");
 }
 
-static SecTrustRef SPTDataLoaderUnitTestCreateGoogleComServerTrust() {
+static SecTrustRef SPTDataLoaderUnitTestCreateGoogleComServerTrust(void) {
     NSArray *paths = SPTDataLoaderServerTrustUnitGoogleTestCertificatePaths();
     return SPTDataLoaderUnitTestCreateTrustChainForCertPaths(paths);
 }
 
-static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust() {
+static SecTrustRef SPTDataLoaderUnitTestCreateSpotifyComServerTrust(void) {
     NSArray *paths = SPTDataLoaderServerTrustUnitSpotifyTestCertificatePaths();
     return SPTDataLoaderUnitTestCreateTrustChainForCertPaths(paths);
 }
