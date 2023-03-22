@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -54,10 +54,10 @@
 {
     // Given
     Class expectedTimeProviderClass = [SPTDataLoaderTimeProviderImplementation class];
-    
+
     // When
     SPTDataLoaderRateLimiter *const rateLimiter = [SPTDataLoaderRateLimiter rateLimiterWithDefaultRequestsPerSecond:self.requestsPerSecond];
-    
+
     // Then
     XCTAssert([rateLimiter.timeProvider isKindOfClass:expectedTimeProviderClass], @"The default timeProvider used by the class method should be a SPTDataLoaderTimeProviderImplementation");
 }
@@ -69,10 +69,10 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     NSTimeInterval seconds = 60.0;
     CFAbsoluteTime retryAfter = self.timeProvider.currentTime + seconds;
-    
+
     // When
     [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
-    
+
     // Then
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     XCTAssertEqualWithAccuracy(earliestTime, seconds, 1.0, @"The retry-after limitation was not respected by the rate limiter");
@@ -86,10 +86,10 @@
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     [self.rateLimiter executedRequest:request];
-    
+
     // When
     self.timeProvider.currentTime += timeDelta;
-    
+
     // Then
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     XCTAssertEqualWithAccuracy(earliestTime, 0, 0.000000001, @"The earliestTime is not 0 although the currentTime is less than the time of the last request executed");
@@ -104,10 +104,10 @@
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     [self.rateLimiter executedRequest:request];
-    
+
     // When
     self.timeProvider.currentTime += timeDelta;
-    
+
     // Then
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     XCTAssertEqualWithAccuracy(earliestTime, cutoffTime - timeDelta, 0.000000001, @"The earliestTime is not equal to the remaining part of the curoffTime");
@@ -121,10 +121,10 @@
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     [self.rateLimiter executedRequest:request];
-    
+
     // When
     self.timeProvider.currentTime -= timeDelta;
-    
+
     // Then
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     XCTAssertEqualWithAccuracy(earliestTime, 0, 0.000000001, @"The earliestTime is not 0 although longer than the cutoff time has passed");
@@ -135,10 +135,10 @@
     // Given
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
-    
+
     // When
     [self.rateLimiter executedRequest:request];
-    
+
     // Then
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     NSString *earliestTimeWithDecimalPrecision = [NSString stringWithFormat:@"%0.1f", earliestTime];
@@ -158,10 +158,10 @@
 {
     // Given
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
-    
+
     // When
     double requestsPerSecond = [self.rateLimiter requestsPerSecondForURL:URL];
-    
+
     // Then
     XCTAssertEqualWithAccuracy(requestsPerSecond, self.requestsPerSecond, 1.0, @"The requests per second for a URL is not falling back to the default specified in the class constructor");
 }
@@ -171,10 +171,10 @@
     // Given
     NSURL *URL = [NSURL URLWithString:@"https://spclient.wg.spotify.com/thingy"];
     double requestsPerSecond = 20.0;
-    
+
     // When
     [self.rateLimiter setRequestsPerSecond:requestsPerSecond forURL:URL];
-    
+
     // Then
     double reportedRequestsPerSecond = [self.rateLimiter requestsPerSecondForURL:URL];
     XCTAssertEqualWithAccuracy(requestsPerSecond, reportedRequestsPerSecond, 1.0, @"The requests per second for this URL was not what was explicitly set");
@@ -196,11 +196,11 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:nil];
     NSTimeInterval seconds = 60.0;
     CFAbsoluteTime retryAfter = self.timeProvider.currentTime + seconds;
-    
+
     // When
     [self.rateLimiter setRetryAfter:retryAfter forURL:URL];
     [self.rateLimiter executedRequest:request];
-    
+
     // Then
     NSTimeInterval earliestTime = [self.rateLimiter earliestTimeUntilRequestCanBeExecuted:request];
     XCTAssertEqualWithAccuracy(earliestTime, 0.0, 1.0, @"The earliest time until request can be executed was not reset despite an overwrite of the retry-after rule");

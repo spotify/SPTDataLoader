@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -224,7 +224,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     [self.factory needsNewBodyStream:^(NSInputStream * _Nonnull _) {} forRequest:request];
-    
+
     XCTAssertEqual(requestResponseHandler.numberOfNewBodyStreamCalls, 1u, @"The factory did not relay a prompt for delivering a new body stream to the correct handler");
 }
 

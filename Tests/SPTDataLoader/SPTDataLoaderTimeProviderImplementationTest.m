@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@
     // Given
     const CFAbsoluteTime expectedTime = CFAbsoluteTimeGetCurrent();
     SPTDataLoaderTimeProviderImplementation *timeProvider = [SPTDataLoaderTimeProviderImplementation new];
-    
+
     // When
     const CFAbsoluteTime actualTime = timeProvider.currentTime;
-    
+
     // Time
     XCTAssertEqualWithAccuracy(expectedTime, actualTime, 0.1, @"The currentTime is not equal to the system time given by CFAbsoluteTimeGetCurrent()");
 }

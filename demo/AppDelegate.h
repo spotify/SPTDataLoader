@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -26,4 +26,3 @@
 @property (nonatomic, strong, readonly) SPTDataLoaderFactory *factory;
 
 @end
-

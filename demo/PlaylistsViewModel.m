@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -42,10 +42,10 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
     if (!(self = [super init])) {
         return nil;
     }
-    
+
     _dataLoader = dataLoader;
     _dataLoader.delegate = self;
-    
+
     return self;
 }
 
@@ -54,7 +54,7 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
     if (self.loaded) {
         return;
     }
-    
+
     NSURL *meURL = [NSURL URLWithString:PlaylistsViewModelMeURLString];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:meURL
                                                         sourceIdentifier:PlaylistsViewModelSourceIdentifier];
@@ -71,9 +71,9 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
     if ([_userID isEqualToString:userID]) {
         return;
     }
-    
+
     _userID = userID;
-    
+
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:self.playlistsURL
                                                         sourceIdentifier:PlaylistsViewModelSourceIdentifier];
     [self.dataLoader performRequest:request];
@@ -84,9 +84,9 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
     if ([_items isEqualToArray:items]) {
         return;
     }
-    
+
     _items = items;
-    
+
     self.loaded = YES;
 }
 
@@ -95,9 +95,9 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
     if (_loaded == loaded) {
         return;
     }
-    
+
     _loaded = loaded;
-    
+
     [self.delegate playlistsViewModelDidLoad:self];
 }
 
@@ -118,7 +118,7 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
         NSLog(@"Error: %@", error);
         return;
     }
-    
+
     if ([response.request.URL.absoluteString isEqualToString:PlaylistsViewModelMeURLString]) {
         self.userID = jsonDictionary[@"id"];
     } else if ([response.request.URL.absoluteString isEqualToString:(NSString * _Nonnull)self.playlistsURL.absoluteString]) {
@@ -128,12 +128,12 @@ static NSString * const PlaylistsViewModelSourceIdentifier = @"me";
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didReceiveErrorResponse:(SPTDataLoaderResponse *)response
 {
-    
+
 }
 
 - (void)dataLoader:(SPTDataLoader *)dataLoader didCancelRequest:(SPTDataLoaderRequest *)request
 {
-    
+
 }
 
 @end

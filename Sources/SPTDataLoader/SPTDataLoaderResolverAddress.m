@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (deltaTime < 0.0) {
         return YES;
     }
-    
+
     return deltaTime > self.stalePeriod;
 }
 
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
         _address = address;
         _stalePeriod = SPTDataLoaderResolverAddressDefaultStalePeriodOneHour;
     }
-    
+
     return self;
 }
 

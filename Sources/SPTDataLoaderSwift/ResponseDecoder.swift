@@ -1,4 +1,4 @@
-// Copyright 2015-2022 Spotify AB
+// Copyright 2015-2023 Spotify AB
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ public protocol ResponseDecoder {
     /// - Parameter type: The type of the value to decode.
     /// - Parameter data: The data to decode from.
     /// - Returns: A value of the requested type.
-    func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T 
+    func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
 }
 
 extension JSONDecoder: ResponseDecoder {}

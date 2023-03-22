@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -116,13 +116,13 @@ NS_ASSUME_NONNULL_BEGIN
     @synchronized(self.cancellationTokens) {
         [self.cancellationTokens addObject:cancellationToken];
     }
-    
+
     @synchronized(self.requests) {
         [self.requests addObject:copiedRequest];
     }
 
     [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:copiedRequest];
-    
+
     return cancellationToken;
 }
 
@@ -171,7 +171,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (![self isRequestExpected:response.request]) {
         return;
     }
-    
+
     [self executeDelegateBlock: ^{
         [self.delegate dataLoader:self didReceiveSuccessfulResponse:response];
     }];
@@ -215,7 +215,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     // Do not send a callback if the request doesn't support it
     NSAssert(response.request.chunks, @"The data loader is receiving a data chunk for a response that doesn't support data chunks");
-    
+
     BOOL didReceiveDataChunkSelectorExists = [self.delegate respondsToSelector:@selector(dataLoader:didReceiveDataChunk:forResponse:)];
     if (didReceiveDataChunkSelectorExists) {
         [self executeDelegateBlock: ^{
@@ -234,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (!response.request.chunks) {
         return;
     }
-    
+
     if ([self.delegate respondsToSelector:@selector(dataLoader:didReceiveInitialResponse:)]) {
         [self executeDelegateBlock: ^{
             [self.delegate dataLoader:self didReceiveInitialResponse:response];

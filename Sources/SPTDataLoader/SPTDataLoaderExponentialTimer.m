@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -88,22 +88,22 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 - (NSTimeInterval)calculateNext
 {
     NSTimeInterval nextTime = self.timeInterval * self.growFactor;
-    
+
     if (nextTime > self.maxTime) {
         nextTime = self.maxTime;
     }
-    
+
     if (self.jitter < 0.0001) {
         self.timeInterval = nextTime;
     } else {
         const double sigma = self.jitter * nextTime;
         self.timeInterval = [self.class normalWithMu:nextTime sigma:sigma];
     }
-    
+
     if (self.timeInterval > self.maxTime) {
         self.timeInterval = self.maxTime;
     }
-    
+
     return self.timeInterval;
 }
 
@@ -119,7 +119,7 @@ const double SPTDataLoaderExponentialTimerDefaultJitter = 0.11304999836;
 
 #define EXPT_MODULO ((u_int32_t)RAND_MAX)
 #define EXPT_MODULO_F64 ((double)(EXPT_MODULO))
-NS_INLINE double SPTExptRandom()
+NS_INLINE double SPTExptRandom(void)
 {
     // We need [0, 1) interval
     return arc4random_uniform(EXPT_MODULO);
@@ -140,12 +140,12 @@ NS_INLINE double SPTExptRandom()
         const double b = 1.0 - (SPTExptRandom() / EXPT_MODULO_F64);
         const double c = 1.7155277699214135 * (a - 0.5) / b;
         const double d = c * c / 4.0;
-        
+
         if (d <= -1.0 * log(b)) {
             return mu + c * sigma;
         }
     }
-    
+
     return mu + 2.0 * sigma * (SPTExptRandom() / EXPT_MODULO_F64);
 }
 

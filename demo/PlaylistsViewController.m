@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -33,11 +33,11 @@
     if (!(self = [super init])) {
         return nil;
     }
-    
+
     self.title = NSLocalizedString(@"Playlists", @"");
     _model = model;
     _model.delegate = self;
-    
+
     return self;
 }
 
@@ -53,14 +53,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass(self.class)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self.model load];
 }
 
@@ -79,9 +79,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(self.class)];
-    
+
     cell.textLabel.text = self.model.items[(NSUInteger)indexPath.row][@"name"];
-    
+
     return cell;
 }
 

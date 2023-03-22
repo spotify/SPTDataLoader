@@ -1,5 +1,5 @@
 /*
- Copyright 2015-2022 Spotify AB
+ Copyright 2015-2023 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -175,7 +175,7 @@
 {
     XCTAssertNotNil(self.request.description,
                     @"The description shouldn't be nil.");
-    
+
     NSString *URLString = [NSString stringWithFormat:@"URL = \"%@\"", self.URL.absoluteString];
     XCTAssertTrue([self.request.description containsString:URLString],
                   @"The description should contain the URL of the request.");
