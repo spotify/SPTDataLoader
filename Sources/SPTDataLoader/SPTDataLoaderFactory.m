@@ -19,7 +19,9 @@
 #import <SPTDataLoader/SPTDataLoaderAuthoriser.h>
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
 #import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
+#import <SPTDataLoader/SPTDataLoaderInterceptorResult.h>
 #import "SPTDataLoaderCancellationTokenFactoryImplementation.h"
+#import "SPTDataLoaderInterceptorChain.h"
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderImplementation+Private.h"
@@ -31,7 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate, SPTDataLoaderRequestResponseHandler>
 
 @property (nonatomic, strong) NSMapTable<SPTDataLoaderRequest *, id<SPTDataLoaderRequestResponseHandler>> *requestToRequestResponseHandler;
+@property (nonatomic, strong) NSMapTable<SPTDataLoaderRequest *, SPTDataLoaderInterceptorChain *> *requestToInterceptorChain;
 @property (nonatomic, strong, readwrite) dispatch_queue_t requestTimeoutQueue;
+@property (nonatomic, copy, readonly) NSArray<id<SPTDataLoaderInterceptor>> *interceptors;
+
 
 @end
 
@@ -41,19 +46,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)dataLoaderFactoryWithRequestResponseHandlerDelegate:(nullable id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
                                                         authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+                                                       interceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors
 {
-    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate authorisers:authorisers];
+    return [[self alloc] initWithRequestResponseHandlerDelegate:requestResponseHandlerDelegate authorisers:authorisers
+        interceptors:interceptors];
 }
 
 - (instancetype)initWithRequestResponseHandlerDelegate:(nullable id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
                                            authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+                                          interceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors
 {
     self = [super init];
     if (self) {
         _requestResponseHandlerDelegate = requestResponseHandlerDelegate;
         _authorisers = [authorisers copy];
+        _interceptors = [interceptors copy];
 
         _requestToRequestResponseHandler = [NSMapTable weakToWeakObjectsMapTable];
+        _requestToInterceptorChain = [NSMapTable weakToStrongObjectsMapTable];
         _requestTimeoutQueue = dispatch_get_main_queue();
 
         for (id<SPTDataLoaderAuthoriser> authoriser in _authorisers) {
@@ -83,6 +93,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 @synthesize requestResponseHandlerDelegate = _requestResponseHandlerDelegate;
 
+-(SPTDataLoaderResponse *)runResponseInterceptors:(SPTDataLoaderResponse *)response
+{
+    SPTDataLoaderInterceptorResult *result = nil;
+    @synchronized (self.requestToInterceptorChain) {
+        SPTDataLoaderInterceptorChain *requestToInterceptorChain = [self.requestToInterceptorChain objectForKey:response.request];
+        result = [requestToInterceptorChain decorateResponse:response];
+        [self.requestToInterceptorChain removeObjectForKey:response.request];
+    }
+    if (result == nil) {
+        return response;
+    }
+    if (result.type == SPTDataLoaderInterceptResultSuccess) {
+        return result.value;
+    }
+    SPTDataLoaderResponse *failed = [SPTDataLoaderResponse dataLoaderResponseWithRequest:response.request response:nil];
+    failed.error = result.error;
+    return failed;
+}
+
 - (void)successfulResponse:(SPTDataLoaderResponse *)response
 {
     id<SPTDataLoaderRequestResponseHandler> requestResponseHandler = nil;
@@ -90,7 +119,16 @@ NS_ASSUME_NONNULL_BEGIN
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
         [self.requestToRequestResponseHandler removeObjectForKey:response.request];
     }
-    [requestResponseHandler successfulResponse:response];
+    SPTDataLoaderResponse *decorated = [self runResponseInterceptors:response];
+    //
+    // This is if an interceptors change the response by adding an error
+    //
+    // TODO: An interceptor might change the HTTP status code as well
+    if (decorated.error != nil) {
+        [requestResponseHandler failedResponse:decorated];
+        return;
+    }
+    [requestResponseHandler successfulResponse:decorated];
 }
 
 - (void)failedResponse:(SPTDataLoaderResponse *)response
@@ -114,7 +152,13 @@ NS_ASSUME_NONNULL_BEGIN
         requestResponseHandler = [self.requestToRequestResponseHandler objectForKey:response.request];
         [self.requestToRequestResponseHandler removeObjectForKey:response.request];
     }
-    [requestResponseHandler failedResponse:response];
+
+    SPTDataLoaderResponse *decorated = [self runResponseInterceptors:response];
+    if (decorated.error == nil) {
+        [requestResponseHandler successfulResponse:decorated];
+        return;
+    }
+    [requestResponseHandler failedResponse:decorated];
 }
 
 - (void)cancelledRequest:(SPTDataLoaderRequest *)request
@@ -193,8 +237,10 @@ NS_ASSUME_NONNULL_BEGIN
         request.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
     }
 
-    @synchronized(self.requestToRequestResponseHandler) {
-        [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
+    SPTDataLoaderInterceptorChain * chain =
+    [[SPTDataLoaderInterceptorChain alloc] initWithInterceptors:self.interceptors];
+    @synchronized(self.requestToInterceptorChain) {
+        [self.requestToInterceptorChain setObject:chain forKey:request];
     }
 
     // Add an absolute timeout for responses
@@ -204,19 +250,29 @@ NS_ASSUME_NONNULL_BEGIN
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(request.timeout * NSEC_PER_SEC)),
                        self.requestTimeoutQueue,
                        ^{
-                           __strong __typeof(self) strongSelf = weakSelf;
-                           __strong __typeof(request) strongRequest = weakRequest;
-                           SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:strongRequest
-                                                                                                         response:nil];
-                           NSError *error = [NSError errorWithDomain:SPTDataLoaderRequestErrorDomain
-                                                                code:SPTDataLoaderRequestErrorCodeTimeout
-                                                            userInfo:nil];
-                           response.error = error;
-                           [strongSelf failedResponse:response];
-                       });
+            __strong __typeof(self) strongSelf = weakSelf;
+            __strong __typeof(request) strongRequest = weakRequest;
+            SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:strongRequest
+                                                                                          response:nil];
+            NSError *error = [NSError errorWithDomain:SPTDataLoaderRequestErrorDomain
+                                                 code:SPTDataLoaderRequestErrorCodeTimeout
+                                             userInfo:nil];
+            response.error = error;
+            [strongSelf failedResponse:response];
+        });
     }
 
-    [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:request];
+    SPTDataLoaderInterceptorResult *result = [chain decorateRequest:request];
+    if (result.type == SPTDataLoaderInterceptResultSuccess) {
+        @synchronized(self.requestToRequestResponseHandler) {
+            [self.requestToRequestResponseHandler setObject:requestResponseHandler forKey:request];
+        }
+        [self.requestResponseHandlerDelegate requestResponseHandler:self performRequest:result.value];
+    } else {
+        SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+        response.error = result.error;
+        [requestResponseHandler failedResponse:response];
+    }
 }
 
 - (void)requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler

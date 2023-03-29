@@ -46,7 +46,7 @@ static NSString *AppDelegateSourceIdentifier = @"app";
                                                             rateLimiter:rateLimiter
                                                                resolver:resolver
                                                customURLProtocolClasses:nil];
-    self.factory = [self.service createDataLoaderFactoryWithAuthorisers:nil];
+    self.factory = [self.service createDataLoaderFactory];
     self.loader = [self.factory createDataLoader];
     self.loader.delegate = self;
     return YES;

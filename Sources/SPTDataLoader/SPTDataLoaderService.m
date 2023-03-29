@@ -172,9 +172,33 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+- (SPTDataLoaderFactory *)createDataLoaderFactory
 {
-    return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self authorisers:authorisers];
+    return [self dataLoaderFactoryWithAuthorisers:nil withInterceptors:@[]];
+}
+
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+{
+    return [self dataLoaderFactoryWithAuthorisers:authorisers withInterceptors:@[]];
+
+}
+
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithInterceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors
+{
+    return [self dataLoaderFactoryWithAuthorisers:nil withInterceptors:interceptors];
+
+}
+
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+                                                withInterceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors
+{
+    return [self dataLoaderFactoryWithAuthorisers:authorisers withInterceptors:interceptors];
+}
+
+- (SPTDataLoaderFactory *)dataLoaderFactoryWithAuthorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+                                           withInterceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors
+{
+    return [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self authorisers:authorisers interceptors:interceptors];
 }
 
 - (void)addConsumptionObserver:(id<SPTDataLoaderConsumptionObserver>)consumptionObserver on:(dispatch_queue_t)queue

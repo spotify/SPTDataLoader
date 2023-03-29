@@ -16,7 +16,7 @@ import SPTDataLoader
 
 final class StubbedNetwork {
     private(set) lazy var dataLoaderService = makeStubbedService()
-    private(set) lazy var dataLoaderFactory = dataLoaderService.createDataLoaderFactory(with: nil)
+    private(set) lazy var dataLoaderFactory = dataLoaderService.createDataLoaderFactory()
 
     func addStub(
         statusCode: Int = 200,

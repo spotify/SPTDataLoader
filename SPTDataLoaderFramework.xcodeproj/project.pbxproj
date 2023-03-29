@@ -115,6 +115,26 @@
 		3426C1F024CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
 		3426C1F124CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
 		3426C1F224CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */; };
+		414B86A829D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A529D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m */; };
+		414B86A929D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A529D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m */; };
+		414B86AA29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A529D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m */; };
+		414B86AB29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A529D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m */; };
+		414B86AC29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86A629D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h */; };
+		414B86AD29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86A629D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h */; };
+		414B86AE29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86A629D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h */; };
+		414B86AF29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86A629D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h */; };
+		414B86B029D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A729D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m */; };
+		414B86B129D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A729D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m */; };
+		414B86B229D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A729D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m */; };
+		414B86B329D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 414B86A729D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m */; };
+		414B86B629D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B429D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h */; };
+		414B86B729D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B429D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h */; };
+		414B86B829D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B429D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h */; };
+		414B86B929D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B429D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h */; };
+		414B86BA29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B529D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h */; };
+		414B86BB29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B529D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h */; };
+		414B86BC29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B529D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h */; };
+		414B86BD29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 414B86B529D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h */; };
 		430D3C8C249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		430D3C8D249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
 		430D3C8E249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */; };
@@ -259,6 +279,11 @@
 		2DE3DABA2344E1780022642E /* SPTDataLoaderServiceSessionSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderServiceSessionSelector.h; sourceTree = "<group>"; };
 		2DE3DABB2344E1780022642E /* SPTDataLoaderServiceSessionSelector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderServiceSessionSelector.m; sourceTree = "<group>"; };
 		3426C1EE24CB2E6200B919B4 /* SPTDataLoaderBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderBlockWrapper.m; sourceTree = "<group>"; };
+		414B86A529D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderInterceptorChain.m; sourceTree = "<group>"; };
+		414B86A629D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderInterceptorChain.h; sourceTree = "<group>"; };
+		414B86A729D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderInterceptorResult.m; sourceTree = "<group>"; };
+		414B86B429D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderInterceptorResult.h; path = include/SPTDataLoader/SPTDataLoaderInterceptorResult.h; sourceTree = "<group>"; };
+		414B86B529D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTDataLoaderInterceptor.h; path = include/SPTDataLoader/SPTDataLoaderInterceptor.h; sourceTree = "<group>"; };
 		430D3C8B249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDataLoaderTimeProviderImplementation.m; sourceTree = "<group>"; };
 		430D3C90249D19AB00791FD3 /* SPTDataLoaderTimeProviderImplementation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTDataLoaderTimeProviderImplementation.h; sourceTree = "<group>"; };
 		6992FD1A1F71DB8B003E1E4F /* SPTDataLoaderServerTrustPolicy+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SPTDataLoaderServerTrustPolicy+Private.h"; sourceTree = "<group>"; };
@@ -406,6 +431,8 @@
 				056A04B91A13D10900FA72AD /* SPTDataLoaderExponentialTimer.h */,
 				056A04B51A13D10900FA72AD /* SPTDataLoaderFactory.h */,
 				6992FD201F71DBA8003E1E4F /* SPTDataLoaderImplementation.h */,
+				414B86B529D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h */,
+				414B86B429D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h */,
 				0568B18A1A14A1AB00FEEBF8 /* SPTDataLoaderRateLimiter.h */,
 				056A04B61A13D10900FA72AD /* SPTDataLoaderRequest.h */,
 				0568B18B1A14A1C400FEEBF8 /* SPTDataLoaderResolver.h */,
@@ -459,6 +486,9 @@
 				050E06A81A10C7BE00A10A0E /* SPTDataLoaderFactory.m */,
 				050E06BE1A10F26800A10A0E /* SPTDataLoaderFactory+Private.h */,
 				6992FD1B1F71DB8C003E1E4F /* SPTDataLoaderImplementation+Private.h */,
+				414B86A629D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h */,
+				414B86A529D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m */,
+				414B86A729D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m */,
 				052FB1611A125E4D00AFE80E /* SPTDataLoaderRateLimiter.m */,
 				050E06AB1A10CC1300A10A0E /* SPTDataLoaderRequest.m */,
 				056E52381A11275700E8716C /* SPTDataLoaderRequest+Private.h */,
@@ -525,12 +555,15 @@
 				05A6381E1C46B55000061E37 /* SPTDataLoaderFactory.h in Headers */,
 				6992FD211F71DBD4003E1E4F /* SPTDataLoaderImplementation.h in Headers */,
 				F7346A331CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */,
+				414B86B929D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */,
 				05A6381F1C46B55000061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				414B86BD29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */,
 				05A638201C46B55000061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A638211C46B55000061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A638221C46B55000061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638231C46B55000061E37 /* SPTDataLoaderService.h in Headers */,
 				05A638241C46B55000061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+				414B86AF29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,12 +580,15 @@
 				05A6385C1C46B85300061E37 /* SPTDataLoaderFactory.h in Headers */,
 				6992FD221F71DC07003E1E4F /* SPTDataLoaderImplementation.h in Headers */,
 				F7346A341CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */,
+				414B86B829D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */,
 				05A6385D1C46B85300061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				414B86BC29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */,
 				05A6385E1C46B85300061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A6385F1C46B85300061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A638601C46B85300061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638611C46B85300061E37 /* SPTDataLoaderService.h in Headers */,
 				05A638621C46B85300061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+				414B86AE29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,12 +605,15 @@
 				05A638761C46B87800061E37 /* SPTDataLoaderFactory.h in Headers */,
 				6992FD231F71DC14003E1E4F /* SPTDataLoaderImplementation.h in Headers */,
 				F7346A351CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */,
+				414B86B729D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */,
 				05A638771C46B87800061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				414B86BB29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */,
 				05A638781C46B87800061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A638791C46B87800061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A6387A1C46B87800061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A6387B1C46B87800061E37 /* SPTDataLoaderService.h in Headers */,
 				05A6387C1C46B87800061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+				414B86AD29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,12 +630,15 @@
 				05A638901C46B8A400061E37 /* SPTDataLoaderFactory.h in Headers */,
 				6992FD241F71DC1C003E1E4F /* SPTDataLoaderImplementation.h in Headers */,
 				F7346A361CC2CF5A00B8AB41 /* SPTDataLoaderServerTrustPolicy.h in Headers */,
+				414B86B629D5A54A00A2C3B2 /* SPTDataLoaderInterceptorResult.h in Headers */,
 				05A638911C46B8A400061E37 /* SPTDataLoaderRateLimiter.h in Headers */,
+				414B86BA29D5A54A00A2C3B2 /* SPTDataLoaderInterceptor.h in Headers */,
 				05A638921C46B8A400061E37 /* SPTDataLoaderRequest.h in Headers */,
 				05A638931C46B8A400061E37 /* SPTDataLoaderResolver.h in Headers */,
 				05A638941C46B8A400061E37 /* SPTDataLoaderResponse.h in Headers */,
 				05A638951C46B8A400061E37 /* SPTDataLoaderService.h in Headers */,
 				05A638961C46B8A400061E37 /* SPTDataLoaderExponentialTimer.h in Headers */,
+				414B86AC29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +874,7 @@
 			files = (
 				058CD0001C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A6383C1C46B82700061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				414B86AB29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */,
 				05A6383D1C46B82700061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC02344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6383F1C46B82700061E37 /* SPTDataLoader.m in Sources */,
@@ -841,6 +884,7 @@
 				05A638421C46B82700061E37 /* SPTDataLoaderRequest.m in Sources */,
 				05A638431C46B82700061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				F7346A381CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
+				414B86B329D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */,
 				05A638441C46B82700061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638451C46B82700061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				430D3C8C249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
@@ -856,6 +900,7 @@
 			files = (
 				058CD0011C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A638491C46B84B00061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				414B86AA29D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */,
 				05A6384A1C46B84B00061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC12344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6384C1C46B84B00061E37 /* SPTDataLoader.m in Sources */,
@@ -865,6 +910,7 @@
 				05A6384F1C46B84B00061E37 /* SPTDataLoaderRequest.m in Sources */,
 				05A638501C46B84B00061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				F7346A391CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
+				414B86B229D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */,
 				05A638511C46B84B00061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638521C46B84B00061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				430D3C8D249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
@@ -880,6 +926,7 @@
 			files = (
 				058CD0021C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A638631C46B87100061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				414B86A929D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */,
 				05A638641C46B87100061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC22344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A638661C46B87100061E37 /* SPTDataLoader.m in Sources */,
@@ -889,6 +936,7 @@
 				05A638691C46B87100061E37 /* SPTDataLoaderRequest.m in Sources */,
 				05A6386A1C46B87100061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				F7346A3A1CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
+				414B86B129D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */,
 				05A6386B1C46B87100061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A6386C1C46B87100061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				430D3C8E249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,
@@ -904,6 +952,7 @@
 			files = (
 				058CD0031C62F90B00FF96D6 /* SPTDataLoaderCancellationTokenImplementation.m in Sources */,
 				05A638261C46B7F800061E37 /* NSDictionary+HeaderSize.m in Sources */,
+				414B86A829D5A51D00A2C3B2 /* SPTDataLoaderInterceptorChain.m in Sources */,
 				05A638281C46B7F800061E37 /* SPTDataLoaderCancellationTokenFactoryImplementation.m in Sources */,
 				2DE3DAC32344E1780022642E /* SPTDataLoaderServiceSessionSelector.m in Sources */,
 				05A6382B1C46B7F800061E37 /* SPTDataLoader.m in Sources */,
@@ -913,6 +962,7 @@
 				05A638301C46B7F800061E37 /* SPTDataLoaderRequest.m in Sources */,
 				05A638341C46B7F800061E37 /* SPTDataLoaderRequestTaskHandler.m in Sources */,
 				F7346A3B1CC2CF8200B8AB41 /* SPTDataLoaderServerTrustPolicy.m in Sources */,
+				414B86B029D5A51D00A2C3B2 /* SPTDataLoaderInterceptorResult.m in Sources */,
 				05A638351C46B7F800061E37 /* SPTDataLoaderResolver.m in Sources */,
 				05A638371C46B7F800061E37 /* SPTDataLoaderResolverAddress.m in Sources */,
 				430D3C8F249D196500791FD3 /* SPTDataLoaderTimeProviderImplementation.m in Sources */,

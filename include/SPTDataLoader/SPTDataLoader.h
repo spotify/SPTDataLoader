@@ -28,3 +28,5 @@
 #import <SPTDataLoader/SPTDataLoaderServerTrustPolicy.h>
 #import <SPTDataLoader/SPTDataLoaderService.h>
 #import <SPTDataLoader/SPTDataLoaderBlockWrapper.h>
+#import <SPTDataLoader/SPTDataLoaderInterceptor.h>
+#import <SPTDataLoader/SPTDataLoaderInterceptorResult.h>
