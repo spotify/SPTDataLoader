@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SPTDataLoaderServerTrustPolicy *serverTrustPolicy;
 @property (nonatomic, weak, nullable) NSFileManager *fileManager;
 @property (nonatomic, weak, nullable) Class dataClass;
+@property (nonatomic, assign) BOOL sessionInvalidated;
 
 @end
 
@@ -138,6 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         _fileManager = [NSFileManager defaultManager];
         _dataClass = [NSData class];
+        _sessionInvalidated = NO;
     }
 
     return self;
@@ -224,6 +226,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performRequest:(SPTDataLoaderRequest *)request
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
+    if (self.sessionInvalidated) {
+        [requestResponseHandler cancelledRequest:request];
+        return;
+    }
     if (request.URL == nil || request.cancellationToken.cancelled) {
         return;
     }
@@ -270,6 +276,7 @@ requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseH
 
 - (void)invalidateAndCancel
 {
+    self.sessionInvalidated = YES;
     [self.sessionSelector invalidateAndCancel];
 }
 
