@@ -42,8 +42,8 @@
     return self.resolve(request);
 }
 
-- (void)invalidateAndCancel {
-    [self.resolve invalidateAndCancel];
+- (void)invalidateAndCancel
+{
 }
 
 @end

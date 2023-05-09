@@ -767,4 +767,14 @@
     XCTAssertEqualObjects(request.URL, URL);
 }
 
+- (void)testCancellingRequestOnSessionInvalidation
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandlerMock = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *URL = [NSURL URLWithString:@"https://localhost"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:URL sourceIdentifier:@""];
+    [self.service invalidateAndCancel];
+    [self.service requestResponseHandler:requestResponseHandlerMock performRequest:request];
+    XCTAssertEqual(requestResponseHandlerMock.numberOfCancelledRequestCalls, 1u);
+}
+
 @end
