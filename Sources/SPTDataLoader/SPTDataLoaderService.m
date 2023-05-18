@@ -226,11 +226,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performRequest:(SPTDataLoaderRequest *)request
 requestResponseHandler:(id<SPTDataLoaderRequestResponseHandler>)requestResponseHandler
 {
-    if (self.sessionInvalidated) {
-        [requestResponseHandler cancelledRequest:request];
+    if (request.URL == nil || request.cancellationToken.cancelled) {
         return;
     }
-    if (request.URL == nil || request.cancellationToken.cancelled) {
+    if (self.sessionInvalidated) {
+        [requestResponseHandler cancelledRequest:request];
         return;
     }
 
