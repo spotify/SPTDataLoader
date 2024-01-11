@@ -21,6 +21,7 @@
 @class SPTDataLoaderResolver;
 @class SPTDataLoaderServerTrustPolicy;
 @protocol SPTDataLoaderAuthoriser;
+@protocol SPTDataLoaderInterceptor;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -91,9 +92,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Creates a data loader factory
+ */
+- (SPTDataLoaderFactory *)createDataLoaderFactory;
+
+/**
+ Creates a data loader factory
  @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */
-- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers;
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers;
+
+/**
+ Creates a data loader factory
+ @param interceptors An NSArray of SPTDataLoaderInterceptor objects for manitpulate a request and its response
+ */
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithInterceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors;
+
+/**
+ Creates a data loader factory
+ @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
+ @param interceptors An NSArray of SPTDataLoaderInterceptor objects for manitpulate a request and its response
+ */
+- (SPTDataLoaderFactory *)createDataLoaderFactoryWithAuthorisers:(NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+                                                 withInterceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors;
+
 /**
  Adds a consumption observer
  @param consumptionObserver The consumption observer to add to the service

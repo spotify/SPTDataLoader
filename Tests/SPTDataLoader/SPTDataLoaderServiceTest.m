@@ -96,7 +96,7 @@
 
 - (void)testFactoryNotNil
 {
-    SPTDataLoaderFactory *factory = [self.service createDataLoaderFactoryWithAuthorisers:nil];
+    SPTDataLoaderFactory *factory = [self.service createDataLoaderFactory];
     XCTAssertNotNil(factory, @"The factory should not be nil after creation from the service");
 }
 

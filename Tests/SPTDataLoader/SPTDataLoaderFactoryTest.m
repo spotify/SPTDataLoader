@@ -19,11 +19,13 @@
 #import <SPTDataLoader/SPTDataLoaderFactory.h>
 
 #import <SPTDataLoader/SPTDataLoaderRequest.h>
+#import <SPTDataLoader/SPTDataLoaderInterceptorResult.h>
 
 #import "SPTDataLoaderFactory+Private.h"
 #import "SPTDataLoaderRequestResponseHandlerMock.h"
 #import "SPTDataLoaderResponse+Private.h"
 #import "SPTDataLoaderAuthoriserMock.h"
+#import "SPTDataLoaderInterceptorMock.h"
 #import "SPTDataLoaderRequestResponseHandlerDelegateMock.h"
 
 @interface SPTDataLoaderFactory () <SPTDataLoaderRequestResponseHandlerDelegate, SPTDataLoaderAuthoriserDelegate>
@@ -37,6 +39,7 @@
 
 @property (nonatomic, strong) SPTDataLoaderRequestResponseHandlerDelegateMock *delegate;
 @property (nonatomic, strong) SPTDataLoaderAuthoriserMock *authoriserMock;
+@property (nonatomic, strong) SPTDataLoaderInterceptorMock *interceptorMock;
 
 @end
 
@@ -49,8 +52,10 @@
     [super setUp];
     self.delegate = [SPTDataLoaderRequestResponseHandlerDelegateMock new];
     self.authoriserMock = [SPTDataLoaderAuthoriserMock new];
+    self.interceptorMock = [SPTDataLoaderInterceptorMock new];
     self.factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:self.delegate
-                                                                                 authorisers:@[ self.authoriserMock ]];
+                                                                                 authorisers:@[ self.authoriserMock ]
+                                                                                interceptors:@[ self.interceptorMock ]];
 }
 
 #pragma mark SPTDataLoaderFactoryTest
@@ -88,6 +93,7 @@
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
     SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    response.error = [NSError errorWithDomain:@"test" code:1 userInfo:nil];
     [self.factory failedResponse:response];
     XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory did not relay a failed response to the correct handler");
 }
@@ -124,7 +130,7 @@
 - (void)testShouldAuthoriseRequest
 {
     SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
-    SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ]];
+    SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ] interceptors:@[]];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     BOOL shouldAuthorise = [factory shouldAuthoriseRequest:request];
     XCTAssertTrue(shouldAuthorise, @"The factory should mark the request as authorisable");
@@ -141,7 +147,7 @@
 - (void)testAuthoriseRequest
 {
     SPTDataLoaderAuthoriserMock *authoriser = [SPTDataLoaderAuthoriserMock new];
-    SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ]];
+    SPTDataLoaderFactory *factory = [SPTDataLoaderFactory dataLoaderFactoryWithRequestResponseHandlerDelegate:nil authorisers:@[ authoriser ] interceptors:@[]];
     SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
     [factory authoriseRequest:request];
     XCTAssertEqual(authoriser.numberOfCallsToAuthoriseRequest, 1u, @"The factory did not send an authorise request to the authoriser");
@@ -226,6 +232,52 @@
     [self.factory needsNewBodyStream:^(NSInputStream * _Nonnull _) {} forRequest:request];
 
     XCTAssertEqual(requestResponseHandler.numberOfNewBodyStreamCalls, 1u, @"The factory did not relay a prompt for delivering a new body stream to the correct handler");
+}
+
+// MARK - Test Interceptors
+
+- (void)testRunRequestResponseInterceptors
+{
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest new];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.factory successfulResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1u, @"The factory did not relay a successful response to the correct handler");
+    XCTAssertEqual(self.interceptorMock.numberOfCallsToInterceptorRequest, 1u, @"Too many calls to Interceptor request");
+    XCTAssertEqual(self.interceptorMock.numberOfCallsToInterceptorResponse, 1u, @"Too many calls to Interceptor response");
+}
+
+- (void)testRequestInterceptorModifyRequest
+{
+    self.interceptorMock.interceptorRequestBlock = ^(SPTDataLoaderRequest *request){
+        [request addValue:@"interceptor-value" forHeader:@"interceptor-key"];
+        return [SPTDataLoaderInterceptorResult success: request];
+    };
+
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *testURL = [NSURL URLWithString:@"https://somewhere"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:testURL sourceIdentifier:@"Test"];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    SPTDataLoaderResponse *response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:request response:nil];
+    [self.factory successfulResponse:response];
+    XCTAssertEqual(requestResponseHandler.numberOfSuccessfulDataResponseCalls, 1u, @"The factory did not relay a successful response to the correct handler");
+    XCTAssertEqual([self.delegate.lastRequestPerformed.headers objectForKey:@"interceptor-key"], @"interceptor-value");
+}
+
+- (void)testRequestInterceptorFailRequest
+{
+    NSError *error = [NSError errorWithDomain:@"test" code:1 userInfo:nil];
+    self.interceptorMock.interceptorRequestBlock = ^(SPTDataLoaderRequest *request){
+        return [SPTDataLoaderInterceptorResult failure: error];
+    };
+
+    SPTDataLoaderRequestResponseHandlerMock *requestResponseHandler = [SPTDataLoaderRequestResponseHandlerMock new];
+    NSURL *testURL = [NSURL URLWithString:@"https://somewhere"];
+    SPTDataLoaderRequest *request = [SPTDataLoaderRequest requestWithURL:testURL sourceIdentifier:@"Test"];
+    [self.factory requestResponseHandler:requestResponseHandler performRequest:request];
+    XCTAssertEqual(requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The factory interceptor failed");
+    XCTAssertEqual(requestResponseHandler.lastReceivedResponse.error, error);
 }
 
 @end
