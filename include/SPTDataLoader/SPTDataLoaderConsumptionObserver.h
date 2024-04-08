@@ -41,6 +41,13 @@ typedef NS_ENUM(NSInteger, SPTDataLoaderFetchType) {
                  bytesDownloaded:(int)bytesDownloaded
                    bytesUploaded:(int)bytesUploaded;
 
+/**
+ Called when a request ends (either via cancel or receiving a server response
+ @param response The response the request was ended with
+ @param fetchType Whether the resource was loaded from network or cache (if known).
+ */
+- (void)endedRequestWithResponse:(SPTDataLoaderResponse *)response fetchType:(SPTDataLoaderFetchType)fetchType;
+
 @end
 
 NS_ASSUME_NONNULL_END
