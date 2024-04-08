@@ -178,7 +178,7 @@ for (int i = 0; i < 1000; ++i) {
 This will result in a backoffTime that has drifted far away from its vanilla exponential calculation. Why? Because we add a random jitter to the calculations in order to prevent clients from connecting at the same time, in order to spread the load out evenly when experiencing a reconnect storm. The jitter gets greater along with the exponent.
 
 ### Consumption observation
-SPTDataLoaderService allows you to add a consumption observer whose purpose is to monitor the data consumption of the service for both uploads and downloads. This object must conform to the SPTDataLoaderConsumptionObserver protocol. This is quite easy considering it is a single method like so:
+SPTDataLoaderService allows you to add a consumption observer whose purpose is to monitor the data consumption of the service for both uploads and downloads and whether the resource was loaded from network or cache. This object must conform to the SPTDataLoaderConsumptionObserver protocol. This is quite easy considering it is a single method like so:
 ```objc
 - (void)load
 {
