@@ -20,6 +20,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, SPTDataLoaderFetchType) {
+    SPTDataLoaderFetchTypeUnknown,
+    SPTDataLoaderFetchTypeNetwork,
+    SPTDataLoaderFetchTypeLocalCache
+};
+
 /**
  The protocol an observer of the data loaders consumption must conform to
  */
