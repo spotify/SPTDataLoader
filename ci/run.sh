@@ -126,7 +126,7 @@ create_sim() {
   xcrun simctl create "$1" "$3" "$runtime" || fail "Failed to create $2 simulator for testing"
 }
 
-create_sim dataloader-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-8
+create_sim dataloader-tester-ios iOS com.apple.CoreSimulator.SimDeviceType.iPhone-XR
 
 xcb "Run tests for iOS" test \
   -scheme "ALL_TESTS" \
