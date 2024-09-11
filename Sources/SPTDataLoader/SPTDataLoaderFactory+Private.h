@@ -34,7 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param authorisers An NSArray of SPTDataLoaderAuthoriser objects for supporting different forms of authorisation
  */
 + (instancetype)dataLoaderFactoryWithRequestResponseHandlerDelegate:(nullable id<SPTDataLoaderRequestResponseHandlerDelegate>)requestResponseHandlerDelegate
-                                                        authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers;
+                                                        authorisers:(nullable NSArray<id<SPTDataLoaderAuthoriser>> *)authorisers
+                                                       interceptors:(NSArray<id<SPTDataLoaderInterceptor>> *)interceptors;
 
 @end
 
