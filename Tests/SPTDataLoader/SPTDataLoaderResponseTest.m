@@ -69,7 +69,7 @@
                                                  headerFields:nil];
     self.response = [SPTDataLoaderResponse dataLoaderResponseWithRequest:self.request response:self.urlResponse];
     BOOL shouldRetry = [self.response shouldRetry];
-    XCTAssertTrue(shouldRetry, @"The response should retry when given the HTTP status code of Not Found");
+    XCTAssertFalse(shouldRetry, @"The response should not retry when given the HTTP status code of Not Found");
 }
 
 - (void)testShouldRetryForCertificateRejection
