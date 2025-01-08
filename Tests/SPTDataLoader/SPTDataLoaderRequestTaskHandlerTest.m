@@ -125,7 +125,7 @@
     [self.handler receiveResponse:httpResponse];
     [self.handler completeWithError:nil];
     XCTAssertEqual(self.requestResponseHandler.numberOfSuccessfulDataResponseCalls, 0u, @"The handler did relay a successful response onto its request response handler when it should have silently retried");
-    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 0u, @"The handler did relay a failed response onto its request response handler when it should have silently retried");
+    XCTAssertEqual(self.requestResponseHandler.numberOfFailedResponseCalls, 1u, @"The handler did not relay a failed response onto its request response handler for a 404 status code");
 }
 
 - (void)testRetryWithResponseBody
