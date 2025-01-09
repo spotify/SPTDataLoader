@@ -19,6 +19,7 @@
 @class SPTDataLoader;
 @class SPTDataLoaderBlockWrapper;
 @protocol SPTDataLoaderAuthoriser;
+@protocol SPTDataLoaderInterceptor;
 
 NS_ASSUME_NONNULL_BEGIN
 
