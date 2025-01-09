@@ -407,6 +407,57 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     completionHandler(disposition, credential);
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
+    
+    if (self.consumptionObservers.count == 0) {
+        return;
+    }
+    
+    SPTDataLoaderRequestTaskHandler *handler = [self handlerForTask:task];
+    SPTDataLoaderResponse *response = [handler completeWithError:nil];
+    
+    if (response == nil && !handler.cancelled) {
+        return;
+    }
+
+    NSURLSessionTaskTransactionMetrics *lastTransactionMetric = metrics.transactionMetrics.lastObject; // Last transaction after any redirects.
+    
+    if (lastTransactionMetric == nil) {
+        return;
+    }
+    
+    SPTDataLoaderFetchType fetchType = SPTDataLoaderFetchTypeUnknown;
+
+    switch (lastTransactionMetric.resourceFetchType) {
+        case NSURLSessionTaskMetricsResourceFetchTypeUnknown:
+            fetchType = SPTDataLoaderFetchTypeUnknown;
+            break;
+        case NSURLSessionTaskMetricsResourceFetchTypeLocalCache:
+            fetchType = SPTDataLoaderFetchTypeLocalCache;
+            break;
+        case NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad:
+            fetchType = SPTDataLoaderFetchTypeNetwork;
+            break;
+        case NSURLSessionTaskMetricsResourceFetchTypeServerPush:
+            fetchType = SPTDataLoaderFetchTypeNetwork;
+            break;
+    }
+
+    @synchronized(self.consumptionObservers) {
+        for (id<SPTDataLoaderConsumptionObserver> consumptionObserver in self.consumptionObservers) {
+            dispatch_block_t observerBlock = ^ {
+                [consumptionObserver endedRequestWithResponse:response fetchType:fetchType];
+            };
+            dispatch_queue_t queue = [self.consumptionObservers objectForKey:consumptionObserver];
+            if ([NSThread isMainThread] && queue == dispatch_get_main_queue()) {
+                observerBlock();
+            } else {
+                dispatch_async(queue, observerBlock);
+            }
+        }
+    }
+}
+
 #pragma mark NSURLSessionTaskDelegate
 
 - (void)URLSession:(NSURLSession *)session
