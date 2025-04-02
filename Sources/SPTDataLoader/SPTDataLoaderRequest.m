@@ -129,8 +129,6 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
 
 + (NSString *)generateLanguageHeaderValue
 {
-    const NSInteger SPTDataLoaderRequestMaximumLanguages = 2;
-    NSString * const SPTDataLoaderRequestEnglishLanguageValue = @"en";
     NSString * const SPTDataLoaderRequestLanguageHeaderValuesJoiner = @", ";
 
     NSString *(^constructLanguageHeaderValue)(NSString *, double) = ^NSString *(NSString *language, double languageImportance) {
@@ -138,34 +136,15 @@ static NSString * NSStringFromSPTDataLoaderRequestMethod(SPTDataLoaderRequestMet
         return [NSString stringWithFormat:SPTDataLoaderRequestLanguageFormatString, language, languageImportance];
     };
 
-    NSArray<NSString *> *localizations = [NSBundle mainBundle].preferredLocalizations;
-    NSMutableOrderedSet<NSString *> *languages = [NSMutableOrderedSet orderedSetWithArray:localizations];
-    if (languages.count > SPTDataLoaderRequestMaximumLanguages) {
-        const NSUInteger excess = languages.count - SPTDataLoaderRequestMaximumLanguages;
-        [languages removeObjectsInRange:NSMakeRange(SPTDataLoaderRequestMaximumLanguages, excess)];
-    }
-    double languageImportanceCounter = 1.0;
-    NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
-    BOOL containsEnglish = NO;
-    for (NSString *language in languages) {
-        if (!containsEnglish) {
-            NSString * const SPTDataLoaderRequestLanguageLocaleSeparator = @"-";
-            NSString *languageValue = [language componentsSeparatedByString:SPTDataLoaderRequestLanguageLocaleSeparator].firstObject;
-            if ([languageValue isEqualToString:SPTDataLoaderRequestEnglishLanguageValue]) {
-                containsEnglish = YES;
-            }
-        }
+    NSArray<NSString *> *languages = [NSLocale preferredLanguages];
 
-        if (languageImportanceCounter == 1.0) {
-            [languageHeaderValues addObject:language];
-        } else {
-            [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportanceCounter)];
-        }
-        languageImportanceCounter -= (1.0 / languages.count);
-    }
-    if (!containsEnglish) {
-        [languageHeaderValues addObject:constructLanguageHeaderValue(SPTDataLoaderRequestEnglishLanguageValue, 0.01)];
-    }
+    NSMutableArray *languageHeaderValues = [NSMutableArray arrayWithCapacity:languages.count];
+
+    [languages enumerateObjectsUsingBlock:^(NSString *language, NSUInteger idx, BOOL *stop) {
+        const double languageImportance = 1.0 - idx * (1.0 / languages.count);
+        [languageHeaderValues addObject:constructLanguageHeaderValue(language, languageImportance)];
+    }];
+
     return [languageHeaderValues componentsJoinedByString:SPTDataLoaderRequestLanguageHeaderValuesJoiner];
 }
 

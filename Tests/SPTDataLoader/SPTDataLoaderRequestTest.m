@@ -7,7 +7,7 @@
 #import <objc/runtime.h>
 
 #import "SPTDataLoaderRequest+Private.h"
-#import "NSBundleMock.h"
+#import "NSLocaleMock.h"
 
 @interface SPTDataLoaderRequest ()
 
@@ -140,24 +140,24 @@
     XCTAssertEqual(request.shouldStopRedirection, self.request.shouldStopRedirection, @"The stop redirection was not copied correctly");
 }
 
-- (void)testAcceptLanguageWithNoEnglishLanguages
+- (void)testAcceptLanguage
 {
-    NSBundleMock *bundleMock = [NSBundleMock new];
-    bundleMock.mockPreferredLocalizations = @[ @"fr-CA", @"pt-PT", @"es-419" ];
+    // When the language identifier does not contain a region designator, NSLocale uses the user's preferred region.
+    [NSLocaleMock setPreferredLanguages:@[ @"en-US", @"fr-SE", @"ja-SE", @"sv-SE", @"mk-SE", @"nl-SE" ]];
 
-    Method originalMethod = class_getClassMethod(NSBundle.class, @selector(mainBundle));
+    Method originalMethod = class_getClassMethod(NSLocale.class, @selector(preferredLanguages));
+    Method fakeMethod = class_getClassMethod(NSLocaleMock.class, @selector(preferredLanguages));
+
     IMP originalMethodImplementation = method_getImplementation(originalMethod);
+    IMP fakeMethodImplementation = method_getImplementation(fakeMethod);
 
-    IMP fakeMethodImplementation = imp_implementationWithBlock(^ {
-        return bundleMock;
-    });
     method_setImplementation(originalMethod, fakeMethodImplementation);
 
     NSString *languageValues = [SPTDataLoaderRequest generateLanguageHeaderValue];
 
     method_setImplementation(originalMethod, originalMethodImplementation);
 
-    XCTAssertEqualObjects(@"fr-CA, pt-PT;q=0.50, en;q=0.01", languageValues);
+    XCTAssertEqualObjects(@"en-US;q=1.00, fr-SE;q=0.83, ja-SE;q=0.67, sv-SE;q=0.50, mk-SE;q=0.33, nl-SE;q=0.17", languageValues);
 }
 
 - (void)testDescription
@@ -168,46 +168,6 @@
     NSString *URLString = [NSString stringWithFormat:@"URL = \"%@\"", self.URL.absoluteString];
     XCTAssertTrue([self.request.description containsString:URLString],
                   @"The description should contain the URL of the request.");
-}
-
-- (void)testAcceptLanguageWithMultipleLanguagesContainingEnglish
-{
-    NSBundleMock *bundleMock = [NSBundleMock new];
-    bundleMock.mockPreferredLocalizations = @[ @"fr-CA", @"en", @"pt-PT" ];
-
-    Method originalMethod = class_getClassMethod(NSBundle.class, @selector(mainBundle));
-    IMP originalMethodImplementation = method_getImplementation(originalMethod);
-
-    IMP fakeMethodImplementation = imp_implementationWithBlock(^ {
-        return bundleMock;
-    });
-    method_setImplementation(originalMethod, fakeMethodImplementation);
-
-    NSString *languageValues = [SPTDataLoaderRequest generateLanguageHeaderValue];
-
-    method_setImplementation(originalMethod, originalMethodImplementation);
-
-    XCTAssertEqualObjects(@"fr-CA, en;q=0.50", languageValues);
-}
-
-- (void)testAcceptLanguageRemovesDuplicateLocalizations
-{
-    NSBundleMock *bundleMock = [NSBundleMock new];
-    bundleMock.mockPreferredLocalizations = @[ @"es-419", @"es-419", @"pt-PT" ];
-
-    Method originalMethod = class_getClassMethod(NSBundle.class, @selector(mainBundle));
-    IMP originalMethodImplementation = method_getImplementation(originalMethod);
-
-    IMP fakeMethodImplementation = imp_implementationWithBlock(^ {
-        return bundleMock;
-    });
-    method_setImplementation(originalMethod, fakeMethodImplementation);
-
-    NSString *languageValues = [SPTDataLoaderRequest generateLanguageHeaderValue];
-
-    method_setImplementation(originalMethod, originalMethodImplementation);
-
-    XCTAssertEqualObjects(@"es-419, pt-PT;q=0.50, en;q=0.01", languageValues);
 }
 
 - (void)testDeleteMethod
