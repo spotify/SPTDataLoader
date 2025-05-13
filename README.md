@@ -1,5 +1,8 @@
 <img alt="SPTDataLoader" src="banner@2x.png" width="100%" max-width="888">
 
+# THIS PROJECT IS DEPRECATED
+## 🚨🚨🚨 Please, read the [Deprecation Notice](DEPRECATED.md) 🚨🚨🚨
+
 [![Coverage Status](https://codecov.io/github/spotify/SPTDataLoader/coverage.svg?branch=master)](https://codecov.io/github/spotify/SPTDataLoader?branch=master)
 [![Documentation](https://img.shields.io/cocoapods/metrics/doc-percent/SPTDataLoader.svg)](http://cocoadocs.org/docsets/SPTDataLoader/)
 [![License](https://img.shields.io/github/license/spotify/SPTDataLoader.svg)](LICENSE)
